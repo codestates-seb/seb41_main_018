@@ -18,13 +18,13 @@ import java.time.LocalDateTime;
 public abstract class Auditable {
 
     @CreatedDate //데이터 생성 날짜 자동 저장 어노테이션
-    @Column(name = "created_time", updatable = false)
-    private LocalDateTime createdTime;
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
 
     @LastModifiedDate // 데이터 수정 날짜 자동 저장 어노테이션
-    @Column(name = "LAST_MODIFIED_TIME")
-    private LocalDateTime modifiedTime;
+    @Column(name = "LAST_MODIFIED_AT")
+    private LocalDateTime modifiedAt;
 
 
     @CreatedBy // 데이터 생성자 자동 저장 어노테이션
