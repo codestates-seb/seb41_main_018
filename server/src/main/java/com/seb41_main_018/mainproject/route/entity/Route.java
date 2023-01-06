@@ -1,11 +1,12 @@
 package com.seb41_main_018.mainproject.route.entity;
 
+import com.seb41_main_018.mainproject.audit.Auditable;
+import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.domain.Auditable;
 
 import javax.persistence.*;
 
@@ -22,8 +23,8 @@ public class Route extends Auditable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private Post post;
+    private Content content;
 
     @Column(nullable = false)
-    private String bodyt;
+    private String body;
 }
