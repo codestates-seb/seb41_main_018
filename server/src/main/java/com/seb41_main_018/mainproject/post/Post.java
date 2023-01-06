@@ -1,5 +1,7 @@
 package com.seb41_main_018.mainproject.post;
 
+import com.seb41_main_018.mainproject.audit.Auditable;
+import jdk.jfr.Category;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,7 +20,7 @@ import java.time.LocalDateTime;
 }, name = "USERS")
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Post {
+public class Post extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
@@ -32,13 +34,22 @@ public class Post {
     @Column(nullable = false, unique = true)
     private Long viewCount;
 
-    // TODO: createAt, updateAt 수정
-    @Column(nullable = false, insertable = false, updatable = false)
-    @CreatedDate
-    private LocalDateTime createAt;
+    // 연관 관계
+    @ManyToOne(optional = true, fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    private User user;
 
-    @Column(nullable = false, insertable = false, updatable = false)
-    @CreatedDate
-    private LocalDateTime updateAt;
+    @ManyToOne
+    private Category category;
+    @OneToMany
+    private Like like;
+
+    @OneToMany
+    private PostTag postTag;
+
+    @OneToMany
+    private Comment comment;
+
+    @OneToMany
+    private Route route;
 
 }
