@@ -9,7 +9,7 @@ public class CommentDto {
     @AllArgsConstructor
     public static class Post {
         private long userId;
-        private long postId;
+        private long contentId;
         @NotSpace(message = "내용을 채워주세요.")
         private String body;
 
@@ -19,6 +19,8 @@ public class CommentDto {
     @AllArgsConstructor
     public static class Patch {
         private long commentId;
+        private long userId;
+        private long contentId;
         @NotSpace(message = "내용을 채워주세요.")
         private String body;
         public void setCommentId(long commentId) {
@@ -31,7 +33,7 @@ public class CommentDto {
     public static class Response {
             private long commentId;
             private long userId;
-            private long postId;
+            private long contentId;
             private String body;
     }
 }
