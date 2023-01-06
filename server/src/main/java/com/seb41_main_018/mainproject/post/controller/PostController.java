@@ -20,6 +20,7 @@ public class PostController {
     // 게시글 단건 조회
     @GetMapping("/{postId}")
     public ResponseEntity getPost(@PathVariable("postId") Long postId
+                                  // TODO: DTO
     ) {
         return null;
     }
@@ -34,11 +35,16 @@ public class PostController {
     // 게시글 수정
     @PatchMapping("/{postId}")
     public ResponseEntity patchPost(@PathVariable("postId") Long postId
-            // TODO: DTO
+                                    // TODO: DTO
     ) {
         return null;
     }
 
-
-
+    // 게시글 삭제
+    @DeleteMapping("/{postId}")
+    public ResponseEntity deletePost(@PathVariable("postId") Long postId
+                                     // TODO: DTO
+    ) {
+        return null;
+    }
 }
