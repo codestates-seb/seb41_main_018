@@ -1,7 +1,7 @@
 package com.seb41_main_018.mainproject.user.entity;
 
+import com.seb41_main_018.mainproject.audit.Auditable;
 import lombok.Getter;
-import org.springframework.data.domain.Auditable;
 
 import javax.persistence.*;
 import java.util.ArrayList;
