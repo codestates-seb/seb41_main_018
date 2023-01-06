@@ -1,6 +1,8 @@
 package com.seb41_main_018.mainproject.comment.entity;
 
 import com.seb41_main_018.mainproject.audit.Auditable;
+import com.seb41_main_018.mainproject.post.entity.Post;
+import com.seb41_main_018.mainproject.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
