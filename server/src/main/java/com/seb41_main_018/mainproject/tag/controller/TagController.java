@@ -1,4 +1,4 @@
-package com.seb41_main_018.mainproject.tag.entity;
+package com.seb41_main_018.mainproject.tag.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
