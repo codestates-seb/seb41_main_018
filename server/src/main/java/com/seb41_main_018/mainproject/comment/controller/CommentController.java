@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/comments")
 @Validated
 public class CommentController {
-    @PostMapping("/{postId}")
-    public ResponseEntity postComment( @PathVariable("postId") Long postId
+    @PostMapping("/{contentId}")
+    public ResponseEntity postComment( @PathVariable("contentId") Long contentId
     ){
         return null;
     }

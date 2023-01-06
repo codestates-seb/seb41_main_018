@@ -1,12 +1,13 @@
 package com.seb41_main_018.mainproject.comment.entity;
 
 import com.seb41_main_018.mainproject.audit.Auditable;
+import com.seb41_main_018.mainproject.content.entity.Content;
+import com.seb41_main_018.mainproject.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @Getter
@@ -20,11 +21,10 @@ public class Comment extends Auditable {
     @Column(nullable = false, name = "user_id")
     private Long userId;
 
-    @Column(nullable = false, name = "post_id")
-    private Long postId;
+    @Column(nullable = false, name = "content_id")
+    private Long contentId;
 
     @Column(nullable = false)
-    @Size(min = 30)
     private String body;
 
     @ManyToOne
@@ -32,8 +32,8 @@ public class Comment extends Auditable {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "POST_ID")
-    private Post post;
+    @JoinColumn(name = "CONTENT_ID")
+    private Content content;
 
     //Comment와 연관관계를 맺을 대상인 User 객체
     public void setUser(User user) {
@@ -44,8 +44,8 @@ public class Comment extends Auditable {
     }
 
     //Comment와 연관관계를 맺을 대상인 Post 객체
-    public void setPost(Post post) {
-        this.post = post;
+    public void setContent(Content content) {
+        this.content = content;
         if (!this.post.getComments().contains(this)) {
             this.post.getComments().add(this);
         }
