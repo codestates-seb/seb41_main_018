@@ -1,7 +1,7 @@
 package com.seb41_main_018.mainproject.category.entity;
 
 import com.seb41_main_018.mainproject.audit.Auditable;
-import com.seb41_main_018.mainproject.post.Post;
+import com.seb41_main_018.mainproject.content.entity.Content;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,5 +25,5 @@ public class Category extends Auditable {
     private String name;
 
     @OneToMany(mappedBy = "category")
-    List<Post> posts = new ArrayList<>();
+    List<Content> contents = new ArrayList<>();
 }
