@@ -1,4 +1,4 @@
-package com.seb41_main_018.mainproject.post;
+package com.seb41_main_018.mainproject.post.entity;
 
 import com.seb41_main_018.mainproject.audit.Auditable;
 import jdk.jfr.Category;
