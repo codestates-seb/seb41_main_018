@@ -1,7 +1,7 @@
 package com.seb41_main_018.mainproject.tag.entity;
 
 import com.seb41_main_018.mainproject.audit.Auditable;
-import com.seb41_main_018.mainproject.post.entity.Post;
+import com.seb41_main_018.mainproject.content.entity.Post;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
