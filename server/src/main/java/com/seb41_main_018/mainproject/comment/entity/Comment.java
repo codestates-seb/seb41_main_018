@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @Getter
@@ -26,7 +25,6 @@ public class Comment extends Auditable {
     private Long contentId;
 
     @Column(nullable = false)
-    @Size(min = 30)
     private String body;
 
     @ManyToOne
