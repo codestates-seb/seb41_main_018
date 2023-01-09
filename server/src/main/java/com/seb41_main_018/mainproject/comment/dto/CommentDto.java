@@ -35,5 +35,7 @@ public class CommentDto {
             private long userId;
             private long contentId;
             private String body;
+
+
     }
 }
