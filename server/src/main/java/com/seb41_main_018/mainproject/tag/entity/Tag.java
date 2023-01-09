@@ -1,8 +1,9 @@
 package com.seb41_main_018.mainproject.tag.entity;
 
 import com.seb41_main_018.mainproject.audit.Auditable;
-import com.seb41_main_018.mainproject.content.entity.Post;
+import com.seb41_main_018.mainproject.content.entity.Content;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -11,8 +12,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@Table
 @Entity
+@NoArgsConstructor
 public class Tag extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +22,17 @@ public class Tag extends Auditable {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne
-    private Post post;
+    @ManyToOne(optional = true, fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "CONTENT_ID")
+    private Content content;
+
+    // 생성자 //
+    public Tag(String name) {
+        this.name = name;
+    }
+
+    // 연관관계 메소드 //
+    public void addContent(Content content) {
+        this.content = content;
+    }
 }
