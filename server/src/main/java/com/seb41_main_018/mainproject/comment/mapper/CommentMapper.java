@@ -41,9 +41,7 @@ public interface CommentMapper {
                 .commentId(comment.getCommentId())
                 .userId(user.getUserId())
                 .contentId(content.getContentId())
-                .createdAt(comment.getCreatedAt())
-                .modifiedAt(comment.getModifiedAt())
-                .text(comment.getBody())
+                .body(comment.getBody())
                 .build();
     }
     List<CommentDto.Response> commentToCommentResponseDtos(List<Comment> comment);

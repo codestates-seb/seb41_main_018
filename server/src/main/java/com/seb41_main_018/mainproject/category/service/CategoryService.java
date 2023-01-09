@@ -20,14 +20,11 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Category createcategory(Category category) {
-        // 이미 등록된 이메일인지 확인
-        verifyExistsEmail(category.getEmail());
-
-        return categoryRepository.save(category);
+    public Category createCategory(Category category) {
+           return category;
     }
-    //유저 코멘트 수정
-    public Category updatecategory(Category category) {
+    //카테고리 수정
+    public Category updateCategory(Category category) {
         Category findCategory = findVerifiedCategory(category.getCategoryId()); //ID로 멤버 존재 확인하고 category 정보 반환
 
         Optional.ofNullable(category.getName())
@@ -38,11 +35,6 @@ public class CategoryService {
 
     public Category findCategory(long categoryId) {
         return findVerifiedCategory(categoryId);
-    }
-
-    public Page<Category> findCategorys(int page, int size) {
-        return categoryRepository.findAll(PageRequest.of(page, size,
-                Sort.by("categoryId").descending()));
     }
 
     //카테고리 삭제
@@ -58,11 +50,5 @@ public class CategoryService {
                 optionalCategory.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.CATEGORY_NOT_FOUND));
         return findCategory;
-    }
-
-    private void verifyExistsEmail(String email) {
-        Optional<Category> category = categoryRepository.findByEmail(email);
-        if (category.isPresent())
-            throw new BusinessLogicException(ExceptionCode.CATEGORY_EXISTS);
     }
 }

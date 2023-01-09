@@ -25,7 +25,7 @@ public class CommentService {
 
         return commentRepository.save(comment);
     }
-    //유저 코멘트 수정
+    // 코멘트 수정
     public Comment updatecomment(Comment comment) {
         Comment findComment = findVerifiedComment(comment.getCommentId()); //ID로 멤버 존재 확인하고 comment 정보 반환
 
