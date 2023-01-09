@@ -20,7 +20,7 @@ public class UserPostDto {
     private String password;
 
     @NotBlank
-    private String ninkname;
+    private String nickname;
     @NotBlank
     private Boolean email_subscribe;
 }
