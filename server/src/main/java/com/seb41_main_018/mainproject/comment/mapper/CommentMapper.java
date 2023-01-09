@@ -44,5 +44,5 @@ public interface CommentMapper {
                 .body(comment.getBody())
                 .build();
     }
-    List<CommentDto.Response> commentToCommentResponseDtos(List<Comment> comment);
+    List<CommentDto.Response> commentsToCommentResponseDtos(List<Comment> comment);
 }

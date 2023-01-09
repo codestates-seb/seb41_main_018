@@ -3,6 +3,7 @@ package com.seb41_main_018.mainproject.category.service;
 
 import com.seb41_main_018.mainproject.category.entity.Category;
 import com.seb41_main_018.mainproject.category.repository.CategoryRepository;
+import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,7 @@ public class CategoryService {
     }
 
     public Category createCategory(Category category) {
-           return category;
+           return categoryRepository.save(category);
     }
     //카테고리 수정
     public Category updateCategory(Category category) {
@@ -35,6 +36,10 @@ public class CategoryService {
 
     public Category findCategory(long categoryId) {
         return findVerifiedCategory(categoryId);
+    }
+    public Page<Category> findCategories(int page, int size) {
+        return categoryRepository.findAll(PageRequest.of(page, size,
+                Sort.by("categoryId").descending()));
     }
 
     //카테고리 삭제
