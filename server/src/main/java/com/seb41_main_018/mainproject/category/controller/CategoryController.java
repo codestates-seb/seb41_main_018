@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/categories")
 @Validated
 public class CategoryController {
-    @PostMapping("/{categoryId}")
+    @PostMapping
     public ResponseEntity postCategory(@PathVariable("categoryId") Long categoryId
     ){
         return null;
