@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class UserResponseDto {
     private Long userId;
     private String email;
-    private String ninkname;
+    private String nickname;
     private String password;
     private Boolean email_subscribe;
     private LocalDateTime createdAt;
