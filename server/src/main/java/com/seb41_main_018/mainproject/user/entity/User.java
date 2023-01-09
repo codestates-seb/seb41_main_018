@@ -1,12 +1,19 @@
 package com.seb41_main_018.mainproject.user.entity;
 
 import com.seb41_main_018.mainproject.audit.Auditable;
+import com.seb41_main_018.mainproject.like.entity.Like;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
 public class User extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +28,16 @@ public class User extends Auditable {
     private String ninkname;
     @Column(columnDefinition = "TEXT")
     private Boolean email_subscribe;
+
+    /*
+    //유저가 삭제되면, 작성 글과 좋아요도 삭제됨
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Content> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Like> answers = new ArrayList<>();
+
+     */
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
