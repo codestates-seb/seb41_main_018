@@ -11,5 +11,5 @@ public interface CategoryMapper {
     Category categoryPostDtoToCategory(CategoryDto.Post requestBody);
     Category categoryPatchDtoToCategory(CategoryDto.Patch requestBody);
     CategoryDto.Response categoryToCategoryResponseDto(Category category);
-    List<CategoryDto.Response> categoryToCategoryResponseDtos(List<Category> category);
+    List<CategoryDto.Response> categoriesToCategoryResponseDtos(List<Category> category);
 }
