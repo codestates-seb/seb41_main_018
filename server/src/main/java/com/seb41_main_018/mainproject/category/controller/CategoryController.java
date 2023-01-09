@@ -6,7 +6,6 @@ import com.seb41_main_018.mainproject.category.entity.Category;
 import com.seb41_main_018.mainproject.category.mapper.CategoryMapper;
 import com.seb41_main_018.mainproject.category.repository.CategoryRepository;
 import com.seb41_main_018.mainproject.category.service.CategoryService;
-import com.seb41_main_018.mainproject.category.entity.category;
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -35,7 +34,7 @@ public class CategoryController {
     @PostMapping("/{adimright}")
     public ResponseEntity postCategory(@Valid @RequestBody CategoryDto.Post requestBody, @PathVariable("adimright") @Positive Long categoryId
     ){
-        Category category = CategoryService.createCategory(categoryMapper.categoryPostDtoToCategory(requestBody));
+        Category category = categoryService.createCategory(categoryMapper.categoryPostDtoToCategory(requestBody));
         CategoryDto.Response categoryResponseDto = categoryMapper.categoryToCategoryResponseDto(category);
 
         return new ResponseEntity(categoryResponseDto, HttpStatus.CREATED);
