@@ -2,6 +2,7 @@ package com.seb41_main_018.mainproject.comment.dto;
 
 import com.seb41_main_018.mainproject.validator.NotSpace;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 public class CommentDto {
@@ -30,6 +31,7 @@ public class CommentDto {
 
     @AllArgsConstructor
     @Getter
+    @Builder
     public static class Response {
             private long commentId;
             private long userId;
