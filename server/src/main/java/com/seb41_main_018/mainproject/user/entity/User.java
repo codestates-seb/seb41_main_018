@@ -25,7 +25,7 @@ public class User extends Auditable {
     private String password;
 
     @Column(nullable = false)
-    private String ninkname;
+    private String nickname;
     @Column(columnDefinition = "TEXT")
     private Boolean email_subscribe;
 
