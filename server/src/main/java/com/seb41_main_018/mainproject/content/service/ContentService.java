@@ -7,6 +7,9 @@ import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,13 +20,39 @@ public class ContentService {
     private final UserRepository userRepository;
     private final ContentRepository contentRepository;
 
+    // 게시글 생성 //
     public Content createContent(Content content) {
         return contentRepository.save(content);
     }
 
-    public Content updateContent(Content content) {
-        // TODO: 코드완성
-        return contentRepository.save(content);
+    // 게시글 수정 //
+    public Content updateContent(Long contentId, Content content) {
+        Content findContent = findVerifiedContent(contentId);
+
+        Optional.ofNullable(findContent.getTitle())
+                .ifPresent(findContent::setTitle);
+
+        Optional.ofNullable(findContent.getBody())
+                .ifPresent(findContent::setBody);
+
+        return contentRepository.save(findContent);
+    }
+
+    // 게시글 단건 조회 //
+    public Content findContent(Long contentId) {
+        return findVerifiedContent(contentId);
+    }
+
+    // 게시글 전체 조회 //
+    public Page<Content> findContents(int page, int size) {
+        return contentRepository.findAll(PageRequest.of(page, size,
+                Sort.by("contentId").descending()));
+    }
+
+    // 게시글 삭제 //
+    public void deleteContent(Long contentId) {
+        Content findContent = findVerifiedContent(contentId);
+        contentRepository.delete(findContent);
     }
 
     // 유저 검증 로직 //
@@ -33,6 +62,15 @@ public class ContentService {
                 optionalUser.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
         return findUser;
+    }
+
+    // 게시글 검증 로직 //
+    public Content findVerifiedContent(Long contentId) {
+        Optional<Content> optionalContent = contentRepository.findById(contentId);
+        Content findContent =
+                optionalContent.orElseThrow(NullPointerException::new);
+
+        return findContent;
     }
 
 }
