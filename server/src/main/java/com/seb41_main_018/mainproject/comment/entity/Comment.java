@@ -46,8 +46,8 @@ public class Comment extends Auditable {
     //Comment와 연관관계를 맺을 대상인 Post 객체
     public void setContent(Content content) {
         this.content = content;
-        if (!this.post.getComments().contains(this)) {
-            this.post.getComments().add(this);
+        if (!this.content.getComments().contains(this)) {
+            this.content.getComments().add(this);
         }
     }
 }

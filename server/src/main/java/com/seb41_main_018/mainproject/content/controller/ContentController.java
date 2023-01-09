@@ -18,7 +18,7 @@ public class ContentController {
     }
 
     // 게시글 단건 조회
-    @GetMapping("/{contentId}")
+    @GetMapping("/{contentId}/Info")
     public ResponseEntity getContent(@PathVariable("contentId") Long contentId
                                   // TODO: DTO
     ) {

@@ -19,7 +19,7 @@ public class CommentController {
         return null;
     }
 
-    @GetMapping("/{commentId}")
+    @GetMapping("/{commentId}/Info")
     public ResponseEntity getComment(@PathVariable("commentId") Long commentId) {
         return null;
     }
