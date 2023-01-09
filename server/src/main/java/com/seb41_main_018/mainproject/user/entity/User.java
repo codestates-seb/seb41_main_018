@@ -32,7 +32,7 @@ public class User extends Auditable {
     /*
     //유저가 삭제되면, 작성 글과 좋아요도 삭제됨
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Content> questions = new ArrayList<>();
+    private List<Content> contents = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Like> answers = new ArrayList<>();
