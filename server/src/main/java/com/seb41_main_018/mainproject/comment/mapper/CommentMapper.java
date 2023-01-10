@@ -4,11 +4,13 @@ import com.seb41_main_018.mainproject.comment.dto.CommentDto;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.user.entity.User;
+import org.mapstruct.Mapper;
 
 import java.util.List;
-
+@Mapper(componentModel = "spring")
 public interface CommentMapper {
-    default Comment commentPostDtoToComment(CommentDto.Post requestBody) {
+    default Comment commentPostDtoToComment(CommentDto.Post requestBody)
+        {
         // content id, comment id 받아오기 + body 받아오기
         Content content = new Content();
         content.setContentId(requestBody.getContentId());
@@ -19,6 +21,7 @@ public interface CommentMapper {
 
         return comment;
     }
+
     default Comment commentPatchDtoToComment(CommentDto.Patch requestBody)
     {
         // content id, comment id 받아오기 + body 받아오기

@@ -1,15 +1,14 @@
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2
   datasource:
-    url: jdbc:h2:mem:test
+    url: jdbc:h2:tcp://localhost/~/finallyHavaVictory
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
   jpa:
     hibernate:
-      ddl-auto: create  # (1) ??? ?? ??
-    show-sql: true      # (2) SQL ?? ??
+      ddl-auto: create
     properties:
       hibernate:
+        show_sql: true
         format_sql: true
-#    open-in-view: true
