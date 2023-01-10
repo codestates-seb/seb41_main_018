@@ -29,36 +29,41 @@ public class User extends Auditable {
     @Column(columnDefinition = "TEXT")
     private Boolean email_subscribe;
 
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private UserStatus userStatus;
+
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private LoginType loginType;
+
     /*
     //유저가 삭제되면, 작성 글과 좋아요도 삭제됨
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Content> contents = new ArrayList<>();
 
+    //유저가 삭제되면, 좋아요가 삭제됨
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Like> answers = new ArrayList<>();
+    private List<Heart> hearts = new ArrayList<>();
 
-     */
+    //유저가 삭제되면, 댓글도 삭제됨
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Comment> comments = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20, nullable = false)
-    private loginStatus loginstatus = loginStatus.USER_ACTIVE;
-
-    public enum loginStatus {
-
-        USER_ACTIVE("Active account"),
-        USER_INACTIVE("Inactive account"),
-        USER_QUIT("Deleted account");
-
-        @Getter
-        private final String loginStatus;
-
-        loginStatus(String loginStatus) {
-            this.loginStatus = loginStatus;
-        }
+    // 생성자 //
+    public User(
+            String email,
+            String password,
+            String nickname,
+            Boolean email_subscribe
+    ) {
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.email_subscribe = email_subscribe;
+        this.userStatus = UserStatus.ACTIVITY;
     }
-
-
 }
