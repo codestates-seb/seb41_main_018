@@ -28,13 +28,12 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
     private final CommentMapper commentMapper;
-    private final CommentRepository commentRepository;
 
     // 코멘트 생성 //
     @PostMapping("/{contentId}")
     public ResponseEntity postComment(@Valid @RequestBody CommentDto.Post requestBody,  @PathVariable("contentId") @Positive Long contentId
     ){
-        Comment comment = commentService.createcomment(commentMapper.commentPostDtoToComment(requestBody));
+        Comment comment = commentService.createComment(commentMapper.commentPostDtoToComment(requestBody));
         CommentDto.Response commentResponseDto = commentMapper.commentToCommentResponseDto(comment);
 
         return new ResponseEntity(commentResponseDto, HttpStatus.CREATED);

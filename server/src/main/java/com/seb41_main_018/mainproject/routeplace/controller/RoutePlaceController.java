@@ -24,7 +24,6 @@ import java.util.List;
 public class RoutePlaceController {
     private final RoutePlaceService routePlaceService;
     private final RoutePlaceMapper routePlaceMapper;
-    private final RoutePlaceRepository routePlaceRepository;
 
 
     @PostMapping("/{adimright}")
