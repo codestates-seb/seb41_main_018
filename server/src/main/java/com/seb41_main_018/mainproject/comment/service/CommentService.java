@@ -21,7 +21,8 @@ public class CommentService {
     }
     public Comment createcomment(Comment comment) {
         // 이미 등록된 이메일인지 확인
-        verifyExistsEmail(comment.getUser().getEmail());
+        User user = userRepository.findByUserId(comment.getUserId());
+        comment.setUser(user);
 
         return commentRepository.save(comment);
     }
