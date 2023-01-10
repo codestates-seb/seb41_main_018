@@ -8,5 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
+    @Query(value = "SELECT c FROM Comment c WHERE c.commentId = :commentId")
     Optional<Comment> findByEmail(String email);
 }

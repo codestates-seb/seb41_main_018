@@ -8,8 +8,8 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface RouteMapper {
-    Route routePostDtoToRoute(RouteDto.RoutePost routePost);
-    Route routePatchDtoToRoute(RouteDto.RoutePatch routePatch);
+    Route routePostDtoToRoute(RouteDto.RoutePost requestBody);
+    Route routePatchDtoToRoute(RouteDto.RoutePatch requestBody);
     RouteDto.RouteResponse routeToRouteResponse(Route route);
     List<RouteDto.RouteResponse> routesToRouteResponse(List<Route> routes);
 }

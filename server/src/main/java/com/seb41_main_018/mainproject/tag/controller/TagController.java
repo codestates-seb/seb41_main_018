@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
@@ -33,7 +34,7 @@ public class TagController {
 
     // 태그 단건 조회 //
     @GetMapping("/{tagId}")
-    public ResponseEntity getTag(@PathVariable("tagId") Long tagId) {
+    public ResponseEntity getTag(@PathVariable("tagId") @Positive Long tagId) {
         Tag tag = tagService.findTag(tagId);
         TagDto.TagResponse tagResponse = tagMapper.tagToTagResponse(tag);
 

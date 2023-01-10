@@ -54,7 +54,7 @@ public class Content extends Auditable {
 
     @ToString.Exclude
     @OrderBy("tagId")
-    @OneToMany(mappedBy = "content", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "content")
     private List<Tag> tags = new ArrayList<>();
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
