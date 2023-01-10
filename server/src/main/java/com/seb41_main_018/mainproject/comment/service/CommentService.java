@@ -4,32 +4,24 @@ import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
-import com.seb41_main_018.mainproject.user.entity.User;
-import com.seb41_main_018.mainproject.user.repository.UserRepository;
-import com.seb41_main_018.mainproject.user.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.Email;
 import java.util.Optional;
 
 @Service
 
 public class CommentService {
     private final CommentRepository commentRepository;
-    private final UserRepository userRepository;
 
-    public CommentService(CommentRepository commentRepository,
-                          UserRepository userRepository) {
+    public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
-        this.userRepository = userRepository;
     }
-    public Comment createComment(Comment comment) {
+    public Comment createcomment(Comment comment) {
         // 이미 등록된 이메일인지 확인
-        User user = userRepository.findByUserId(comment.getUserId());
-        comment.setUser(user);
+        verifyExistsEmail(comment.getUser().getEmail());
 
         return commentRepository.save(comment);
     }
@@ -67,9 +59,9 @@ public class CommentService {
         return findComment;
     }
 
-    /*private void verifyExistsId(Long commentId) {
-        Optional<Comment> comment = commentRepository.findById(commentId);
+    private void verifyExistsEmail(String email) {
+        Optional<Comment> comment = commentRepository.findByEmail(email);
         if (comment.isPresent())
             throw new BusinessLogicException(ExceptionCode.COMMENT_EXISTS);
-    }*/
+    }
 }
