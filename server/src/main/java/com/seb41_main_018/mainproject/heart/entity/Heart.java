@@ -1,12 +1,10 @@
-package com.seb41_main_018.mainproject.like.entity;
+package com.seb41_main_018.mainproject.heart.entity;
 
 import com.seb41_main_018.mainproject.audit.Auditable;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.user.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 
@@ -16,10 +14,11 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "Like_Table")
 @Entity
-public class Like extends Auditable {
+@Builder
+public class Heart extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long likeId;
+    private Long heartId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -29,6 +28,13 @@ public class Like extends Auditable {
     @JoinColumn(name = "content_id")
     private Content content;
 
-    @Column(nullable = false)
-    private int like_count;
+    private int heartCount;
+
+//    @Column(nullable = false)
+//    @Range(min = -1, max = 1)
+//    private int heartStatus;
+public Heart(User user, Content content) {
+    this.user = user;
+    this.content = content;
+}
 }
