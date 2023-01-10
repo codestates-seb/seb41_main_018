@@ -5,16 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 public class CategoryDto {
-    @Getter
     @AllArgsConstructor
+    @Getter
     public static class Post {
         @NotSpace(message = "카테고리 이름은 필수입니다.")
         private String name;
 
     }
 
-    @Getter
     @AllArgsConstructor
+    @Getter
     public static class Patch {
         private Long categoryId;
         @NotSpace(message = "카테고리 이름은 필수입니다.")

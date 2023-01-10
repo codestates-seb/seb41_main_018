@@ -16,8 +16,8 @@ import java.util.List;
 
 @RestController
 @Validated
-@RequestMapping("/tags")
 @RequiredArgsConstructor
+@RequestMapping("/tags")
 public class TagController {
     private final TagService tagService;
     private final TagMapper tagMapper;

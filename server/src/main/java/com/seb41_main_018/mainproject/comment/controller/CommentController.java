@@ -10,6 +10,7 @@ import com.seb41_main_018.mainproject.response.SingleResponseDto;
 import com.seb41_main_018.mainproject.user.dto.UserPatchDto;
 import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
 import com.seb41_main_018.mainproject.user.entity.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,19 +22,15 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
-@RequestMapping("/comments")
 @Validated
+@RequiredArgsConstructor
+@RequestMapping("/comments")
 public class CommentController {
     private final CommentService commentService;
     private final CommentMapper commentMapper;
     private final CommentRepository commentRepository;
 
-    public CommentController(CommentService commentService, CommentMapper commentMapper, CommentRepository commentRepository) {
-        this.commentService = commentService;
-        this.commentMapper = commentMapper;
-        this.commentRepository = commentRepository;
-    }
-
+    // 코멘트 생성 //
     @PostMapping("/{contentId}")
     public ResponseEntity postComment(@Valid @RequestBody CommentDto.Post requestBody,  @PathVariable("contentId") @Positive Long contentId
     ){
@@ -43,6 +40,7 @@ public class CommentController {
         return new ResponseEntity(commentResponseDto, HttpStatus.CREATED);
     }
 
+    // 코멘트 수정 //
     @PatchMapping("/{commentId}")
     public ResponseEntity patchComment(@Valid @RequestBody CommentDto.Patch requestBody, @PathVariable("commentId") @Positive Long commentId)
     {
@@ -52,6 +50,7 @@ public class CommentController {
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
+    // 코멘트 조회 //
     @GetMapping("/{commentId}/Info")
     public ResponseEntity getComment(@PathVariable("commentId") @Positive Long commentId)
     {
@@ -63,6 +62,7 @@ public class CommentController {
 //        );
     }
 
+    // 코멘트 전체 조회 //
     @GetMapping
     public ResponseEntity getComments(@Positive @RequestParam int page,
                                       @Positive @RequestParam int size) {
@@ -75,6 +75,7 @@ public class CommentController {
                 HttpStatus.OK);
     }
 
+    // 코멘트 삭제 //
     @DeleteMapping("/{commentId}")
     public ResponseEntity deleteComment(@PathVariable("commentId") @Positive Long commentId) {
         commentService.deleteComment(commentId);

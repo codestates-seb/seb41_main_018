@@ -6,8 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 
 public class CommentDto {
-    @Getter
     @AllArgsConstructor
+    @Getter
     public static class Post {
         private long userId;
         private long contentId;
@@ -16,8 +16,8 @@ public class CommentDto {
 
     }
 
-    @Getter
     @AllArgsConstructor
+    @Getter
     public static class Patch {
         private long commentId;
         private long userId;

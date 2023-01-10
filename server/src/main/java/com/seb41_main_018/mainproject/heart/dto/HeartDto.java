@@ -7,9 +7,9 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
 public class HeartDto {
+    @AllArgsConstructor
     @Getter
     @Setter
-    @AllArgsConstructor
     @Builder
     static public class Response {
         private Long heartId;
