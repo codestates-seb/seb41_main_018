@@ -17,7 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "USERS")
 @Entity
 public class User extends Auditable {
     @Id
@@ -34,11 +33,11 @@ public class User extends Auditable {
     @Column(columnDefinition = "TEXT")
     private Boolean email_subscribe;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private UserStatus userStatus;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private LoginType loginType;
 
