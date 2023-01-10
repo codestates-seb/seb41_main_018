@@ -59,7 +59,7 @@ public class ContentController {
     public ResponseEntity patchContent(@RequestBody ContentDto.ContentPatch requestBody,
                                        @PathVariable("contentId") Long contentId) {
         Content content = contentService.updateContent(
-                requestBody.getContentId(),
+                contentId,
                 contentMapper.contentPatchDtoToContent(requestBody));
 
         ContentDto.ContentResponse contentResponse = contentMapper.contentToContentResponse(content);
