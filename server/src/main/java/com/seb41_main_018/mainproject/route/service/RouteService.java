@@ -1,5 +1,7 @@
 package com.seb41_main_018.mainproject.route.service;
 
+import com.seb41_main_018.mainproject.exception.BusinessLogicException;
+import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.route.entity.Route;
 import com.seb41_main_018.mainproject.route.repository.RouteRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,8 +52,8 @@ public class RouteService {
     // 경로 검증 로직 //
     public Route findVerifiedRoute(Long routeId) {
         Optional<Route> optionalRoute = routeRepository.findById(routeId);
-        Route findRoute =
-                optionalRoute.orElseThrow(NullPointerException::new);
+        Route findRoute = optionalRoute.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.ROUTE_NOT_FOUND));
 
         return findRoute;
     }

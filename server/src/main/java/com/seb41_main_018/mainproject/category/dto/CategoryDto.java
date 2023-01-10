@@ -16,10 +16,10 @@ public class CategoryDto {
     @Getter
     @AllArgsConstructor
     public static class Patch {
-        private long categoryId;
+        private Long categoryId;
         @NotSpace(message = "카테고리 이름은 필수입니다.")
         private String name;
-        public void setCategoryId(long categoryId) {
+        public void setCategoryId(Long categoryId) {
             this.categoryId = categoryId;
         }
     }
@@ -27,7 +27,7 @@ public class CategoryDto {
     @AllArgsConstructor
     @Getter
     public static class Response {
-        private long categoryId;
+        private Long categoryId;
         private String name;
     }
 }

@@ -25,7 +25,6 @@ public class RouteDto {
     @Getter
     public static class RouteResponse {
         private Long routeId;
-        @NotBlank
         private String name;
     }
 }
