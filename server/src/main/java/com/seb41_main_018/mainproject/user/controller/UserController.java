@@ -50,16 +50,16 @@ public class UserController {
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
-    // 유저 상세 정보 조회 //
-    @GetMapping("/{userId}/Info")
-    public ResponseEntity getUser(@PathVariable("userId") @Positive Long userId) {
-        User user = userService.findUser(userId);
-        return null;
-//        UserAllResponseDto userAllResponseDto = userMapper.InfoResponse(member, questionRepository, answerRepository);
-//        return new ResponseEntity<>(
-//                new SingleResponseDto<>(userAllResponseDto), HttpStatus.OK
-//        );
-    }
+//    // 유저 상세 정보 조회 //
+//    @GetMapping("/{userId}/Info")
+//    public ResponseEntity getUser(@PathVariable("userId") @Positive Long userId) {
+//        User user = userService.findUser(userId);
+//        return null;
+////        UserAllResponseDto userAllResponseDto = userMapper.InfoResponse(member, questionRepository, answerRepository);
+////        return new ResponseEntity<>(
+////                new SingleResponseDto<>(userAllResponseDto), HttpStatus.OK
+////        );
+//    }
     // 유저 삭제 //
     @DeleteMapping("/{userId}")
     public ResponseEntity deleteUser(@PathVariable("userId") @Positive Long userId){
