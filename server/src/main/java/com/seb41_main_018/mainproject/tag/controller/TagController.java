@@ -59,7 +59,7 @@ public class TagController {
     public ResponseEntity patchTag(@RequestBody TagDto.TagPatch requestBody,
                                    @PathVariable("tagId") Long tagId) {
         Tag tag = tagService.updateTag(
-                requestBody.getTagId(),
+                tagId,
                 tagMapper.tagPatchDtoToTag(requestBody));
 
         TagDto.TagResponse tagResponse = tagMapper.tagToTagResponse(tag);
