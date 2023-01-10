@@ -72,8 +72,8 @@ public class Content extends Auditable {
     }
 
     // 연관관계 메소드 //
-    public void addLike(Like like) {
-        likes.add(like);
+    public void addHeart(Heart heart) {
+        hearts.add(heart);
     }
 
     public void addComment(Comment comment) {

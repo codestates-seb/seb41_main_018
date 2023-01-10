@@ -30,9 +30,6 @@ public class Heart extends Auditable {
 
     private int heartCount;
 
-//    @Column(nullable = false)
-//    @Range(min = -1, max = 1)
-//    private int heartStatus;
 public Heart(User user, Content content) {
     this.user = user;
     this.content = content;

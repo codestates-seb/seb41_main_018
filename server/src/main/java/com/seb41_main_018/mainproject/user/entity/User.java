@@ -1,7 +1,11 @@
 package com.seb41_main_018.mainproject.user.entity;
 
 import com.seb41_main_018.mainproject.audit.Auditable;
-import com.seb41_main_018.mainproject.like.entity.Like;
+import com.seb41_main_018.mainproject.constant.LoginType;
+import com.seb41_main_018.mainproject.constant.UserStatus;
+import com.seb41_main_018.mainproject.content.entity.Content;
+import com.seb41_main_018.mainproject.comment.entity.Comment;
+import com.seb41_main_018.mainproject.heart.entity.Heart;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,7 +41,6 @@ public class User extends Auditable {
     @Enumerated(value = EnumType.STRING)
     private LoginType loginType;
 
-    /*
     //유저가 삭제되면, 작성 글과 좋아요도 삭제됨
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Content> contents = new ArrayList<>();

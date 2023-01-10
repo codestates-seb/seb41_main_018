@@ -8,6 +8,7 @@ import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
 import com.seb41_main_018.mainproject.user.mapper.UserMapper;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
 import com.seb41_main_018.mainproject.user.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,8 +19,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 @RestController
-@RequestMapping("/users")
 @Validated
+@RequiredArgsConstructor
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
@@ -27,21 +29,17 @@ public class UserController {
 
     //private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserController(UserService userService, UserMapper userMapper, UserRepository userRepository) {
-        this.userService = userService;
-        this.userMapper = userMapper;
-        this.userRepository = userRepository;
-    }
 
-
-    @PostMapping //유저 생성
+    // 유저 생성 //
+    @PostMapping
     public ResponseEntity postUser(@Valid @RequestBody UserPostDto userPostDto ){
         User user = userService.createUser(userMapper.userPostDtoToUser(userPostDto));
         UserResponseDto userResponseDto = userMapper.userToUserResponseDto(user);
 
         return new ResponseEntity(userResponseDto, HttpStatus.CREATED);
     }
-    @PatchMapping("/{userId}") //유저 정보 수정
+    // 유저 정보 수정 //
+    @PatchMapping("/{userId}")
     public ResponseEntity patchUser(@PathVariable("userId") @Positive Long userId,
                                     @Valid @RequestBody UserPatchDto userPatchDto){
         userPatchDto.setUserId(userId);
@@ -52,7 +50,8 @@ public class UserController {
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
-    @GetMapping("/{userId}/Info") //유저 정보 조회
+    // 유저 상세 정보 조회 //
+    @GetMapping("/{userId}/Info")
     public ResponseEntity getUser(@PathVariable("userId") @Positive Long userId) {
         User user = userService.findUser(userId);
         return null;
@@ -61,7 +60,7 @@ public class UserController {
 //                new SingleResponseDto<>(userAllResponseDto), HttpStatus.OK
 //        );
     }
-
+    // 유저 삭제 //
     @DeleteMapping("/{userId}")
     public ResponseEntity deleteUser(@PathVariable("userId") @Positive Long userId){
         userService.deleteUser(userId);

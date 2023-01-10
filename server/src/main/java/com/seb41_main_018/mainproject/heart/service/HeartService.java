@@ -27,26 +27,20 @@ public class HeartService {
         Content findContent = contentService.findVerifiedContent(contentId);
         User findUser = userService.findVerifiedUser(userId);
         List<Heart> hearts = heartRepository.findAllByUserAndContent(findUser, findContent);
+
         if(hearts.isEmpty()) { //좋아요 목록이 없을 경우
             Heart createdHeart = createHeart(findUser, findContent);
             heartRepository.save(createdHeart);
-            return HeartDto.Response.builder()
-                    .userId(userId)
-                    .heartCount(heartRepository
-                            .findAllByContent(findContent)
-                            .size())
-                    .contentId(contentId)
-                    .build();
         } else {
             heartRepository.deleteAll(hearts);
-            return HeartDto.Response.builder()
-                    .userId(userId)
-                    .heartCount(heartRepository
-                            .findAllByContent(findContent)
-                            .size())
-                    .contentId(contentId)
-                    .build();
         }
+        return HeartDto.Response.builder()
+                .userId(userId)
+                .heartCount(heartRepository
+                        .findAllByContent(findContent)
+                        .size())
+                .contentId(contentId)
+                .build();
     }
         private Heart createHeart(User user, Content content){
             return Heart.builder()
