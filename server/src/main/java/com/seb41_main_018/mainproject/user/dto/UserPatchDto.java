@@ -18,6 +18,5 @@ public class UserPatchDto {
 
     @NotBlank
     private String nickname;
-    @NotBlank
     private Boolean email_subscribe;
 }

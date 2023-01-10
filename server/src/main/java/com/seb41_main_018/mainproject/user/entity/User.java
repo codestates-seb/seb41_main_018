@@ -34,11 +34,11 @@ public class User extends Auditable {
     @Column(columnDefinition = "TEXT")
     private Boolean email_subscribe;
 
-    @Column(nullable = false)
+    @Column
     @Enumerated(value = EnumType.STRING)
     private UserStatus userStatus;
 
-    @Column(nullable = false)
+    @Column
     @Enumerated(value = EnumType.STRING)
     private LoginType loginType;
 
