@@ -32,7 +32,7 @@ public class Content extends Auditable {
     @Column(nullable = false)
     private String body;
 
-    @Column(nullable = false)
+    @Column
     private Long viewCount;
 
 

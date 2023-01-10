@@ -1,5 +1,7 @@
 package com.seb41_main_018.mainproject.user.controller;
 
+import com.seb41_main_018.mainproject.content.dto.ContentDto;
+import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
 import com.seb41_main_018.mainproject.user.dto.UserAllResponseDto;
 import com.seb41_main_018.mainproject.user.dto.UserPatchDto;
@@ -45,6 +47,15 @@ public class UserController {
         userPatchDto.setUserId(userId);
 
         User user = userService.updateUser(userMapper.userPatchDtoToUser(userPatchDto));
+        UserResponseDto userResponseDto = userMapper.userToUserResponseDto(user);
+
+        return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
+    }
+
+    // 유저 단건 조회 //
+    @GetMapping("/{userId}")
+    public ResponseEntity getUser(@PathVariable("userId") Long userId) {
+        User user = userService.findUser(userId);
         UserResponseDto userResponseDto = userMapper.userToUserResponseDto(user);
 
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
