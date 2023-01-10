@@ -31,8 +31,8 @@ public class UserService {
     public User updateUser(User user) {
         User findUser = findVerifiedUser(user.getUserId()); //ID로 멤버 존재 확인하고 User 정보 반환
 
-        Optional.ofNullable(user.getNinkname())
-                .ifPresent(nickname -> findUser.setNinkname(nickname));
+        Optional.ofNullable(user.getNickname())
+                .ifPresent(nickname -> findUser.setNickname(nickname));
         //Optional.ofNullable(user.getPassword())
                 //.ifPresent(password -> findUser.setPassword(bCryptPasswordEncoder.encode(password)));
 
