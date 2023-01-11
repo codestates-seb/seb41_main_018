@@ -39,11 +39,14 @@ public class CommentService {
         return commentRepository.save(comment);
     }
     // 코멘트 수정
-    public Comment updateComment(Comment comment) {
-        Comment findComment = findVerifiedComment(comment.getCommentId()); //ID로 멤버 존재 확인하고 comment 정보 반환
+    public Comment updateComment(
+            Comment comment,
+            Long commentId) {
+
+        Comment findComment = findVerifiedComment(commentId); //ID로 멤버 존재 확인하고 comment 정보 반환
 
         Optional.ofNullable(comment.getBody())
-                .ifPresent(body -> findComment.setBody(body));
+                .ifPresent(findComment::setBody);
 
         return commentRepository.save(findComment);
     }

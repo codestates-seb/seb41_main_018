@@ -25,7 +25,7 @@ public class CommentController {
     private final CommentMapper commentMapper;
 
     // 코멘트 생성 //
-    @PostMapping("/{contentId}")
+    @PostMapping
     public ResponseEntity postComment(@Valid @RequestBody CommentDto.Post requestBody
     ){
         Comment comment = commentService.createComment(
@@ -40,9 +40,14 @@ public class CommentController {
 
     // 코멘트 수정 //
     @PatchMapping("/{commentId}")
-    public ResponseEntity patchComment(@Valid @RequestBody CommentDto.Patch requestBody, @PathVariable("commentId") @Positive Long commentId)
+    public ResponseEntity patchComment(@Valid @RequestBody CommentDto.Patch requestBody,
+                                       @PathVariable("commentId") @Positive Long commentId)
     {
-        Comment comment = commentService.updateComment(commentMapper.commentPatchDtoToComment(requestBody));
+        Comment comment = commentService.updateComment(
+                commentMapper.commentPatchDtoToComment(requestBody),
+                commentId);
+
+        comment.setCommentId(commentId);
         CommentDto.Response userResponseDto = commentMapper.commentToCommentResponseDto(comment);
 
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
