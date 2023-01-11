@@ -25,32 +25,46 @@ public class RoutePlaceController {
     private final RoutePlaceService routePlaceService;
     private final RoutePlaceMapper routePlaceMapper;
 
+    // 상세 경로 생성 //
+    @PostMapping
+    public ResponseEntity postroutePlace(@Valid @RequestBody RoutePlaceDto.Post requestBody) {
+        RoutePlace routePlace = routePlaceService.createRoutePlace(
+                routePlaceMapper.routePlacePostDtoToRoutePlace(requestBody),
+                requestBody.getRouteId());
 
-    @PostMapping("/{adimright}")
-    public ResponseEntity postroutePlace(@Valid @RequestBody RoutePlaceDto.Post requestBody, @PathVariable("adimright") @Positive Long placeId
-    ){
-        RoutePlace routePlace = routePlaceService.createRoutePlace(routePlaceMapper.routePlacePostDtoToRoutePlace(requestBody));
-        RoutePlaceDto.Response routePlaceResponseDto = routePlaceMapper.routePlaceToRoutePlaceResponseDto(routePlace);
+        RoutePlaceDto.Response routePlaceResponseDto =
+                routePlaceMapper.routePlaceToRoutePlaceResponseDto(routePlace);
 
         return new ResponseEntity(routePlaceResponseDto, HttpStatus.CREATED);
     }
 
+    // 상세 경로 수정 //
     @PatchMapping("/{placeId}")
     public ResponseEntity patchRoutePlace(@Valid @RequestBody RoutePlaceDto.Patch requestBody,
-                                        @PathVariable("placeId") @Positive Long placeId)
+                                          @PathVariable("placeId") @Positive Long placeId)
     {
-        RoutePlace routePlace = routePlaceService.updateRoutePlace(placeId,routePlaceMapper.routePlacePatchDtoToRoutePlace(requestBody));
-        RoutePlaceDto.Response routePlaceResponseDto = routePlaceMapper.routePlaceToRoutePlaceResponseDto(routePlace);
+        RoutePlace routePlace = routePlaceService.updateRoutePlace(
+                placeId,
+                routePlaceMapper.routePlacePatchDtoToRoutePlace(requestBody));
+
+        routePlace.setPlaceId(placeId);
+        RoutePlaceDto.Response routePlaceResponseDto =
+                routePlaceMapper.routePlaceToRoutePlaceResponseDto(routePlace);
 
         return new ResponseEntity<>(routePlaceResponseDto, HttpStatus.OK);
     }
 
+    // 상세 경로 단건 조회 //
     @GetMapping("/{placeId}")
     public ResponseEntity getroutePlace(@PathVariable("placeId") Long placeId) {
         RoutePlace routePlace = routePlaceService.findRoutePlace(placeId);
-        return null;
+        RoutePlaceDto.Response routePlaceResponse =
+                routePlaceMapper.routePlaceToRoutePlaceResponseDto(routePlace);
+
+        return new ResponseEntity<>(routePlaceResponse, HttpStatus.OK);
     }
 
+    // 상세 경로 전체 조회 //
     @GetMapping
     public ResponseEntity getCategories(@Positive @RequestParam int page,
                                         @Positive @RequestParam int size) {
@@ -63,7 +77,8 @@ public class RoutePlaceController {
                 HttpStatus.OK);
     }
 
-    @DeleteMapping("/{routePlaceId}")
+    // 상세 경로 삭제 //
+    @DeleteMapping("/{placeId}")
     public ResponseEntity deleteRoutePlace(@PathVariable("placeId") @Positive Long placeId) {
 
         routePlaceService.deleteRoutePlace(placeId);
