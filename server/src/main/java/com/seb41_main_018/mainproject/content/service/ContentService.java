@@ -6,6 +6,7 @@ import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
+import com.seb41_main_018.mainproject.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,9 +20,13 @@ import java.util.Optional;
 public class ContentService {
     private final UserRepository userRepository;
     private final ContentRepository contentRepository;
+    private final UserService userService;
 
     // 게시글 생성 //
-    public Content createContent(Content content) {
+    public Content createContent(Content content, Long userId) {
+        User user = userService.findVerifiedUser(userId);
+        content.setUser(user);
+
         return contentRepository.save(content);
     }
 

@@ -25,7 +25,7 @@ public class ContentController {
     // 게시글 생성 //
     @PostMapping
     public ResponseEntity postContent(@RequestBody ContentDto.ContentPost requestBody) {
-        Content content = contentService.createContent(contentMapper.contentPostDtoToContent(requestBody));
+        Content content = contentService.createContent(contentMapper.contentPostDtoToContent(requestBody), requestBody.getUserId());
         ContentDto.ContentResponse contentResponse = contentMapper.contentToContentResponse(content);
 
         return new ResponseEntity<>(contentResponse, HttpStatus.CREATED);
