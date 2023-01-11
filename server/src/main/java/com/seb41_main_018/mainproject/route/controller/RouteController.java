@@ -26,7 +26,7 @@ public class RouteController {
     // 경로 생성 //
     @PostMapping
     public ResponseEntity postRoute(@RequestBody RouteDto.RoutePost requestBody){
-        Route route = routeService.createRoute(routeMapper.routePostDtoToRoute(requestBody));
+        Route route = routeService.createRoute(routeMapper.routePostDtoToRoute(requestBody), requestBody.getContentId());
         RouteDto.RouteResponse routeResponse = routeMapper.routeToRouteResponse(route);
 
         return new ResponseEntity<>(routeResponse, HttpStatus.CREATED);
