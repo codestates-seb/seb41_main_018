@@ -3,13 +3,8 @@ package com.seb41_main_018.mainproject.comment.controller;
 import com.seb41_main_018.mainproject.comment.dto.CommentDto;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.mapper.CommentMapper;
-import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
 import com.seb41_main_018.mainproject.comment.service.CommentService;
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
-import com.seb41_main_018.mainproject.response.SingleResponseDto;
-import com.seb41_main_018.mainproject.user.dto.UserPatchDto;
-import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
-import com.seb41_main_018.mainproject.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -31,9 +26,13 @@ public class CommentController {
 
     // 코멘트 생성 //
     @PostMapping("/{contentId}")
-    public ResponseEntity postComment(@Valid @RequestBody CommentDto.Post requestBody,  @PathVariable("contentId") @Positive Long contentId
+    public ResponseEntity postComment(@Valid @RequestBody CommentDto.Post requestBody
     ){
-        Comment comment = commentService.createComment(commentMapper.commentPostDtoToComment(requestBody));
+        Comment comment = commentService.createComment(
+                commentMapper.commentPostDtoToComment(requestBody),
+                requestBody.getUserId(),
+                requestBody.getContentId()
+        );
         CommentDto.Response commentResponseDto = commentMapper.commentToCommentResponseDto(comment);
 
         return new ResponseEntity(commentResponseDto, HttpStatus.CREATED);

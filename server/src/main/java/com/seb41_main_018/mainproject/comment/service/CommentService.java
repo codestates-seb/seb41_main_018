@@ -2,34 +2,39 @@ package com.seb41_main_018.mainproject.comment.service;
 
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
+import com.seb41_main_018.mainproject.content.entity.Content;
+import com.seb41_main_018.mainproject.content.service.ContentService;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
-import com.seb41_main_018.mainproject.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.Email;
 import java.util.Optional;
 
 @Service
-
+@RequiredArgsConstructor
+@Transactional
 public class CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
+    private final ContentService contentService;
 
-    public CommentService(CommentRepository commentRepository,
-                          UserRepository userRepository) {
-        this.commentRepository = commentRepository;
-        this.userRepository = userRepository;
-    }
-    public Comment createComment(Comment comment) {
+    public Comment createComment(
+            Comment comment,
+            Long userId,
+            Long contentId) {
         // 이미 등록된 이메일인지 확인
-        User user = userRepository.findByUserId(comment.getUserId());
+        User user = userRepository.findByUserId(userId);
+        Content content = contentService.findContent(contentId);
+
         comment.setUser(user);
+        comment.setContent(content);
 
         return commentRepository.save(comment);
     }
