@@ -10,6 +10,7 @@ import Mypage from "../src/pages/Mypage";
 import Detail from "../src/pages/Detail";
 import Post from "../src/pages/Post";
 import Result from "../src/pages/Result";
+import "./App.css";
 
 const App = () => {
     return (

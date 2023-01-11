@@ -3,3 +3,12 @@
     padding: 0;
     margin: 0;
 }
+
+input:focus {
+    outline: none;
+}
+
+textarea:focus {
+    outline: none;
+}
+
