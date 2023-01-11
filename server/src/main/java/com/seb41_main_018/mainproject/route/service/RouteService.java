@@ -35,7 +35,7 @@ public class RouteService {
     public Route updateRoute(Long routeId, Route route) {
         Route findRoute = findVerifiedRoute(routeId);
 
-        Optional.ofNullable(findRoute.getName())
+        Optional.ofNullable(route.getName())
                 .ifPresent(findRoute::setName);
 
         return routeRepository.save(findRoute);
