@@ -1,5 +1,7 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ScrollToTop from "../src/util/ScrollToTop";
+import './App.css';
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom' 
+import ScrollToTop from './util/ScrollToTop'
 import Header from "./components/Header";
 import Home from "../src/pages/Home";
 import Login from "../src/pages/Login";
@@ -27,5 +29,7 @@ const App = () => {
         </BrowserRouter>
     );
 };
+
+
 
 export default App;
