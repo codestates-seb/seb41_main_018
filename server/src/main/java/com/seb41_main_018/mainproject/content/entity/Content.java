@@ -7,10 +7,8 @@ import com.seb41_main_018.mainproject.route.entity.Route;
 import com.seb41_main_018.mainproject.tag.entity.Tag;
 import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.category.entity.Category;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class Content extends Auditable {
     private String body;
 
     @Column(nullable = false)
-    private Long viewCount;
+    private int viewCount = 0;
 
 
     // 연관 관계 //
