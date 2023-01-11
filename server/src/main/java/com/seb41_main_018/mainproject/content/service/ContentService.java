@@ -34,11 +34,11 @@ public class ContentService {
     public Content updateContent(Long contentId, Content content) {
         Content findContent = findVerifiedContent(contentId);
 
-        Optional.ofNullable(findContent.getTitle())
-                .ifPresent(findContent::setTitle);
+        Optional.ofNullable(content.getTitle())
+                .ifPresent(title->findContent.setTitle(title));
 
-        Optional.ofNullable(findContent.getBody())
-                .ifPresent(findContent::setBody);
+        Optional.ofNullable(content.getBody())
+                .ifPresent(body->findContent.setBody(body));
 
         return contentRepository.save(findContent);
     }

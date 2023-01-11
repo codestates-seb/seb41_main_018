@@ -17,6 +17,7 @@ public class ContentDto {
 
     @AllArgsConstructor
     @Getter
+    @Setter
     public static class ContentPatch {
         private Long contentId;
         private Long userId;

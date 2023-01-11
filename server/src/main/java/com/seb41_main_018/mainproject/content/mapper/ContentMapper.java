@@ -10,7 +10,15 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ContentMapper {
     Content contentPostDtoToContent(ContentDto.ContentPost requestBody);
-    Content contentPatchDtoToContent(ContentDto.ContentPatch requestBody);
+    default Content contentPatchDtoToContent(ContentDto.ContentPatch requestBody){
+        Content content = new Content();
+
+        content.setContentId(requestBody.getContentId());
+
+        content.setBody(requestBody.getBody());
+        content.setTitle(requestBody.getTitle());
+        return content;
+    }
     default ContentDto.ContentResponse contentToContentResponse(Content content){
         User user = content.getUser();
 
