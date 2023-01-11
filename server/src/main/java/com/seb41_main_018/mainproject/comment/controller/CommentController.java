@@ -54,15 +54,13 @@ public class CommentController {
     }
 
     // 코멘트 조회 //
-    @GetMapping("/{commentId}/Info")
+    @GetMapping("/{commentId}")
     public ResponseEntity getComment(@PathVariable("commentId") @Positive Long commentId)
     {
         Comment comment = commentService.findComment(commentId);
-        return null;
-//        CommentDto commentDto = commentMapper.InfoResponse(user, contentRepository, commentRepository);
-//        return new ResponseEntity<>(
-//                new SingleResponseDto<>(commentDto), HttpStatus.OK
-//        );
+        CommentDto.Response commentResponse = commentMapper.commentToCommentResponseDto(comment);
+
+        return new ResponseEntity<>(commentResponse, HttpStatus.OK);
     }
 
     // 코멘트 전체 조회 //
