@@ -32,8 +32,7 @@ public class Content extends Auditable {
 
     @Column(nullable = false)
     private int viewCount = 0;
-
-
+ 
     // 연관 관계 //
     @ToString.Exclude
     @OrderBy("heartId")
