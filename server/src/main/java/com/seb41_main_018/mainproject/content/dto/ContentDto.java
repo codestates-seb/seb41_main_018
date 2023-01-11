@@ -28,6 +28,7 @@ public class ContentDto {
 
     @AllArgsConstructor
     @Getter
+    @Builder
     public static class ContentResponse {
         private Long contentId;
         private Long userId;

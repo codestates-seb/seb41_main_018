@@ -22,7 +22,7 @@ import java.util.List;
 public class User extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "USER_ID")
     private Long userId;
     @Column(nullable = false)
     private String email;
