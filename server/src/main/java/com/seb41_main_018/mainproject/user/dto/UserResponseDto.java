@@ -1,5 +1,6 @@
 package com.seb41_main_018.mainproject.user.dto;
 
+import com.seb41_main_018.mainproject.constant.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +16,5 @@ public class UserResponseDto {
     private String nickname;
     private String password;
     private Boolean email_subscribe;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private UserStatus userStatus;
 }

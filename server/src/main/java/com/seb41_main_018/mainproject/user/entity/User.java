@@ -36,11 +36,11 @@ public class User extends Auditable {
 
     @Column
     @Enumerated(value = EnumType.STRING)
-    private UserStatus userStatus;
+    private UserStatus userStatus = UserStatus.ACTIVITY;
 
     @Column
     @Enumerated(value = EnumType.STRING)
-    private LoginType loginType;
+    private LoginType loginType = LoginType.BASIC;
 
     //유저가 삭제되면, 작성 글과 좋아요도 삭제됨
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
@@ -68,6 +68,6 @@ public class User extends Auditable {
         this.password = password;
         this.nickname = nickname;
         this.email_subscribe = email_subscribe;
-        this.userStatus = UserStatus.ACTIVITY;
     }
+
 }

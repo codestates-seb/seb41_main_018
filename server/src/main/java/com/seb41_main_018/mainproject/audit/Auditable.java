@@ -34,4 +34,5 @@ public abstract class Auditable {
 
     @LastModifiedBy // 데이터 수정자 자동 저장 어노테이션
     private String modifiedBy;
+
 }
