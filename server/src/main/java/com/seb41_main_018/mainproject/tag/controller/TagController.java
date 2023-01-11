@@ -26,7 +26,7 @@ public class TagController {
     // 태그 생성 //
     @PostMapping
     public ResponseEntity postTag(@RequestBody TagDto.TagPost requestBody) {
-        Tag tag = tagService.createTag(tagMapper.tagPostDtoToTag(requestBody));
+        Tag tag = tagService.createTag(tagMapper.tagPostDtoToTag(requestBody), requestBody.getContentId());
         TagDto.TagResponse tagResponse = tagMapper.tagToTagResponse(tag);
 
         return new ResponseEntity<>(tagResponse, HttpStatus.CREATED);
@@ -63,6 +63,7 @@ public class TagController {
                 tagId,
                 tagMapper.tagPatchDtoToTag(requestBody));
 
+        tag.setTagId(tagId);
         TagDto.TagResponse tagResponse = tagMapper.tagToTagResponse(tag);
 
         return new ResponseEntity<>(tagResponse, HttpStatus.OK);

@@ -24,6 +24,7 @@ public class TagDto {
 
     @AllArgsConstructor
     @Getter
+    @Builder
     public static class TagResponse {
         private Long tagId;
         private Long contentId;
