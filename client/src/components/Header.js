@@ -1,45 +1,39 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
+import { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import logo3 from "../assets/logo3.png";
 import { css } from "@emotion/react";
+import { PALETTE } from "../Common.js";
+import logo3 from "../assets/logo3.png";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import SignButton from "./SignButton";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState, useEffect, useRef } from "react";
 
 const Header = () => {
-    const [islogin, setislogin] = useState(true);
+    const [islogin, setislogin] = useState(false);
     const [isclick, setisclick] = useState(false);
-    const [isMenuClick, setMenuclick] = useState(false);
+    const [ismenuclick, setmenuclick] = useState(false);
     const [isaccountclick, setaccountclick] = useState(false);
-    const menuclick = () => {
-        setMenuclick(!isMenuClick);
+    const [isvalue, setisvalue] = useState("");
+    const [keyword, setkeyword] = useState("");
+    const menuRef = useRef();
+    const AccountRef = useRef();
+    const location = useLocation();
+    const menuClick = () => {
+        setmenuclick(!ismenuclick);
     };
-    // 768px에서 메뉴 버튼 클릭시 좌측에 창이 열리는데, 외부클릭시 닫게 하는 코드
-    const ref = useRef();
-    const handleClickOutSide = (e) => {
-        console.log(ref.current.contains(e.target));
-        if (isMenuClick && !ref.current.contains(e.target)) {
-            setMenuclick(false);
-        }
-    };
-    useEffect(() => {
-        if (isMenuClick) document.addEventListener("mousedown", handleClickOutSide);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutSide);
-        };
-    });
 
-    const handleisclick = () => {
+    const handleClick = () => {
         setisclick(!isclick);
         console.log(isclick);
     };
 
-    const handleclose = () => {
+    const handleClose = () => {
         setisclick(false);
     };
 
@@ -47,42 +41,52 @@ const Header = () => {
         setaccountclick(!isaccountclick);
     };
 
+    const getInputText = (e) => {
+        setkeyword(e.target.value);
+        console.log(keyword);
+    };
+
+    const searchIconClick = () => {
+        console.log(keyword);
+    };
+
+    // 768px에서 메뉴 버튼 클릭시 좌측에 창이 열리는데, 외부클릭시 닫게 하는 코드
+    const handleClickOutSide = (e) => {
+        console.log(menuRef.current.contains(e.target));
+        if (ismenuclick && !menuRef.current.contains(e.target)) {
+            setmenuclick(false);
+        }
+    };
+    useEffect(() => {
+        if (ismenuclick) document.addEventListener("mousedown", handleClickOutSide);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutSide);
+        };
+    });
+
+    const handleClickOutSide2 = (e) => {
+        console.log(AccountRef.current.contains(e.target));
+        if (isaccountclick && !AccountRef.current.contains(e.target)) {
+            setaccountclick(false);
+        }
+    };
+    useEffect(() => {
+        if (isaccountclick) document.addEventListener("mousedown", handleClickOutSide2);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutSide2);
+        };
+    });
+
+    if (window.location.pathname === "/login") return null;
+    if (window.location.pathname === "/signup") return null;
+
     return (
-        <div
-            css={css`
-                display: flex;
-                width: 100vw;
-                justify-content: space-between;
-                align-items: center;
-                margin-top: 20px;
-                padding-bottom: 20px;
-                border-bottom: 1px solid rgb(0, 0, 0, 0.1);
-                @media (max-width: 768px) {
-                    justify-content: space-between;
-                }
-            `}
-        >
-            <div
-                css={css`
-                    display: none;
-                    @media (max-width: 768px) {
-                        display: block;
-                    }
-                `}
-            >
-                <MenuIcon onClick={menuclick} css={menuicon} />
-                {isMenuClick ? (
-                    <div
-                        css={css`
-                            position: absolute;
-                            top: 0px;
-                            left: 0px;
-                            width: 100vw;
-                            height: 100vw;
-                            background-color: rgb(0, 0, 0, 0.3);
-                        `}
-                    >
-                        <div css={menubox} ref={ref}>
+        <div css={wrap}>
+            <div css={container}>
+                <MenuIcon onClick={menuClick} css={menuicon} />
+                {ismenuclick ? (
+                    <div css={menuClickBackground}>
+                        <div css={menubox} ref={menuRef}>
                             <img
                                 src={logo3}
                                 alt="같이갈래 logo"
@@ -101,7 +105,6 @@ const Header = () => {
                             >
                                 {islogin ? (
                                     <div>
-                                        {" "}
                                         <Link to="/mypage">
                                             <SignButton text="마이페이지" width="250px" />
                                         </Link>
@@ -141,8 +144,10 @@ const Header = () => {
                     fullWidth
                     label="후기를 검색해보세요"
                     css={search}
+                    onChange={getInputText}
                 />
-                <SearchIcon css={searchIcon} onClick={handleisclick} />
+                <SearchIcon css={searchIcon} onClick={searchIconClick} />
+                <SearchIcon css={responsiveSearchIcon} onClick={handleClick} />
                 {isclick ? (
                     <div>
                         <div
@@ -159,7 +164,7 @@ const Header = () => {
                             `}
                         >
                             <CloseIcon
-                                onClick={handleclose}
+                                onClick={handleClose}
                                 css={css`
                                     width: 30px;
                                     height: 30px;
@@ -184,24 +189,26 @@ const Header = () => {
             </div>
             {islogin ? (
                 <div css={divAccount}>
+                    <NotificationsActiveIcon css={notification} />
                     <AccountCircleIcon css={Account} onClick={handleAccountClick} />
                     {isaccountclick ? (
-                        <div
-                            css={css`
-                                position: absolute;
-                                margin-top: 40px;
-                            `}
-                        >
+                        <div css={dropMenu} ref={AccountRef}>
                             <ul
                                 css={css`
                                     list-style: none;
                                     padding: 0;
                                 `}
                             >
-                                <Link to="/mypage">
-                                    <li css={dropmenu}>마이페이지</li>
+                                <Link
+                                    to="/mypage"
+                                    css={css`
+                                        text-decoration-line: none;
+                                        color: black;
+                                    `}
+                                >
+                                    <li css={topDropMenu}>마이페이지</li>
                                 </Link>
-                                <li css={dropmenu}>로그아웃</li>
+                                <li css={bottomDropMenu}>로그아웃</li>
                             </ul>
                         </div>
                     ) : (
@@ -211,10 +218,10 @@ const Header = () => {
             ) : (
                 <div css={divAccount}>
                     <Link to="/login">
-                        <SignButton text="로그인" width="100px" />
+                        <SignButton text="로그인" width="100px" height="50px" />
                     </Link>
                     <Link to="/signup">
-                        <SignButton text="회원가입" width="100px" />
+                        <SignButton text="회원가입" width="100px" height="50px" />
                     </Link>
                 </div>
             )}
@@ -222,8 +229,35 @@ const Header = () => {
     );
 };
 
-export default Header;
+const wrap = css`
+    display: flex;
+    width: 100vw;
+    height: 70px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.1);
+    @media (max-width: 768px) {
+        justify-content: space-between;
+    }
+`;
 
+const container = css`
+    display: none;
+    @media (max-width: 768px) {
+        display: block;
+    }
+`;
+
+const menuClickBackground = css`
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vw;
+    background-color: rgb(0, 0, 0, 0.3);
+`;
 const logostyle = css`
     width: 220px;
     height: 70px;
@@ -237,9 +271,11 @@ const logostyle = css`
 const search = css`
     display: flex;
     width: 400px;
+
     .MuiInputBase-root {
+        height: 50px;
         border-radius: 50px;
-        box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.3);
+        box-shadow: 1px 1px 10px 2px rgba(60, 60, 60, 0.2);
     }
     @media (max-width: 1080px) {
         width: 300px;
@@ -251,12 +287,12 @@ const search = css`
 
 const searchIcon = css`
     position: relative;
-    width: 20px;
-    height: 20px;
+    width: 34px;
+    height: 34px;
     border: solid 10px #055e8e;
     background-color: #055e8e;
     border-radius: 50px;
-    margin-left: -49px;
+    margin-left: -45px;
     margin-top: 8px;
     color: white;
     &:hover {
@@ -265,6 +301,29 @@ const searchIcon = css`
         cursor: pointer;
     }
     @media (max-width: 768px) {
+        display: none;
+        margin: 0 20px 0 0;
+    }
+`;
+
+const responsiveSearchIcon = css`
+    display: none;
+    position: relative;
+    width: 34px;
+    height: 34px;
+    border: solid 10px #055e8e;
+    background-color: #055e8e;
+    border-radius: 50px;
+    margin-left: -45px;
+    margin-top: 10px;
+    color: white;
+    &:hover {
+        background-color: #003f62;
+        border: solid 10px #003f62;
+        cursor: pointer;
+    }
+    @media (max-width: 768px) {
+        display: block;
         margin: 0 20px 0 0;
     }
 `;
@@ -283,9 +342,21 @@ const divAccount = css`
 `;
 
 const Account = css`
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
+    margin: 0 10px;
     color: #055e8e;
+    &:hover {
+        color: #003f62;
+        cursor: pointer;
+    }
+`;
+
+const notification = css`
+    width: 40px;
+    height: 40px;
+    color: #055e8e;
+    margin: 0 10px;
     &:hover {
         color: #003f62;
         cursor: pointer;
@@ -314,13 +385,38 @@ const menubox = css`
     background-color: white;
 `;
 
-const dropmenu = css`
-    width: 150px;
-    height: 40px;
-    border: solid black 1px;
-    /* background-color: white; */
-    display: flex;
-    margin-top: -1px; //이래도 되는지?
-    justify-content: center;
-    align-items: center;
+const dropMenu = css`
+    position: absolute;
+    margin-top: 50px;
+    right: 100px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: ${PALETTE.box_shaodw};
+    border-radius: ${PALETTE.border_radius};
+    li {
+        width: 150px;
+        height: 40px;
+        display: flex;
+        margin-top: -1px; //이래도 되는지?
+        justify-content: center;
+        align-items: center;
+        &:hover {
+            cursor: pointer;
+            background-color: ${PALETTE.ligth_gray};
+        }
+    }
 `;
+
+const topDropMenu = css`
+    border: solid ${PALETTE.ligth_gray} 1px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+`;
+
+const bottomDropMenu = css`
+    border: solid ${PALETTE.ligth_gray} 1px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+`;
+
+export default Header;
