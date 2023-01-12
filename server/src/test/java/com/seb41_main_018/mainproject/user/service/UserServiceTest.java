@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
@@ -30,14 +31,24 @@ public class UserServiceTest {
     @DisplayName("User Service 검증 로직 TEST")
     void verifyLogic() {
         // Given
-        User createUser = createTestUser(1L);
-        given(userRepository.findByEmail(anyString())).willReturn(Optional.of(createUser));
+        User testUser = createTestUser(1L);
+        given(userRepository.findByEmail(anyString())).willReturn(Optional.of(testUser));
+        //given(userRepository.findByUserId(anyLong())).willReturn(testUser);
+
         // When
-        Throwable throwableByCreate = Assertions.catchThrowable(() -> userService.createUser(createUser));
+        Throwable throwableByCreate = Assertions.catchThrowable(() -> userService.createUser(testUser));
+        Throwable throwableByFind = Assertions.catchThrowable(() -> userService.findUser(testUser.getUserId()));
+        Throwable throwableByDelete = Assertions.catchThrowable(() -> userService.deleteUser(testUser.getUserId()));
         // Then
         assertThat(throwableByCreate)
                 .isInstanceOf(BusinessLogicException.class)
                 .hasMessageContaining(ExceptionCode.USER_EXISTS.getMessage());
+        assertThat(throwableByFind)
+                .isInstanceOf(BusinessLogicException.class)
+                .hasMessageContaining(ExceptionCode.USER_NOT_FOUND.getMessage());
+        assertThat(throwableByDelete)
+                .isInstanceOf(BusinessLogicException.class)
+                .hasMessageContaining(ExceptionCode.USER_NOT_FOUND.getMessage());
     }
 
     private User createTestUser(Long userId) {
