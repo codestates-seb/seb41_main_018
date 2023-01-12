@@ -2,13 +2,9 @@ package com.seb41_main_018.mainproject.tag.controller;
 
 import com.google.gson.Gson;
 import com.seb41_main_018.mainproject.tag.dto.TagDto;
-import com.seb41_main_018.mainproject.tag.dto.tagDto;
 import com.seb41_main_018.mainproject.tag.entity.Tag;
-import com.seb41_main_018.mainproject.tag.entity.tag;
 import com.seb41_main_018.mainproject.tag.mapper.TagMapper;
-import com.seb41_main_018.mainproject.tag.mapper.tagMapper;
 import com.seb41_main_018.mainproject.tag.service.TagService;
-import com.seb41_main_018.mainproject.tag.service.tagService;
 import com.seb41_main_018.mainproject.user.entity.User;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -60,7 +56,7 @@ class TagControllerTest {
         // Stubbing by Mockito
         given(tagMapper.tagPostDtoToTag(Mockito.any(TagDto.TagPost.class))).willReturn(new Tag());
 
-        given(tagService.createTag(Mockito.any(Tag.class))).willReturn(new Tag());
+        given(tagService.createTag(Mockito.any(Tag.class),1L)).willReturn(new Tag());
 
         given(tagMapper.tagToTagResponse(Mockito.any(Tag.class))).willReturn(responseBody);
 
@@ -129,7 +125,7 @@ class TagControllerTest {
         // Stubbing by Mockito
         given(tagMapper.tagPatchDtoToTag(Mockito.any(TagDto.TagPatch.class))).willReturn(new Tag());
 
-        given(tagService.updateTag(Mockito.any(Tag.class))).willReturn(new Tag());
+        given(tagService.updateTag(1L,Mockito.any(Tag.class))).willReturn(new Tag());
 
         given(tagMapper.tagToTagResponse(Mockito.any(Tag.class))).willReturn(response);
 

@@ -2,14 +2,10 @@ package com.seb41_main_018.mainproject.route.controller;
 
 import com.google.gson.Gson;
 import com.seb41_main_018.mainproject.route.dto.RouteDto;
-import com.seb41_main_018.mainproject.route.dto.routeDto;
 import com.seb41_main_018.mainproject.route.entity.Route;
-import com.seb41_main_018.mainproject.route.entity.route;
 import com.seb41_main_018.mainproject.route.mapper.RouteMapper;
-import com.seb41_main_018.mainproject.route.mapper.routeMapper;
 import com.seb41_main_018.mainproject.route.repository.RouteRepository;
 import com.seb41_main_018.mainproject.route.service.RouteService;
-import com.seb41_main_018.mainproject.route.service.routeService;
 import com.seb41_main_018.mainproject.user.entity.User;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -26,7 +22,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -65,7 +60,7 @@ class RouteControllerTest {
         // Stubbing by Mockito
         given(routeMapper.routePostDtoToRoute(Mockito.any(RouteDto.RoutePost.class))).willReturn(new Route());
 
-        given(routeService.createRoute(Mockito.any(Route.class))).willReturn(new Route());
+        given(routeService.createRoute(Mockito.any(Route.class),1L)).willReturn(new Route());
 
         given(routeMapper.routeToRouteResponse(Mockito.any(Route.class))).willReturn(responseBody);
 
@@ -139,7 +134,7 @@ class RouteControllerTest {
         // Stubbing by Mockito
         given(routeMapper.routePatchDtoToRoute(Mockito.any(RouteDto.RoutePatch.class))).willReturn(new Route());
 
-        given(routeService.updateRoute(Mockito.any(Route.class))).willReturn(new Route());
+        given(routeService.updateRoute(1L,Mockito.any(Route.class))).willReturn(new Route());
 
         given(routeMapper.routeToRouteResponse(Mockito.any(Route.class))).willReturn(response);
 

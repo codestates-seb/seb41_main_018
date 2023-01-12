@@ -56,7 +56,7 @@ class CommentControllerTest {
         // Stubbing by Mockito
         given(commentMapper.commentPostDtoToComment(Mockito.any(CommentDto.Post.class))).willReturn(new Comment());
 
-        given(commentService.createComment(Mockito.any(Comment.class))).willReturn(new Comment());
+        given(commentService.createComment(Mockito.any(Comment.class),1L,1L)).willReturn(new Comment());
 
         given(commentMapper.commentToCommentResponseDto(Mockito.any(Comment.class))).willReturn(responseBody);
 
@@ -95,7 +95,7 @@ class CommentControllerTest {
         // Stubbing by Mockito
         given(commentMapper.commentPatchDtoToComment(Mockito.any(CommentDto.Patch.class))).willReturn(new Comment());
 
-        given(commentService.updateComment(Mockito.any(Comment.class))).willReturn(new Comment());
+        given(commentService.updateComment(Mockito.any(Comment.class),1L)).willReturn(new Comment());
 
         given(commentMapper.commentToCommentResponseDto(Mockito.any(Comment.class))).willReturn(response);
 

@@ -141,7 +141,7 @@ class ContentControllerTest {
         // Stubbing by Mockito
         given(ContentMapper.contentPatchDtoToContent(Mockito.any(ContentDto.ContentPatch.class))).willReturn(new Content());
 
-        given(contentService.updateContent(Mockito.any(Content.class))).willReturn(new Content());
+        given(contentService.updateContent(1L,Mockito.any(Content.class),"제주")).willReturn(new Content());
 
         given(ContentMapper.contentToContentResponse(Mockito.any(Content.class))).willReturn(response);
 

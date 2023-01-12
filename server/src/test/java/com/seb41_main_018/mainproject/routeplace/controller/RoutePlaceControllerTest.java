@@ -57,7 +57,7 @@ class RoutePlaceControllerTest {
         // Stubbing by Mockito
         given(routePlaceMapper.routePlacePostDtoToRoutePlace(Mockito.any(RoutePlaceDto.Post.class))).willReturn(new RoutePlace());
 
-        given(routePlaceService.createRoutePlace(Mockito.any(RoutePlace.class))).willReturn(new RoutePlace());
+        given(routePlaceService.createRoutePlace(Mockito.any(RoutePlace.class),1L)).willReturn(new RoutePlace());
 
         given(routePlaceMapper.routePlaceToRoutePlaceResponseDto(Mockito.any(RoutePlace.class))).willReturn(responseBody);
 
@@ -84,7 +84,7 @@ class RoutePlaceControllerTest {
 
     @Test
     void patchRoutePlace() throws Exception {
-        long routePlaceId = 1L;
+        long placeId = 1L;
         RoutePlaceDto.Patch patch = new RoutePlaceDto.Patch(1L,
                 1L,
                 100L,
@@ -99,14 +99,14 @@ class RoutePlaceControllerTest {
         // Stubbing by Mockito
         given(routePlaceMapper.routePlacePatchDtoToRoutePlace(Mockito.any(RoutePlaceDto.Patch.class))).willReturn(new RoutePlace());
 
-        given(routePlaceService.updateRoutePlace(Mockito.any(RoutePlace.class))).willReturn(new RoutePlace());
+        given(routePlaceService.updateRoutePlace(1L,Mockito.any(RoutePlace.class))).willReturn(new RoutePlace());
 
         given(routePlaceMapper.routePlaceToRoutePlaceResponseDto(Mockito.any(RoutePlace.class))).willReturn(response);
 
         Gson gson = new Gson();
         String routePlace = gson.toJson(patch);
 
-        URI uri = UriComponentsBuilder.newInstance().path("/routePlaces/{routePlace-id}").buildAndExpand(routePlaceId).toUri();
+        URI uri = UriComponentsBuilder.newInstance().path("/routePlaces/{routePlace-id}").buildAndExpand(placeId).toUri();
 
         // when
         ResultActions actions =
@@ -129,12 +129,12 @@ class RoutePlaceControllerTest {
     @Test
     void getRoutePlace() throws Exception {
         // given
-        long routePlaceId = 1L;
+        long placeId = 1L;
 
         RoutePlace routePlace = new RoutePlace(
                 100L,
                 "자동차", "서울");
-        RoutePlace.setRoutePlaceId(routePlaceId);
+        routePlace.setPlaceId(placeId);
 
         RoutePlaceDto.Response response = new RoutePlaceDto.Response( 1L,1L,100L,
                 "자동차", "서울");
@@ -144,7 +144,7 @@ class RoutePlaceControllerTest {
         given(routePlaceService.findRoutePlace(Mockito.anyLong())).willReturn(new RoutePlace());
         given(routePlaceMapper.routePlaceToRoutePlaceResponseDto(Mockito.any(RoutePlace.class))).willReturn(response);
 
-        URI uri = UriComponentsBuilder.newInstance().path("/routePlaces/{routePlace-id}").buildAndExpand(routePlaceId).toUri();
+        URI uri = UriComponentsBuilder.newInstance().path("/routePlaces/{routePlace-id}").buildAndExpand(placeId).toUri();
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -167,13 +167,13 @@ class RoutePlaceControllerTest {
 
     @Test
     void deleteRoutePlace() throws Exception {
-        long routePlaceId = 1L;
+        long placeId = 1L;
 
         // Stubbing by Mockito
-        doNothing().when(routePlaceService).deleteRoutePlace(routePlaceId);
+        doNothing().when(routePlaceService).deleteRoutePlace(placeId);
 
         // when
-        ResultActions actions = mockMvc.perform(delete("/routePlaces/" + routePlaceId));
+        ResultActions actions = mockMvc.perform(delete("/routePlaces/" + placeId));
 
         // then
         actions.andExpect(status().isNoContent());
