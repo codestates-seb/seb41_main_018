@@ -69,7 +69,7 @@ class CategoryControllerTest {
 
         Gson gson = new Gson();
         String content = gson.toJson(post);
-        URI uri = UriComponentsBuilder.newInstance().path("/categorys").build().toUri();
+        URI uri = UriComponentsBuilder.newInstance().path("/categories").build().toUri();
 
         // when
         ResultActions actions =
@@ -82,7 +82,7 @@ class CategoryControllerTest {
         // then
         MvcResult result = actions
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.data.text").value(post.getName()))
+                .andExpect(jsonPath("$.name").value(post.getName()))
                 .andReturn();
     }
 
@@ -106,7 +106,7 @@ class CategoryControllerTest {
         Gson gson = new Gson();
         String content = gson.toJson(patch);
 
-        URI uri = UriComponentsBuilder.newInstance().path("/categorys/{categoryId}").buildAndExpand(categoryId).toUri();
+        URI uri = UriComponentsBuilder.newInstance().path("/categories/{categoryId}").buildAndExpand(categoryId).toUri();
 
         // when
         ResultActions actions =
@@ -119,7 +119,7 @@ class CategoryControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.text").value(patch.getName()));
+                .andExpect(jsonPath("$.name").value(patch.getName()));
 
     }
 
@@ -136,7 +136,7 @@ class CategoryControllerTest {
         given(categoryService.findCategory(Mockito.anyLong())).willReturn(new Category());
         given(categoryMapper.categoryToCategoryResponseDto(Mockito.any(Category.class))).willReturn(response);
 
-        URI uri = UriComponentsBuilder.newInstance().path("/categorys/{categoryId}").buildAndExpand(categoryId).toUri();
+        URI uri = UriComponentsBuilder.newInstance().path("/categories/{categoryId}").buildAndExpand(categoryId).toUri();
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -146,7 +146,7 @@ class CategoryControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.text").value(category.getName()));
+                .andExpect(jsonPath("$.name").value(category.getName()));
 
     }
 
@@ -182,7 +182,7 @@ class CategoryControllerTest {
         queryParams.add("size", size);
 
         /** 중복 */
-        URI getUri = UriComponentsBuilder.newInstance().path("/categorys").build().toUri();
+        URI getUri = UriComponentsBuilder.newInstance().path("/categories").build().toUri();
 
         // when
         ResultActions actions =

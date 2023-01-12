@@ -22,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import java.net.URI;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -56,7 +57,7 @@ class CommentControllerTest {
         // Stubbing by Mockito
         given(commentMapper.commentPostDtoToComment(Mockito.any(CommentDto.Post.class))).willReturn(new Comment());
 
-        given(commentService.createComment(Mockito.any(Comment.class),1L,1L)).willReturn(new Comment());
+        given(commentService.createComment(Mockito.any(Comment.class),anyLong(),anyLong())).willReturn(new Comment());
 
         given(commentMapper.commentToCommentResponseDto(Mockito.any(Comment.class))).willReturn(responseBody);
 
@@ -75,7 +76,7 @@ class CommentControllerTest {
         // then
         MvcResult result = actions
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.data.text").value(post.getBody()))
+                .andExpect(jsonPath("$.body").value(post.getBody()))
                 .andReturn();
 
 //        System.out.println(result.getResponse().getContentAsString());
@@ -95,7 +96,7 @@ class CommentControllerTest {
         // Stubbing by Mockito
         given(commentMapper.commentPatchDtoToComment(Mockito.any(CommentDto.Patch.class))).willReturn(new Comment());
 
-        given(commentService.updateComment(Mockito.any(Comment.class),1L)).willReturn(new Comment());
+        given(commentService.updateComment(Mockito.any(Comment.class),anyLong())).willReturn(new Comment());
 
         given(commentMapper.commentToCommentResponseDto(Mockito.any(Comment.class))).willReturn(response);
 
@@ -115,7 +116,7 @@ class CommentControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.text").value(patch.getBody()));
+                .andExpect(jsonPath("$.body").value(patch.getBody()));
     }
 
     @Test
@@ -141,7 +142,7 @@ class CommentControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.text").value(comment.getBody()));
+                .andExpect(jsonPath("$.body").value(comment.getBody()));
     }
 
     @Test

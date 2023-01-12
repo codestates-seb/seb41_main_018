@@ -28,6 +28,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -65,11 +66,11 @@ class TagControllerTest {
         // Stubbing by Mockito
         given(tagMapper.tagPostDtoToTag(Mockito.any(TagDto.TagPost.class))).willReturn(new Tag());
 
-        given(tagService.createTag(Mockito.any(Tag.class),1L)).willReturn(new Tag());
+        given(tagService.createTag(Mockito.any(Tag.class),anyLong())).willReturn(new Tag());
 
         given(tagMapper.tagToTagResponse(Mockito.any(Tag.class))).willReturn(responseBody);
 
-        String tag = gson.toJson(post);
+        String content = gson.toJson(post);
         URI uri = UriComponentsBuilder.newInstance().path("/tags").build().toUri();
 
         // when
@@ -79,12 +80,12 @@ class TagControllerTest {
                                 .post(uri)
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(tag));
+                                .content(content));
         // then
         MvcResult result = actions
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.data.contentId").value(post.getContentId()))
-                .andExpect(jsonPath("$.data.name").value(post.getName()))
+                .andExpect(jsonPath("$.contentId").value(post.getContentId()))
+                .andExpect(jsonPath("$.name").value(post.getName()))
                 .andReturn();
     }
 
@@ -103,7 +104,7 @@ class TagControllerTest {
         given(tagService.findTag(Mockito.anyLong())).willReturn(new Tag());
         given(tagMapper.tagToTagResponse(Mockito.any(Tag.class))).willReturn(response);
 
-        URI uri = UriComponentsBuilder.newInstance().path("/tags/{tag-id}").buildAndExpand(tagId).toUri();
+        URI uri = UriComponentsBuilder.newInstance().path("/tags/{tagId}").buildAndExpand(tagId).toUri();
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -112,8 +113,8 @@ class TagControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.tagId").value(tag.getTagId()))
-                .andExpect(jsonPath("$.data.name").value(tag.getName()));
+                .andExpect(jsonPath("$.tagId").value(tag.getTagId()))
+                .andExpect(jsonPath("$.name").value(tag.getName()));
 
     }
 
@@ -162,7 +163,7 @@ class TagControllerTest {
         // then
         MvcResult result = actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data").isArray())
+                .andExpect(jsonPath("$.").isArray())
                 .andReturn();
 
         List list = JsonPath.parse(result.getResponse().getContentAsString()).read("$.data");
@@ -184,12 +185,12 @@ class TagControllerTest {
         // Stubbing by Mockito
         given(tagMapper.tagPatchDtoToTag(Mockito.any(TagDto.TagPatch.class))).willReturn(new Tag());
 
-        given(tagService.updateTag(1L,Mockito.any(Tag.class))).willReturn(new Tag());
+        given(tagService.updateTag(anyLong(),Mockito.any(Tag.class))).willReturn(new Tag());
 
         given(tagMapper.tagToTagResponse(Mockito.any(Tag.class))).willReturn(response);
 
         Gson gson = new Gson();
-        String tag = gson.toJson(patch);
+        String content = gson.toJson(patch);
 
         URI uri = UriComponentsBuilder.newInstance().path("/tags/{tag-id}").buildAndExpand(tagId).toUri();
 
@@ -200,13 +201,13 @@ class TagControllerTest {
                                 .patch(uri)
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(tag));
+                                .content(content));
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.tagId").value(patch.getTagId()))
-                .andExpect(jsonPath("$.data.contentId").value(patch.getContentId()))
-                .andExpect(jsonPath("$.data.name").value(patch.getName()));
+                .andExpect(jsonPath("$.tagId").value(patch.getTagId()))
+                .andExpect(jsonPath("$.contentId").value(patch.getContentId()))
+                .andExpect(jsonPath("$.name").value(patch.getName()));
 
     }
 

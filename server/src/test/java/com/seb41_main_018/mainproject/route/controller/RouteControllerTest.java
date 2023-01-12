@@ -28,6 +28,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -66,7 +67,7 @@ class RouteControllerTest {
         // Stubbing by Mockito
         given(routeMapper.routePostDtoToRoute(Mockito.any(RouteDto.RoutePost.class))).willReturn(new Route());
 
-        given(routeService.createRoute(Mockito.any(Route.class),1L)).willReturn(new Route());
+        given(routeService.createRoute(Mockito.any(Route.class),anyLong())).willReturn(new Route());
 
         given(routeMapper.routeToRouteResponse(Mockito.any(Route.class))).willReturn(responseBody);
 
@@ -84,8 +85,8 @@ class RouteControllerTest {
         // then
         MvcResult result = actions
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.data.contentId").value(post.getContentId()))
-                .andExpect(jsonPath("$.data.name").value(post.getName()))
+                .andExpect(jsonPath("$.contentId").value(post.getContentId()))
+                .andExpect(jsonPath("$.name").value(post.getName()))
                 .andReturn();
     }
 
@@ -116,8 +117,8 @@ class RouteControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.routeId").value(route.getRouteId()))
-                .andExpect(jsonPath("$.data.name").value(route.getName()));
+                .andExpect(jsonPath("$.routeId").value(route.getRouteId()))
+                .andExpect(jsonPath("$.name").value(route.getName()));
     }
 
     @Test
@@ -190,7 +191,7 @@ class RouteControllerTest {
         // Stubbing by Mockito
         given(routeMapper.routePatchDtoToRoute(Mockito.any(RouteDto.RoutePatch.class))).willReturn(new Route());
 
-        given(routeService.updateRoute(1L,Mockito.any(Route.class))).willReturn(new Route());
+        given(routeService.updateRoute(anyLong(),Mockito.any(Route.class))).willReturn(new Route());
 
         given(routeMapper.routeToRouteResponse(Mockito.any(Route.class))).willReturn(response);
 
@@ -210,9 +211,9 @@ class RouteControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.routeId").value(patch.getRouteId()))
-                .andExpect(jsonPath("$.data.contentId").value(patch.getContentId()))
-                .andExpect(jsonPath("$.data.name").value(patch.getName()));
+                .andExpect(jsonPath("$.routeId").value(patch.getRouteId()))
+                .andExpect(jsonPath("$.contentId").value(patch.getContentId()))
+                .andExpect(jsonPath("$.name").value(patch.getName()));
     }
 
     @Test

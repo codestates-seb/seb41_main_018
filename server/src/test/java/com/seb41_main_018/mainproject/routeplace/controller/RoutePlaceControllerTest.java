@@ -28,6 +28,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -64,7 +65,7 @@ class RoutePlaceControllerTest {
         // Stubbing by Mockito
         given(routePlaceMapper.routePlacePostDtoToRoutePlace(Mockito.any(RoutePlaceDto.Post.class))).willReturn(new RoutePlace());
 
-        given(routePlaceService.createRoutePlace(Mockito.any(RoutePlace.class),1L)).willReturn(new RoutePlace());
+        given(routePlaceService.createRoutePlace(Mockito.any(RoutePlace.class),anyLong())).willReturn(new RoutePlace());
 
         given(routePlaceMapper.routePlaceToRoutePlaceResponseDto(Mockito.any(RoutePlace.class))).willReturn(responseBody);
 
@@ -82,10 +83,10 @@ class RoutePlaceControllerTest {
         // then
         MvcResult result = actions
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.data.routeId").value(post.getRouteId()))
-                .andExpect(jsonPath("$.data.price").value(post.getPrice()))
-                .andExpect(jsonPath("$.data.vehicle").value(post.getVehicle()))
-                .andExpect(jsonPath("$.data.body").value(post.getBody()))
+                .andExpect(jsonPath("$.routeId").value(post.getRouteId()))
+                .andExpect(jsonPath("$.price").value(post.getPrice()))
+                .andExpect(jsonPath("$.vehicle").value(post.getVehicle()))
+                .andExpect(jsonPath("$.body").value(post.getBody()))
                 .andReturn();
     }
 
@@ -106,7 +107,7 @@ class RoutePlaceControllerTest {
         // Stubbing by Mockito
         given(routePlaceMapper.routePlacePatchDtoToRoutePlace(Mockito.any(RoutePlaceDto.Patch.class))).willReturn(new RoutePlace());
 
-        given(routePlaceService.updateRoutePlace(1L,Mockito.any(RoutePlace.class))).willReturn(new RoutePlace());
+        given(routePlaceService.updateRoutePlace(anyLong(),Mockito.any(RoutePlace.class))).willReturn(new RoutePlace());
 
         given(routePlaceMapper.routePlaceToRoutePlaceResponseDto(Mockito.any(RoutePlace.class))).willReturn(response);
 
@@ -126,11 +127,11 @@ class RoutePlaceControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.routeId").value(patch.getRouteId()))
-                .andExpect(jsonPath("$.data.placeId").value(patch.getPlaceId()))
-                .andExpect(jsonPath("$.data.price").value(patch.getPrice()))
-                .andExpect(jsonPath("$.data.vehicle").value(patch.getVehicle()))
-                .andExpect(jsonPath("$.data.body").value(patch.getBody()));
+                .andExpect(jsonPath("$.routeId").value(patch.getRouteId()))
+                .andExpect(jsonPath("$.placeId").value(patch.getPlaceId()))
+                .andExpect(jsonPath("$.price").value(patch.getPrice()))
+                .andExpect(jsonPath("$.vehicle").value(patch.getVehicle()))
+                .andExpect(jsonPath("$.body").value(patch.getBody()));
     }
 
     @Test
@@ -161,10 +162,10 @@ class RoutePlaceControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.placeId").value(routePlace.getPlaceId()))
-                .andExpect(jsonPath("$.data.price").value(routePlace.getPrice()))
-                .andExpect(jsonPath("$.data.vehicle").value(routePlace.getVehicle()))
-                .andExpect(jsonPath("$.data.body").value(routePlace.getBody()));
+                .andExpect(jsonPath("$.placeId").value(routePlace.getPlaceId()))
+                .andExpect(jsonPath("$.price").value(routePlace.getPrice()))
+                .andExpect(jsonPath("$.vehicle").value(routePlace.getVehicle()))
+                .andExpect(jsonPath("$.body").value(routePlace.getBody()));
 
     }
 
@@ -232,7 +233,7 @@ class RoutePlaceControllerTest {
         doNothing().when(routePlaceService).deleteRoutePlace(placeId);
 
         // when
-        ResultActions actions = mockMvc.perform(delete("/routePlaces/" + placeId));
+        ResultActions actions = mockMvc.perform(delete("/routeplaces/" + placeId));
 
         // then
         actions.andExpect(status().isNoContent());

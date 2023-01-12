@@ -28,6 +28,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -67,7 +68,7 @@ class ContentControllerTest {
         // Stubbing by Mockito
         given(contentMapper.contentPostDtoToContent(Mockito.any(ContentDto.ContentPost.class))).willReturn(new Content());
 
-        given(contentService.createContent(Mockito.any(Content.class),1L)).willReturn(new Content());
+        given(contentService.createContent(Mockito.any(Content.class),anyLong())).willReturn(new Content());
 
         given(contentMapper.contentToContentResponse(Mockito.any(Content.class))).willReturn(responseBody);
 
@@ -85,9 +86,8 @@ class ContentControllerTest {
         // then
         MvcResult result = actions
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.data.userId").value(post.getUserId()))
-                .andExpect(jsonPath("$.data.title").value(post.getTitle()))
-                .andExpect(jsonPath("$.data.body").value(post.getBody()))
+                .andExpect(jsonPath("$.title").value(post.getTitle()))
+                .andExpect(jsonPath("$.body").value(post.getBody()))
                 .andReturn();
     }
 
@@ -110,7 +110,7 @@ class ContentControllerTest {
         given(contentService.findContent(Mockito.anyLong())).willReturn(new Content());
         given(contentMapper.contentToContentResponse(Mockito.any(Content.class))).willReturn(response);
 
-        URI uri = UriComponentsBuilder.newInstance().path("/contents/{content-id}").buildAndExpand(contentId).toUri();
+        URI uri = UriComponentsBuilder.newInstance().path("/contents/{contentId}").buildAndExpand(contentId).toUri();
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -120,8 +120,8 @@ class ContentControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.title").value(content.getTitle()))
-                .andExpect(jsonPath("$.data.body").value(content.getBody()));
+                .andExpect(jsonPath("$.title").value(content.getTitle()))
+                .andExpect(jsonPath("$.body").value(content.getBody()));
     }
 
     @Test
@@ -140,9 +140,9 @@ class ContentControllerTest {
                         .content(postContent1)   /** 중복 */
         );
 
-        ContentDto.ContentPost post2 = new ContentDto.ContentPost(1L,
-                "Algorithm to simplify a weighted directed graph of debts",
-                "I've been using a little python script I wrote to manage debt amongst my roommates.");
+        ContentDto.ContentPost post2 = new ContentDto.ContentPost(2L,
+                "Algorithm to simplify a weighted directed graph of debts2",
+                "I've been using a little python script I wrote to manage debt amongst my roommates2");
         String postContent2 = gson.toJson(post2);
 
         mockMvc.perform(
@@ -173,7 +173,7 @@ class ContentControllerTest {
         // then
         MvcResult result = actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data").isArray())
+                .andExpect(jsonPath("$.content").isArray())
                 .andReturn();
 
         List list = JsonPath.parse(result.getResponse().getContentAsString()).read("$.data");
@@ -199,14 +199,14 @@ class ContentControllerTest {
         // Stubbing by Mockito
         given(contentMapper.contentPatchDtoToContent(Mockito.any(ContentDto.ContentPatch.class))).willReturn(new Content());
 
-        given(contentService.updateContent(1L,Mockito.any(Content.class))).willReturn(new Content());
+        given(contentService.updateContent(anyLong(),Mockito.any(Content.class))).willReturn(new Content());
 
         given(contentMapper.contentToContentResponse(Mockito.any(Content.class))).willReturn(response);
 
         Gson gson = new Gson();
         String content = gson.toJson(patch);
 
-        URI uri = UriComponentsBuilder.newInstance().path("/contents/{content-id}").buildAndExpand(contentId).toUri();
+        URI uri = UriComponentsBuilder.newInstance().path("/contents/{contentId}").buildAndExpand(contentId).toUri();
 
         // when
         ResultActions actions =
@@ -219,8 +219,8 @@ class ContentControllerTest {
 
         // then
         actions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.title").value(patch.getTitle()))
-                .andExpect(jsonPath("$.data.body").value(patch.getBody()));
+                .andExpect(jsonPath("$.title").value(patch.getTitle()))
+                .andExpect(jsonPath("$.body").value(patch.getBody()));
     }
 
     @Test
