@@ -26,7 +26,7 @@ public class ContentController {
     @PostMapping
     public ResponseEntity postContent(@RequestBody ContentDto.ContentPost requestBody) {
         Content content = contentService.createContent(contentMapper.contentPostDtoToContent(requestBody), requestBody.getUserId());
-        ContentDto.ContentResponse contentResponse = ContentMapper.contentToContentResponse(content);
+        ContentDto.ContentResponse contentResponse = contentMapper.contentToContentResponse(content);
 
         return new ResponseEntity<>(contentResponse, HttpStatus.CREATED);
     }
@@ -35,7 +35,7 @@ public class ContentController {
     @GetMapping("/{contentId}")
     public ResponseEntity getContent(@PathVariable("contentId") Long contentId) {
         Content content = contentService.findContent(contentId);
-        ContentDto.ContentResponse contentResponse = ContentMapper.contentToContentResponse(content);
+        ContentDto.ContentResponse contentResponse = contentMapper.contentToContentResponse(content);
 
         return new ResponseEntity<>(contentResponse, HttpStatus.OK);
     }
@@ -60,9 +60,9 @@ public class ContentController {
                                        @PathVariable("contentId") Long contentId) {
         Content content = contentService.updateContent(
                 contentId,
-                ContentMapper.contentPatchDtoToContent(requestBody));
+                contentMapper.contentPatchDtoToContent(requestBody));
 
-        ContentDto.ContentResponse contentResponse = ContentMapper.contentToContentResponse(content);
+        ContentDto.ContentResponse contentResponse = contentMapper.contentToContentResponse(content);
 
         return new ResponseEntity<>(contentResponse, HttpStatus.OK);
     }

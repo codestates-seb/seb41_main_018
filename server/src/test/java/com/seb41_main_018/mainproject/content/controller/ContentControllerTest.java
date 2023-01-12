@@ -24,12 +24,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -71,7 +69,7 @@ class ContentControllerTest {
 
         given(contentService.createContent(Mockito.any(Content.class),1L)).willReturn(new Content());
 
-        given(ContentMapper.contentToContentResponse(Mockito.any(Content.class))).willReturn(responseBody);
+        given(contentMapper.contentToContentResponse(Mockito.any(Content.class))).willReturn(responseBody);
 
         String content = gson.toJson(post);
         URI uri = UriComponentsBuilder.newInstance().path("/contents").build().toUri();
@@ -110,7 +108,7 @@ class ContentControllerTest {
 
         // Stubbing by Mockito
         given(contentService.findContent(Mockito.anyLong())).willReturn(new Content());
-        given(ContentMapper.contentToContentResponse(Mockito.any(Content.class))).willReturn(response);
+        given(contentMapper.contentToContentResponse(Mockito.any(Content.class))).willReturn(response);
 
         URI uri = UriComponentsBuilder.newInstance().path("/contents/{content-id}").buildAndExpand(contentId).toUri();
 
@@ -199,11 +197,11 @@ class ContentControllerTest {
 
 
         // Stubbing by Mockito
-        given(ContentMapper.contentPatchDtoToContent(Mockito.any(ContentDto.ContentPatch.class))).willReturn(new Content());
+        given(contentMapper.contentPatchDtoToContent(Mockito.any(ContentDto.ContentPatch.class))).willReturn(new Content());
 
         given(contentService.updateContent(1L,Mockito.any(Content.class))).willReturn(new Content());
 
-        given(ContentMapper.contentToContentResponse(Mockito.any(Content.class))).willReturn(response);
+        given(contentMapper.contentToContentResponse(Mockito.any(Content.class))).willReturn(response);
 
         Gson gson = new Gson();
         String content = gson.toJson(patch);
