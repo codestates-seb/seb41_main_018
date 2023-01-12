@@ -28,12 +28,13 @@ public class UserServiceTest {
     private UserService userService;
 
     @Test
-    @DisplayName("User Service 검증 로직 TEST")
+    @DisplayName("UserService 검증 로직 TEST")
     void verifyLogic() {
         // Given
         User testUser = createTestUser(1L);
         given(userRepository.findByEmail(anyString())).willReturn(Optional.of(testUser));
-        //given(userRepository.findByUserId(anyLong())).willReturn(testUser);
+        // null 발생
+        // given(userRepository.findByUserId(anyLong())).willReturn(testUser);
 
         // When
         Throwable throwableByCreate = Assertions.catchThrowable(() -> userService.createUser(testUser));
@@ -49,6 +50,35 @@ public class UserServiceTest {
         assertThat(throwableByDelete)
                 .isInstanceOf(BusinessLogicException.class)
                 .hasMessageContaining(ExceptionCode.USER_NOT_FOUND.getMessage());
+    }
+
+    @Test
+    @DisplayName("유저 수정 테스트")
+    void updateTest() {
+        // Given
+        User testUser = createTestUser(1L);
+        User patchUser = createPatchUser(1L);
+        given(userRepository.findByEmail(anyString())).willReturn(Optional.of(testUser));
+        //given(userRepository.findByUserId(anyLong())).willReturn(testUser);
+
+        // When
+        User user = userService.updateUser(patchUser);
+        userRepository.save(user);
+
+        // Then
+        assertThat(user.getEmail()).isEqualTo(patchUser.getEmail());
+        assertThat(user.getNickname()).isEqualTo(patchUser.getNickname());
+        assertThat(user.getPassword()).isEqualTo(patchUser.getPassword());
+        assertThat(user.getEmail_subscribe()).isEqualTo(patchUser.getEmail_subscribe());
+
+//
+//        Throwable throwable = Assertions.catchThrowable(
+//                () -> userService.updateUser(createTestUser(1L)));
+//
+//        Assertions.assertThat(throwable)
+//                .isInstanceOf(BusinessLogicException.class)
+//                .hasMessageContaining(ExceptionCode.USER_NOT_FOUND.getMessage());
+//
     }
 
     private User createTestUser(Long userId) {
