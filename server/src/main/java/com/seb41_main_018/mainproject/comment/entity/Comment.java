@@ -32,6 +32,11 @@ public class Comment extends Auditable {
     @JoinColumn(name = "CONTENT_ID")
     private Content content;
 
+    //생성자
+    public Comment(String body) {
+        this.body = body;
+    }
+
     //Comment와 연관관계를 맺을 대상인 User 객체
     public void setUser(User user) {
         this.user = user;
