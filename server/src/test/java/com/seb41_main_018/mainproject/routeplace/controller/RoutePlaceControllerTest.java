@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class RoutePlaceControllerTest {
 
     @Test
-    void postroutePlace() {
+    void postRoutePlace() {
     }
 
     @Test
@@ -15,11 +15,11 @@ class RoutePlaceControllerTest {
     }
 
     @Test
-    void getroutePlace() {
+    void getRoutePlace() {
     }
 
     @Test
-    void getCategories() {
+    void getRoutePlaces() {
     }
 
     @Test
