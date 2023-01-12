@@ -27,7 +27,7 @@ public class RoutePlaceController {
 
     // 상세 경로 생성 //
     @PostMapping
-    public ResponseEntity postroutePlace(@Valid @RequestBody RoutePlaceDto.Post requestBody) {
+    public ResponseEntity postRoutePlace(@Valid @RequestBody RoutePlaceDto.Post requestBody) {
         RoutePlace routePlace = routePlaceService.createRoutePlace(
                 routePlaceMapper.routePlacePostDtoToRoutePlace(requestBody),
                 requestBody.getRouteId());
@@ -56,7 +56,7 @@ public class RoutePlaceController {
 
     // 상세 경로 단건 조회 //
     @GetMapping("/{placeId}")
-    public ResponseEntity getroutePlace(@PathVariable("placeId") Long placeId) {
+    public ResponseEntity getRoutePlace(@PathVariable("placeId") Long placeId) {
         RoutePlace routePlace = routePlaceService.findRoutePlace(placeId);
         RoutePlaceDto.Response routePlaceResponse =
                 routePlaceMapper.routePlaceToRoutePlaceResponseDto(routePlace);
@@ -66,7 +66,7 @@ public class RoutePlaceController {
 
     // 상세 경로 전체 조회 //
     @GetMapping
-    public ResponseEntity getCategories(@Positive @RequestParam int page,
+    public ResponseEntity getRoutePlaces(@Positive @RequestParam int page,
                                         @Positive @RequestParam int size) {
         Page<RoutePlace> pageRoutePlaces = routePlaceService.findRoutePlaces(page - 1, size);
         List<RoutePlace> routePlaces = pageRoutePlaces.getContent();
