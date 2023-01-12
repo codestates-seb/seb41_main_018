@@ -22,6 +22,10 @@ public class Category extends Auditable {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     List<Content> contents = new ArrayList<>();
+
+    public Category(String name) {
+        this.name = name;
+    }
 }

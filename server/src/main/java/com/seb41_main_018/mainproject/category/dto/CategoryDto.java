@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 public class CategoryDto {
-    @AllArgsConstructor
     @Getter
+    @AllArgsConstructor
     public static class Post {
         @NotSpace(message = "카테고리 이름은 필수입니다.")
         private String name;

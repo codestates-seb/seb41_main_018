@@ -28,8 +28,8 @@ public class CategoryController {
     private final CategoryRepository categoryRepository;
 
     // 카테고리 생성 //
-    @PostMapping("/{adimright}")
-    public ResponseEntity postCategory(@Valid @RequestBody CategoryDto.Post requestBody, @PathVariable("adimright") @Positive Long categoryId
+    @PostMapping
+    public ResponseEntity postCategory(@Valid @RequestBody CategoryDto.Post requestBody, @Positive Long categoryId
     ){
         Category category = categoryService.createCategory(categoryMapper.categoryPostDtoToCategory(requestBody));
         CategoryDto.Response categoryResponseDto = categoryMapper.categoryToCategoryResponseDto(category);
