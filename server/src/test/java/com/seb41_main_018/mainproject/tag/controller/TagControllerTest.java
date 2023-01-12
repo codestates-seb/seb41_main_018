@@ -1,6 +1,7 @@
 package com.seb41_main_018.mainproject.tag.controller;
 
 import com.google.gson.Gson;
+import com.jayway.jsonpath.JsonPath;
 import com.seb41_main_018.mainproject.tag.dto.TagDto;
 import com.seb41_main_018.mainproject.tag.entity.Tag;
 import com.seb41_main_018.mainproject.tag.mapper.TagMapper;
@@ -17,16 +18,24 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import java.net.URI;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 class TagControllerTest {
@@ -98,8 +107,7 @@ class TagControllerTest {
 
         // when
         ResultActions actions = mockMvc.perform(
-                MockMvcRequestBuilders
-                        .get(uri)
+                get(uri)
                         .accept(MediaType.APPLICATION_JSON));
 
         // then
@@ -110,7 +118,58 @@ class TagControllerTest {
     }
 
     @Test
-    void getTags() {
+    void getTags() throws Exception {
+        // given: tagController의 gettags()를 테스트하기 위해 posttag()를 이용해 테스트 데이터(2건)를 생성 후, DB에 저장
+        TagDto.TagPost post1 = new TagDto.TagPost(1L,"제주");
+        String postContent1 = gson.toJson(post1);
+        URI postUri = UriComponentsBuilder.newInstance().path("/tags").build().toUri();
+
+        mockMvc.perform(
+                post(postUri)
+                        .accept(MediaType.APPLICATION_JSON)    /** 중복 */
+                        .contentType(MediaType.APPLICATION_JSON)  /** 중복 */
+                        .content(postContent1)   /** 중복 */
+        );
+
+        TagDto.TagPost post2 = new TagDto.TagPost(1L,"제주2");
+        String postContent2 = gson.toJson(post2);
+
+        mockMvc.perform(
+                post(postUri)
+                        .accept(MediaType.APPLICATION_JSON)    /** 중복 */
+                        .contentType(MediaType.APPLICATION_JSON)  /** 중복 */
+                        .content(postContent2)   /** 중복 */
+        );
+        /** 중복 코드 끝 */
+
+        String page = "1";
+        String size = "10";
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", page);
+        queryParams.add("size", size);
+
+        /** 중복 */
+        URI getUri = UriComponentsBuilder.newInstance().path("/tags").build().toUri();
+
+        // when
+        ResultActions actions =
+                mockMvc.perform(
+                        get(getUri)
+                                .params(queryParams)
+                                .accept(MediaType.APPLICATION_JSON)   /** 중복 */
+                );
+
+        // then
+        MvcResult result = actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data").isArray())
+                .andReturn();
+
+        List list = JsonPath.parse(result.getResponse().getContentAsString()).read("$.data");
+
+        assertThat(list.size(), is(2));
+
+//        System.out.println(result.getResponse().getContentAsString());
     }
 
     @Test
