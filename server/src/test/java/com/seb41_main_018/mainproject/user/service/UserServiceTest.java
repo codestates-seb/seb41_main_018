@@ -72,12 +72,12 @@ public class UserServiceTest {
     void updateTest() {
         // Given
         User testUser = createTestUser(1L);
-        User patchUser = createPatchUser(1L);
-        given(userRepository.findById(Mockito.anyLong())).willReturn(Optional.of(testUser));
+        User patchUser = createPatchUser(2L);
+        given(userRepository.findById(Mockito.anyLong())).willReturn(Optional.of(patchUser));
 
-        User user = userService.findUser(testUser.getUserId());
+        User user = userService.updateUser(patchUser);
 
-        assertThat(user.getNickname()).isEqualTo(testUser.getNickname());
+        assertThat(user.getNickname()).isEqualTo(patchUser.getNickname());
     }
     @Test
     @DisplayName("유저 조회 테스트")
@@ -96,6 +96,7 @@ public class UserServiceTest {
     void deleteTest() {
         // Given
         User testUser = createTestUser(1L);
+        given(userRepository.findById(Mockito.anyLong())).willReturn(Optional.of(testUser));
         // When
         userService.deleteUser(testUser.getUserId());
         // Then

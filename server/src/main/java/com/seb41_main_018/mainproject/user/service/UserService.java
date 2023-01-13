@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserService {
     private final UserRepository userRepository;
     //private final CustomBeanUtils<Member> beanUtils;
