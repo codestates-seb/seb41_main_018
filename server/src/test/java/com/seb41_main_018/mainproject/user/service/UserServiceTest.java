@@ -1,5 +1,6 @@
 package com.seb41_main_018.mainproject.user.service;
 
+import com.seb41_main_018.mainproject.constant.UserStatus;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.user.entity.User;
@@ -36,7 +37,7 @@ public class UserServiceTest {
         User testUser = createTestUser(1L);
         given(userRepository.findByEmail(anyString())).willReturn(Optional.of(testUser));
         // null 발생
-        // given(userRepository.findByUserId(anyLong())).willReturn(testUser);
+        //given(userRepository.findByUserId(anyLong())).willReturn(testUser);
 
         // When
         Throwable throwableByCreate = Assertions.catchThrowable(() -> userService.createUser(testUser));
@@ -74,9 +75,20 @@ public class UserServiceTest {
         User patchUser = createPatchUser(1L);
         given(userRepository.findById(Mockito.anyLong())).willReturn(Optional.of(testUser));
 
-        User user = userService.updateUser(patchUser);
+        User user = userService.findUser(testUser.getUserId());
 
-        assertThat(user.getNickname()).isEqualTo(patchUser.getNickname());
+        assertThat(user.getNickname()).isEqualTo(testUser.getNickname());
+    }
+    @Test
+    @DisplayName("유저 조회 테스트")
+    void findTest() {
+        // Given
+        User testUser = createTestUser(1L);
+        given(userRepository.findById(Mockito.anyLong())).willReturn(Optional.of(testUser));
+
+        User user = userService.findUser(testUser.getUserId());
+
+        assertThat(user.getNickname()).isEqualTo(testUser.getNickname());
     }
 
     @Test
@@ -108,7 +120,9 @@ public class UserServiceTest {
                 "patchUser",
                 true);
         testUser.setUserId(userId);
+        testUser.setUserStatus(UserStatus.ACTIVITY);
 
         return testUser;
     }
+
 }
