@@ -11,9 +11,11 @@ import com.seb41_main_018.mainproject.user.repository.UserRepository;
 import com.seb41_main_018.mainproject.user.service.UserService;
 import org.springframework.stereotype.Service;
 
+import javax.management.ServiceNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import com.seb41_main_018.mainproject.exception.ExceptionCode
 
 @Service
 public class HeartService {
@@ -23,31 +25,11 @@ public class HeartService {
     private ContentService contentService;
     private UserService userService;
 
-    public HeartDto.Response saveHeart(Long contentId, Long userId) {
-        Content findContent = contentService.findVerifiedContent(contentId);
-        User findUser = userService.findVerifiedUser(userId);
-        List<Heart> hearts = heartRepository.findAllByUserAndContent(findUser, findContent);
+    public HeartDto.Response saveHeart(Heart heart,Long contentId, Long userId) {
+        User fineUser = userService.findVerifiedUser(userId);
+        Content findContent = contentService.findVerifiedContent(contentId)
+                .orElseThrow(() -> new ServiceNotFoundException(ExceptionCode.CONTENT_NOT_FOUND));
 
-        if(hearts.isEmpty()) { //좋아요 목록이 없을 경우
-            Heart createdHeart = createHeart(findUser, findContent);
-            heartRepository.save(createdHeart);
-        } else {
-            heartRepository.deleteAll(hearts);
-        }
-        return HeartDto.Response.builder()
-                .userId(userId)
-                .heartCount(heartRepository
-                        .findAllByContent(findContent)
-                        .size())
-                .contentId(contentId)
-                .build();
-    }
-        private Heart createHeart(User user, Content content){
-            return Heart.builder()
-                    .user(user)
-                    .content(content)
-                    .build();
-        }
     }
 
 
