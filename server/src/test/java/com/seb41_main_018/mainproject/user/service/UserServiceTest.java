@@ -71,12 +71,12 @@ public class UserServiceTest {
     void updateTest() {
         // Given
         User testUser = createTestUser(1L);
-        testUser.setPassword("2222");
+        User patchUser = createPatchUser(1L);
+        given(userRepository.findById(Mockito.anyLong())).willReturn(Optional.of(testUser));
 
-        // When
-        given(userRepository.findByEmail(Mockito.anyString())).willReturn(Optional.of(testUser));
+        User user = userService.updateUser(patchUser);
 
-        assertThrows(BusinessLogicException.class, () -> userService.updateUser(testUser));
+        assertThat(user.getNickname()).isEqualTo(patchUser.getNickname());
     }
 
     @Test
@@ -104,9 +104,9 @@ public class UserServiceTest {
     private User createPatchUser(Long userId) {
         User testUser = new User(
                 "test@test.com",
-                "2222",
+                "1111",
                 "patchUser",
-                false);
+                true);
         testUser.setUserId(userId);
 
         return testUser;
