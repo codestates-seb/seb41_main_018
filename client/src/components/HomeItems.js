@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../Common";
-import sample from "../assets/sample.jpg";
+import sample from "../assets/sampleImg/sample.jpg";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { BsStarFill } from "react-icons/bs";
 
