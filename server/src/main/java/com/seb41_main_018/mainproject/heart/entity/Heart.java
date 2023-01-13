@@ -14,14 +14,14 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @Entity
-@Builder
 public class Heart extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long heartId;
-    @Column
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private HeartType heartType;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -34,5 +34,15 @@ public class Heart extends Auditable {
         this.user = user;
         this.content = content;
         this.heartType = HeartType.REMOVE;
+    }
+
+    public void addUser(User user) {
+        this.user = user;
+        user.addHeart(this);
+    }
+
+    public void addContent(Content content) {
+        this.content = content;
+        content.addHeart(this);
     }
 }

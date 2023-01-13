@@ -11,6 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface HeartRepository extends JpaRepository<Heart, Long> {
-    List<Heart> findAllByUserAndContent(User user, Content content);
-    List<Heart> findAllByContent(Content content);
+//    List<Heart> findAllByUserAndContent(User user, Content content);
+//    List<Heart> findAllByContent(Content content);
 }

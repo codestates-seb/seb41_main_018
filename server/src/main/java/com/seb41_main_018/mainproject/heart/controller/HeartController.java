@@ -3,6 +3,7 @@ package com.seb41_main_018.mainproject.heart.controller;
 import com.seb41_main_018.mainproject.constant.HeartType;
 import com.seb41_main_018.mainproject.heart.dto.HeartDto;
 import com.seb41_main_018.mainproject.heart.entity.Heart;
+import com.seb41_main_018.mainproject.heart.mapper.HeartMapper;
 import com.seb41_main_018.mainproject.heart.service.HeartService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -17,20 +18,25 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 public class HeartController {
+    private final HeartMapper heartMapper;
     private final HeartService heartService;
 
     // 좋아요 등록 //
 
-/*    @PostMapping("/contents/hearts")
-    public ResponseEntity postHeart(@RequestBody HeartDto.Response requestbody) {
-        HeartType heartType = requestbody.getHeartType();
-        requestbody.setHeartType(HeartType.ADD);
+    @PostMapping("/{contentId}/hearts")
+    public ResponseEntity postHeart(
+            @PathVariable Long contentId,
+            @RequestBody HeartDto.Post requestBody) {
 
-        HeartDto.Response response = heartService.saveHeart(
+        String heartType = requestBody.getHeartType().toUpperCase();
+        requestBody.setHeartType(heartType);
 
-                requestbody.getUserId());
+        Heart createHeart = heartService.createHeart(
+                heartMapper.heartPostDtoToEntity(requestBody),
+                contentId,
+                requestBody.getContentId());
 
-        return new ResponseEntity<>((response, heartType), HttpStatus.OK);
-    }*/
+        return new ResponseEntity<>(heartMapper.heartToHeartResponseDto(createHeart),HttpStatus.CREATED);
+    }
 
 }

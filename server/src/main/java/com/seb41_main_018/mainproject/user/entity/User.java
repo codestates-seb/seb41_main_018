@@ -28,8 +28,8 @@ public class User extends Auditable {
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
-    private String phone;
+//    @Column(nullable = false)
+//    private String phone;
 
     @Column(nullable = false)
     private String nickname;
@@ -71,5 +71,7 @@ public class User extends Auditable {
         this.nickname = nickname;
         this.email_subscribe = email_subscribe;
     }
+
+    public void addHeart(Heart heart) { hearts.add(heart); }
 
 }

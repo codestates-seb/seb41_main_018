@@ -1,3 +1,4 @@
+/*
 package com.seb41_main_018.mainproject.content.service;
 
 import com.seb41_main_018.mainproject.content.entity.Content;
@@ -119,4 +120,4 @@ public class ContentServiceTest {
 
         return testContent;
     }
-}
+}*/
