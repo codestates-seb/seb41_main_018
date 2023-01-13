@@ -5,6 +5,7 @@ import com.seb41_main_018.mainproject.comment.dto.CommentDto;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.mapper.CommentMapper;
 import com.seb41_main_018.mainproject.comment.service.CommentService;
+import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.user.entity.User;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -123,7 +124,7 @@ class CommentControllerTest {
     void getCommentTest() throws Exception {
         // given
         long commentId = 1L;
-        Comment comment = new Comment();
+        Comment comment = new Comment("홍길동");
         comment.setCommentId(commentId);
 
         CommentDto.Response response = new CommentDto.Response(1L,

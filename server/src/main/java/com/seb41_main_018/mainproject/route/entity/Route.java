@@ -36,7 +36,9 @@ public class Route extends Auditable {
     private Content content;
 
     // 생성자 //
-    public Route(String name) {
+
+    public Route(Long routeId, String name) {
+        this.routeId = routeId;
         this.name = name;
     }
 }
