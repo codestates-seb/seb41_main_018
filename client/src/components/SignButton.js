@@ -1,21 +1,21 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
+import { PALETTE } from "../Common";
 import { css } from "@emotion/react";
 
 const SignButton = (props) => {
-    console.log(props);
     return (
         <button
             css={css`
-                border: solid 2px #055e8e;
+                border: solid 2px ${PALETTE.default_color};
                 background-color: white;
                 border-radius: 5px;
                 width: ${props.width};
-                height: 60px;
+                height: ${props.height};
                 margin: 10px;
                 &:hover {
                     background-color: #eee;
-                    border: solid 2px #003f62;
+                    border: solid 2px ${PALETTE.default_hover};
                     cursor: pointer;
                 }
             `}
@@ -29,8 +29,8 @@ export default SignButton;
 
 const text = css`
     font-size: 1rem;
-    color: #055e8e;
+    color: ${PALETTE.default_color};
     &:hover {
-        color: #003f62;
+        color: ${PALETTE.default_hover};
     }
 `;

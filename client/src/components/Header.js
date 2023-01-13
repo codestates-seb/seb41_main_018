@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
 import { PALETTE } from "../Common.js";
-import logo3 from "../assets/logo3.png";
+import logo9 from "../assets/logo9.png";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -15,34 +15,33 @@ import SignButton from "./SignButton";
 import CloseIcon from "@mui/icons-material/Close";
 
 const Header = () => {
-    const [islogin, setislogin] = useState(false);
-    const [isclick, setisclick] = useState(false);
-    const [ismenuclick, setmenuclick] = useState(false);
-    const [isaccountclick, setaccountclick] = useState(false);
-    const [isvalue, setisvalue] = useState("");
-    const [keyword, setkeyword] = useState("");
+    const [isLogin, setislogin] = useState(false);
+    const [isResSearchIconClick, setResSearchIcon] = useState(false);
+    const [isMenuClick, setMenuClick] = useState(false);
+    const [isAccountClick, setAccontClick] = useState(false);
+    const [keyword, setKeyword] = useState("");
     const menuRef = useRef();
     const AccountRef = useRef();
     const location = useLocation();
+
     const menuClick = () => {
-        setmenuclick(!ismenuclick);
+        setMenuClick(!isMenuClick);
     };
 
-    const handleClick = () => {
-        setisclick(!isclick);
-        console.log(isclick);
+    const handleResSearchIconClick = () => {
+        setResSearchIcon(!isResSearchIconClick);
     };
 
     const handleClose = () => {
-        setisclick(false);
+        setResSearchIcon(false);
     };
 
     const handleAccountClick = () => {
-        setaccountclick(!isaccountclick);
+        setAccontClick(!isAccountClick);
     };
 
     const getInputText = (e) => {
-        setkeyword(e.target.value);
+        setKeyword(e.target.value);
         console.log(keyword);
     };
 
@@ -50,15 +49,15 @@ const Header = () => {
         console.log(keyword);
     };
 
-    // 768px에서 메뉴 버튼 클릭시 좌측에 창이 열리는데, 외부클릭시 닫게 하는 코드
+    // 외부클릭시 닫히게하기
     const handleClickOutSide = (e) => {
         console.log(menuRef.current.contains(e.target));
-        if (ismenuclick && !menuRef.current.contains(e.target)) {
-            setmenuclick(false);
+        if (isMenuClick && !menuRef.current.contains(e.target)) {
+            setMenuClick(false);
         }
     };
     useEffect(() => {
-        if (ismenuclick) document.addEventListener("mousedown", handleClickOutSide);
+        if (isMenuClick) document.addEventListener("mousedown", handleClickOutSide);
         return () => {
             document.removeEventListener("mousedown", handleClickOutSide);
         };
@@ -66,12 +65,12 @@ const Header = () => {
 
     const handleClickOutSide2 = (e) => {
         console.log(AccountRef.current.contains(e.target));
-        if (isaccountclick && !AccountRef.current.contains(e.target)) {
-            setaccountclick(false);
+        if (isAccountClick && !AccountRef.current.contains(e.target)) {
+            setAccontClick(false);
         }
     };
     useEffect(() => {
-        if (isaccountclick) document.addEventListener("mousedown", handleClickOutSide2);
+        if (isAccountClick) document.addEventListener("mousedown", handleClickOutSide2);
         return () => {
             document.removeEventListener("mousedown", handleClickOutSide2);
         };
@@ -84,15 +83,15 @@ const Header = () => {
         <div css={wrap}>
             <div css={container}>
                 <MenuIcon onClick={menuClick} css={menuicon} />
-                {ismenuclick ? (
-                    <div css={menuClickBackground}>
+                {isMenuClick ? (
+                    <div css={menuClickContainer}>
                         <div css={menubox} ref={menuRef}>
                             <img
-                                src={logo3}
+                                src={logo9}
                                 alt="같이갈래 logo"
                                 css={css`
-                                    width: 220px;
-                                    height: 70px;
+                                    width: 140px;
+                                    height: 80px;
                                     margin: 20px;
                                 `}
                             ></img>
@@ -103,20 +102,28 @@ const Header = () => {
                                     align-items: center;
                                 `}
                             >
-                                {islogin ? (
+                                {isLogin ? (
                                     <div>
                                         <Link to="/mypage">
-                                            <SignButton text="마이페이지" width="250px" />
+                                            <SignButton
+                                                text="마이페이지"
+                                                width="250px"
+                                                height="60px"
+                                            />
                                         </Link>
-                                        <SignButton text="로그아웃" width="250px" />
+                                        <SignButton text="로그아웃" width="250px" height="60px" />
                                     </div>
                                 ) : (
                                     <div>
                                         <Link to="/login">
-                                            <SignButton text="로그인" width="250px" />
+                                            <SignButton text="로그인" width="250px" height="60px" />
                                         </Link>
                                         <Link to="/signup">
-                                            <SignButton text="회원가입" width="250px" />
+                                            <SignButton
+                                                text="회원가입"
+                                                width="250px"
+                                                height="60px"
+                                            />
                                         </Link>
                                     </div>
                                 )}
@@ -129,7 +136,7 @@ const Header = () => {
             </div>
             <div>
                 <Link to="/">
-                    <img src={logo3} alt="같이갈래 logo" css={logostyle}></img>
+                    <img src={logo9} alt="같이갈래 logo" css={logoStyle}></img>
                 </Link>
             </div>
             <div
@@ -147,22 +154,10 @@ const Header = () => {
                     onChange={getInputText}
                 />
                 <SearchIcon css={searchIcon} onClick={searchIconClick} />
-                <SearchIcon css={responsiveSearchIcon} onClick={handleClick} />
-                {isclick ? (
+                <SearchIcon css={resSearchIcon} onClick={handleResSearchIconClick} />
+                {isResSearchIconClick ? (
                     <div>
-                        <div
-                            css={css`
-                                position: absolute;
-                                top: 0px;
-                                left: 0px;
-                                width: 100vw;
-                                height: 100vh;
-                                background-color: rgb(255, 255, 255);
-                                display: flex;
-                                flex-direction: column;
-                                align-items: center;
-                            `}
-                        >
+                        <div css={resSearchIconClick}>
                             <CloseIcon
                                 onClick={handleClose}
                                 css={css`
@@ -174,24 +169,22 @@ const Header = () => {
                             />
                             <input
                                 type="text"
-                                css={css`
-                                    width: 668px;
-                                    height: 40px;
-                                    background-color: rgb(0, 0, 0, 0.05);
-                                    border: solid 2px rgb(0, 0, 0, 0.05);
-                                `}
+                                css={responsiveSearchInput}
+                                placeholder="후기를 검색해보세요."
+                                onChange={getInputText}
                             ></input>
+                            <div css={recentKeword}>최근 검색어</div>
                         </div>
                     </div>
                 ) : (
                     false
                 )}
             </div>
-            {islogin ? (
+            {isLogin ? (
                 <div css={divAccount}>
                     <NotificationsActiveIcon css={notification} />
                     <AccountCircleIcon css={Account} onClick={handleAccountClick} />
-                    {isaccountclick ? (
+                    {isAccountClick ? (
                         <div css={dropMenu} ref={AccountRef}>
                             <ul
                                 css={css`
@@ -250,7 +243,7 @@ const container = css`
     }
 `;
 
-const menuClickBackground = css`
+const menuClickContainer = css`
     position: absolute;
     top: 0px;
     left: 0px;
@@ -258,10 +251,11 @@ const menuClickBackground = css`
     height: 100vw;
     background-color: rgb(0, 0, 0, 0.3);
 `;
-const logostyle = css`
-    width: 220px;
-    height: 70px;
+const logoStyle = css`
+    width: 140px;
+    height: 80px;
     margin-left: 100px;
+    margin-top: 10px;
 
     @media (max-width: 768px) {
         margin: 0;
@@ -289,15 +283,15 @@ const searchIcon = css`
     position: relative;
     width: 34px;
     height: 34px;
-    border: solid 10px #055e8e;
-    background-color: #055e8e;
+    border: solid 10px ${PALETTE.default_color};
+    background-color: ${PALETTE.default_color};
     border-radius: 50px;
     margin-left: -45px;
     margin-top: 8px;
     color: white;
     &:hover {
-        background-color: #003f62;
-        border: solid 10px #003f62;
+        background-color: ${PALETTE.default_hover};
+        border: solid 10px ${PALETTE.default_hover};
         cursor: pointer;
     }
     @media (max-width: 768px) {
@@ -306,20 +300,20 @@ const searchIcon = css`
     }
 `;
 
-const responsiveSearchIcon = css`
+const resSearchIcon = css`
     display: none;
     position: relative;
     width: 34px;
     height: 34px;
-    border: solid 10px #055e8e;
-    background-color: #055e8e;
+    border: solid 10px ${PALETTE.default_color};
+    background-color: ${PALETTE.default_color};
     border-radius: 50px;
     margin-left: -45px;
     margin-top: 10px;
     color: white;
     &:hover {
-        background-color: #003f62;
-        border: solid 10px #003f62;
+        background-color: ${PALETTE.default_hover};
+        border: solid 10px ${PALETTE.default_hover};
         cursor: pointer;
     }
     @media (max-width: 768px) {
@@ -328,6 +322,37 @@ const responsiveSearchIcon = css`
     }
 `;
 
+const resSearchIconClick = css`
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const responsiveSearchInput = css`
+    width: 95%;
+    height: 50px;
+    background-color: rgb(0, 0, 0, 0.05);
+    border: solid 2px rgb(0, 0, 0, 0.05);
+    border-radius: ${PALETTE.border_radius};
+    &:focus {
+        background-color: white;
+        box-shadow: ${PALETTE.box_shaodw};
+    }
+`;
+
+const recentKeword = css`
+    display: flex;
+    align-self: start;
+    margin-top: 30px;
+    margin-left: 10px;
+    font-weight: 600;
+`;
 const divAccount = css`
     display: flex;
     justify-content: center;
@@ -345,9 +370,9 @@ const Account = css`
     width: 40px;
     height: 40px;
     margin: 0 10px;
-    color: #055e8e;
+    color: ${PALETTE.default_color};
     &:hover {
-        color: #003f62;
+        color: ${PALETTE.default_hover};
         cursor: pointer;
     }
 `;
@@ -355,10 +380,10 @@ const Account = css`
 const notification = css`
     width: 40px;
     height: 40px;
-    color: #055e8e;
+    color: ${PALETTE.default_color};
     margin: 0 10px;
     &:hover {
-        color: #003f62;
+        color: ${PALETTE.default_hover};
         cursor: pointer;
     }
 `;
