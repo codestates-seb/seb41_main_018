@@ -3,27 +3,27 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from '@emotion/react';
+import { jsx, css } from "@emotion/react";
 
 import SocialButton from "../components/SocialButton";
 import Button from "../components/Button";
 
 const defaultValues = {
-    email:'',
-    password:'',
-    }
+    email: "",
+    password: "",
+};
 
 const LoginPage = () => {
     // const [userInfo, setUserInfo] = useState({
     //     email: "",
     //     password: "",
     // });
-    
+
     const {
         register,
         handleSubmit,
         formState: { isSubmitting, isDirty, errors },
-    } = useForm({mode: 'onchange', defaultValues});
+    } = useForm({ mode: "onchange", defaultValues });
 
     const onSubmit = (data) => {
         setUserInfo(data);
@@ -33,11 +33,11 @@ const LoginPage = () => {
     return (
         <div css={BgCenter}>
             <div css={Container}>
-                <div css={LogoContainer}>
-                    hi
-                </div>
+                <div css={LogoContainer}>hi</div>
                 <form css={LoginContainer} onSubmit={handleSubmit(onSubmit)}>
-                    <label htmlFor="email" css={LabelBox}>이메일</label>
+                    <label htmlFor="email" css={LabelBox}>
+                        이메일
+                    </label>
                     <input
                         id="email"
                         type="email"
@@ -53,7 +53,9 @@ const LoginPage = () => {
                         css={InputBox}
                     />
                     {errors.email && <small role="alert">{errors.email.message}</small>}
-                    <label htmlFor="password" css={LabelBox}>비밀번호</label>
+                    <label htmlFor="password" css={LabelBox}>
+                        비밀번호
+                    </label>
                     <input
                         id="password"
                         type="password"
@@ -70,9 +72,9 @@ const LoginPage = () => {
                         css={InputBox}
                     />
                     {errors.password && <small role="alert">{errors.password.message}</small>}
-                    <SocialButton/>
+                    <SocialButton />
                     {/* <Button type="submit" text="Login"/> */}
-                    <Button type="button" text="Login"/>
+                    <Button type="button" text="Login" />
                     <div css={UserData}>아이디 / 비밀번호 찾기</div>
                     <div css={UserData}>회원가입</div>
                 </form>
@@ -87,11 +89,11 @@ export const BgCenter = css`
     justify-content: center;
     width: 100%;
     height: 100vh;
-    background-color:hsl(210,8%,95%);
-`
+    background-color: hsl(210, 8%, 95%);
+`;
 
 export const Container = css`
-    width: 38rem;;
+    width: 38rem;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -117,7 +119,7 @@ export const LoginContainer = css`
     height: 100%;
     padding-top: 100px;
     padding-bottom: 100px;
-    small{
+    small {
         color: rgba(248, 112, 112, 1);
         margin-bottom: 30px;
         font-size: 15px;

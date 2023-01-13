@@ -14,13 +14,7 @@ const HomeItems = () => {
     };
 
     return (
-        <div
-            css={css`
-                max-width: 260px;
-                max-height: 350px;
-                margin: 10px;
-            `}
-        >
+        <div css={wrap}>
             <div>
                 <img
                     src={sample}
@@ -34,9 +28,9 @@ const HomeItems = () => {
                 <div
                     onClick={handleFavoriteClick}
                     css={css`
-                        position: absolute;
-                        top: 110px;
-                        left: 237px;
+                        position: relative;
+                        top: -205px;
+                        left: 230px;
                         font-size: 22px;
                     `}
                 >
@@ -114,6 +108,11 @@ const HomeItems = () => {
         </div>
     );
 };
+const wrap = css`
+    max-width: 260px;
+    max-height: 350px;
+    margin: 10px;
+`;
 
 const listStyle = css`
     margin-right: 5px;
