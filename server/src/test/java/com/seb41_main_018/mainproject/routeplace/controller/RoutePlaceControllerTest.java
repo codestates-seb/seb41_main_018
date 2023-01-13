@@ -118,7 +118,7 @@ class RoutePlaceControllerTest {
         Gson gson = new Gson();
         String routePlace = gson.toJson(patch);
 
-        URI uri = UriComponentsBuilder.newInstance().path("/routePlaces/{placeId}").buildAndExpand(placeId).toUri();
+        URI uri = UriComponentsBuilder.newInstance().path("/routeplaces/{placeId}").buildAndExpand(placeId).toUri();
 
         // when
         ResultActions actions =
@@ -156,7 +156,7 @@ class RoutePlaceControllerTest {
         given(routePlaceService.findRoutePlace(Mockito.anyLong())).willReturn(new RoutePlace());
         given(routePlaceMapper.routePlaceToRoutePlaceResponseDto(Mockito.any(RoutePlace.class))).willReturn(response);
 
-        URI uri = UriComponentsBuilder.newInstance().path("/routePlaces/{placeId}").buildAndExpand(placeId).toUri();
+        URI uri = UriComponentsBuilder.newInstance().path("/routeplaces/{placeId}").buildAndExpand(placeId).toUri();
 
         // when
         ResultActions actions = mockMvc.perform(
