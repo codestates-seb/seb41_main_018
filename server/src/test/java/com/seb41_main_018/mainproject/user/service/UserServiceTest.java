@@ -10,11 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -40,6 +42,7 @@ public class UserServiceTest {
         Throwable throwableByCreate = Assertions.catchThrowable(() -> userService.createUser(testUser));
         Throwable throwableByFind = Assertions.catchThrowable(() -> userService.findUser(testUser.getUserId()));
         Throwable throwableByDelete = Assertions.catchThrowable(() -> userService.deleteUser(testUser.getUserId()));
+
         // Then
         assertThat(throwableByCreate)
                 .isInstanceOf(BusinessLogicException.class)
@@ -53,32 +56,38 @@ public class UserServiceTest {
     }
 
     @Test
+    @DisplayName("유저 등록 테스트")
+    void postTest() {
+        // Given
+        User testUser = createTestUser(1L);
+        // When
+        given(userRepository.findByEmail(Mockito.anyString())).willReturn(Optional.of(testUser));
+        // Then
+        assertThrows(BusinessLogicException.class, () -> userService.createUser(testUser));
+    }
+
+    @Test
     @DisplayName("유저 수정 테스트")
     void updateTest() {
         // Given
         User testUser = createTestUser(1L);
-        User patchUser = createPatchUser(1L);
-        given(userRepository.findByEmail(anyString())).willReturn(Optional.of(testUser));
-        //given(userRepository.findByUserId(anyLong())).willReturn(testUser);
+        testUser.setPassword("2222");
 
         // When
-        User user = userService.updateUser(patchUser);
-        userRepository.save(user);
+        given(userRepository.findByEmail(Mockito.anyString())).willReturn(Optional.of(testUser));
 
+        assertThrows(BusinessLogicException.class, () -> userService.updateUser(testUser));
+    }
+
+    @Test
+    @DisplayName("유저 삭제 테스트")
+    void deleteTest() {
+        // Given
+        User testUser = createTestUser(1L);
+        // When
+        userService.deleteUser(testUser.getUserId());
         // Then
-        assertThat(user.getEmail()).isEqualTo(patchUser.getEmail());
-        assertThat(user.getNickname()).isEqualTo(patchUser.getNickname());
-        assertThat(user.getPassword()).isEqualTo(patchUser.getPassword());
-        assertThat(user.getEmail_subscribe()).isEqualTo(patchUser.getEmail_subscribe());
 
-//
-//        Throwable throwable = Assertions.catchThrowable(
-//                () -> userService.updateUser(createTestUser(1L)));
-//
-//        Assertions.assertThat(throwable)
-//                .isInstanceOf(BusinessLogicException.class)
-//                .hasMessageContaining(ExceptionCode.USER_NOT_FOUND.getMessage());
-//
     }
 
     private User createTestUser(Long userId) {
