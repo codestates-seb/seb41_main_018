@@ -2,6 +2,7 @@ export const PALETTE = {
     //text
     text_default: "#000000",
     text_placeholder: "#b4b4b4",
+    text_shadow: "1px 1px 2px rgb(0, 0, 0, 0.3)",
 
     /* identity */
     default_color: "#0f7586",
