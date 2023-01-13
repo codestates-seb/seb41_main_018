@@ -35,6 +35,8 @@ public class UserService {
 
         Optional.ofNullable(user.getNickname())
                 .ifPresent(nickname -> findUser.setNickname(nickname));
+        Optional.ofNullable(user.getPhone())
+                .ifPresent(phone -> findUser.setPhone(phone));
         //Optional.ofNullable(user.getPassword())
                 //.ifPresent(password -> findUser.setPassword(bCryptPasswordEncoder.encode(password)));
 

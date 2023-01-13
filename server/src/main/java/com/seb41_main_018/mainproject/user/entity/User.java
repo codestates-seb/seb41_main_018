@@ -28,6 +28,8 @@ public class User extends Auditable {
     private String email;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    private String phone;
 
     @Column(nullable = false)
     private String nickname;
