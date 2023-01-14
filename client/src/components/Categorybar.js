@@ -9,7 +9,6 @@ import 혼자여행 from "../assets/categoryImg/혼자여행.png";
 import 커플여행 from "../assets/categoryImg/커플여행.png";
 import 효도여행 from "../assets/categoryImg/효도여행.png";
 import 카페투어 from "../assets/categoryImg/카페투어.png";
-import 카페투어1 from "../assets/categoryImg/카페투어1.png";
 
 const Categorybar = () => {
     const category = [
