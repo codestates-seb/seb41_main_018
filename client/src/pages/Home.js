@@ -3,7 +3,6 @@ import React from "react";
 import { css } from "@emotion/react";
 import HomeItems from "../components/HomeItems";
 import Categorybar from "../components/Categorybar";
-import Banner from "../components/Banner";
 
 const Home = () => {
     return (
@@ -30,7 +29,6 @@ const Home = () => {
                 <HomeItems />
                 <HomeItems />
             </div>
-            <Banner />
         </div>
     );
 };

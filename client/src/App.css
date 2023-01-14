@@ -12,3 +12,8 @@ textarea:focus {
     outline: none;
 }
 
+ol,
+ul,
+li {
+    list-style: none;
+}
