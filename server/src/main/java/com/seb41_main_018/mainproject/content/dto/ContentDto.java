@@ -36,5 +36,7 @@ public class ContentDto {
         private Long userId;
         private String title;
         private String body;
+
+        private int heartCount;
     }
 }
