@@ -7,7 +7,6 @@ import com.seb41_main_018.mainproject.heart.entity.Heart;
 import com.seb41_main_018.mainproject.route.entity.Route;
 import com.seb41_main_018.mainproject.tag.entity.Tag;
 import com.seb41_main_018.mainproject.user.entity.User;
-import com.seb41_main_018.mainproject.category.entity.Category;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
 
@@ -66,9 +65,9 @@ public class Content extends Auditable {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "CATEGORY_ID")
-    private Category category;
+    private Category category;*/
 
     // 생성자 //
     public Content(String title, String body) {

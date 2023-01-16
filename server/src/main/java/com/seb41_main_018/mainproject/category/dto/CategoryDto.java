@@ -1,3 +1,4 @@
+/*
 package com.seb41_main_018.mainproject.category.dto;
 
 import com.seb41_main_018.mainproject.validator.NotSpace;
@@ -32,3 +33,4 @@ public class CategoryDto {
     }
 }
 
+*/

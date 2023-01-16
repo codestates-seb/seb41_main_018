@@ -1,3 +1,4 @@
+/*
 package com.seb41_main_018.mainproject.category.entity;
 
 import com.seb41_main_018.mainproject.audit.Auditable;
@@ -29,3 +30,4 @@ public class Category extends Auditable {
         this.name = name;
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.seb41_main_018.mainproject.category.controller;
 
 
@@ -77,3 +78,4 @@ public class CategoryController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
+*/
