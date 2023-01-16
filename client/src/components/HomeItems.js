@@ -3,37 +3,20 @@ import React from "react";
 import { useState } from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../Common";
-import sample from "../assets/sampleImg/sample.jpg";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { BsStarFill } from "react-icons/bs";
+import sample from "../assets/sampleImg/sample.jpg";
 
 const HomeItems = () => {
     const [isFavoriteClcik, setFavoriteClick] = useState(false);
     const handleFavoriteClick = () => {
         setFavoriteClick(!isFavoriteClcik);
     };
-
     return (
         <div css={wrap}>
             <div>
-                <img
-                    src={sample}
-                    css={css`
-                        max-width: 260px;
-                        max-height: 250px;
-                        height: 210px;
-                        border-radius: ${PALETTE.border_radius};
-                    `}
-                />
-                <div
-                    onClick={handleFavoriteClick}
-                    css={css`
-                        position: relative;
-                        top: -205px;
-                        left: 230px;
-                        font-size: 22px;
-                    `}
-                >
+                <img src={sample} css={ImgStyle} />
+                <div onClick={handleFavoriteClick} css={favoriteStyle}>
                     {isFavoriteClcik ? (
                         <FaHeart
                             css={css`
@@ -112,8 +95,41 @@ const wrap = css`
     max-width: 260px;
     max-height: 350px;
     margin: 10px;
+    @media (max-width: 1440px) {
+        max-width: 260px;
+        max-height: 350px;
+    }
+    @media (max-width: 1280px) {
+        max-width: 260px;
+        max-height: 350px;
+    }
+    @media (max-width: 1080px) {
+        max-width: 260px;
+        max-height: 350px;
+    }
+    @media (max-width: 860px) {
+        max-width: 260px;
+        max-height: 350px;
+    }
+    @media (max-width: 540px) {
+        max-width: 260px;
+        max-height: 350px;
+    }
 `;
 
+const ImgStyle = css`
+    max-width: 260px;
+    max-height: 250px;
+    height: 210px;
+    border-radius: ${PALETTE.border_radius};
+`;
+
+const favoriteStyle = css`
+    position: relative;
+    top: -205px;
+    left: 230px;
+    font-size: 22px;
+`;
 const listStyle = css`
     margin-right: 5px;
     margin-bottom: 10px;
