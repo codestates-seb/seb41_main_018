@@ -13,6 +13,7 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import SignButton from "./SignButton";
 import CloseIcon from "@mui/icons-material/Close";
+import Button from "./Button.js";
 
 const Header = () => {
     const [isLogin, setislogin] = useState(false);
@@ -85,44 +86,46 @@ const Header = () => {
                 <MenuIcon onClick={menuClick} css={menuicon} />
                 {isMenuClick ? (
                     <div css={menuClickContainer}>
-                        <div css={menubox} ref={menuRef}>
-                            <img
-                                src={logo9}
-                                alt="같이갈래 logo"
-                                css={css`
-                                    width: 140px;
-                                    height: 80px;
-                                    margin: 20px;
-                                `}
-                            ></img>
-                            <div
-                                css={css`
-                                    display: flex;
-                                    flex-direction: column;
-                                    align-items: center;
-                                `}
-                            >
+                        <div css={menuContainer} ref={menuRef}>
+                            <img src={logo9} alt="같이갈래 logo" />
+                            <div css={buttonContainer}>
                                 {isLogin ? (
                                     <div>
                                         <Link to="/mypage">
-                                            <SignButton
-                                                text="마이페이지"
+                                            <Button
                                                 width="250px"
                                                 height="60px"
+                                                text="마이페이지"
+                                                boxShadow="1px 1px 5px rgb(0,0,0,0.2)"
+                                                margin="10px"
                                             />
                                         </Link>
-                                        <SignButton text="로그아웃" width="250px" height="60px" />
+                                        <Button
+                                            width="250px"
+                                            height="60px"
+                                            text="로그아웃"
+                                            boxShadow="1px 1px 5px rgb(0,0,0,0.2)"
+                                            margin="10px"
+                                        />
                                     </div>
                                 ) : (
                                     <div>
                                         <Link to="/login">
-                                            <SignButton text="로그인" width="250px" height="60px" />
-                                        </Link>
-                                        <Link to="/signup">
-                                            <SignButton
-                                                text="회원가입"
+                                            <Button
                                                 width="250px"
                                                 height="60px"
+                                                text="로그인"
+                                                boxShadow="1px 1px 5px rgb(0,0,0,0.2)"
+                                                margin="10px"
+                                            />
+                                        </Link>
+                                        <Link to="/signup">
+                                            <Button
+                                                width="250px"
+                                                height="60px"
+                                                text="회원가입"
+                                                boxShadow="1px 1px 5px rgb(0,0,0,0.2)"
+                                                margin="10px"
                                             />
                                         </Link>
                                     </div>
@@ -134,90 +137,111 @@ const Header = () => {
                     false
                 )}
             </div>
-            <div>
-                <Link to="/">
-                    <img src={logo9} alt="같이갈래 logo" css={logoStyle}></img>
-                </Link>
-            </div>
             <div
                 css={css`
                     display: flex;
+                    justify-content: space-between;
+                    width: 1200px;
+                    align-items: center;
                 `}
             >
-                <TextField
-                    id="outlined-basic"
-                    autoComplete="string"
-                    variant="outlined"
-                    fullWidth
-                    label="후기를 검색해보세요"
-                    css={search}
-                    onChange={getInputText}
-                />
-                <SearchIcon css={searchIcon} onClick={searchIconClick} />
-                <SearchIcon css={resSearchIcon} onClick={handleResSearchIconClick} />
-                {isResSearchIconClick ? (
-                    <div>
-                        <div css={resSearchIconClick}>
-                            <CloseIcon
-                                onClick={handleClose}
-                                css={css`
-                                    width: 30px;
-                                    height: 30px;
-                                    margin: 20px;
-                                    align-self: start;
-                                `}
-                            />
-                            <input
-                                type="text"
-                                css={responsiveSearchInput}
-                                placeholder="후기를 검색해보세요."
-                                onChange={getInputText}
-                            ></input>
-                            <div css={recentKeword}>최근 검색어</div>
-                        </div>
-                    </div>
-                ) : (
-                    false
-                )}
-            </div>
-            {isLogin ? (
-                <div css={divAccount}>
-                    <NotificationsActiveIcon css={notification} />
-                    <AccountCircleIcon css={Account} onClick={handleAccountClick} />
-                    {isAccountClick ? (
-                        <div css={dropMenu} ref={AccountRef}>
-                            <ul
-                                css={css`
-                                    list-style: none;
-                                    padding: 0;
-                                `}
-                            >
-                                <Link
-                                    to="/mypage"
+                <div>
+                    <Link to="/">
+                        <img src={logo9} alt="같이갈래 logo" css={logoStyle}></img>
+                    </Link>
+                </div>
+                <div
+                    css={css`
+                        display: flex;
+                    `}
+                >
+                    <TextField
+                        id="outlined-basic"
+                        autoComplete="string"
+                        variant="outlined"
+                        fullWidth
+                        label="후기를 검색해보세요"
+                        css={search}
+                        onChange={getInputText}
+                    />
+                    <SearchIcon css={searchIcon} onClick={searchIconClick} />
+                    <SearchIcon css={resSearchIcon} onClick={handleResSearchIconClick} />
+                    {isResSearchIconClick ? (
+                        <div>
+                            <div css={resSearchIconClick}>
+                                <CloseIcon
+                                    onClick={handleClose}
                                     css={css`
-                                        text-decoration-line: none;
-                                        color: black;
+                                        width: 30px;
+                                        height: 30px;
+                                        margin: 20px;
+                                        align-self: start;
                                     `}
-                                >
-                                    <li css={topDropMenu}>마이페이지</li>
-                                </Link>
-                                <li css={bottomDropMenu}>로그아웃</li>
-                            </ul>
+                                />
+                                <input
+                                    type="text"
+                                    css={responsiveSearchInput}
+                                    placeholder="후기를 검색해보세요."
+                                    onChange={getInputText}
+                                ></input>
+                                <div css={recentKeyword}>최근 검색어</div>
+                            </div>
                         </div>
                     ) : (
                         false
                     )}
                 </div>
-            ) : (
-                <div css={divAccount}>
-                    <Link to="/login">
-                        <SignButton text="로그인" width="100px" height="50px" />
-                    </Link>
-                    <Link to="/signup">
-                        <SignButton text="회원가입" width="100px" height="50px" />
-                    </Link>
-                </div>
-            )}
+                {isLogin ? (
+                    <div css={divAccount}>
+                        <NotificationsActiveIcon css={notification} />
+                        <AccountCircleIcon css={Account} onClick={handleAccountClick} />
+                        {isAccountClick ? (
+                            <div css={dropMenu} ref={AccountRef}>
+                                <ul
+                                    css={css`
+                                        list-style: none;
+                                        padding: 0;
+                                    `}
+                                >
+                                    <Link
+                                        to="/mypage"
+                                        css={css`
+                                            text-decoration-line: none;
+                                            color: black;
+                                        `}
+                                    >
+                                        <li css={topDropMenu}>마이페이지</li>
+                                    </Link>
+                                    <li css={bottomDropMenu}>로그아웃</li>
+                                </ul>
+                            </div>
+                        ) : (
+                            false
+                        )}
+                    </div>
+                ) : (
+                    <div css={divAccount}>
+                        <Link to="/login">
+                            <Button
+                                width="100px"
+                                height="50px"
+                                text="로그인"
+                                boxShadow="1px 1px 5px rgb(0,0,0,0.2)"
+                                margin="10px"
+                            />
+                        </Link>
+                        <Link to="/signup">
+                            <Button
+                                width="100px"
+                                height="50px"
+                                text="회원가입"
+                                boxShadow="1px 1px 5px rgb(0,0,0,0.2)"
+                                margin="10px"
+                            />
+                        </Link>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
@@ -225,8 +249,8 @@ const Header = () => {
 const wrap = css`
     display: flex;
     width: 100vw;
-    height: 70px;
-    justify-content: space-between;
+    height: 100px;
+    justify-content: center;
     align-items: center;
     margin-top: 20px;
     padding-bottom: 20px;
@@ -240,6 +264,7 @@ const container = css`
     display: none;
     @media (max-width: 768px) {
         display: block;
+        z-index: 2;
     }
 `;
 
@@ -248,13 +273,33 @@ const menuClickContainer = css`
     top: 0px;
     left: 0px;
     width: 100vw;
-    height: 100vw;
+    height: 2554px;
     background-color: rgb(0, 0, 0, 0.3);
 `;
+const menuContainer = css`
+    position: absolute;
+    text-align: center;
+    top: 0px;
+    left: 0px;
+    width: 300px;
+    height: 100%;
+    margin: 0 auto;
+    background-color: white;
+    img {
+        width: 140px;
+        height: 80px;
+        margin: 20px;
+    }
+`;
+const buttonContainer = css`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
 const logoStyle = css`
     width: 140px;
     height: 80px;
-    margin-left: 100px;
     margin-top: 10px;
 
     @media (max-width: 768px) {
@@ -346,7 +391,7 @@ const responsiveSearchInput = css`
     }
 `;
 
-const recentKeword = css`
+const recentKeyword = css`
     display: flex;
     align-self: start;
     margin-top: 30px;
@@ -357,7 +402,6 @@ const divAccount = css`
     display: flex;
     justify-content: center;
     width: 220px;
-    margin-right: 100px;
     @media (max-width: 768px) {
         display: none;
     }
@@ -397,17 +441,6 @@ const menuicon = css`
     &:hover {
         cursor: pointer;
     }
-`;
-
-const menubox = css`
-    position: absolute;
-    text-align: center;
-    top: 0px;
-    left: 0px;
-    width: 300px;
-    height: 100vh;
-    margin: 0 auto;
-    background-color: white;
 `;
 
 const dropMenu = css`
