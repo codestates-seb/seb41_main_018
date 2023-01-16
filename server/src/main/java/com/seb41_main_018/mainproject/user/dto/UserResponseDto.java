@@ -15,6 +15,7 @@ public class UserResponseDto {
     private String email;
     private String nickname;
     private String password;
+    private String phone;
     private Boolean email_subscribe;
     private UserStatus userStatus;
 }

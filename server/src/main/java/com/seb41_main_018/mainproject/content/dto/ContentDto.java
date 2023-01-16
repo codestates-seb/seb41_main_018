@@ -29,11 +29,14 @@ public class ContentDto {
 
     @AllArgsConstructor
     @Getter
+    @Setter
     @Builder
     public static class ContentResponse {
         private Long contentId;
         private Long userId;
         private String title;
         private String body;
+
+        private int heartCount;
     }
 }

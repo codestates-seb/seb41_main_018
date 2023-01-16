@@ -22,5 +22,7 @@ public class UserPostDto {
     @NotBlank
     private String nickname;
 
+    private String phone;
+
     private Boolean email_subscribe;
 }

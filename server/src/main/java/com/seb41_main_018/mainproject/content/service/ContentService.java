@@ -75,7 +75,8 @@ public class ContentService {
     public Content findVerifiedContent(Long contentId) {
         Optional<Content> optionalContent = contentRepository.findById(contentId);
         Content findContent =
-                optionalContent.orElseThrow(NullPointerException::new);
+                optionalContent.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.CONTENT_NOT_FOUND));
 
         return findContent;
     }

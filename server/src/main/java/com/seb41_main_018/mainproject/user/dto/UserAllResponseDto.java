@@ -14,6 +14,7 @@ public class UserAllResponseDto {
     private String email;
     private String nickname;
     private String password;
+    private String phone;
     private Boolean email_subscribe;
 
     //private List<ContentResponseDto> contents;

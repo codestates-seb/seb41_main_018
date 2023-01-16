@@ -27,6 +27,7 @@ public interface ContentMapper {
                 .userId(user.getUserId())
                 .title(content.getTitle())
                 .body(content.getBody())
+                .heartCount(content.getHeartCount())
                 .build();
     }
     List<ContentDto.ContentResponse> contentsToContentResponse(List<Content> contents);

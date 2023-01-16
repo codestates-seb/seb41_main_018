@@ -2,6 +2,7 @@ package com.seb41_main_018.mainproject.content.entity;
 
 import com.seb41_main_018.mainproject.audit.Auditable;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
+import com.seb41_main_018.mainproject.constant.ThemeType;
 import com.seb41_main_018.mainproject.heart.entity.Heart;
 import com.seb41_main_018.mainproject.route.entity.Route;
 import com.seb41_main_018.mainproject.tag.entity.Tag;
@@ -32,6 +33,13 @@ public class Content extends Auditable {
 
     @Column(nullable = false)
     private int viewCount = 0;
+
+    @Column(nullable = false)
+    private int heartCount = 0;
+
+    @Column
+    @Enumerated(value = EnumType.STRING)
+    private ThemeType themeType = ThemeType.BASIC;
  
     // 연관 관계 //
     @ToString.Exclude

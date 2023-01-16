@@ -1,20 +1,31 @@
 package com.seb41_main_018.mainproject.heart.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.validator.constraints.Range;
+import com.seb41_main_018.mainproject.constant.HeartType;
+import lombok.*;
+
+import javax.validation.constraints.NotBlank;
 
 public class HeartDto {
+
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class Patch {
+        @NotBlank
+        private Long contentId;
+        @NotBlank
+        private String heartType;
+    }
+
     @AllArgsConstructor
     @Getter
     @Setter
     @Builder
     static public class Response {
         private Long heartId;
-        private Long userId;
+
         private Long contentId;
-        private int heartCount;
+        private Long userId;
+        private String heartType;
     }
 }
