@@ -1,33 +1,43 @@
 package com.seb41_main_018.mainproject.user.service;
 
+import com.seb41_main_018.mainproject.auth.utils.CustomAuthorityUtils;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final CustomAuthorityUtils authorityUtils;
     //private final CustomBeanUtils<Member> beanUtils;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public User createUser(User user) {
         // 이미 등록된 이메일인지 확인
         verifyExistsEmail(user.getEmail());
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
 
-        return userRepository.save(user);
+        List<String> roles = authorityUtils.createRoles(user.getEmail());
+        user.setRoles(roles);
+
+        User savedUser = userRepository.save(user);
+
+        return savedUser;
     }
     //유저 수정
     public User updateUser(User user) {
@@ -35,8 +45,8 @@ public class UserService {
 
         Optional.ofNullable(user.getNickname())
                 .ifPresent(nickname -> findUser.setNickname(nickname));
-//        Optional.ofNullable(user.getPhone())
-//                .ifPresent(phone -> findUser.setPhone(phone));
+        Optional.ofNullable(user.getPhone())
+                .ifPresent(phone -> findUser.setPhone(phone));
         //Optional.ofNullable(user.getPassword())
                 //.ifPresent(password -> findUser.setPassword(bCryptPasswordEncoder.encode(password)));
 
@@ -71,5 +81,12 @@ public class UserService {
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent())
             throw new BusinessLogicException(ExceptionCode.USER_EXISTS);
+    }
+    public boolean emailCheck(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()){
+            return false;
+        }
+        return true;
     }
 }
