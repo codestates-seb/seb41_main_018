@@ -23,8 +23,8 @@ const Categorybar = () => {
     ];
     return (
         <div css={wrap}>
-            {category.map((el) => (
-                <div css={categoryContainer}>
+            {category.map((el, index) => (
+                <div key={index} css={categoryContainer}>
                     <img src={el.src} css={categoryImg} />
                     <span css={categoryFont}>{el.title}</span>
                 </div>
