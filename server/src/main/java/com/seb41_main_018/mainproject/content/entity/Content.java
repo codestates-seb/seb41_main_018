@@ -34,6 +34,9 @@ public class Content extends Auditable {
     @Column(nullable = false)
     private int viewCount = 0;
 
+    @Column(nullable = false)
+    private int heartCount = 0;
+
     @Column
     @Enumerated(value = EnumType.STRING)
     private ThemeType themeType = ThemeType.BASIC;
