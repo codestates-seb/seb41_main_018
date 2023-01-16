@@ -61,7 +61,7 @@ const Banner = () => {
 const wrap = css`
     display: flex;
     height: 300px;
-    margin: auto;
+    margin: 20px auto; //RegionItems relative로 되어있어서 그 공간을 땡김
     width: 1440px;
     @media (max-width: 1440px) {
         width: 1200px;
