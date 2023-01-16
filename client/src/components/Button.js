@@ -28,7 +28,7 @@ const Button = (props) => {
                 border: ${props.border || `${PALETTE.border_default}`};
                 box-shadow: ${props.boxShadow || null};
 
-                transition: all 0.2s;
+                transition: ${props.transition || "all 0.2s"};
 
                 cursor: pointer;
 

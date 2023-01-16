@@ -14,14 +14,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
-// import "swiper/components/navigation/navigation.min.css";
-// import "swiper/components/pagination/pagination.min.css";
-// import "swiper/css";
-// import "swiper/css/bundle";
-// import "swiper/swiper-bundle.min.css";
-// import "swiper/swiper.min.css";
 import { PALETTE } from "../Common";
-// SwiperCore.use([Navigation, Pagination, Autoplay]);
+
 
 const Banner = () => {
     const swiperOption = {
