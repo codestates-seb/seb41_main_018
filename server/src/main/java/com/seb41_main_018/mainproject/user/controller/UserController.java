@@ -2,6 +2,7 @@ package com.seb41_main_018.mainproject.user.controller;
 
 import com.seb41_main_018.mainproject.content.dto.ContentDto;
 import com.seb41_main_018.mainproject.content.entity.Content;
+import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
 import com.seb41_main_018.mainproject.user.dto.UserAllResponseDto;
 import com.seb41_main_018.mainproject.user.dto.UserPatchDto;
@@ -13,6 +14,8 @@ import com.seb41_main_018.mainproject.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.seb41_main_018.mainproject.user.entity.User;
@@ -77,6 +80,11 @@ public class UserController {
         userService.deleteUser(userId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    // 이메일 검사 //
+    @GetMapping("/emailCheck/{email}")
+    public ResponseEntity<Boolean> verifyExistsEmail(@PathVariable("email") String email){
+        return ResponseEntity.ok(userService.emailCheck(email));
     }
 
 }
