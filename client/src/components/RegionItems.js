@@ -31,7 +31,7 @@ const Regionitems = () => {
 };
 
 const imgStyle = css`
-    width: 275px;
+    width: 264px;
     height: 380px;
     margin: 10px 0;
     border-radius: ${PALETTE.border_radius};
