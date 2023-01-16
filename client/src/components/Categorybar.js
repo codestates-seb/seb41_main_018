@@ -21,14 +21,33 @@ const Categorybar = () => {
         { src: 카페투어, title: "카페투어" },
         { src: 맛집투어, title: "맛집투어" },
     ];
+
     return (
         <div css={wrap}>
-            {category.map((el, index) => (
-                <div key={index} css={categoryContainer}>
-                    <img src={el.src} css={categoryImg} />
-                    <span css={categoryFont}>{el.title}</span>
-                </div>
-            ))}
+            <div
+                css={css`
+                    display: flex;
+                `}
+            >
+                {category.slice(0, category.length / 2).map((el, index) => (
+                    <div key={index} css={categoryContainer}>
+                        <img src={el.src} css={categoryImg} />
+                        <span css={categoryFont}>{el.title}</span>
+                    </div>
+                ))}
+            </div>
+            <div
+                css={css`
+                    display: flex;
+                `}
+            >
+                {category.slice(category.length / 2, category.length).map((el, index) => (
+                    <div key={index} css={categoryContainer}>
+                        <img src={el.src} css={categoryImg} />
+                        <span css={categoryFont}>{el.title}</span>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
@@ -37,11 +56,21 @@ const wrap = css`
     width: 100vw;
     display: flex;
     justify-content: center;
+    margin: 0 auto;
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        width: 460px;
+    }
 `;
 
 const categoryContainer = css`
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
     &:hover {
         font-weight: 900;
     }
