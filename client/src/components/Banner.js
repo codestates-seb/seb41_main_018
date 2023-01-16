@@ -21,7 +21,7 @@ import "swiper/css/autoplay";
 // import "swiper/swiper-bundle.min.css";
 // import "swiper/swiper.min.css";
 import { PALETTE } from "../Common";
-SwiperCore.use([Navigation, Pagination, Autoplay]);
+// SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const Banner = () => {
     const swiperOption = {
@@ -65,6 +65,9 @@ const wrap = css`
     width: 1440px;
     @media (max-width: 1440px) {
         width: 1200px;
+    }
+    @media (max-width: 1200px) {
+        width: 1080px;
     }
     @media (max-width: 1000px) {
         width: 788px;
