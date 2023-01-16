@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-
 import { useForm } from "react-hook-form";
-
 /** @jsxImportSource @emotion/react */
 import { jsx, css } from "@emotion/react";
-
 import SocialButton from "../components/SocialButton";
 import Button from "../components/Button";
 
@@ -74,7 +71,15 @@ const LoginPage = () => {
                     {errors.password && <small role="alert">{errors.password.message}</small>}
                     <SocialButton />
                     {/* <Button type="submit" text="Login"/> */}
-                    <Button type="button" text="Login" />
+                    <Button
+                        type="button"
+                        text="Login"
+                        transform="scale(1.1, 1.1)"
+                        ms_transform="scale(1.1, 1.1)"
+                        webkit_transform="scale(1.1, 1.1)"
+                        bgHover="rgba(228, 78, 78, 1)"
+                        transition="250ms"
+                    />
                     <div css={UserData}>아이디 / 비밀번호 찾기</div>
                     <div css={UserData}>회원가입</div>
                 </form>

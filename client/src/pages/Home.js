@@ -1,68 +1,204 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { css } from "@emotion/react";
-import HomeItems from "../components/HomeItems";
-import PostItem from "../components/PostItem";
+import Postitems from "../components/Postitems";
+import Regionitems from "../components/RegionItems";
 import Categorybar from "../components/Categorybar";
 import Banner from "../components/Banner";
+import Footer from "../components/Footer";
+import { Navigation, Pagination, Autoplay } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore from "swiper/core";
+import "swiper/swiper-bundle.min.css";
+import "swiper/swiper.min.css";
+import "swiper/components/navigation/navigation.min.css";
+import "swiper/components/pagination/pagination.min.css";
+import right from "../assets/right.png";
+import left from "../assets/left.png";
 
 const Home = () => {
+    const swiperOption = {
+        spaceBetween: 10,
+        // scrollbar: {
+        //     draggable: true,
+        // },
+        slidesPerView: 5,
+        navigation: true,
+        breakpoints: {
+            1441: {
+                slidesPerView: 5,
+            },
+            1200: {
+                slidesPerView: 4,
+                spaceBetween: 30,
+            },
+            1000: {
+                slidesPerView: 4,
+            },
+            768: {
+                slidesPerView: 3,
+            },
+            576: {
+                slidesPerView: 2,
+            },
+            400: {
+                slidesPerView: 1,
+            },
+        },
+    };
     return (
         <div>
             <Categorybar />
-            <div css={itemsTitle}>{/* 지역 여행 */}</div>
-            <div
-                css={css`
-                    display: flex;
-                    width: 1440px;
-                    margin: 0 auto;
-                `}
-            >
-                <PostItem />
-                <PostItem />
-                <PostItem />
-                <PostItem />
-            </div>
-            <Banner />
+            <Swiper {...swiperOption} css={postStyle}>
+                <div>
+                    <SwiperSlide>
+                        <Regionitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Regionitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Regionitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Regionitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Regionitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Regionitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Regionitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Regionitems />
+                    </SwiperSlide>
+                </div>
+            </Swiper>
+            {/* <Banner /> */}
             <div css={itemsTitle}>✈️ 관심 급상승 여행지</div>
-            <div css={items}>
-                {/* <HomeItems />
-                <HomeItems />
-                <HomeItems />
-                <HomeItems />
-                <HomeItems />
-                <HomeItems /> */}
-            </div>
+            <Swiper {...swiperOption} css={postStyle}>
+                <div>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                </div>
+            </Swiper>
+            <div css={itemsTitle}>✈️ 관심 급상승 여행지</div>
+            <Swiper {...swiperOption} css={postStyle}>
+                <div>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <Postitems />
+                    </SwiperSlide>
+                </div>
+            </Swiper>
+            <Banner />
+            <Footer />
         </div>
     );
 };
 
-const items = css`
-    display: grid;
-    margin: 10px 20px;
-    grid-template-columns: repeat(6, 1fr);
-
-    @media (max-width: 1440px) {
-        grid-template-columns: repeat(5, 1fr);
-    }
-    @media (max-width: 1280px) {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    @media (max-width: 1080px) {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    @media (max-width: 860px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    @media (max-width: 540px) {
-        grid-template-columns: repeat(1, 1fr);
-    }
-`;
-
 const itemsTitle = css`
-    margin: 30px;
-    margin-bottom: 10px;
-    font-size: 21px;
+    width: 1440px;
+    @media (max-width: 1440px) {
+        width: 1200px;
+    }
+    @media (max-width: 1200px) {
+        width: 1080px;
+    }
+    @media (max-width: 1000px) {
+        width: 788px;
+    }
+    @media (max-width: 768px) {
+        width: 630px;
+    }
+    @media (max-width: 576px) {
+        width: 460px;
+    }
+    margin: 30px auto 0;
+    font-size: 1.5rem;
     font-weight: 600;
 `;
+
+const postStyle = css`
+    width: 1440px;
+    @media (max-width: 1440px) {
+        width: 1200px;
+    }
+    @media (max-width: 1200px) {
+        width: 1080px;
+    }
+    @media (max-width: 1000px) {
+        width: 788px;
+    }
+    @media (max-width: 768px) {
+        width: 630px;
+    }
+    @media (max-width: 576px) {
+        width: 460px;
+    }
+    .swiper-button-next {
+        background: url(${right}) no-repeat;
+        right: 0;
+        background-size: 140% auto;
+        background-position: center;
+        position: absolute;
+    }
+    .swiper-button-prev {
+        background: url(${left}) no-repeat;
+        left: 0;
+        background-size: 140% auto;
+        background-position: center;
+        position: absolute;
+    }
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+        display: none;
+    }
+`;
+
 export default Home;
