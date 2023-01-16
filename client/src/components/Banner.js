@@ -1,28 +1,23 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { css } from "@emotion/react";
+import { PALETTE } from "../Common";
 import 배너이미지1 from "../assets/bannerImg/배너이미지1.png";
 import 배너이미지2 from "../assets/bannerImg/배너이미지2.png";
 import 배너이미지3 from "../assets/bannerImg/배너이미지3.png";
 import right from "../assets/right.png";
 import left from "../assets/left.png";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper";
-import SwiperCore from "swiper/core";
+import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 import "swiper/css/autoplay";
-import { PALETTE } from "../Common";
 
-
+SwiperCore.use([Navigation, Pagination, Autoplay]);
 const Banner = () => {
     const swiperOption = {
         spaceBetween: 50,
-        scrollbar: {
-            draggable: true,
-        },
         navigation: true,
         pagination: {
             clickable: true,
@@ -55,7 +50,7 @@ const Banner = () => {
 const wrap = css`
     display: flex;
     height: 300px;
-    margin: 20px auto; //RegionItems relative로 되어있어서 그 공간을 땡김
+    margin: 20px auto;
     width: 1440px;
     @media (max-width: 1440px) {
         width: 1200px;
@@ -79,7 +74,7 @@ const swiperStyle = css`
         margin-top: 40px;
         background: black;
     }
-    /* .swiper-button-next {
+    .swiper-button-next {
         background: url(${right}) no-repeat;
         right: 0;
         background-size: 140% auto;
@@ -96,7 +91,7 @@ const swiperStyle = css`
     .swiper-button-next::after,
     .swiper-button-prev::after {
         display: none;
-    } */
+    }
 `;
 
 export default Banner;
