@@ -1,3 +1,4 @@
+/*
 package com.seb41_main_018.mainproject;
 
 import org.springframework.context.annotation.Bean;
@@ -20,3 +21,4 @@ public class SwaggerConfig {
                 .build();
     }
 }
+*/
