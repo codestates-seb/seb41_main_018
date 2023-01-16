@@ -9,10 +9,10 @@ import left from "../assets/left.png";
 import { Navigation, Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper/core";
-import "swiper/swiper-bundle.min.css";
+/* import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 import "swiper/components/navigation/navigation.min.css";
-import "swiper/components/pagination/pagination.min.css";
+import "swiper/components/pagination/pagination.min.css"; */
 import { PALETTE } from "../Common";
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
