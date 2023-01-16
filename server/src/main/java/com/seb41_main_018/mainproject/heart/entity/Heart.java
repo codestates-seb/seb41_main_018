@@ -33,7 +33,6 @@ public class Heart extends Auditable {
     public Heart(User user, Content content) {
         this.user = user;
         this.content = content;
-        this.heartType = HeartType.REMOVE;
     }
 
     public void addUser(User user) {

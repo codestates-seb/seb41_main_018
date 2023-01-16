@@ -1,42 +1,48 @@
 package com.seb41_main_018.mainproject.heart.controller;
 
 import com.seb41_main_018.mainproject.constant.HeartType;
+import com.seb41_main_018.mainproject.content.service.ContentService;
 import com.seb41_main_018.mainproject.heart.dto.HeartDto;
 import com.seb41_main_018.mainproject.heart.entity.Heart;
 import com.seb41_main_018.mainproject.heart.mapper.HeartMapper;
 import com.seb41_main_018.mainproject.heart.service.HeartService;
+import com.seb41_main_018.mainproject.user.entity.User;
+import com.seb41_main_018.mainproject.content.entity.Content;
+import com.seb41_main_018.mainproject.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
+@Slf4j
 @Validated
 @RestController
 @RequiredArgsConstructor
 public class HeartController {
     private final HeartMapper heartMapper;
     private final HeartService heartService;
+    private final UserService userService;
+    private final ContentService contentService;
 
     // 좋아요 등록 //
 
-    @PostMapping("/{contentId}/hearts")
+    @PostMapping("/{userId}/{contentId}/hearts")
     public ResponseEntity postHeart(
-            @PathVariable Long contentId,
-            @RequestBody HeartDto.Post requestBody) {
+            @PathVariable("userId") @Positive Long userId,
+            @PathVariable("contentId") @Positive Long contentId) {
+        User user = userService.findUser(userId);
+        Content content = contentService.findContent(contentId);
+        Heart heart = heartService.createHeart(user,content);
+        HeartDto.Response response = heartMapper.heartToHeartResponseDto(heart);
 
-        String heartType = requestBody.getHeartType().toUpperCase();
-        requestBody.setHeartType(heartType);
-
-        Heart createHeart = heartService.createHeart(
-                heartMapper.heartPostDtoToEntity(requestBody),
-                contentId,
-                requestBody.getContentId());
-
-        return new ResponseEntity<>(heartMapper.heartToHeartResponseDto(createHeart),HttpStatus.CREATED);
+        return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
 
 }

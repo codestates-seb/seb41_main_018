@@ -6,15 +6,6 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 
 public class HeartDto {
-    @AllArgsConstructor
-    @Getter
-    @Setter
-    public static class Post {
-        @NotBlank
-        private Long contentId;
-        @NotBlank
-        private String heartType;
-    }
 
     @AllArgsConstructor
     @Getter
@@ -32,6 +23,8 @@ public class HeartDto {
     @Builder
     static public class Response {
         private Long heartId;
+
+        private Long contentId;
         private Long userId;
         private String heartType;
     }

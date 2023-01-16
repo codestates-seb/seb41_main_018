@@ -10,7 +10,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface HeartMapper {
-    Heart heartPostDtoToEntity(HeartDto.Post requestBody);
     Heart heartPatchDtoToEntity(HeartDto.Patch requestBody);
     default HeartDto.Response heartToHeartResponseDto(Heart heart) {
         User user = heart.getUser();
@@ -19,6 +18,7 @@ public interface HeartMapper {
         return HeartDto.Response.builder()
                 .userId(user.getUserId())
                 .heartId(heart.getHeartId())
+                .contentId(content.getContentId())
                 .heartType(heart.getHeartType().toString())
                 .build();
     }
