@@ -8,7 +8,11 @@ import SignButton from "./SignButton";
 
 const Regionitems = () => {
     return (
-        <div>
+        <div
+            css={css`
+                margin-bottom: -120px;
+            `}
+        >
             <div>
                 <img src={경복궁} css={imgStyle} />
             </div>
