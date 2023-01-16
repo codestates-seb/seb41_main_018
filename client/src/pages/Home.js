@@ -6,13 +6,14 @@ import Regionitems from "../components/RegionItems";
 import Categorybar from "../components/Categorybar";
 import Banner from "../components/Banner";
 import Footer from "../components/Footer";
-import { Navigation, Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper";
 import SwiperCore from "swiper/core";
-import "swiper/swiper-bundle.min.css";
-import "swiper/swiper.min.css";
-import "swiper/components/navigation/navigation.min.css";
-import "swiper/components/pagination/pagination.min.css";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import "swiper/css/autoplay";
 import right from "../assets/right.png";
 import left from "../assets/left.png";
 
@@ -77,7 +78,7 @@ const Home = () => {
                     </SwiperSlide>
                 </div>
             </Swiper>
-            {/* <Banner /> */}
+            <Banner />
             <div css={itemsTitle}>✈️ 관심 급상승 여행지</div>
             <Swiper {...swiperOption} css={postStyle}>
                 <div>
