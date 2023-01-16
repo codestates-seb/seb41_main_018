@@ -160,7 +160,7 @@ const Header = () => {
                         autoComplete="string"
                         variant="outlined"
                         fullWidth
-                        label="후기를 검색해보세요"
+                        placeholder="후기를 검색해보세요"
                         css={search}
                         onChange={getInputText}
                     />
