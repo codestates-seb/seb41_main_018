@@ -4,20 +4,27 @@ import { useForm } from "react-hook-form";
 
 import { useNavigate, Link } from "react-router-dom";
 
-import axios from 'axios';
+import axios from "axios";
 
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import { css } from "@emotion/react";
 
-import { LoginpageBg, LoginpageContainer, LoginLogoContainer, LoginContainer, LoginLabelBox, LoginInputBox } from "./loginstyle";
+import {
+    LoginpageBg,
+    LoginpageContainer,
+    LoginLogoContainer,
+    LoginContainer,
+    LoginLabelBox,
+    LoginInputBox,
+} from "./loginstyle";
 import SocialButton from "../../components/SocialButton";
 import Button from "../../components/Button";
 import logo3 from "../../assets/logo3.png";
 
 const defaultValues = {
-    email:'',
-    password:'',
-    }
+    email: "",
+    password: "",
+};
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -26,37 +33,39 @@ const LoginPage = () => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm({mode: 'onchange', defaultValues});
+    } = useForm({ mode: "onchange", defaultValues });
 
     const onSubmit = async () => {
         const jsonData = JSON.stringify(defaultValues);
-        console.log(jsonData)
-            
-        await axios.get("url", jsonData,
-        {
-        headers: {
-            "Content-Type": `application/json`
-        }
-        })
-        .then((res) => {
-            navigate("/");
-        })
-        .catch((err) => {
-            console.log(err)
-            alert('로그인에 실패했습니다.');
-        })
-    }
+        console.log(jsonData);
+
+        await axios
+            .get("url", jsonData, {
+                headers: {
+                    "Content-Type": `application/json`,
+                },
+            })
+            .then((res) => {
+                navigate("/");
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("로그인에 실패했습니다.");
+            });
+    };
 
     return (
         <div css={LoginpageBg}>
             <div css={LoginpageContainer}>
                 <div css={LoginLogoContainer}>
-                    <Link to={'/'}>
+                    <Link to={"/"}>
                         <img src={logo3} alt="logo" />
                     </Link>
                 </div>
                 <form css={LoginContainer} onSubmit={handleSubmit(onSubmit)}>
-                    <label htmlFor="email" css={LoginLabelBox}>이메일</label>
+                    <label htmlFor="email" css={LoginLabelBox}>
+                        이메일
+                    </label>
                     <input
                         id="email"
                         type="email"
@@ -72,7 +81,9 @@ const LoginPage = () => {
                         css={LoginInputBox}
                     />
                     {errors.email && <small role="alert">{errors.email.message}</small>}
-                    <label htmlFor="password" css={LoginLabelBox}>비밀번호</label>
+                    <label htmlFor="password" css={LoginLabelBox}>
+                        비밀번호
+                    </label>
                     <input
                         id="password"
                         type="password"
@@ -88,8 +99,8 @@ const LoginPage = () => {
                         css={LoginInputBox}
                     />
                     {errors.password && <small role="alert">{errors.password.message}</small>}
-                    <SocialButton/>
-                    <Button type="button" text="Login"/>
+                    <SocialButton />
+                    <Button type="button" text="Login" />
                     <div css={UserInfoButton}>아이디 / 비밀번호 찾기</div>
                     <div css={UserInfoButton}>회원가입</div>
                 </form>
