@@ -63,7 +63,7 @@ class ContentControllerTest {
         ContentDto.ContentResponse responseBody = new ContentDto.ContentResponse(1L,
                 1L,
                 "Algorithm to simplify a weighted directed graph of debts",
-                "I've been using a little python script I wrote to manage debt amongst my roommates.");
+                "I've been using a little python script I wrote to manage debt amongst my roommates.",0);
 
         // Stubbing by Mockito
         given(contentMapper.contentPostDtoToContent(Mockito.any(ContentDto.ContentPost.class))).willReturn(new Content());
@@ -103,7 +103,7 @@ class ContentControllerTest {
         ContentDto.ContentResponse response = new ContentDto.ContentResponse(1L,
                 1L,
                 "Algorithm to simplify a weighted directed graph of debts",
-                "I've been using a little python script I wrote to manage debt amongst my roommates.");
+                "I've been using a little python script I wrote to manage debt amongst my roommates.",0);
 
 
         // Stubbing by Mockito
@@ -193,7 +193,7 @@ class ContentControllerTest {
         ContentDto.ContentResponse response = new ContentDto.ContentResponse(1L,
                 1L,
                 "Patch:Algorithm to simplify a weighted directed graph of debts",
-                "Patch:I've been using a little python script I wrote to manage debt amongst my roommates.");
+                "Patch:I've been using a little python script I wrote to manage debt amongst my roommates.",0);
 
 
         // Stubbing by Mockito

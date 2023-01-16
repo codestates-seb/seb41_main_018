@@ -52,7 +52,7 @@ public class UserControllerTest {
     @Test
     void postUserTest() throws Exception {
         //given
-        UserPostDto post = new UserPostDto("hgd@gmail.com","qwer1234!","길동길동",true);
+        UserPostDto post = new UserPostDto("hgd@gmail.com","qwer1234!","길동길동","010-1111-1111",true);
 //
 
         given(userMapper.userPostDtoToUser(Mockito.any(UserPostDto.class))).willReturn(new User());
@@ -81,9 +81,9 @@ public class UserControllerTest {
     @Test
         void patchUserTest() throws Exception{
         long userId = 1L;
-        UserPatchDto patch = new UserPatchDto(userId, "hgd@naver.com", "qwer1234!","길동길동",true,UserStatus.ACTIVITY);
+        UserPatchDto patch = new UserPatchDto(userId, "hgd@naver.com", "qwer1234!","길동길동","010-1111-1111",true,UserStatus.ACTIVITY);
 
-        UserResponseDto response = new UserResponseDto(userId, "hgd@naver.com", "길동길동","qwer1234!",true,UserStatus.ACTIVITY);;
+        UserResponseDto response = new UserResponseDto(userId, "hgd@naver.com", "길동길동","qwer1234!","010-1111-1111",true,UserStatus.ACTIVITY);;
 
         Gson gson = new Gson();
         String requestToJson = gson.toJson(patch);
@@ -118,7 +118,7 @@ public class UserControllerTest {
                 "hgd@gmail.com",
                 "길동길동",
                 "qwer1234!",
-                true,
+                "010-1111-1111",true,
                 UserStatus.ACTIVITY);
 
         // Stubbing by Mockito

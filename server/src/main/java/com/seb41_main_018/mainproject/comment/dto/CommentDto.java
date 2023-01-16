@@ -1,5 +1,6 @@
 package com.seb41_main_018.mainproject.comment.dto;
 
+import com.seb41_main_018.mainproject.constant.RatingType;
 import com.seb41_main_018.mainproject.validator.NotSpace;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,6 +14,7 @@ public class CommentDto {
         private long contentId;
         @NotSpace(message = "내용을 채워주세요.")
         private String body;
+        private RatingType ratingType;
 
     }
 
@@ -24,6 +26,7 @@ public class CommentDto {
         private long contentId;
         @NotSpace(message = "내용을 채워주세요.")
         private String body;
+        private RatingType ratingType;
         public void setCommentId(long commentId) {
             this.commentId = commentId;
         }
@@ -37,7 +40,6 @@ public class CommentDto {
             private long userId;
             private long contentId;
             private String body;
-
-
+            private RatingType ratingType;
     }
 }
