@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
+import Button from "../components/Button";
 import { css } from "@emotion/react";
 import { PALETTE } from "../Common";
 import 경복궁 from "../assets/sampleImg/경복궁.png";
@@ -9,16 +10,15 @@ const Regionitems = () => {
     return (
         <div
             css={css`
-                height: 500px;
+                margin-bottom: -120px;
             `}
         >
             <div>
                 <img src={경복궁} css={imgStyle} />
             </div>
-            <div>
+            <div css={textWrap}>
                 <div css={textStyle}>서울</div>
-                <SignButton
-                    css={buttonStyle}
+                <Button
                     width="100px"
                     height="40px"
                     text="더보기"
@@ -53,39 +53,32 @@ const imgStyle = css`
     }
 `;
 
+const textWrap = css`
+    position: relative;
+    bottom: 180px;
+    left: 20px;
+    @media (max-width: 1200px) {
+        bottom: 150px;
+        left: 20px;
+    }
+`;
+
 const textStyle = css`
     position: relative;
     font-size: 4rem;
     font-weight: 600;
     color: rgb(255, 255, 255, 0.9);
     text-shadow: ${PALETTE.text_shadow};
-    bottom: 380px;
-    left: 22px;
+    bottom: 190px;
+    left: 0;
     @media (max-width: 1200px) {
         font-size: 3rem;
-        bottom: 320px;
-        left: 22px;
+        bottom: 160px;
+        left: 0;
     }
     @media (max-width: 1000px) {
         font-size: 2.5rem;
-        bottom: 320px;
-        left: 17px;
-    }
-    @media (max-width: 768px) {
-        font-size: 2.5rem;
-        bottom: 320px;
-        left: 17px;
-    }
-    @media (max-width: 576px) {
-        font-size: 2.5rem;
-        width: 460px;
-        height: 320px;
     }
 `;
 
-const buttonStyle = css`
-    position: relative;
-    bottom: 500px;
-    left: 22px;
-`;
 export default Regionitems;

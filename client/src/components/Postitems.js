@@ -59,6 +59,7 @@ const Postitems = () => {
         </div>
     );
 };
+
 const wrap = css`
     width: 250px;
     height: 270px;
@@ -74,13 +75,13 @@ const imgStyle = css`
     margin: 10px 0;
     border-radius: ${PALETTE.border_radius};
     @media (max-width: 1200px) {
-        width: 275px;
-        height: 180px;
-    }
-    /* @media (max-width: 1000px) {
         width: 250px;
         height: 180px;
-    } */
+    }
+    @media (max-width: 1000px) {
+        width: 250px;
+        height: 180px;
+    }
     @media (max-width: 768px) {
         width: 290px;
         height: 200px;
@@ -96,6 +97,14 @@ const favoriteStyle = css`
     bottom: 190px;
     left: 250px;
     font-size: 22px;
+    @media (max-width: 1200px) {
+        bottom: 190px;
+        left: 225px;
+    }
+    @media (max-width: 768px) {
+        bottom: 210px;
+        left: 265px;
+    }
     @media (max-width: 576px) {
         bottom: 285px;
         left: 430px;

@@ -6,15 +6,16 @@ import 배너이미지2 from "../assets/bannerImg/배너이미지2.png";
 import 배너이미지3 from "../assets/bannerImg/배너이미지3.png";
 import right from "../assets/right.png";
 import left from "../assets/left.png";
-import { Navigation, Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper";
 import SwiperCore from "swiper/core";
-/* import "swiper/swiper-bundle.min.css";
-import "swiper/swiper.min.css";
-import "swiper/components/navigation/navigation.min.css";
-import "swiper/components/pagination/pagination.min.css"; */
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import "swiper/css/autoplay";
 import { PALETTE } from "../Common";
-SwiperCore.use([Navigation, Pagination, Autoplay]);
+
 
 const Banner = () => {
     const swiperOption = {
@@ -54,10 +55,13 @@ const Banner = () => {
 const wrap = css`
     display: flex;
     height: 300px;
-    margin: auto;
+    margin: 20px auto; //RegionItems relative로 되어있어서 그 공간을 땡김
     width: 1440px;
     @media (max-width: 1440px) {
         width: 1200px;
+    }
+    @media (max-width: 1200px) {
+        width: 1080px;
     }
     @media (max-width: 1000px) {
         width: 788px;
