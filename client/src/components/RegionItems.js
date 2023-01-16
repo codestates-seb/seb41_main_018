@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
+import Button from "../components/Button";
 import { css } from "@emotion/react";
 import { PALETTE } from "../Common";
 import 경복궁 from "../assets/sampleImg/경복궁.png";
@@ -13,8 +14,7 @@ const Regionitems = () => {
             </div>
             <div css={textWrap}>
                 <div css={textStyle}>서울</div>
-                <SignButton
-                    css={buttonStyle}
+                <Button
                     width="100px"
                     height="40px"
                     text="더보기"
@@ -52,10 +52,10 @@ const imgStyle = css`
 const textWrap = css`
     position: relative;
     bottom: 180px;
-    left: 10px;
+    left: 20px;
     @media (max-width: 1200px) {
         bottom: 150px;
-        left: 10px;
+        left: 20px;
     }
 `;
 
@@ -66,20 +66,15 @@ const textStyle = css`
     color: rgb(255, 255, 255, 0.9);
     text-shadow: ${PALETTE.text_shadow};
     bottom: 190px;
-    left: 17px;
+    left: 0;
     @media (max-width: 1200px) {
         font-size: 3rem;
         bottom: 160px;
-        left: 17px;
+        left: 0;
     }
     @media (max-width: 1000px) {
         font-size: 2.5rem;
     }
 `;
 
-const buttonStyle = css`
-    position: relative;
-    top: 0px;
-    left: 0px;
-`;
 export default Regionitems;
