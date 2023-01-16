@@ -7,12 +7,14 @@ const SignButton = (props) => {
     return (
         <button
             css={css`
-                border: solid 2px ${PALETTE.default_color};
                 background-color: white;
+                color: ${props.color};
+                border: solid 2px ${PALETTE.default_color};
                 border-radius: 5px;
                 width: ${props.width};
                 height: ${props.height};
                 margin: 10px;
+                box-shadow: ${props.boxShadow};
                 &:hover {
                     background-color: #eee;
                     border: solid 2px ${PALETTE.default_hover};
