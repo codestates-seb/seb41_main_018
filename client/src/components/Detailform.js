@@ -96,7 +96,8 @@ const ComContent = css`
     display: flex;
     font-size: 1.1rem;
     justify-content: space-between;
-    padding: 3px 20px;
+    font-weight: 600;
+    padding: 8px 20px;
 `;
 
 export default Detailform;
