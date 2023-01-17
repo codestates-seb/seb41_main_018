@@ -14,10 +14,7 @@ import javax.validation.constraints.NotBlank;
 public class UserPatchDto {
     private Long userId;
     private String email;
-    @NotBlank
     private String password;
-
-    @NotBlank
     private String nickname;
     private String phone;
     private Boolean email_subscribe;
