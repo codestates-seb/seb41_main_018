@@ -4,8 +4,8 @@ import { PALETTE } from "../Common";
 import { css } from "@emotion/react";
 import DetailformItems from "./DetailformItems";
 import Button from "../components/Button";
-import FiShare from "react-icons/fi";
-
+import { FiShare } from "react-icons/fi";
+import { BsFillHeartFill } from "react-icons/bs";
 const Detailform = (props) => {
     return (
         <div
@@ -51,8 +51,29 @@ const Detailform = (props) => {
                     </div>
                 </div>
             </div>
-            <Button width="100px" text="가치갈래?" />
-            <Button width="80px" text="<FiShare/>" />
+            <div
+                css={css`
+                    display: flex;
+                `}
+            >
+                <Button
+                    width="23.5vw"
+                    margin="10px 10px 10px 40px"
+                    text={[
+                        <BsFillHeartFill
+                            css={css`
+                                position: relative;
+                                top: 5px;
+                                right: 70px;
+                            `}
+                        />,
+                        "가치갈래!",
+                    ]}
+                    ftweight="700"
+                    ftsize="1.4rem"
+                />
+                <Button width="5vw" margin="10px" color="black" ftsize="1.4rem" text=<FiShare /> />
+            </div>
         </div>
     );
 };
