@@ -8,6 +8,7 @@ import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
+import com.seb41_main_018.mainproject.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,15 +26,15 @@ public class CommentService {
     private final UserRepository userRepository;
     private final ContentService contentService;
 
+    private final UserService userService;
+
     public Comment createComment(
             Comment comment,
-            Long userId,
             Long contentId) {
         // 이미 등록된 이메일인지 확인
-        User user = userRepository.findByUserId(userId);
         Content content = contentService.findContent(contentId);
 
-        comment.setUser(user);
+        comment.setUser(userService.getLoginMember());
         comment.setContent(content);
 
         return commentRepository.save(comment);
