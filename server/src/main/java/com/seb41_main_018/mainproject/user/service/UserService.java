@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.seb41_main_018.mainproject.user.entity.User;
@@ -47,8 +49,10 @@ public class UserService {
                 .ifPresent(nickname -> findUser.setNickname(nickname));
         Optional.ofNullable(user.getPhone())
                 .ifPresent(phone -> findUser.setPhone(phone));
-        //Optional.ofNullable(user.getPassword())
-                //.ifPresent(password -> findUser.setPassword(bCryptPasswordEncoder.encode(password)));
+        Optional.ofNullable(user.getPassword())
+                .ifPresent(password -> findUser.setPassword(passwordEncoder.encode(password)));
+        Optional.ofNullable(user.getEmail_subscribe())
+                .ifPresent(email_subscribe -> findUser.setEmail_subscribe(email_subscribe));
 
         return userRepository.save(findUser);
     }
@@ -89,4 +93,17 @@ public class UserService {
         }
         return true;
     }
+    //로그인된 유저 정보 조회
+    public User getLoginMember() { // 로그인된 유저 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if(authentication == null || authentication.getName() == null || authentication.getName().equals("anonymousUser"))
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
+
+        Optional<User> optionalUser = userRepository.findByEmail(authentication.getName());
+        User user = optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+
+        return user;
+    }
+
 }

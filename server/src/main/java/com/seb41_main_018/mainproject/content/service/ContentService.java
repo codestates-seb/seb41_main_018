@@ -25,9 +25,8 @@ public class ContentService {
     private final UserService userService;
 
     // 게시글 생성 //
-    public Content createContent(Content content, Long userId) {
-        User user = userService.findVerifiedUser(userId);
-        content.setUser(user);
+    public Content createContent(Content content) {
+        content.setUser(userService.getLoginMember());
 
         return contentRepository.save(content);
     }

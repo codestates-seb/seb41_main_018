@@ -8,7 +8,7 @@ public class ContentDto {
     @AllArgsConstructor
     @Getter
     public static class ContentPost {
-        private Long userId;
+        //private Long userId;
         @NotBlank(message = "게시글 제목을 입력해야합니다.")
         private String title;
         @NotBlank(message = "게시글 내용을 입력해야합니다.")

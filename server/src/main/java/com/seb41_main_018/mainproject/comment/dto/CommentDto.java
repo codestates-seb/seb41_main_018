@@ -10,7 +10,7 @@ public class CommentDto {
     @AllArgsConstructor
     @Getter
     public static class Post {
-        private long userId;
+        //private long userId;
         private long contentId;
         @NotSpace(message = "내용을 채워주세요.")
         private String body;

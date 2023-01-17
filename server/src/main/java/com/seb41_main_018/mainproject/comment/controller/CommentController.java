@@ -30,7 +30,6 @@ public class CommentController {
     ){
         Comment comment = commentService.createComment(
                 commentMapper.commentPostDtoToComment(requestBody),
-                requestBody.getUserId(),
                 requestBody.getContentId()
         );
         CommentDto.Response commentResponseDto = commentMapper.commentToCommentResponseDto(comment);
