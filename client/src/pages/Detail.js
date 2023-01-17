@@ -9,11 +9,22 @@ import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
+import Detial_Img from "../components/Detail_Img";
 {
     /* 반응형 : 768px이하일 때 */
 }
-
+const RouteDummy = [
+    {
+        RouteId: 1,
+        content: "review1",
+        postId: 1,
+        displayName: "displayName1",
+        email: "test1@gmail.com",
+        rate: 3,
+        createdAt: "2022-12-30T08:32:07.625506082",
+        modifiedAt: "2022-12-30T08:32:07.625506082",
+    },
+];
 // 후기 더미 데이터
 const reviewDummy = [
     {
@@ -68,8 +79,7 @@ const Detail = () => {
             <h1>제목</h1>
             <div css={TotalContainer}>
                 <div css={Image}>
-                    <img alt="img_sample" src="https://via.placeholder.com/100"></img>
-                    <img alt="map_sample" src="https://via.placeholder.com/100"></img>
+                    <Detial_Img />
                 </div>
                 <div>
                     <div css={Sticky}>
@@ -77,9 +87,9 @@ const Detail = () => {
                             <div css={ContentsHead}>
                                 {/* 경로 >> map */}
                                 <div css={Route}>
-                                    <button>강남역</button>
-                                    <button>종로</button>
-                                    <button>잠실</button>
+                                    <button>아르떼 뮤지엄</button>
+                                    <button>금오름</button>
+                                    <button>명월 국민학교</button>
                                     <button>강남역</button>
                                     <button>종로</button>
                                     <button>잠실</button>
@@ -184,16 +194,13 @@ const TotalContainer = css`
 const Image = css`
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 65%;
-    padding: 10px;
-
-    img {
-        max-width: 100%;
-        height: auto !important;
-    }
+    height: 500px;
+    padding: 20px;
 `;
 
-// Sticky 작동안됨....
 const Sticky = css`
     position: -webkit-sticky; /* 사파리 브라우저 지원 */
     position: sticky;
