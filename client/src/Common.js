@@ -6,7 +6,7 @@ export const PALETTE = {
 
     /* identity */
     default_color: "#0f7586",
-    default_hover: "#056969",
+    default_hover: "#05696938",
     default_active: "#659156",
     second_color: "#65bcbe",
     //
