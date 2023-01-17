@@ -24,6 +24,7 @@ const Button = (props) => {
                 color: ${props.color || `${PALETTE.default_color}`};
                 background-color: ${props.bgColor || `${PALETTE.white}`};
                 font-size: ${props.ftsize || "17px"};
+                font-weight: ${props.ftweight || "400"};
                 border-radius: ${props.bdradius || "5px"};
                 border: ${props.border || `${PALETTE.border_default}`};
                 box-shadow: ${props.boxShadow || null};
