@@ -16,7 +16,7 @@ export const PALETTE = {
     border_default: "2px solid #0f7586",
     border_radius: "5px",
     border_round: "50px",
-    box_shaodw: "0px 1px 2px rgba(60, 60, 60, 0.2)",
+    box_shadow: "0px 1px 2px rgba(60, 60, 60, 0.2)",
 
     /* Etc */
     gray: "#787878",
