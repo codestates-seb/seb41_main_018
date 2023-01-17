@@ -21,8 +21,8 @@ const Button = (props) => {
                 height: ${props.height || "50px"};
                 margin: ${props.margin || "25px 0 40px 0"};
 
-                color: ${props.color || `${PALETTE.default_color}`};
                 background-color: ${props.bgColor || `${PALETTE.white}`};
+                background-image: ${props.bgImg || "none"};
                 border-radius: ${props.bdradius || "5px"};
                 border: ${props.border || `${PALETTE.border_default}`};
                 box-shadow: ${props.boxShadow || null};
@@ -50,10 +50,10 @@ const Button = (props) => {
                     font-size: ${props.ftsize || "1rem"};
                     font-weight: ${props.ftweight || "400"};
                     align-items: center;
-                    color: ${PALETTE.default_color};
+                    color: ${props.color || "black"};
 
                     &:hover {
-                        color: ${PALETTE.default_hover};
+                        color: white;
                     }
                 `}
             >
