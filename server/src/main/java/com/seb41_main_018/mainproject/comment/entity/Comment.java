@@ -2,7 +2,6 @@ package com.seb41_main_018.mainproject.comment.entity;
 
 import com.seb41_main_018.mainproject.audit.Auditable;
 import com.seb41_main_018.mainproject.constant.RatingType;
-import com.seb41_main_018.mainproject.constant.UserStatus;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.user.entity.User;
 import lombok.Getter;
@@ -25,7 +24,7 @@ public class Comment extends Auditable {
 
     @Column
     @Enumerated(value = EnumType.STRING)
-    private RatingType ratingType;
+    private RatingType ratingType = RatingType.ZERO;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
