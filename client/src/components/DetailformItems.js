@@ -44,7 +44,7 @@ const wrap = css`
     font-size: 1.4rem;
     font-weight: 600;
     text-align: center;
-    border: 2px solid ${PALETTE.default_color};
+    border: 3px solid ${PALETTE.default_color};
     border-radius: ${PALETTE.border_radius};
     width: 27vw;
     margin: 10px auto;
@@ -75,15 +75,20 @@ const Clicked = css`
     }
 
     span {
-        color: ${PALETTE.gray};
+        border: 1px solid ${PALETTE.default_color};
+        border-radius: ${PALETTE.border_round};
+        padding: 7px;
+        text-align: center;
+        background-color: ${PALETTE.default_color};
+        color: ${PALETTE.white};
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: 1rem;
         margin: 10px;
     }
     div {
-        font-size: 1rem;
+        font-size: 1.1rem;
         /* border-bottom: 1px solid red; */
-        margin: 10px;
+        margin: 15px;
     }
 `;
 export default DetailformItems;

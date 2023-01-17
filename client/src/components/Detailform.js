@@ -6,6 +6,7 @@ import DetailformItems from "./DetailformItems";
 import Button from "../components/Button";
 import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
+import Tag from "../components/Tag";
 const Detailform = (props) => {
     return (
         <div
@@ -45,12 +46,8 @@ const Detailform = (props) => {
                         <span>총 여행 경비</span>
                         <span>700,000원</span>
                     </div>
-                    <div css={TagBox}>
-                        <div>맛집</div>
-                        <div>혼밥</div>
-                        <div>사람 많음ㅜㅜ</div>
-                    </div>
                 </div>
+                <Tag />
             </div>
             <div
                 css={css`
