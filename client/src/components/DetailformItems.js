@@ -47,7 +47,7 @@ const wrap = css`
     border: 2px solid ${PALETTE.default_color};
     border-radius: ${PALETTE.border_radius};
     width: 27vw;
-    margin: 30px auto;
+    margin: 10px auto;
     padding: 5px;
 `;
 

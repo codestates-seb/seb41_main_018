@@ -22,6 +22,7 @@ const Detailform = (props) => {
                     border-radius: ${PALETTE.border_radius};
                     box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2);
                     margin: 10px 40px;
+                    padding: 20px;
                 `}
             >
                 <div>
