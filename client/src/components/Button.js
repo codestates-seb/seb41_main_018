@@ -23,7 +23,6 @@ const Button = (props) => {
 
                 color: ${props.color || `${PALETTE.default_color}`};
                 background-color: ${props.bgColor || `${PALETTE.white}`};
-                font-size: ${props.ftsize || "17px"};
                 border-radius: ${props.bdradius || "5px"};
                 border: ${props.border || `${PALETTE.border_default}`};
                 box-shadow: ${props.boxShadow || null};
@@ -36,7 +35,8 @@ const Button = (props) => {
                     transform: scale(1.1, 1.1);
                     -ms-transform: scale(1.1, 1.1);
                     -webkit-transform: scale(1.1, 1.1);
-                    background-color: rgba(228, 78, 78, 1);
+                    background-color: ${PALETTE.default_hover};
+                    color: ${PALETTE.white};
                     transition-duration: 250ms;
                 }
 
@@ -45,17 +45,22 @@ const Button = (props) => {
                 }
             `}
         >
-            <div css={text}>{props.text}</div>
+            <div
+                css={css`
+                    font-size: ${props.ftsize || "1rem"};
+                    font-weight: ${props.ftweight || "400"};
+                    align-items: center;
+                    color: ${PALETTE.default_color};
+
+                    &:hover {
+                        color: ${PALETTE.default_hover};
+                    }
+                `}
+            >
+                {props.text}
+            </div>
         </button>
     );
 };
-
-const text = css`
-    font-size: 1rem;
-    color: ${PALETTE.default_color};
-    &:hover {
-        color: ${PALETTE.default_hover};
-    }
-`;
 
 export default Button;
