@@ -83,8 +83,8 @@ public class RoutePlaceController {
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "RoutePlace not found")})
     @GetMapping
-    public ResponseEntity getRoutePlaces(@Positive @RequestParam int page,
-                                        @Positive @RequestParam int size) {
+    public ResponseEntity getRoutePlaces(@Positive @RequestParam("page") int page,
+                                        @Positive @RequestParam("size") int size) {
         Page<RoutePlace> pageRoutePlaces = routePlaceService.findRoutePlaces(page - 1, size);
         List<RoutePlace> routePlaces = pageRoutePlaces.getContent();
 

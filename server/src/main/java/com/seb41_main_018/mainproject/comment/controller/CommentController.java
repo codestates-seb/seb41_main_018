@@ -81,8 +81,8 @@ public class CommentController {
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Comment not found")})
     @GetMapping
-    public ResponseEntity getComments(@Positive @RequestParam int page,
-                                      @Positive @RequestParam int size) {
+    public ResponseEntity getComments(@Positive @RequestParam("page") int page,
+                                      @Positive @RequestParam("size") int size) {
         Page<Comment> pageComments = commentService.findComments(page - 1, size);
         List<Comment> comments = pageComments.getContent();
 

@@ -57,8 +57,8 @@ public class TagController {
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Tag not found")})
     @GetMapping
-    public ResponseEntity getTags(@RequestParam int page,
-                                  @RequestParam int size) {
+    public ResponseEntity getTags(@RequestParam("page") int page,
+                                  @RequestParam("size") int size) {
         Page<Tag> pageTags = tagService.findTags(page-1, size);
         List<Tag> tags = pageTags.getContent();
 
