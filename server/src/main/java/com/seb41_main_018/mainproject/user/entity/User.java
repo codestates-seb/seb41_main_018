@@ -17,32 +17,29 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "USERS")
 @Entity
 public class User extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID")
+    @Column(name = "user_id")
     private Long userId;
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
-    private String phone;
 
     @Column(nullable = false)
     private String nickname;
     @Column(columnDefinition = "TEXT")
     private Boolean email_subscribe;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private UserStatus userStatus = UserStatus.ACTIVITY;
+    private UserStatus userStatus;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private LoginType loginType = LoginType.BASIC;
+    private LoginType loginType;
 
     //유저가 삭제되면, 작성 글과 좋아요도 삭제됨
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
@@ -70,8 +67,6 @@ public class User extends Auditable {
         this.password = password;
         this.nickname = nickname;
         this.email_subscribe = email_subscribe;
+        this.userStatus = UserStatus.ACTIVITY;
     }
-
-    public void addHeart(Heart heart) { hearts.add(heart); }
-
 }

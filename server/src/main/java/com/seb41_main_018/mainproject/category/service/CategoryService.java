@@ -1,4 +1,3 @@
-/*
 package com.seb41_main_018.mainproject.category.service;
 
 
@@ -7,20 +6,20 @@ import com.seb41_main_018.mainproject.category.repository.CategoryRepository;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
-@Transactional
-@RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
+
+    public CategoryService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
     public Category createCategory(Category category) {
            return categoryRepository.save(category);
@@ -58,4 +57,3 @@ public class CategoryService {
         return findCategory;
     }
 }
-*/
