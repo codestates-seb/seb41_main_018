@@ -46,6 +46,7 @@ public interface CommentMapper {
                 .commentId(comment.getCommentId())
                 .userId(user.getUserId())
                 .contentId(content.getContentId())
+                .title(content.getTitle())
                 .body(comment.getBody())
                 .ratingType(comment.getRatingType())
                 .build();
