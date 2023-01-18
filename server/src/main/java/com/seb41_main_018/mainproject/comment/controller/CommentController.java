@@ -27,6 +27,7 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
     private final CommentMapper commentMapper;
+    private final CommentRepository commentRepository;
 
     // 코멘트 생성 //
     @ApiOperation(value = "코멘트 등록", notes = "코멘트를 등록합니다.")

@@ -28,6 +28,7 @@ import java.util.List;
 public class RoutePlaceController {
     private final RoutePlaceService routePlaceService;
     private final RoutePlaceMapper routePlaceMapper;
+    private final RoutePlaceRepository routePlaceRepository;
 
     // 상세 경로 생성 //
     @ApiOperation(value = "상세 경로 등록", notes = "상세 경로를 등록합니다.")

@@ -76,9 +76,9 @@ public class CommentService {
         return findComment;
     }
 
-    /*private void verifyExistsId(Long commentId) {
-        Optional<Comment> comment = commentRepository.findById(commentId);
+    private void verifyExistsEmail(String email) {
+        Optional<Comment> comment = commentRepository.findByEmail(email);
         if (comment.isPresent())
             throw new BusinessLogicException(ExceptionCode.COMMENT_EXISTS);
-    }*/
+    }
 }
