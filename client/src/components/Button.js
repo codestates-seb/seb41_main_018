@@ -18,6 +18,8 @@ const Button = (props) => {
                 align-items: center;
 
                 width: ${props.width || "85%"};
+                min-width: ${props.minWidth || null};
+                max-width: ${props.maxWidth || null};
                 height: ${props.height || "50px"};
                 margin: ${props.margin || "0px"};
 
