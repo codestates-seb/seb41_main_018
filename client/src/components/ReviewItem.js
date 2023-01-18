@@ -11,7 +11,6 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 const ReviewItem = ({ review }) => {
     const { content, createdAt, displayName, rate } = review;
     const starArray = [0, 1, 2, 3, 4];
-
     return (
         <div css={Container}>
             <div css={ReviewContent}>
@@ -64,6 +63,7 @@ const Container = css`
     align-items: center;
     margin: 40px auto;
 `;
+
 const ReviewContent = css`
     display: flex;
     padding-left: 20px;
@@ -73,9 +73,9 @@ const ProfileImg = css`
     align-self: center;
     background-color: #adade1;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    margin: 10px;
+    min-width: 60px;
+    min-height: 60px;
+    margin: 0 10px 0 -10px;
 `;
 
 const RatingBox = css`

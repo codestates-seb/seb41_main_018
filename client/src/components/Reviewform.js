@@ -82,11 +82,12 @@ const Reviewform = (props) => {
                 <textarea placeholder="후기를 작성해주세요."></textarea>
                 <Button
                     width="10vw"
+                    minWidth="60px"
                     height="80px"
                     margin="0 0 0 10px"
                     text="등록하기"
                     ftweight="700"
-                    ftsize="1.4rem"
+                    ftsize="1.3rem"
                     color="#00AEAE"
                 />
             </div>
@@ -107,13 +108,13 @@ const Reviewform = (props) => {
 };
 //리뷰
 const ReviewContainer = css`
-    width: 85vw;
+    width: 85%;
     margin: 0 auto;
 `;
 
 const ReviewCount = css`
-    width: 85vw;
-    margin: 13px;
+    width: fit-content;
+    margin: 10px 0;
     font-size: 1.2rem;
     font-weight: 600;
 `;
@@ -121,17 +122,16 @@ const ReviewCount = css`
 const ReviewInput = css`
     display: flex;
     justify-content: space-between;
-    width: 80vw;
+    width: 85vw;
     height: 80px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
 
     textarea {
         border: none;
-        width: 70vw;
+        width: 90vw;
         height: 80px;
         border: 2px solid ${PALETTE.default_color};
         border-radius: ${PALETTE.border_radius};
-        margin: 0 -20px;
         padding: 10px;
         font-size: 1.2rem;
         color: gray;
@@ -143,7 +143,6 @@ const ReviewList = css`
 
 const RatingBox = css`
     width: fit-content;
-    margin: 0 10px;
 
     /* .inactive {
         color: #c4c4c4;
