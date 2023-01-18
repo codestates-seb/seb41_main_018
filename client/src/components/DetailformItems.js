@@ -22,7 +22,7 @@ const DetailformItems = (props) => {
             <div onClick={() => handleClick(props.routeId)} css={wrap}>
                 {props.text}
                 {isClick ? (
-                    <div css={Clicked}>
+                    <div css={clicked}>
                         <ul>
                             <li>
                                 <span>경비</span>
@@ -52,21 +52,26 @@ const wrap = css`
     font-size: 1.4rem;
     font-weight: 600;
     text-align: center;
-    border: 2px solid ${PALETTE.default_color};
+    border: 3px solid ${PALETTE.default_color};
     border-radius: ${PALETTE.border_radius};
     width: 27vw;
+    min-width: 250px;
+    max-width: 400px;
     margin: 10px auto;
     padding: 5px;
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
-const Clicked = css`
+const clicked = css`
     width: 25vw;
     margin: 5px auto;
     text-align: start;
     border-radius: ${PALETTE.border_radius};
     font-size: 1.2rem;
-    font-weight: 400;
-    animation: identifier 1s ease-in-out;
+    font-weight: 500;
+    animation: identifier 0.5s ease-in-out;
 
     @keyframes identifier {
         0% {
@@ -80,18 +85,31 @@ const Clicked = css`
     }
     li {
         margin: 30px 0;
+        animation: fadein 1s ease-in-out;
+        @keyframes fadein {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
     }
 
     span {
-        color: ${PALETTE.gray};
+        border-radius: ${PALETTE.border_round};
+        background-color: #eff5f5;
+        color: #497174;
+        padding: 7px;
+        text-align: center;
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: 1rem;
         margin: 10px;
     }
     div {
-        font-size: 1rem;
-        /* border-bottom: 1px solid red; */
-        margin: 10px;
+        font-size: 1.15rem;
+        margin: 15px;
     }
 `;
+
 export default DetailformItems;

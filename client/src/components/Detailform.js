@@ -6,6 +6,7 @@ import DetailformItems from "./DetailformItems";
 import Button from "../components/Button";
 import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
+import Tag from "../components/Tag";
 
 // 경로 데이터 더미
 const routeDummy = [
@@ -28,23 +29,8 @@ const routeDummy = [
 
 const Detailform = () => {
     return (
-        <div
-            css={css`
-                position: sticky;
-                top: 50px;
-                right: 10px;
-                height: 100%;
-            `}
-        >
-            <div
-                css={css`
-                    width: 30vw;
-                    border-radius: ${PALETTE.border_radius};
-                    box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2);
-                    margin: 10px 40px;
-                    padding: 20px;
-                `}
-            >
+        <div css={wrap}>
+            <div css={container}>
                 {/* 경로 아이템 불러오기 */}
                 <div>
                     {routeDummy.map((routeplace) => (
@@ -70,12 +56,8 @@ const Detailform = () => {
                         <span>총 여행 경비</span>
                         <span>700,000원</span>
                     </div>
-                    <div css={TagBox}>
-                        <div>맛집</div>
-                        <div>혼밥</div>
-                        <div>사람 많음ㅜㅜ</div>
-                    </div>
                 </div>
+                <Tag />
             </div>
             <div
                 css={css`
@@ -84,25 +66,57 @@ const Detailform = () => {
             >
                 <Button
                     width="23.5vw"
+                    minWidth="240px"
+                    maxWidth="340px"
+                    height="50px"
                     margin="10px 10px 10px 40px"
+                    bgImg="linear-gradient(15deg, #008080 0%, #00AEAE 100%)"
                     text={[
                         <BsFillHeartFill
                             css={css`
                                 position: relative;
                                 top: 5px;
-                                right: 70px;
+                                right: 10px;
                             `}
                         />,
                         "가치갈래!",
                     ]}
                     ftweight="700"
                     ftsize="1.4rem"
+                    color="white"
                 />
-                <Button width="5vw" margin="10px" color="black" ftsize="1.4rem" text=<FiShare /> />
+                <Button
+                    width="5vw"
+                    minWidth="50px"
+                    maxWidth="100px"
+                    height="50px"
+                    margin="10px 5px"
+                    color="white"
+                    ftsize="1.4rem"
+                    ftweight="700"
+                    bgImg="linear-gradient(15deg, #008080 0%, #00AEAE 100%)"
+                    text=<FiShare />
+                />
             </div>
         </div>
     );
 };
+const wrap = css`
+    position: sticky;
+    top: 50px;
+    right: 10px;
+    height: 100%;
+`;
+
+const container = css`
+    width: 30vw;
+    min-width: 300px;
+    max-width: 450px;
+    border-radius: ${PALETTE.border_radius};
+    box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2);
+    margin: 10px 40px;
+    padding: 20px;
+`;
 
 const ContentsBody = css`
     padding-top: 20px;
@@ -110,20 +124,10 @@ const ContentsBody = css`
 
 const ComContent = css`
     display: flex;
+    font-size: 1.1rem;
     justify-content: space-between;
-    padding: 3px 20px;
+    font-weight: 600;
+    padding: 8px 20px;
 `;
 
-const TagBox = css`
-    display: flex;
-    padding: 10px 15px;
-    div {
-        background-color: #e1ecf4;
-        border-radius: 3px;
-        padding: 5px;
-        margin: 5px;
-        color: #39739d;
-        font-size: 12px;
-    }
-`;
 export default Detailform;
