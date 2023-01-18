@@ -1,10 +1,13 @@
 package com.seb41_main_018.mainproject.content.controller;
 
+import com.seb41_main_018.mainproject.constant.ThemeType;
 import com.seb41_main_018.mainproject.content.dto.ContentDto;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.content.mapper.ContentMapper;
+import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.content.service.ContentService;
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
+import com.seb41_main_018.mainproject.response.SingleResponseDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -25,6 +28,7 @@ import java.util.List;
 public class ContentController {
     private final ContentService contentService;
     private final ContentMapper contentMapper;
+    private final ContentRepository contentRepository;
 
     // 게시글 생성 //
     @ApiOperation(value = "컨텐트 등록", notes = "컨텐트를 등록합니다.")
@@ -93,5 +97,13 @@ public class ContentController {
         contentService.deleteContent(contentId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/category/{themeType}")
+    public ResponseEntity getContentFromThemeType(@PathVariable("themeType")ThemeType themeType){
+        ContentDto.ThemeTypeResponse response = contentMapper.themeTypeResponse(themeType, contentRepository);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(response), HttpStatus.OK
+        );
     }
 }

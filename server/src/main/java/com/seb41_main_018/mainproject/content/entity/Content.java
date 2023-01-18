@@ -65,10 +65,6 @@ public class Content extends Auditable {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-/*    @ManyToOne
-    @JoinColumn(name = "CATEGORY_ID")
-    private Category category;*/
-
     // 생성자 //
     public Content(String title, String body) {
         this.title = title;
