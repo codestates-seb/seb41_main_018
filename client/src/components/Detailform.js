@@ -6,7 +6,27 @@ import DetailformItems from "./DetailformItems";
 import Button from "../components/Button";
 import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
-const Detailform = (props) => {
+
+// 경로 데이터 더미
+const routeDummy = [
+    {
+        contentId: 1,
+        name: "아르떼 뮤지엄",
+        routeId: 1,
+    },
+    {
+        contentId: 1,
+        name: "금오름",
+        routeId: 2,
+    },
+    {
+        contentId: 1,
+        name: "명월국민학교",
+        routeId: 3,
+    },
+];
+
+const Detailform = () => {
     return (
         <div
             css={css`
@@ -25,10 +45,15 @@ const Detailform = (props) => {
                     padding: 20px;
                 `}
             >
+                {/* 경로 아이템 불러오기 */}
                 <div>
-                    <DetailformItems text="강남역" />
-                    <DetailformItems text="역삼역" />
-                    <DetailformItems text="삼성역" />
+                    {routeDummy.map((routeplace) => (
+                        <DetailformItems
+                            key={routeplace.routeId}
+                            text={routeplace.name}
+                            routeId={routeplace.routeId}
+                        />
+                    ))}
                 </div>
 
                 {/* 공통 정보 */}

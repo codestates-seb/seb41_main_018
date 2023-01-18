@@ -10,21 +10,8 @@ import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Detial_Img from "../components/Detail_Img";
-{
-    /* 반응형 : 768px이하일 때 */
-}
-const RouteDummy = [
-    {
-        RouteId: 1,
-        content: "review1",
-        postId: 1,
-        displayName: "displayName1",
-        email: "test1@gmail.com",
-        rate: 3,
-        createdAt: "2022-12-30T08:32:07.625506082",
-        modifiedAt: "2022-12-30T08:32:07.625506082",
-    },
-];
+import Detailform from "../components/Detailform";
+
 // 후기 더미 데이터
 const reviewDummy = [
     {
@@ -81,57 +68,7 @@ const Detail = () => {
                 <div css={Image}>
                     <Detial_Img />
                 </div>
-                <div>
-                    <div css={Sticky}>
-                        <div css={ContentsArea}>
-                            <div css={ContentsHead}>
-                                {/* 경로 >> map */}
-                                <div css={Route}>
-                                    <button>아르떼 뮤지엄</button>
-                                    <button>금오름</button>
-                                    <button>명월 국민학교</button>
-                                    <button>강남역</button>
-                                    <button>종로</button>
-                                    <button>잠실</button>
-                                    <button>강남역</button>
-                                    <button>종로</button>
-                                    <button>잠실</button>
-                                </div>
-                                {/* 개별 정보 */}
-                                <div css={IndContent}>
-                                    <div>경비</div>
-                                    <span>50000원</span>
-                                    <div>이동 수단</div>
-                                    <span>자동차</span>
-                                    <div>상세 설명</div>
-                                    <span> 아이들도 입장 가능합니다! </span>
-                                </div>
-                            </div>
-                            {/* 공통 정보 */}
-                            <div css={ContentsBody}>
-                                <div css={ComContent}>
-                                    <span>카테고리</span>
-                                    <span>혼자 여행</span>
-                                </div>
-                                <div css={ComContent}>
-                                    <span>여행일</span>
-                                    <span>2023.02.08</span>
-                                </div>
-                                <div css={ComContent}>
-                                    <span>총 여행 경비</span>
-                                    <span>700,000원</span>
-                                </div>
-                                <div css={TagBox}>
-                                    <div>맛집</div>
-                                    <div>혼밥</div>
-                                    <div>사람 많음ㅜㅜ</div>
-                                </div>
-                            </div>
-                        </div>
-                        <button>가치갈래?</button>
-                        <button>공유</button>
-                    </div>
-                </div>
+                <Detailform />
             </div>
             {/* 후기 영역 */}
             <div css={ReviewContainer}>
@@ -206,71 +143,6 @@ const Sticky = css`
     position: sticky;
     top: 0;
     padding: 10px;
-`;
-
-const ContentsArea = css`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid gray;
-
-    width: 300px;
-    height: auto;
-    padding: 10px;
-`;
-
-const ContentsHead = css`
-    display: flex;
-`;
-
-const Route = css`
-    display: flex;
-    flex-direction: column;
-
-    button {
-        width: 70px;
-        height: 50px;
-    }
-`;
-const IndContent = css`
-    padding: 10px;
-
-    div {
-        color: red;
-        font-size: 15px;
-        margin: 10px;
-    }
-
-    span {
-        padding: 5px;
-    }
-
-    span:not(:last-of-type) {
-        border-bottom: solid;
-    }
-`;
-
-const ContentsBody = css`
-    padding-top: 20px;
-`;
-
-const ComContent = css`
-    display: flex;
-    justify-content: space-between;
-    padding: 3px 20px;
-`;
-
-const TagBox = css`
-    display: flex;
-    padding: 10px 15px;
-    div {
-        background-color: #e1ecf4;
-        border-radius: 3px;
-        padding: 5px;
-        margin: 5px;
-        color: #39739d;
-        font-size: 12px;
-    }
 `;
 
 const ReviewContainer = css`

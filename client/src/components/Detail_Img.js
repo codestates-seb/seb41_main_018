@@ -11,9 +11,10 @@ import "swiper/css/thumbs";
 
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper";
-import { PALETTE } from "../Common";
 import right from "../assets/right.png";
 import left from "../assets/left.png";
+import { useRecoilState } from "recoil";
+import { selectedRouteState } from "../state/atom";
 
 // import sample img (추후 삭제 예정)
 import sam1_1 from "../assets/sampleImg/sam1_1.png";
@@ -22,10 +23,35 @@ import sam1_3 from "../assets/sampleImg/sam1_3.jpg";
 import sam2 from "../assets/sampleImg/sam2.jpg";
 import sam3_1 from "../assets/sampleImg/sam3_1.jpeg";
 import sam3_2 from "../assets/sampleImg/sam3_2.jpeg";
-import white from "../assets/sampleImg/white.png";
+
+// 경로 데이터 더미
+const routeDummy = [
+    {
+        contentId: 1,
+        name: "아르떼 뮤지엄",
+        routeId: 1,
+        img: [sam1_1, sam1_2, sam1_3],
+    },
+    {
+        contentId: 1,
+        name: "금오름",
+        routeId: 2,
+        img: [sam2],
+    },
+    {
+        contentId: 1,
+        name: "명월국민학교",
+        routeId: 3,
+        img: [sam3_1, sam3_2],
+    },
+];
 
 const Detial_Img = () => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const [selectedRoute, setSelectedRoute] = useRecoilState(selectedRouteState);
+
+    /* 선택 된 경로만 filter */
+    // let selected = routeDummy.filter((routeplace) => routeplace.routeId === selectedRoute);
 
     return (
         <div css={Swiper_Wrap}>
@@ -39,79 +65,36 @@ const Detial_Img = () => {
                 navigation={true}
                 thumbs={{ swiper: thumbsSwiper }}
                 modules={[FreeMode, Navigation, Thumbs]}
-                className="mySwiper2"
+                watchOverflow={true} // 슬라이드가 1개 일 때 pager, button 숨김 여부 설정
+                className="gallery"
             >
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
-                </SwiperSlide>
+                {routeDummy.map((el) =>
+                    el.img.map((img) => (
+                        <SwiperSlide key={img}>
+                            <img src={img} alt={el.name} />
+                        </SwiperSlide>
+                    ))
+                )}
             </Swiper>
+
             <Swiper
                 onSwiper={setThumbsSwiper}
                 loop={true}
                 spaceBetween={10}
-                slidesPerView={4}
+                slidesPerView={"auto"}
                 freeMode={true}
                 watchSlidesProgress={true}
                 modules={[FreeMode, Navigation, Thumbs]}
-                className="mySwiper"
+                className="gallery-thumbs"
             >
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src="https://swiperjs.com/demos/images/nature-10.jpg" />
-                </SwiperSlide>
+                {routeDummy.map((el) =>
+                    el.img.map((img) => (
+                        <SwiperSlide key={img}>
+                            <img src={img} alt={el.name} />
+                            <div>{el.name}</div>
+                        </SwiperSlide>
+                    ))
+                )}
             </Swiper>
         </div>
     );
@@ -120,11 +103,11 @@ const Detial_Img = () => {
 const Swiper_Wrap = css`
     width: 70%;
     height: 100%;
-    /* 
+
     @media (max-width: 768px) {
         width: 300px;
         height: 300px;
-    } */
+    }
 
     .swiper {
         width: 100%;
@@ -156,6 +139,7 @@ const Swiper_Wrap = css`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        border-radius: 10px;
     }
 
     .swiper {
@@ -170,24 +154,31 @@ const Swiper_Wrap = css`
         background-position: center;
     }
 
-    .mySwiper2 {
+    .gallery {
         height: 80%;
         width: 100%;
     }
 
-    .mySwiper {
+    .gallery-thumbs {
         height: 20%;
         box-sizing: border-box;
         padding: 10px 0;
     }
 
-    .mySwiper .swiper-slide {
+    .gallery-thumbs .swiper-slide {
         width: 25%;
         height: 100%;
         opacity: 0.4;
+        display: flex;
+        flex-direction: column;
+        font-size: 12px;
     }
 
-    .mySwiper .swiper-slide-thumb-active {
+    .gallery-thumbs .swiper-slide img {
+        margin: 3px;
+    }
+
+    .gallery-thumbs .swiper-slide-thumb-active {
         opacity: 1;
     }
 
@@ -197,6 +188,7 @@ const Swiper_Wrap = css`
         height: 100%;
         object-fit: cover;
     }
+
     .swiper-button-next {
         background: url(${right}) no-repeat;
         right: 0;

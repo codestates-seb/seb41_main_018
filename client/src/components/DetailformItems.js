@@ -4,14 +4,22 @@ import { useState } from "react";
 import { PALETTE } from "../Common";
 import { css } from "@emotion/react";
 
+// 경로 선택 상태관리 필요 import
+import { useRecoilState } from "recoil";
+import { selectedRouteState } from "../state/atom";
+
 const DetailformItems = (props) => {
     const [isClick, setClick] = useState(false);
-    const handleClick = () => {
+    // 경로 선택 상태
+    const [selectedRoute, setSelectedRoute] = useRecoilState(selectedRouteState);
+    const handleClick = (routeId) => {
         setClick(!isClick);
+        // 선택 된 routeId 저장
+        setSelectedRoute(routeId);
     };
     return (
         <>
-            <div onClick={handleClick} css={wrap}>
+            <div onClick={() => handleClick(props.routeId)} css={wrap}>
                 {props.text}
                 {isClick ? (
                     <div css={Clicked}>
