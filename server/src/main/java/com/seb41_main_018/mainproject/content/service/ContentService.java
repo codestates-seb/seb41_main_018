@@ -6,22 +6,28 @@ import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
+import com.seb41_main_018.mainproject.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ContentService {
     private final UserRepository userRepository;
     private final ContentRepository contentRepository;
+    private final UserService userService;
 
     // 게시글 생성 //
     public Content createContent(Content content) {
+        content.setUser(userService.getLoginMember());
+
         return contentRepository.save(content);
     }
 
@@ -29,11 +35,11 @@ public class ContentService {
     public Content updateContent(Long contentId, Content content) {
         Content findContent = findVerifiedContent(contentId);
 
-        Optional.ofNullable(findContent.getTitle())
-                .ifPresent(findContent::setTitle);
+        Optional.ofNullable(content.getTitle())
+                .ifPresent(title->findContent.setTitle(title));
 
-        Optional.ofNullable(findContent.getBody())
-                .ifPresent(findContent::setBody);
+        Optional.ofNullable(content.getBody())
+                .ifPresent(body->findContent.setBody(body));
 
         return contentRepository.save(findContent);
     }
@@ -68,7 +74,8 @@ public class ContentService {
     public Content findVerifiedContent(Long contentId) {
         Optional<Content> optionalContent = contentRepository.findById(contentId);
         Content findContent =
-                optionalContent.orElseThrow(NullPointerException::new);
+                optionalContent.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.CONTENT_NOT_FOUND));
 
         return findContent;
     }

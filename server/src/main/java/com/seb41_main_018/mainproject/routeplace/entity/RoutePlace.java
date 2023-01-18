@@ -28,4 +28,14 @@ public class RoutePlace extends Auditable {
 
     @Column(nullable = false)
     private String body;
+
+    public RoutePlace(
+            Long price,
+            String vehicle,
+            String body
+    ) {
+        this.price = price;
+        this.vehicle = vehicle;
+        this.body = body;
+    }
 }

@@ -5,6 +5,9 @@ spring:
       path: /h2
   datasource:
     url: jdbc:h2:mem:test
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   jpa:
     hibernate:
       ddl-auto: create  # (1) ??? ?? ??
@@ -12,4 +15,16 @@ spring:
     properties:
       hibernate:
         format_sql: true
-#    open-in-view: true
+    open-in-view: false
+jwt:
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 1440
+  refresh-token-expiration-minutes: 20160
+
+mail:
+  address:
+    admin: admin@email.com
+
+logging.level:
+  org.hibernate.SQL: debug
+  org.hibernate.type: trace
