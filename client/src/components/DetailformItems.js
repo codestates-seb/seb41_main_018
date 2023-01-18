@@ -47,6 +47,8 @@ const wrap = css`
     border: 3px solid ${PALETTE.default_color};
     border-radius: ${PALETTE.border_radius};
     width: 27vw;
+    min-width: 250px;
+    max-width: 400px;
     margin: 10px auto;
     padding: 5px;
     &:hover {
@@ -61,7 +63,7 @@ const clicked = css`
     border-radius: ${PALETTE.border_radius};
     font-size: 1.2rem;
     font-weight: 500;
-    animation: identifier 1s ease-in-out;
+    animation: identifier 0.5s ease-in-out;
 
     @keyframes identifier {
         0% {
@@ -78,9 +80,6 @@ const clicked = css`
         animation: fadein 1s ease-in-out;
         @keyframes fadein {
             0% {
-                opacity: 0;
-            }
-            50% {
                 opacity: 0;
             }
             100% {

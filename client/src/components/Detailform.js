@@ -9,23 +9,8 @@ import { BsFillHeartFill } from "react-icons/bs";
 import Tag from "../components/Tag";
 const Detailform = (props) => {
     return (
-        <div
-            css={css`
-                position: sticky;
-                top: 50px;
-                right: 10px;
-                height: 100%;
-            `}
-        >
-            <div
-                css={css`
-                    width: 30vw;
-                    border-radius: ${PALETTE.border_radius};
-                    box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2);
-                    margin: 10px 40px;
-                    padding: 20px;
-                `}
-            >
+        <div css={wrap}>
+            <div css={container}>
                 <div>
                     <DetailformItems text="강남역" />
                     <DetailformItems text="역삼역" />
@@ -56,7 +41,9 @@ const Detailform = (props) => {
             >
                 <Button
                     width="23.5vw"
-                    height="6vh"
+                    minWidth="240px"
+                    maxWidth="340px"
+                    height="50px"
                     margin="10px 10px 10px 40px"
                     bgImg="linear-gradient(15deg, #008080 0%, #00AEAE 100%)"
                     text={[
@@ -64,7 +51,7 @@ const Detailform = (props) => {
                             css={css`
                                 position: relative;
                                 top: 5px;
-                                right: 70px;
+                                right: 10px;
                             `}
                         />,
                         "가치갈래!",
@@ -75,8 +62,10 @@ const Detailform = (props) => {
                 />
                 <Button
                     width="5vw"
-                    height="6vh"
-                    margin="10px"
+                    minWidth="50px"
+                    maxWidth="100px"
+                    height="50px"
+                    margin="10px 5px"
                     color="white"
                     ftsize="1.4rem"
                     ftweight="700"
@@ -87,6 +76,22 @@ const Detailform = (props) => {
         </div>
     );
 };
+const wrap = css`
+    position: sticky;
+    top: 50px;
+    right: 10px;
+    height: 100%;
+`;
+
+const container = css`
+    width: 30vw;
+    min-width: 300px;
+    max-width: 450px;
+    border-radius: ${PALETTE.border_radius};
+    box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2);
+    margin: 10px 40px;
+    padding: 20px;
+`;
 
 const ContentsBody = css`
     padding-top: 20px;
