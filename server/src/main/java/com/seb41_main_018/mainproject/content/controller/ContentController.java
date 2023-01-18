@@ -56,8 +56,8 @@ public class ContentController {
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Content not found")})
     @GetMapping
-    public ResponseEntity getContents(@RequestParam int page,
-                                      @RequestParam int size) {
+    public ResponseEntity getContents(@RequestParam("page") int page,
+                                      @RequestParam("size") int size) {
         Page<Content> pageContents = contentService.findContents(page-1, size);
         List<Content> contents = pageContents.getContent();
 
