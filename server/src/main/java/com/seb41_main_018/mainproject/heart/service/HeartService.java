@@ -1,53 +1,72 @@
 package com.seb41_main_018.mainproject.heart.service;
 
+import com.seb41_main_018.mainproject.constant.HeartType;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.content.service.ContentService;
+import com.seb41_main_018.mainproject.exception.BusinessLogicException;
+import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.heart.dto.HeartDto;
 import com.seb41_main_018.mainproject.heart.entity.Heart;
 import com.seb41_main_018.mainproject.heart.repository.HeartRepository;
 import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
 import com.seb41_main_018.mainproject.user.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class HeartService {
-    private HeartRepository heartRepository;
-    private ContentRepository contentRepository;
-    private UserRepository userRepository;
-    private ContentService contentService;
-    private UserService userService;
+    private final HeartRepository heartRepository;
+    private final ContentRepository contentRepository;
 
-    public HeartDto.Response saveHeart(Long contentId, Long userId) {
-        Content findContent = contentService.findVerifiedContent(contentId);
-        User findUser = userService.findVerifiedUser(userId);
-        List<Heart> hearts = heartRepository.findAllByUserAndContent(findUser, findContent);
 
-        if(hearts.isEmpty()) { //좋아요 목록이 없을 경우
-            Heart createdHeart = createHeart(findUser, findContent);
-            heartRepository.save(createdHeart);
-        } else {
-            heartRepository.deleteAll(hearts);
+    public Heart createHeart(User user, Content content){
+        Heart heart;
+        int heartStatus =0;
+        //좋아요 안했을 경우
+        if (isNotAlreadyHeart(user, content)) {
+            heart = new Heart(user,content);
+            heart.setHeartType(HeartType.ADD);
+            heartStatus = 1;
+        }else{//좋아요를 했지만 취소했을 경우
+            heart = findVerifiedHeart(user,content);
+            switch(heart.getHeartType()){
+                case ADD:
+                    heart.setHeartType(HeartType.REMOVE);
+                    heartStatus = -1;
+                    break;
+                case REMOVE:
+                    heart.setHeartType(HeartType.ADD);
+                    heartStatus = 1;
+                    break;
+                default:
+            }
         }
-        return HeartDto.Response.builder()
-                .userId(userId)
-                .heartCount(heartRepository
-                        .findAllByContent(findContent)
-                        .size())
-                .contentId(contentId)
-                .build();
+        int heartCount = content.getHeartCount();
+        heartCount+=heartStatus;
+        content.setHeartCount(heartCount);
+        contentRepository.save(content);
+        Heart SavedHeart = heartRepository.save(heart);
+        return SavedHeart;
     }
-        private Heart createHeart(User user, Content content){
-            return Heart.builder()
-                    .user(user)
-                    .content(content)
-                    .build();
-        }
+
+    public Heart findVerifiedHeart(User user,Content content) {
+        Optional<Heart> optionalHeart = heartRepository.findByUserAndContent(user, content);
+        Heart heart = optionalHeart.orElseThrow(
+                () -> new BusinessLogicException(ExceptionCode.HEART_NOT_FOUND)
+        );
+        return heart;
     }
+
+    private boolean isNotAlreadyHeart(User user, Content content) {
+        return heartRepository.findByUserAndContent(user, content).isEmpty();
+    }
+}
+
 
 

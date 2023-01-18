@@ -1,5 +1,7 @@
 package com.seb41_main_018.mainproject.tag.service;
 
+import com.seb41_main_018.mainproject.content.entity.Content;
+import com.seb41_main_018.mainproject.content.service.ContentService;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.tag.entity.Tag;
@@ -11,25 +13,35 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TagService {
     private final UserRepository userRepository;
     private final TagRepository tagRepository;
+    private final ContentService contentService;
 
     // 태그 생성 //
-    public Tag createTag(Tag tag) {
+    public Tag createTag(Tag tag, Long contentId) {
+
+        Content content = contentService.findVerifiedContent(contentId);
+
+        content.addTag(tag);
+
         return tagRepository.save(tag);
     }
 
     // 태그 수정 //
-    public Tag updateTag(Long tagId, Tag tag) {
+    public Tag updateTag(
+            Long tagId,
+            Tag tag) {
         Tag findTag = findVerifiedTag(tagId);
 
-        Optional.ofNullable(findTag.getName())
+        Optional.ofNullable(tag.getName())
                 .ifPresent(findTag::setName);
 
         return tagRepository.save(findTag);

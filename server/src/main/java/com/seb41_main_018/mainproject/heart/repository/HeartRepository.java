@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 public interface HeartRepository extends JpaRepository<Heart, Long> {
-    List<Heart> findAllByUserAndContent(User user, Content content);
-    List<Heart> findAllByContent(Content content);
+//    List<Heart> findAllByUserAndContent(User user, Content content);
+//    List<Heart> findAllByContent(Content content);
+Optional<Heart> findByUserAndContent(User user, Content content);
 }

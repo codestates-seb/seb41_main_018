@@ -1,3 +1,4 @@
+
 package com.seb41_main_018.mainproject.category.entity;
 
 import com.seb41_main_018.mainproject.audit.Auditable;
@@ -22,6 +23,8 @@ public class Category extends Auditable {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "category")
-    List<Content> contents = new ArrayList<>();
+    public Category(String name) {
+        this.name = name;
+    }
 }
+

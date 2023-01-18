@@ -27,16 +27,18 @@ public class Route extends Auditable {
     @Column(nullable = false)
     private String name;
 
-//    @OrderBy("routeplaceId")
-//    @OneToMany(mappedBy = "route", cascade = CascadeType.REMOVE)
-//    private List<RoutePlace> routePlaces = new ArrayList<>();
+    @OrderBy("placeId")
+    @OneToMany(mappedBy = "route", cascade = CascadeType.REMOVE)
+    private List<RoutePlace> routePlaces = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CONTENT_ID")
     private Content content;
 
     // 생성자 //
-//    public Route(String name) {
-//        this.name = name;
-//    }
+
+    public Route(Long routeId, String name) {
+        this.routeId = routeId;
+        this.name = name;
+    }
 }
