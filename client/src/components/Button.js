@@ -21,6 +21,8 @@ const Button = (props) => {
                 min-width: ${props.minWidth || null};
                 max-width: ${props.maxWidth || null};
                 height: ${props.height || "50px"};
+                min-height: ${props.maxWidth || null};
+                max-width: ${props.maxWidth || null};
                 margin: ${props.margin || "0px"};
 
                 background-color: ${props.bgColor || `${PALETTE.white}`};
