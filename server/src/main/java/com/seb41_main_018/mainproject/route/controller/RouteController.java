@@ -57,8 +57,8 @@ public class RouteController {
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Route not found")})
     @GetMapping
-    public ResponseEntity getRoutes(@RequestParam int page,
-                                    @RequestParam int size) {
+    public ResponseEntity getRoutes(@RequestParam("page") int page,
+                                    @RequestParam("size") int size) {
         Page<Route> pageRoutes = routeService.findRoutes(page-1, size);
         List<Route> routes = pageRoutes.getContent();
 
