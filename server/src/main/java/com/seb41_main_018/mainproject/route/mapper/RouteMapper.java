@@ -5,10 +5,12 @@ import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.route.dto.RouteDto;
 import com.seb41_main_018.mainproject.route.entity.Route;
+import com.seb41_main_018.mainproject.routeplace.entity.RoutePlace;
 import com.seb41_main_018.mainproject.user.entity.User;
 import org.mapstruct.Mapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface RouteMapper {
@@ -43,7 +45,20 @@ public interface RouteMapper {
                 .routeId(route.getRouteId())
                 .contentId(content.getContentId())
                 .name(route.getName())
+                .routePlaces(routePlaceToRouteResponseDto(route.getRoutePlaces()))
                 .build();
     }
     List<RouteDto.RouteResponse> routesToRouteResponse(List<Route> routes);
+    default List<RouteDto.RoutePlaceResponseDto> routePlaceToRouteResponseDto(List<RoutePlace> routePlaces){
+        return routePlaces
+                .stream()
+                .map(routePlace -> RouteDto.RoutePlaceResponseDto
+                        .builder()
+                        .placeId(routePlace.getPlaceId())
+                        .price(routePlace.getPrice())
+                        .body(routePlace.getBody())
+                        .vehicle(routePlace.getVehicle())
+                        .build())
+                .collect(Collectors.toList());
+    }
 }

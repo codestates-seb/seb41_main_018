@@ -50,6 +50,9 @@ public class ContentController {
     public ResponseEntity getContent( @ApiParam(name = "ContentId", value = "컨텐트 식별자", example = "1")
             @PathVariable("contentId") Long contentId) {
         Content content = contentService.findContent(contentId);
+        int view = content.getViewCount();
+        content.setViewCount(++view); //조회수 증가
+        contentRepository.save(content);
         ContentDto.ContentResponse contentResponse = contentMapper.contentToContentResponse(content);
 
         return new ResponseEntity<>(contentResponse, HttpStatus.OK);

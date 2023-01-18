@@ -17,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.seb41_main_018.mainproject.user.entity.User;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 @ApiOperation(value = "유저 API", tags = {"User Controller"})
@@ -97,5 +99,11 @@ public class UserController {
     public ResponseEntity<Boolean> verifyExistsEmail(@PathVariable("email") String email){
         return ResponseEntity.ok(userService.emailCheck(email));
     }
+
+//    @DeleteMapping("/logout")
+//    public ResponseEntity logout(@RequestHeader String Refresh) {
+//        jwtRepository.deleteJwtToken(refreshToken);
+//        return new ResponseEntity(HttpStatus.NO_CONTENT);
+//    }
 
 }

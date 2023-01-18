@@ -1,6 +1,7 @@
 package com.seb41_main_018.mainproject.route.controller;
 
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
+import com.seb41_main_018.mainproject.response.SingleResponseDto;
 import com.seb41_main_018.mainproject.route.dto.RouteDto;
 import com.seb41_main_018.mainproject.route.entity.Route;
 import com.seb41_main_018.mainproject.route.mapper.RouteMapper;
@@ -49,7 +50,9 @@ public class RouteController {
         Route route = routeService.findRoute(routeId);
         RouteDto.RouteResponse routeResponse = routeMapper.routeToRouteResponse(route);
 
-        return new ResponseEntity<>(routeResponse, HttpStatus.OK);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(routeResponse), HttpStatus.OK
+        );
     }
 
     // 경로 전체 조회 //

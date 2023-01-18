@@ -5,8 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 public class RouteDto {
     @ApiModel("Route Post")
@@ -43,5 +45,22 @@ public class RouteDto {
         private Long contentId;
         @ApiModelProperty(notes = "경로 이름", example = "서울", required = true)
         private String name;
+
+        private List<RoutePlaceResponseDto> routePlaces;
+
+    }
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class RoutePlaceResponseDto {
+        @ApiModelProperty(notes = "상세 경로 아이디", example = "1", required = true)
+        private Long placeId;
+        @ApiModelProperty(notes = "금액", example = "100,000", required = true)
+        private Long price;
+        @ApiModelProperty(notes = "교통 수단", example = "버스", required = true)
+        private String vehicle;
+        @ApiModelProperty(notes = "상세 경로 내용", example = "서울역", required = true)
+        private String body;
     }
 }
