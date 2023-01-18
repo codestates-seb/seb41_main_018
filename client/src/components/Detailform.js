@@ -6,6 +6,7 @@ import DetailformItems from "./DetailformItems";
 import Button from "../components/Button";
 import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
+import Tag from "../components/Tag";
 const Detailform = (props) => {
     return (
         <div
@@ -45,12 +46,8 @@ const Detailform = (props) => {
                         <span>총 여행 경비</span>
                         <span>700,000원</span>
                     </div>
-                    <div css={TagBox}>
-                        <div>맛집</div>
-                        <div>혼밥</div>
-                        <div>사람 많음ㅜㅜ</div>
-                    </div>
                 </div>
+                <Tag />
             </div>
             <div
                 css={css`
@@ -59,7 +56,9 @@ const Detailform = (props) => {
             >
                 <Button
                     width="23.5vw"
+                    height="6vh"
                     margin="10px 10px 10px 40px"
+                    bgImg="linear-gradient(15deg, #008080 0%, #00AEAE 100%)"
                     text={[
                         <BsFillHeartFill
                             css={css`
@@ -72,8 +71,18 @@ const Detailform = (props) => {
                     ]}
                     ftweight="700"
                     ftsize="1.4rem"
+                    color="white"
                 />
-                <Button width="5vw" margin="10px" color="black" ftsize="1.4rem" text=<FiShare /> />
+                <Button
+                    width="5vw"
+                    height="6vh"
+                    margin="10px"
+                    color="white"
+                    ftsize="1.4rem"
+                    ftweight="700"
+                    bgImg="linear-gradient(15deg, #008080 0%, #00AEAE 100%)"
+                    text=<FiShare />
+                />
             </div>
         </div>
     );
@@ -85,20 +94,10 @@ const ContentsBody = css`
 
 const ComContent = css`
     display: flex;
+    font-size: 1.1rem;
     justify-content: space-between;
-    padding: 3px 20px;
+    font-weight: 600;
+    padding: 8px 20px;
 `;
 
-const TagBox = css`
-    display: flex;
-    padding: 10px 15px;
-    div {
-        background-color: #e1ecf4;
-        border-radius: 3px;
-        padding: 5px;
-        margin: 5px;
-        color: #39739d;
-        font-size: 12px;
-    }
-`;
 export default Detailform;
