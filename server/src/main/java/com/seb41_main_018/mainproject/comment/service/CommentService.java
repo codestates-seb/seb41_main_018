@@ -10,6 +10,7 @@ import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
 import com.seb41_main_018.mainproject.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -76,9 +77,9 @@ public class CommentService {
         return findComment;
     }
 
-    /*private void verifyExistsId(Long commentId) {
-        Optional<Comment> comment = commentRepository.findById(commentId);
+    private void verifyExistsEmail(String email) {
+        Optional<Comment> comment = commentRepository.findByEmail(email);
         if (comment.isPresent())
             throw new BusinessLogicException(ExceptionCode.COMMENT_EXISTS);
-    }*/
+    }
 }

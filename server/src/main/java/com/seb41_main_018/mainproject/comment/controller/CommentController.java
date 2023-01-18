@@ -27,6 +27,7 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
     private final CommentMapper commentMapper;
+    private final CommentRepository commentRepository;
 
     // 코멘트 생성 //
     @ApiOperation(value = "코멘트 등록", notes = "코멘트를 등록합니다.")
@@ -39,6 +40,7 @@ public class CommentController {
                 commentMapper.commentPostDtoToComment(requestBody),
                 requestBody.getContentId()
         );
+
         CommentDto.Response commentResponseDto = commentMapper.commentToCommentResponseDto(comment);
 
         return new ResponseEntity(commentResponseDto, HttpStatus.CREATED);
