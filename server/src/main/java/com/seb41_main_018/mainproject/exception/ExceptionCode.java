@@ -35,9 +35,7 @@ public enum ExceptionCode {
 
     // ETC //
     NOT_IMPLEMENTATION(501, "NOT IMPLEMENTATION"),
-    INVALID_USER_STATUS(400, "INVALID USER STATUS"),
-
-    UNAUTHORIZED(401, "Unauthorized");
+    INVALID_USER_STATUS(400, "INVALID USER STATUS");
 
     @Getter
     private int status;

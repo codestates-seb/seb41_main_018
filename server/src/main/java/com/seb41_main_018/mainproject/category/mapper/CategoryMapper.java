@@ -1,4 +1,3 @@
-/*
 package com.seb41_main_018.mainproject.category.mapper;
 
 import com.seb41_main_018.mainproject.category.dto.CategoryDto;
@@ -14,4 +13,3 @@ public interface CategoryMapper {
     CategoryDto.Response categoryToCategoryResponseDto(Category category);
     List<CategoryDto.Response> categoriesToCategoryResponseDtos(List<Category> category);
 }
-*/

@@ -6,10 +6,6 @@ import com.seb41_main_018.mainproject.routeplace.entity.RoutePlace;
 import com.seb41_main_018.mainproject.routeplace.mapper.RoutePlaceMapper;
 import com.seb41_main_018.mainproject.routeplace.repository.RoutePlaceRepository;
 import com.seb41_main_018.mainproject.routeplace.service.RoutePlaceService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -20,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.List;
-@ApiOperation(value = "상세 경로 API", tags = {"RoutePlace Controller"})
+
 @RestController
 @Validated
 @RequiredArgsConstructor
@@ -30,62 +26,35 @@ public class RoutePlaceController {
     private final RoutePlaceMapper routePlaceMapper;
     private final RoutePlaceRepository routePlaceRepository;
 
-    // 상세 경로 생성 //
-    @ApiOperation(value = "상세 경로 등록", notes = "상세 경로를 등록합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 404, message = "RoutePlace not found")})
-    @PostMapping
-    public ResponseEntity postRoutePlace(@Valid @RequestBody RoutePlaceDto.Post requestBody) {
-        RoutePlace routePlace = routePlaceService.createRoutePlace(
-                routePlaceMapper.routePlacePostDtoToRoutePlace(requestBody),
-                requestBody.getRouteId());
 
-        RoutePlaceDto.Response routePlaceResponseDto =
-                routePlaceMapper.routePlaceToRoutePlaceResponseDto(routePlace);
+    @PostMapping("/{adimright}")
+    public ResponseEntity postroutePlace(@Valid @RequestBody RoutePlaceDto.Post requestBody, @PathVariable("adimright") @Positive Long placeId
+    ){
+        RoutePlace routePlace = routePlaceService.createRoutePlace(routePlaceMapper.routePlacePostDtoToRoutePlace(requestBody));
+        RoutePlaceDto.Response routePlaceResponseDto = routePlaceMapper.routePlaceToRoutePlaceResponseDto(routePlace);
 
         return new ResponseEntity(routePlaceResponseDto, HttpStatus.CREATED);
     }
 
-    // 상세 경로 수정 //
-    @ApiOperation(value = "상세 경로 수정", notes = "상세 경로를 수정합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 404, message = "RoutePlace not found")})
     @PatchMapping("/{placeId}")
     public ResponseEntity patchRoutePlace(@Valid @RequestBody RoutePlaceDto.Patch requestBody,
-                                          @PathVariable("placeId") @Positive Long placeId)
+                                        @PathVariable("placeId") @Positive Long placeId)
     {
-        RoutePlace routePlace = routePlaceService.updateRoutePlace(
-                placeId,
-                routePlaceMapper.routePlacePatchDtoToRoutePlace(requestBody));
-
-        routePlace.setPlaceId(placeId);
-        RoutePlaceDto.Response routePlaceResponseDto =
-                routePlaceMapper.routePlaceToRoutePlaceResponseDto(routePlace);
+        RoutePlace routePlace = routePlaceService.updateRoutePlace(placeId,routePlaceMapper.routePlacePatchDtoToRoutePlace(requestBody));
+        RoutePlaceDto.Response routePlaceResponseDto = routePlaceMapper.routePlaceToRoutePlaceResponseDto(routePlace);
 
         return new ResponseEntity<>(routePlaceResponseDto, HttpStatus.OK);
     }
 
-    // 상세 경로 단건 조회 //
-    @ApiOperation(value = "상세 경로 조회", notes = "상세 경로를 조회합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 404, message = "RoutePlace not found")})
     @GetMapping("/{placeId}")
-    public ResponseEntity getRoutePlace(@ApiParam(name = "placeId", value = "상세 경로 식별자", example = "1")
-            @PathVariable("placeId") Long placeId) {
+    public ResponseEntity getroutePlace(@PathVariable("placeId") Long placeId) {
         RoutePlace routePlace = routePlaceService.findRoutePlace(placeId);
-        RoutePlaceDto.Response routePlaceResponse =
-                routePlaceMapper.routePlaceToRoutePlaceResponseDto(routePlace);
-
-        return new ResponseEntity<>(routePlaceResponse, HttpStatus.OK);
+        return null;
     }
 
-    // 상세 경로 전체 조회 //
-    @ApiOperation(value = "상세 경로 전체 조회", notes = "상세 경로를 전체 조회 합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 404, message = "RoutePlace not found")})
     @GetMapping
-    public ResponseEntity getRoutePlaces(@Positive @RequestParam("page") int page,
-                                        @Positive @RequestParam("size") int size) {
+    public ResponseEntity getCategories(@Positive @RequestParam int page,
+                                        @Positive @RequestParam int size) {
         Page<RoutePlace> pageRoutePlaces = routePlaceService.findRoutePlaces(page - 1, size);
         List<RoutePlace> routePlaces = pageRoutePlaces.getContent();
 
@@ -95,11 +64,7 @@ public class RoutePlaceController {
                 HttpStatus.OK);
     }
 
-    // 상세 경로 삭제 //
-    @ApiOperation(value = "상세 경로 삭제", notes = "상세 경로를 삭제합니다.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 404, message = "RoutePlace not found")})
-    @DeleteMapping("/{placeId}")
+    @DeleteMapping("/{routePlaceId}")
     public ResponseEntity deleteRoutePlace(@PathVariable("placeId") @Positive Long placeId) {
 
         routePlaceService.deleteRoutePlace(placeId);

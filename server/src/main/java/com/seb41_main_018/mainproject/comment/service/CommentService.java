@@ -2,53 +2,35 @@ package com.seb41_main_018.mainproject.comment.service;
 
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
-import com.seb41_main_018.mainproject.content.entity.Content;
-import com.seb41_main_018.mainproject.content.service.ContentService;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
-import com.seb41_main_018.mainproject.user.entity.User;
-import com.seb41_main_018.mainproject.user.repository.UserRepository;
-import com.seb41_main_018.mainproject.user.service.UserService;
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
-@Transactional
+
 public class CommentService {
     private final CommentRepository commentRepository;
-    private final UserRepository userRepository;
-    private final ContentService contentService;
 
-    private final UserService userService;
-
-    public Comment createComment(
-            Comment comment,
-            Long contentId) {
+    public CommentService(CommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
+    }
+    public Comment createcomment(Comment comment) {
         // 이미 등록된 이메일인지 확인
-        Content content = contentService.findContent(contentId);
-
-        comment.setUser(userService.getLoginMember());
-        comment.setContent(content);
+        verifyExistsEmail(comment.getUser().getEmail());
 
         return commentRepository.save(comment);
     }
     // 코멘트 수정
-    public Comment updateComment(
-            Comment comment,
-            Long commentId) {
-
-        Comment findComment = findVerifiedComment(commentId); //ID로 멤버 존재 확인하고 comment 정보 반환
+    public Comment updateComment(Comment comment) {
+        Comment findComment = findVerifiedComment(comment.getCommentId()); //ID로 멤버 존재 확인하고 comment 정보 반환
 
         Optional.ofNullable(comment.getBody())
-                .ifPresent(findComment::setBody);
+                .ifPresent(body -> findComment.setBody(body));
 
         return commentRepository.save(findComment);
     }
