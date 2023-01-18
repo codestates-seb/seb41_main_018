@@ -35,7 +35,7 @@ public class Content extends Auditable {
     @Column(nullable = false)
     private int heartCount = 0;
 
-    @Column
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private ThemeType themeType = ThemeType.BASIC;
  

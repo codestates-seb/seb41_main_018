@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import javax.validation.constraints.NotBlank;
+
 public class CommentDto {
     @ApiModel("Comment Post")
     @AllArgsConstructor
@@ -53,6 +55,9 @@ public class CommentDto {
         private long userId;
         @ApiModelProperty(notes = "컨텐트 아이디", example = "1", required = true)
         private long contentId;
+        @ApiModelProperty(notes = "컨텐트 제목", example = "기가 막힌 서울여행", required = true)
+        @NotBlank(message = "게시글 제목을 입력해야합니다.")
+        private String title;
         @ApiModelProperty(notes = "코멘트 내용", example = "너무 좋은 코스네요!", required = true)
         private String body;
         @ApiModelProperty(notes = "별점", example = "FIVE", required = true)

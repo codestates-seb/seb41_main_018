@@ -36,10 +36,13 @@ public class ContentService {
         Content findContent = findVerifiedContent(contentId);
 
         Optional.ofNullable(content.getTitle())
-                .ifPresent(title->findContent.setTitle(title));
+                .ifPresent(findContent::setTitle);
 
         Optional.ofNullable(content.getBody())
-                .ifPresent(body->findContent.setBody(body));
+                .ifPresent(findContent::setBody);
+
+        Optional.ofNullable(content.getThemeType())
+                .ifPresent(findContent::setThemeType);
 
         return contentRepository.save(findContent);
     }

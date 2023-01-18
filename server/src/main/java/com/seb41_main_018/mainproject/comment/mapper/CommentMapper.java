@@ -18,6 +18,7 @@ public interface CommentMapper {
         Comment comment = new Comment();
         comment.setContent(content);
         comment.setBody(requestBody.getBody());
+        comment.setRatingType(requestBody.getRatingType());
 
         return comment;
     }
@@ -32,6 +33,7 @@ public interface CommentMapper {
         content.setContentId(requestBody.getContentId());
         comment.setContent(content);
         comment.setBody(requestBody.getBody());
+        comment.setRatingType(requestBody.getRatingType());
 
         return comment;
     }
@@ -44,7 +46,9 @@ public interface CommentMapper {
                 .commentId(comment.getCommentId())
                 .userId(user.getUserId())
                 .contentId(content.getContentId())
+                .title(content.getTitle())
                 .body(comment.getBody())
+                .ratingType(comment.getRatingType())
                 .build();
     }
     List<CommentDto.Response> commentsToCommentResponseDtos(List<Comment> comment);

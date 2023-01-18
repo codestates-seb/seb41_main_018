@@ -49,6 +49,9 @@ public class CommentService {
         Optional.ofNullable(comment.getBody())
                 .ifPresent(findComment::setBody);
 
+        Optional.ofNullable(comment.getRatingType())
+                .ifPresent(findComment::setRatingType);
+
         return commentRepository.save(findComment);
     }
 
