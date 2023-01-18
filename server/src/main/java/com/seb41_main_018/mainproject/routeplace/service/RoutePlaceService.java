@@ -43,7 +43,7 @@ public class RoutePlaceService {
     // 루트 장소 전체 조회 //
     public Page<RoutePlace> findRoutePlaces(int page, int size) {
         return routePlaceRepository.findAll(PageRequest.of(page, size,
-                Sort.by("tagId").descending()));
+                Sort.by("placeId").descending()));
     }
 
     // 루트 장소 조회 //
