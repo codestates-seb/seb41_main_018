@@ -19,7 +19,7 @@ const Button = (props) => {
 
                 width: ${props.width || "85%"};
                 height: ${props.height || "50px"};
-                margin: ${props.margin || "25px 0 40px 0"};
+                margin: ${props.margin || "0px"};
 
                 background-color: ${props.bgColor || `${PALETTE.white}`};
                 background-image: ${props.bgImg || "none"};
