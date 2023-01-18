@@ -50,6 +50,7 @@ const Reviewform = (props) => {
     const starArray = [0, 1, 2, 3, 4];
     const [ratingIndex, setRatingIndex] = useState(4);
     const [state, setState] = useState(0);
+    const [value, setValue] = useState(0);
 
     return (
         <div css={ReviewContainer}>
@@ -63,20 +64,14 @@ const Reviewform = (props) => {
                     name="customized-color"
                     defaultValue={2}
                     getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
-                    precision={0.5}
+                    precision={1}
                     icon={<FavoriteIcon fontSize="inherit" />}
                     emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
                     onClick={(value) => setState(value)}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}
                 />
-                {/* {starArray.map((arrayindex, index) => (
-                    // <AiFillStar
-                    //     key={index}
-                    //     onClick={() => setRatingIndex(arrayindex)}
-                    //     className={index <= ratingIndex ? "active" : "inactive"}
-                    //     size="20"
-                    // />
-
-                ))} */}
             </div>
             <div css={ReviewInput}>
                 <textarea placeholder="후기를 작성해주세요."></textarea>
