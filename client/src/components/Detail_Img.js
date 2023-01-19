@@ -51,8 +51,14 @@ const Detial_Img = () => {
     const [selectedRoute, setSelectedRoute] = useRecoilState(selectedRouteState);
 
     /* 선택 된 경로만 filter */
-    // let selected = routeDummy.filter((routeplace) => routeplace.routeId === selectedRoute);
+    let selected = routeDummy.filter((routeplace) => routeplace.routeId === selectedRoute);
 
+    // 슬라이드 이동 (사용 안할 시 삭제)
+    /*  
+    const slide = () => {
+        console.log(swiper);
+        swiper.slideTo(3, 1000);
+    }; */
     return (
         <div css={Swiper_Wrap}>
             <Swiper
@@ -68,33 +74,38 @@ const Detial_Img = () => {
                 watchOverflow={true} // 슬라이드가 1개 일 때 pager, button 숨김 여부 설정
                 className="gallery"
             >
-                {routeDummy.map((el) =>
-                    el.img.map((img) => (
-                        <SwiperSlide key={img}>
-                            <img src={img} alt={el.name} />
-                        </SwiperSlide>
-                    ))
-                )}
+                {selected[0].img.map((img) => (
+                    <SwiperSlide key={img}>
+                        <img src={img} alt={img.name} />
+                    </SwiperSlide>
+                ))}
             </Swiper>
 
             <Swiper
                 onSwiper={setThumbsSwiper}
-                loop={true}
+                loop={false}
                 spaceBetween={10}
-                slidesPerView={"auto"}
+                slidesPerView={selected[0].img.length}
                 freeMode={true}
                 watchSlidesProgress={true}
+                /* centeredSlides={true} */ /*썸네일 가운데 정렬 */
                 modules={[FreeMode, Navigation, Thumbs]}
                 className="gallery-thumbs"
             >
-                {routeDummy.map((el) =>
+                {selected[0].img.map((img) => (
+                    <SwiperSlide key={img}>
+                        <img src={img} alt={img.name} />
+                    </SwiperSlide>
+                ))}
+                {/* 전체 이미지 불러오기 (사용 안할 시 삭제) */}
+                {/* {routeDummy.map((el) =>
                     el.img.map((img) => (
                         <SwiperSlide key={img}>
                             <img src={img} alt={el.name} />
                             <div>{el.name}</div>
                         </SwiperSlide>
                     ))
-                )}
+                )} */}
             </Swiper>
         </div>
     );
@@ -174,7 +185,9 @@ const Swiper_Wrap = css`
         font-size: 12px;
     }
 
+    // 썸네일 개별 이미지
     .gallery-thumbs .swiper-slide img {
+        width: 100px;
         margin: 3px;
     }
 
@@ -189,6 +202,7 @@ const Swiper_Wrap = css`
         object-fit: cover;
     }
 
+    // 버튼
     .swiper-button-next {
         background: url(${right}) no-repeat;
         right: 0;
