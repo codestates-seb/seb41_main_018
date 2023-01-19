@@ -8,6 +8,7 @@ import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.content.service.ContentService;
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
+import com.seb41_main_018.mainproject.tag.repository.TagRepository;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -29,6 +30,8 @@ public class ContentController {
     private final ContentService contentService;
     private final ContentMapper contentMapper;
     private final ContentRepository contentRepository;
+
+
 
     // 게시글 생성 //
     @ApiOperation(value = "컨텐트 등록", notes = "컨텐트를 등록합니다.")
@@ -53,9 +56,7 @@ public class ContentController {
         int view = content.getViewCount();
         content.setViewCount(++view); //조회수 증가
         contentRepository.save(content);
-        ContentDto.ContentResponse contentResponse = contentMapper.contentToContentResponse(content);
-
-        return new ResponseEntity<>(contentResponse, HttpStatus.OK);
+        return contentService.detail(content);
     }
 
     // 게시글 전체 조회 //
@@ -102,6 +103,9 @@ public class ContentController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @ApiOperation(value = "카테고리 별 컨텐트 조회", notes = "카테고리 별 컨텐트를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 404, message = "Content not found")})
     @GetMapping("/category/{themeType}")
     public ResponseEntity getContentFromThemeType(@PathVariable("themeType")ThemeType themeType){
         ContentDto.ThemeTypeResponse response = contentMapper.themeTypeResponse(themeType, contentRepository);

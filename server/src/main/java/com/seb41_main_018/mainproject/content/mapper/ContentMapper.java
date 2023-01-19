@@ -1,10 +1,16 @@
 package com.seb41_main_018.mainproject.content.mapper;
 
+import com.seb41_main_018.mainproject.comment.dto.CommentDto;
+import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
 import com.seb41_main_018.mainproject.constant.ThemeType;
 import com.seb41_main_018.mainproject.content.dto.ContentDto;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.content.repository.ContentRepository;
+import com.seb41_main_018.mainproject.route.repository.RouteRepository;
+import com.seb41_main_018.mainproject.tag.dto.TagDto;
+import com.seb41_main_018.mainproject.tag.entity.Tag;
+import com.seb41_main_018.mainproject.tag.repository.TagRepository;
 import com.seb41_main_018.mainproject.user.entity.User;
 import org.mapstruct.Mapper;
 
@@ -34,6 +40,7 @@ public interface ContentMapper {
                 .body(content.getBody())
                 .heartCount(content.getHeartCount())
                 .themeType(content.getThemeType())
+                .viewCount(content.getViewCount())
                 .build();
     }
     List<ContentDto.ContentResponse> contentsToContentResponse(List<Content> contents);
@@ -53,5 +60,44 @@ public interface ContentMapper {
                         .build())
                 .collect(Collectors.toList());
     }
+
+    default ContentDto.ContentAllResponse contentToContentAllResponse(Content content, CommentRepository commentRepository, TagRepository tagRepository){
+        User user = content.getUser();
+        List<Comment> comments = commentRepository.findAllByContentId(content.getContentId());
+
+        return ContentDto.ContentAllResponse.builder()
+                .contentId(content.getContentId())
+                .userId(user.getUserId())
+                .title(content.getTitle())
+                .body(content.getBody())
+                .heartCount(content.getHeartCount())
+                .themeType(content.getThemeType())
+                .comments(commentsToCommentResponseDtos(commentRepository.findAllByContentId(content.getContentId())))
+                .tags(tagsToTagResponseDtos(tagRepository.findAllByContentId(content.getContentId())))
+                .build();
+    }
+    default List<CommentDto.Response> commentsToCommentResponseDtos(List<Comment> comments){
+        return comments.stream()
+                .map(comment -> CommentDto.Response.builder()
+                        .commentId(comment.getCommentId())
+                        .contentId(comment.getContent().getContentId())
+                        .userId(comment.getUser().getUserId())
+                        .body(comment.getBody())
+                        .ratingType(comment.getRatingType())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    default List<TagDto.TagResponse> tagsToTagResponseDtos(List<Tag> tags){
+        // tag
+        return tags.stream()
+                .map(tag -> TagDto.TagResponse.builder()
+                        .tagId(tag.getTagId())
+                        .contentId(tag.getContent().getContentId())
+                        .name(tag.getName())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
 
 }

@@ -53,7 +53,7 @@ public class Content extends Auditable {
     private List<Route> routes = new ArrayList<>();
 
     @OrderBy("tagId")
-    @OneToMany(mappedBy = "content")
+    @OneToMany(mappedBy = "content", cascade = CascadeType.REMOVE)
     private List<Tag> tags = new ArrayList<>();
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER, cascade = CascadeType.DETACH)

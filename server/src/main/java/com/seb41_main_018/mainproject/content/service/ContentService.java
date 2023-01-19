@@ -1,9 +1,15 @@
 package com.seb41_main_018.mainproject.content.service;
 
+import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
+import com.seb41_main_018.mainproject.content.dto.ContentDto;
 import com.seb41_main_018.mainproject.content.entity.Content;
+import com.seb41_main_018.mainproject.content.mapper.ContentMapper;
 import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
+import com.seb41_main_018.mainproject.response.SingleResponseDto;
+import com.seb41_main_018.mainproject.tag.repository.TagRepository;
+import com.seb41_main_018.mainproject.tag.service.TagService;
 import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
 import com.seb41_main_018.mainproject.user.service.UserService;
@@ -11,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +32,11 @@ public class ContentService {
     private final ContentRepository contentRepository;
     private final UserService userService;
 
+    private final ContentMapper contentMapper;
+
+    private final CommentRepository commentRepository;
+    private final TagRepository tagRepository;
+
     // 게시글 생성 //
     public Content createContent(Content content) {
         content.setUser(userService.getLoginMember());
@@ -34,6 +47,10 @@ public class ContentService {
     // 게시글 수정 //
     public Content updateContent(Long contentId, Content content) {
         Content findContent = findVerifiedContent(contentId);
+
+        User writer = userService.findVerifiedUser(findContent.getUser().getUserId()); // 작성자 찾기
+        if(userService.getLoginMember().getUserId() != writer.getUserId()) // 작성자와 로그인한 사람이 다를 경우
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED); //예외 발생(권한 없음)
 
         Optional.ofNullable(content.getTitle())
                 .ifPresent(findContent::setTitle);
@@ -61,6 +78,10 @@ public class ContentService {
     // 게시글 삭제 //
     public void deleteContent(Long contentId) {
         Content findContent = findVerifiedContent(contentId);
+
+        User writer = userService.findVerifiedUser(findContent.getUser().getUserId()); // 작성자 찾기
+        if(userService.getLoginMember().getUserId() != writer.getUserId()) // 작성자와 로그인한 사람이 다를 경우
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED); //예외 발생(권한 없음)
         contentRepository.delete(findContent);
     }
 
@@ -81,6 +102,16 @@ public class ContentService {
                         new BusinessLogicException(ExceptionCode.CONTENT_NOT_FOUND));
 
         return findContent;
+    }
+
+    @Transactional(readOnly = true)
+    public ResponseEntity detail(Content content) {
+
+        ContentDto.ContentAllResponse response = contentMapper.contentToContentAllResponse(content, commentRepository, tagRepository);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(response), HttpStatus.OK
+        );
     }
 
 }
