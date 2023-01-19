@@ -11,10 +11,12 @@ import { BsFillHeartFill } from "react-icons/bs";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import { addBtnClickState } from "../state/atom";
+import { MdDelete } from "react-icons/md";
 
 const Postform = (props) => {
     const [countList, setCountList] = useState([0]);
     const [isAddBtnClick, setAddBtnClick] = useRecoilState(addBtnClickState);
+    const [isDragging, setDragging] = useState(false);
 
     const onAddBtnClick = () => {
         let countArr = [...countList];
@@ -22,24 +24,44 @@ const Postform = (props) => {
         countArr.push(isAddBtnClick);
         setCountList(countArr);
     };
-    const handleChange = (result) => {
+
+    const onRemoveBtnClick = (index) => {
+        console.log(countList);
+        console.log(index);
+    };
+
+    const onDragEnd = (result) => {
         if (!result.destination) return;
         const items = [...countList];
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);
         setCountList(items);
-        console.log(countList);
+        setDragging(false);
+    };
+
+    const onDragStart = () => {
+        setDragging(true);
     };
 
     return (
-        <DragDropContext onDragEnd={handleChange}>
+        <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
             <div css={wrap}>
                 <div css={container}>
+                    {isDragging ? (
+                        <Button
+                            width="27vw"
+                            maxWidth="400px"
+                            minWidth="250px"
+                            minheigth="47px"
+                            text={[<MdDelete />, "삭제하기"]}
+                            onClick={onRemoveBtnClick}
+                        />
+                    ) : null}
                     <Droppable droppableId="droppable">
                         {(provided) => (
                             <div {...provided.droppableProps} ref={provided.innerRef}>
                                 {countList.map((e, i) => (
-                                    <Draggable draggableId={`${e}`} index={`${i}`} key={`${e}`}>
+                                    <Draggable draggableId={`${e}`} index={i} key={`${e}`}>
                                         {(provided, snapshot) => {
                                             return (
                                                 <div
@@ -65,6 +87,7 @@ const Postform = (props) => {
                         minWidth="250px"
                         minheigth="47px"
                         text="추가하기"
+                        margin="0 auto"
                         onClick={onAddBtnClick}
                     />
 
@@ -128,6 +151,7 @@ const Postform = (props) => {
         </DragDropContext>
     );
 };
+
 const wrap = css`
     position: sticky;
     top: 50px;
