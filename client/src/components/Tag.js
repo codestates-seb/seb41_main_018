@@ -6,9 +6,7 @@ import { css } from "@emotion/react";
 import { AiOutlineClose } from "react-icons/ai";
 
 const Tag = () => {
-    const initialTags = ["CodeStates", "kimcoding"];
-
-    const [tags, setTags] = useState(initialTags);
+    const [tags, setTags] = useState([]);
     const removeTags = (indexToRemove) => {
         const filter = tags.filter((el, index) => index !== indexToRemove);
         setTags(filter);
@@ -42,6 +40,26 @@ const Tag = () => {
                         </li>
                     ))}
                 </ul>
+                <input
+                    css={css`
+                        flex: 1;
+                        border: none;
+                        height: 46px;
+                        font-size: 1rem;
+                        padding: 10px;
+                        :focus {
+                            outline: transparent;
+                        }
+                    `}
+                    type="text"
+                    onKeyUp={(e) => {
+                        return addTags(e);
+                        {
+                            /* 키보드의 Enter 키에 의해 addTags 메소드가 실행되어야 합니다. */
+                        }
+                    }}
+                    placeholder="태그를 입력해보세요!"
+                />
             </div>
         </>
     );
@@ -52,8 +70,8 @@ const TagsInput = css`
     align-items: flex-start;
     flex-wrap: wrap;
     min-height: 48px;
-    width: 27vw;
     border-radius: 6px;
+    /* background-color: yellow; */
 
     ul {
         display: flex;
