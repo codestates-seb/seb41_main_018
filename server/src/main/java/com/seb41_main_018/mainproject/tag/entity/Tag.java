@@ -22,7 +22,7 @@ public class Tag extends Auditable {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(optional = true, fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @ManyToOne
     @JoinColumn(name = "CONTENT_ID")
     private Content content;
 
