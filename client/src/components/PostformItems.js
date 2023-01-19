@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { PALETTE } from "../Common";
 import { css } from "@emotion/react";
 import { Turn as Hamburger } from "hamburger-react";
@@ -8,10 +8,22 @@ import { Turn as Hamburger } from "hamburger-react";
 const PostformItems = (props) => {
     const [isClick, setClick] = useState(false);
     const [isOpen, setOpen] = useState(false);
+    const [isInput, setInput] = useState(true);
+    const [isValue, setValue] = useState("");
+    const inputRef = useRef();
 
     const handleClick = () => {
         setClick(!isClick);
     };
+
+    const handleInputValue = () => {
+        setInput(!isInput);
+    };
+
+    // const enterkey = () => {
+    //     if (window.event.keyCode == 13) return handleInputValue();
+    // };
+
     return (
         <>
             <div onClick={handleClick} css={wrap}>
@@ -21,38 +33,62 @@ const PostformItems = (props) => {
                         justify-content: space-between;
                     `}
                 >
-                    <input
-                        css={css`
-                            width: inherit;
-                            min-height: 35px;
-                            width: 26vw;
-                            min-width: 180px;
-                            font-size: 1.4rem;
-                            font-weight: 600;
-                        `}
+                    {isInput ? (
+                        <input
+                            css={css`
+                                min-height: 35px;
+                                width: 26vw;
+                                min-width: 180px;
+                                font-size: 1.4rem;
+                                font-weight: 600;
+                            `}
+                            onChange={(e) => {
+                                setValue(e.target.value);
+                            }}
+                            // onKeyUp={enterkey}
+                            value={isValue}
+                        ></input>
+                    ) : (
+                        <div
+                            css={css`
+                                font-size: 1.4rem;
+                                font-weight: 600;
+                                text-align: center;
+                                width: 26vw;
+                                min-width: 180px;
+                                max-width: 400px;
+                                margin: 0px auto;
+                                padding: 5px;
+                            `}
+                        >
+                            {isValue}
+                        </div>
+                    )}
+                    <Hamburger
+                        toggled={isOpen}
+                        toggle={setOpen}
+                        size={25}
+                        onToggle={handleInputValue}
                     />
-                    <Hamburger toggled={isOpen} toggle={setOpen} size={25} />
                 </div>
                 {isOpen ? (
                     <div css={clicked}>
                         <ul>
                             <li>
-                                <span>경비</span>
-                                <div>50000원</div>
+                                <div>경비</div>
+                                <input></input>
                             </li>
                             <li>
-                                <span>이동 수단</span>
-                                <div>자동차</div>
+                                <div>이동 수단</div>
+                                <input></input>
                             </li>
                             <li>
-                                <span>상세 설명</span>
-                                <div> 아이들도 입장 가능합니다! </div>
+                                <div>상세 설명</div>
+                                <input></input>
                             </li>
                         </ul>
                     </div>
-                ) : (
-                    false
-                )}
+                ) : null}
             </div>
         </>
     );
@@ -73,7 +109,6 @@ const wrap = css`
 `;
 
 const clicked = css`
-    width: 25vw;
     margin: 5px auto;
     text-align: start;
     border-radius: ${PALETTE.border_radius};
@@ -104,7 +139,7 @@ const clicked = css`
         }
     }
 
-    span {
+    div {
         border-radius: ${PALETTE.border_round};
         background-color: #eff5f5;
         color: #497174;
@@ -112,11 +147,19 @@ const clicked = css`
         text-align: center;
         font-weight: 600;
         font-size: 1rem;
-        margin: 10px;
+        margin: 10px auto;
+        min-width: 180px;
+        max-width: 350px;
     }
-    div {
+    input {
+        display: flex;
+        border-radius: ${PALETTE.border_radius};
+        width: 23vw;
+        min-height: 40px;
+        min-width: 180px;
+        max-width: 350px;
         font-size: 1.15rem;
-        margin: 15px;
+        margin: 15px auto;
     }
 `;
 
