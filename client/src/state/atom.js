@@ -7,3 +7,9 @@ export const selectedRouteState = atom({
     key: "selectedRouteState",
     default: 1,
 });
+
+export const imgState = atom({
+    key: "imgState",
+    default: [],
+    dangerouslyAllowMutability: true,
+});

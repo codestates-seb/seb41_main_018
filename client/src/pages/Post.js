@@ -1,7 +1,8 @@
 import React from "react";
+import ImgUpload from "../components/ImgUpload";
 
 const Post = () => {
-    return;
+    return <ImgUpload />;
 };
 
 export default Post;
