@@ -48,11 +48,8 @@ public class RouteController {
     public ResponseEntity getRoute(@ApiParam(name = "RouteId", value = "경로 식별자", example = "1")
                                          @PathVariable("routeId") Long routeId) {
         Route route = routeService.findRoute(routeId);
-        RouteDto.RouteResponse routeResponse = routeMapper.routeToRouteResponse(route);
 
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(routeResponse), HttpStatus.OK
-        );
+        return routeService.detail(route);
     }
 
     // 경로 전체 조회 //

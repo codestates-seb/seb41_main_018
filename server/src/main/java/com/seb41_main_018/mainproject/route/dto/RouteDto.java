@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
@@ -20,6 +21,9 @@ public class RouteDto {
         @ApiModelProperty(notes = "경로 이름", example = "서울", required = true)
         @NotBlank
         private String name;
+        @ApiModelProperty(notes = "여행 날짜", example = "2023.01.20", required = true)
+        @NotBlank
+        private String date;
     }
 
     @ApiModel("Route Patch")
@@ -33,6 +37,9 @@ public class RouteDto {
         @ApiModelProperty(notes = "경로 이름", example = "서울", required = true)
         @NotBlank
         private String name;
+        @ApiModelProperty(notes = "여행 날짜", example = "2023.01.20", required = true)
+        @NotBlank
+        private String date;
     }
     @ApiModel("Route Response")
     @AllArgsConstructor
@@ -46,7 +53,13 @@ public class RouteDto {
         @ApiModelProperty(notes = "경로 이름", example = "서울", required = true)
         private String name;
 
+        @ApiModelProperty(notes = "경로에 따른 상세 장소", example = "창경궁", required = true)
         private List<RoutePlaceResponseDto> routePlaces;
+
+        @ApiModelProperty(notes = "총 여행 비용", example = "120000", required = true)
+        private Long totalPrice;
+        @ApiModelProperty(notes = "여행 날짜", example = "2023.01.20", required = true)
+        private String date;
 
     }
     @Builder
@@ -62,5 +75,11 @@ public class RouteDto {
         private String vehicle;
         @ApiModelProperty(notes = "상세 경로 내용", example = "서울역", required = true)
         private String body;
+
+        @ApiModelProperty(notes = "경로의 x좌표", example = "126.99571824238", required = true)
+        private String x;
+
+        @ApiModelProperty(notes = "경로의 y좌표", example = "37.5428216732984", required = true)
+        private String y;
     }
 }

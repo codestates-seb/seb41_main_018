@@ -29,10 +29,14 @@ public class Route extends Auditable {
     @Column(nullable = false)
     private String name;
 
-    @JsonIgnore
-    @JsonManagedReference
+    @Column(nullable = false)
+    private String date;
+
+    @Column(nullable = false)
+    private Long totalPrice=0L;
+
     @OrderBy("placeId")
-    @OneToMany(mappedBy = "route", fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "route",cascade = CascadeType.REMOVE)
     private List<RoutePlace> routePlaces = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
