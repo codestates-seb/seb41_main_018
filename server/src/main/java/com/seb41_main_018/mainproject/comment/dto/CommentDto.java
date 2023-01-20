@@ -62,5 +62,8 @@ public class CommentDto {
         private String body;
         @ApiModelProperty(notes = "별점", example = "FIVE", required = true)
         private RatingType ratingType;
+
+        @ApiModelProperty(notes = "유저닉네임", example = "원할머니멱살", required = true)
+        private String nickName;
     }
 }
