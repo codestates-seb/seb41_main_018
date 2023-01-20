@@ -36,8 +36,19 @@ public class Content extends Auditable {
     private int heartCount = 0;
 
     @Column(nullable = false)
+    private Long totalPrice = 0L;
+
+    @Column(nullable = false)
+    private String date;
+
+    @Column(nullable = false)
+    private String routeName;
+
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private ThemeType themeType = ThemeType.BASIC;
+
+
  
     // 연관 관계 //
     @OrderBy("heartId")

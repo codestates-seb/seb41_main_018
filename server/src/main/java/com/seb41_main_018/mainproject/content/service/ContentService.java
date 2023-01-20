@@ -61,6 +61,12 @@ public class ContentService {
         Optional.ofNullable(content.getThemeType())
                 .ifPresent(findContent::setThemeType);
 
+        Optional.ofNullable(content.getDate())
+                .ifPresent(findContent::setDate);
+
+        Optional.ofNullable(content.getRouteName())
+                .ifPresent(findContent::setRouteName);
+
         return contentRepository.save(findContent);
     }
 
