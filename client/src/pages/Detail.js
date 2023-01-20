@@ -18,7 +18,14 @@ import Reviewform from "../components/Reviewform";
 const Detail = () => {
     return (
         <div className="Detail" css={Wrap}>
-            <h1>제목</h1>
+            <h1
+                css={css`
+                    width: 80vw;
+                    margin: 0 auto;
+                `}
+            >
+                제목
+            </h1>
             <div css={TotalContainer}>
                 <div css={Image}>
                     <Detial_Img />
@@ -30,9 +37,8 @@ const Detail = () => {
     );
 };
 const Wrap = css`
-    margin: 3rem;
     width: 100%;
-    height: 100vh;
+    height: 100%;
 `;
 
 const TotalContainer = css`
