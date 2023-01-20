@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 public class CommentDto {
     @ApiModel("Comment Post")
@@ -65,5 +66,11 @@ public class CommentDto {
 
         @ApiModelProperty(notes = "유저닉네임", example = "원할머니멱살", required = true)
         private String nickName;
+
+        @ApiModelProperty(notes = "코멘트 작성 날짜와 시간", example = "2023.01.20", required = true)
+        private LocalDateTime createdAt;
+
+        @ApiModelProperty(notes = "코멘트 수정 날짜와 시간", example = "2023.01.20", required = true)
+        private LocalDateTime modifiedAt;
     }
 }
