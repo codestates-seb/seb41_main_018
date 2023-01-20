@@ -6,13 +6,6 @@ import Button from "../components/Button";
 import { useRecoilState } from "recoil";
 import { imgState } from "../state/atom";
 
-/*
-해야할 일 
-- 사진 개수 제한 (3개)
-- 사진 삭제 버튼
-- 압축......??
-
- */
 const ImgUpload = () => {
     const [imgList, setImgList] = useRecoilState(imgState);
     const inputRef = useRef(null);
@@ -21,7 +14,14 @@ const ImgUpload = () => {
     };
     const handleUploadImg = (event) => {
         const selectedImg = event.target.files;
+        const maxImg = selectedImg.length > 3 ? 3 : selectedImg.length;
         let previewList = [...imgList];
+
+        // 사진 입력 제한 : 최대 3장
+        if (imgList.length + maxImg > 3 || selectedImg.length > 3) {
+            alert("최대 3장까지만 등록 가능합니다.");
+            return;
+        }
 
         // img의 상대경로 반환
         for (let i = 0; i < selectedImg.length; i++) {
@@ -34,13 +34,19 @@ const ImgUpload = () => {
     return (
         <div css={ImgUpload_Wrap}>
             <input
+                css={ImgInput}
                 type="file"
                 accept="image/*"
                 ref={inputRef}
                 onChange={handleUploadImg}
                 multiple
             />
-            <Button text="사진 업로드" width="150px" onClick={uploadBtnClick}></Button>
+            <Button
+                text="사진 업로드"
+                width="130px"
+                margin="15px"
+                onClick={uploadBtnClick}
+            ></Button>
             <div css={PreviewContainer}>
                 {imgList.map((img, i) => (
                     <div key={`${img}`}>
@@ -56,6 +62,7 @@ const ImgUpload_Wrap = css`
         display: none;
     }
 `;
+const ImgInput = css``;
 
 const PreviewContainer = css`
     display: flex;
