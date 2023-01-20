@@ -1,8 +1,12 @@
 import React from "react";
-import ImgUpload from "../components/ImgUpload";
+import Postfrom from "../components/Postform";
 
 const Post = () => {
-    return <ImgUpload />;
+    return (
+        <>
+            <Postfrom />
+        </>
+    );
 };
 
 export default Post;

@@ -13,3 +13,8 @@ export const imgState = atom({
     default: [],
     dangerouslyAllowMutability: true,
 });
+
+export const addBtnClickState = atom({
+    key: "addBtnClickState",
+    default: 1,
+});
