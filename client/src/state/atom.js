@@ -8,6 +8,12 @@ export const selectedRouteState = atom({
     default: 1,
 });
 
+export const imgState = atom({
+    key: "imgState",
+    default: [],
+    dangerouslyAllowMutability: true,
+});
+
 export const addBtnClickState = atom({
     key: "addBtnClickState",
     default: 1,

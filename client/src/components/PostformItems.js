@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { PALETTE } from "../Common";
 import { css } from "@emotion/react";
 import { Turn as Hamburger } from "hamburger-react";
+import ImgUpload from "../components/ImgUpload";
 
 const PostformItems = (props) => {
     const [isClick, setClick] = useState(false);
@@ -75,16 +76,19 @@ const PostformItems = (props) => {
                     <div css={clicked}>
                         <ul>
                             <li>
-                                <div>경비</div>
-                                <input></input>
+                                <div css={ListName}>경비</div>
+                                <input css={ListInput}></input>
                             </li>
                             <li>
-                                <div>이동 수단</div>
-                                <input></input>
+                                <div css={ListName}>이동 수단</div>
+                                <input css={ListInput}></input>
                             </li>
                             <li>
-                                <div>상세 설명</div>
-                                <input></input>
+                                <div css={ListName}>상세 설명</div>
+                                <input css={ListInput}></input>
+                            </li>
+                            <li>
+                                <ImgUpload />
                             </li>
                         </ul>
                     </div>
@@ -138,29 +142,29 @@ const clicked = css`
             }
         }
     }
+`;
 
-    div {
-        border-radius: ${PALETTE.border_round};
-        background-color: #eff5f5;
-        color: #497174;
-        padding: 7px;
-        text-align: center;
-        font-weight: 600;
-        font-size: 1rem;
-        margin: 10px auto;
-        min-width: 180px;
-        max-width: 350px;
-    }
-    input {
-        display: flex;
-        border-radius: ${PALETTE.border_radius};
-        width: 23vw;
-        min-height: 40px;
-        min-width: 180px;
-        max-width: 350px;
-        font-size: 1.15rem;
-        margin: 15px auto;
-    }
+const ListName = css`
+    border-radius: ${PALETTE.border_round};
+    background-color: #eff5f5;
+    color: #497174;
+    padding: 7px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 10px auto;
+    min-width: 180px;
+    max-width: 350px;
+`;
+const ListInput = css`
+    display: flex;
+    border-radius: ${PALETTE.border_radius};
+    width: 23vw;
+    min-height: 40px;
+    min-width: 180px;
+    max-width: 350px;
+    font-size: 1.15rem;
+    margin: 15px auto;
 `;
 
 const close = css`
