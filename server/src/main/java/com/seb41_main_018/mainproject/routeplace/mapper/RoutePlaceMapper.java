@@ -20,6 +20,8 @@ public interface RoutePlaceMapper {
         routePlace.setPrice(requestBody.getPrice());
         routePlace.setVehicle(requestBody.getVehicle());
         routePlace.setBody(requestBody.getBody());
+        routePlace.setX(requestBody.getX());
+        routePlace.setY(requestBody.getY());
 
         return routePlace;
     }
@@ -32,6 +34,8 @@ public interface RoutePlaceMapper {
                 .price(routePlace.getPrice())
                 .vehicle(routePlace.getVehicle())
                 .body(routePlace.getBody())
+                .x(routePlace.getX())
+                .y(routePlace.getY())
                 .build();
 
     }

@@ -16,7 +16,7 @@ public class RoutePlace extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long placeId;
 
-    @ManyToOne(optional = true, fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @ManyToOne
     @JoinColumn(name = "ROUTE_ID")
     private Route route;
 
@@ -28,6 +28,12 @@ public class RoutePlace extends Auditable {
 
     @Column(nullable = false)
     private String body;
+
+    @Column(nullable = false)
+    private String x;
+
+    @Column(nullable = false)
+    private String y;
 
     public RoutePlace(
             Long price,

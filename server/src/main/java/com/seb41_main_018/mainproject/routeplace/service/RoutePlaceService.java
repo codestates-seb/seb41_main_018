@@ -3,6 +3,7 @@ package com.seb41_main_018.mainproject.routeplace.service;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.route.entity.Route;
+import com.seb41_main_018.mainproject.route.repository.RouteRepository;
 import com.seb41_main_018.mainproject.route.service.RouteService;
 import com.seb41_main_018.mainproject.routeplace.entity.RoutePlace;
 import com.seb41_main_018.mainproject.routeplace.repository.RoutePlaceRepository;
@@ -21,11 +22,14 @@ public class RoutePlaceService {
     private final UserRepository userRepository;
     private final RouteService routeService;
     private final RoutePlaceRepository routePlaceRepository;
+    private final RouteRepository routeRepository;
 
     // 루트 장소 생성 //
     public RoutePlace createRoutePlace(RoutePlace routePlace, Long routeId) {
         Route route = routeService.findVerifiedRoute(routeId);
         routePlace.setRoute(route);
+//        route.setTotalPrice(route.getTotalPrice()+routePlace.getPrice());
+//        routeRepository.save(route);
 
         return routePlaceRepository.save(routePlace);
     }

@@ -22,6 +22,11 @@ public class RoutePlaceDto {
         @ApiModelProperty(notes = "상세 경로 내용", example = "서울역", required = true)
         @NotSpace(message = "내용을 채워주세요.")
         private String body;
+        @ApiModelProperty(notes = "경로의 x좌표", example = "126.99571824238", required = true)
+        private String x;
+
+        @ApiModelProperty(notes = "경로의 y좌표", example = "37.5428216732984", required = true)
+        private String y;
     }
     @ApiModel("RoutePlace Patch")
     @AllArgsConstructor
@@ -39,6 +44,11 @@ public class RoutePlaceDto {
         @ApiModelProperty(notes = "상세 경로 내용", example = "서울역", required = true)
         @NotSpace(message = "내용을 채워주세요.")
         private String body;
+        @ApiModelProperty(notes = "경로의 x좌표", example = "126.99571824238", required = true)
+        private String x;
+
+        @ApiModelProperty(notes = "경로의 y좌표", example = "37.5428216732984", required = true)
+        private String y;
     }
 
     @ApiModel("RoutePlace Response")
@@ -56,5 +66,10 @@ public class RoutePlaceDto {
         private String vehicle;
         @ApiModelProperty(notes = "상세 경로 내용", example = "서울역", required = true)
         private String body;
+        @ApiModelProperty(notes = "경로의 x좌표", example = "126.99571824238", required = true)
+        private String x;
+
+        @ApiModelProperty(notes = "경로의 y좌표", example = "37.5428216732984", required = true)
+        private String y;
     }
 }
