@@ -8,7 +8,7 @@ import Login from "../src/pages/Login,SignUp page/Login";
 import SignUp from "../src/pages/Login,SignUp page/SignUp";
 import Mypage from "../src/pages/Mypage";
 import Detail from "../src/pages/Detail";
-import Post from "../src/pages/PostPage/Post";
+import Post from "../src/pages/Post";
 import Result from "../src/pages/Result";
 import Footer from "./components/Footer";
 import "./App.css";
