@@ -1,64 +1,43 @@
 package com.seb41_main_018.mainproject.route.mapper;
 
-import com.seb41_main_018.mainproject.comment.dto.CommentDto;
-import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.route.dto.RouteDto;
 import com.seb41_main_018.mainproject.route.entity.Route;
-import com.seb41_main_018.mainproject.routeplace.entity.RoutePlace;
-import com.seb41_main_018.mainproject.user.entity.User;
 import org.mapstruct.Mapper;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface RouteMapper {
-    default Route routePostDtoToRoute(RouteDto.RoutePost requestBody)
-    {
-    Content content = new Content();
-    content.setContentId(requestBody.getContentId());
-
-    Route route = new Route();
-    route.setContent(content);
-    route.setName(requestBody.getName());
-
-    return route;
-    }
-    default Route routePatchDtoToRoute(RouteDto.RoutePatch requestBody)
-    {
-        Content content = new Content();
-        content.setContentId(requestBody.getContentId());
-
-        Route route  = new Route();
-        content.setContentId(requestBody.getContentId());
-        route.setContent(content);
-        route.setName(requestBody.getName());
-
-        return route;
-    }
-    default RouteDto.RouteResponse routeToRouteResponse(Route route)
-    {
+    Route routePostDtoToRoute(RouteDto.Post requestBody);
+//    default Route routePatchDtoToRoute(RouteDto.Patch requestBody) {
+//        Route route = new Route();
+//        route.setRouteId(requestBody.getRouteId());
+//
+//        RoutePlace routePlace = new RoutePlace();
+//        routePlace.setRoute(route);
+//        routePlace.setPrice(requestBody.getPrice());
+//        routePlace.setVehicle(requestBody.getVehicle());
+//        routePlace.setBody(requestBody.getBody());
+//        routePlace.setX(requestBody.getX());
+//        routePlace.setY(requestBody.getY());
+//
+//        return routePlace;
+//    }
+    default RouteDto.Response routeToRouteResponseDto(Route route) {
         Content content = route.getContent();
 
-        return RouteDto.RouteResponse.builder()
-                .routeId(route.getRouteId())
+        return RouteDto.Response.builder()
                 .contentId(content.getContentId())
-                .name(route.getName())
-                .routePlaces(routePlaceToRouteResponseDto(route.getRoutePlaces()))
+                .routeId(route.getRouteId())
+                .price(route.getPrice())
+                .vehicle(route.getVehicle())
+                .body(route.getBody())
+                .x(route.getX())
+                .y(route.getY())
+                .place(route.getPlace())
                 .build();
+
     }
-    List<RouteDto.RouteResponse> routesToRouteResponse(List<Route> routes);
-    default List<RouteDto.RoutePlaceResponseDto> routePlaceToRouteResponseDto(List<RoutePlace> routePlaces){
-        return routePlaces
-                .stream()
-                .map(routePlace -> RouteDto.RoutePlaceResponseDto
-                        .builder()
-                        .placeId(routePlace.getPlaceId())
-                        .price(routePlace.getPrice())
-                        .body(routePlace.getBody())
-                        .vehicle(routePlace.getVehicle())
-                        .build())
-                .collect(Collectors.toList());
-    }
+    List<RouteDto.Response> routeToRouteResponseDtos(List<Route> routes);
 }

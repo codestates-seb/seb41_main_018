@@ -33,8 +33,10 @@ public class CommentService {
             Long contentId) {
         // 이미 등록된 이메일인지 확인
         Content content = contentService.findContent(contentId);
+        User user = userService.getLoginMember();
 
-        comment.setUser(userService.getLoginMember());
+        comment.setUser(user);
+//        comment.setNickname(user.getNickname());
         comment.setContent(content);
 
         return commentRepository.save(comment);

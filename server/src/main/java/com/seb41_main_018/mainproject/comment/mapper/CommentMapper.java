@@ -49,6 +49,9 @@ public interface CommentMapper {
                 .title(content.getTitle())
                 .body(comment.getBody())
                 .ratingType(comment.getRatingType())
+                .nickName(user.getNickname())
+                .createdAt(comment.getCreatedAt())
+                .modifiedAt(comment.getModifiedAt())
                 .build();
     }
     List<CommentDto.Response> commentsToCommentResponseDtos(List<Comment> comment);
