@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
-import { PALETTE } from "../Common";
+import { PALETTE } from "../../Common";
 import { css } from "@emotion/react";
 import DetailformItems from "./DetailformItems";
-import Button from "../components/Button";
+import Button from "../Button";
 import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
-import Tag from "../components/Tag";
+import Tag from "../Post_components/Tag";
 
 // 경로 데이터 더미
 const routeDummy = [

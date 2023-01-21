@@ -26,14 +26,7 @@ const TitleCard = () => {
     const defaultOption = options[0];
 
     return (
-        <div
-            css={css`
-                width: 380px;
-                height: 250px;
-                border: ${PALETTE.border};
-                margin: 10px;
-            `}
-        >
+        <div css={wrap}>
             <div
                 css={css`
                     margin: 20px;
@@ -42,15 +35,7 @@ const TitleCard = () => {
                 <div>
                     <Post placeholder="제목을 입력해주세요." width="340px" />
                 </div>
-                <div
-                    css={css`
-                        width: inherit;
-                        justify-content: space-between;
-                        display: flex;
-                        align-items: center;
-                        margin: 20px 0;
-                    `}
-                >
+                <div css={ComContainer}>
                     <span>카테고리</span>
                     <Dropdown
                         options={options}
@@ -59,15 +44,7 @@ const TitleCard = () => {
                         onChange={(e) => setCategory(e.value)}
                     />
                 </div>
-                <div
-                    css={css`
-                        width: inherit;
-                        justify-content: space-between;
-                        display: flex;
-                        align-items: center;
-                        margin: 20px 0;
-                    `}
-                >
+                <div css={ComContainer}>
                     <span>여행일</span>
                     <div
                         css={css`
@@ -78,21 +55,29 @@ const TitleCard = () => {
                         <Calendar />
                     </div>
                 </div>
-                <div
-                    css={css`
-                        width: inherit;
-                        justify-content: space-between;
-                        display: flex;
-                        align-items: center;
-                        margin: 20px 0;
-                    `}
-                >
+                <div css={ComContainer}>
                     <span>총 여행 경비</span>
-                    <Post />
+                    <Post placeholder="얼마를 사용하셨나요?" width="80px" />
                 </div>
             </div>
         </div>
     );
 };
+
+const wrap = css`
+    width: 380px;
+    height: 250px;
+    border: ${PALETTE.border};
+    border-radius: ${PALETTE.border_radius};
+    margin: 10px;
+`;
+
+const ComContainer = css`
+    width: inherit;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+`;
 
 export default TitleCard;

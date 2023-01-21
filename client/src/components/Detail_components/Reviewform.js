@@ -1,10 +1,10 @@
 import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { PALETTE } from "../Common";
+import { PALETTE } from "../../Common";
 import { useState } from "react";
-import ReviewItem from "../components/ReviewItem";
-import Button from "../components/Button";
+import ReviewItem from "./ReviewItem";
+import Button from "../Button";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";

@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
-import Button from "../components/Button";
+import Button from "../Button";
 import { css } from "@emotion/react";
-import { PALETTE } from "../Common";
-import 경복궁 from "../assets/sampleImg/경복궁.png";
-import SignButton from "./SignButton";
+import { PALETTE } from "../../Common";
+import 경복궁 from "../../assets/sampleImg/경복궁.png";
+import SignButton from "../SignButton";
 
 const Regionitems = () => {
     return (

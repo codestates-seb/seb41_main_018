@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { useState, useRef } from "react";
-import { PALETTE } from "../Common";
+import { PALETTE } from "../../Common";
 import { css } from "@emotion/react";
 import { Turn as Hamburger } from "hamburger-react";
-import ImgUpload from "../components/ImgUpload";
+import ImgUpload from "./ImgUpload";
 
 const PostformItems = (props) => {
     const [isClick, setClick] = useState(false);

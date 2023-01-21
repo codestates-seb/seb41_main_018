@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { useState } from "react";
-import { PALETTE } from "../Common";
+import { PALETTE } from "../../Common";
 import { css } from "@emotion/react";
 
 // 경로 선택 상태관리 필요 import
 import { useRecoilState } from "recoil";
-import { selectedRouteState } from "../state/atom";
+import { selectedRouteState } from "../../state/atom";
 
 const DetailformItems = (props) => {
     const [isClick, setClick] = useState(false);

@@ -2,7 +2,7 @@
 import React from "react";
 import { css } from "@emotion/react";
 import Categorybar from "../components/Categorybar";
-import Postitems from "../components/Postitems";
+import HomeItems from "../components/Home_components/HomeItems";
 
 const Result = () => {
     return (
@@ -11,22 +11,22 @@ const Result = () => {
             <div>
                 <div css={resultText}>검색결과</div>
                 <div css={postStyle}>
-                    <Postitems />
-                    <Postitems />
-                    <Postitems />
-                    <Postitems />
-                    <Postitems />
-                    <Postitems />
-                    <Postitems />
-                    <Postitems />
-                    <Postitems />
-                    <Postitems />
-                    <Postitems />
-                    <Postitems />
-                    <Postitems />
-                    <Postitems />
-                    <Postitems />
-                    <Postitems />
+                    <HomeItems />
+                    <HomeItems />
+                    <HomeItems />
+                    <HomeItems />
+                    <HomeItems />
+                    <HomeItems />
+                    <HomeItems />
+                    <HomeItems />
+                    <HomeItems />
+                    <HomeItems />
+                    <HomeItems />
+                    <HomeItems />
+                    <HomeItems />
+                    <HomeItems />
+                    <HomeItems />
+                    <HomeItems />
                 </div>
             </div>
         </div>
