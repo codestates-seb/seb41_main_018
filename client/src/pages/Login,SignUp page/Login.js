@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { getAuthorization, getRefresh } from "../../state/atom";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -35,18 +37,25 @@ const LoginPage = () => {
         formState: { errors },
     } = useForm({ mode: "onchange", defaultValues });
 
-    const onSubmit = async () => {
-        const jsonData = JSON.stringify(defaultValues);
+    const onSubmit = async (data) => {
+        const jsonData = JSON.stringify(data);
+
         console.log(jsonData);
 
         await axios
-            .get("url", jsonData, {
+            .post("/users/login", jsonData, {
                 headers: {
                     "Content-Type": `application/json`,
                 },
             })
             .then((res) => {
                 navigate("/");
+                const [getAuthorization, setGetAuthorization] = useRecoilState(getAuthorization);
+                const [getRefresh, setGetRefresh] = useRecoilState(getRefresh);
+                setGetAuthorization(res.headers.get("Authorization"));
+                setGetRefresh(res.headers.get("Refresh"));
+                console.log(getAuthorization);
+                console.log(getRefresh);
             })
             .catch((err) => {
                 console.log(err);

@@ -1,22 +1,51 @@
 import React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+
 import PostformItems from "./PostformItems";
 import Button from "./Button";
 import Tag from "./Tag";
 import { PALETTE } from "../Common";
+
 import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
+import { MdDelete } from "react-icons/md";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { AiOutlineConsoleSql } from "react-icons/ai";
+
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import Dropdown from "react-dropdown";
+import DatePicker from "react-datepicker";
 import { useRecoilState } from "recoil";
 import { addBtnClickState } from "../state/atom";
-import { MdDelete } from "react-icons/md";
+
+import "react-dropdown/style.css";
+import "react-datepicker/dist/react-datepicker.css";
+
+import axios from "axios";
 
 const Postform = (props) => {
     const [countList, setCountList] = useState([0]);
     const [isAddBtnClick, setAddBtnClick] = useRecoilState(addBtnClickState);
     const [isDragging, setDragging] = useState(false);
+    const [category, setCategory] = useState("");
+    const [startDate, setStartDate] = useState(new Date());
+    const [iscalendarClick, setCalendarClick] = useState(false);
+    const calendarRef = useRef();
+
+    const options = [
+        "국내여행",
+        "해외여행",
+        "효도여행",
+        "커플여행",
+        "친구여행",
+        "혼자여행",
+        "카페투어",
+        "맛집투어",
+    ];
+    const defaultOption = options[0];
 
     const onAddBtnClick = () => {
         let countArr = [...countList];
@@ -42,6 +71,49 @@ const Postform = (props) => {
     const onDragStart = () => {
         setDragging(true);
     };
+
+    const defaultValues = {
+        title: "자동차",
+        body: "강남역",
+    };
+    const putdate = async () => {
+        const jsonData = JSON.stringify(defaultValues);
+        await axios
+            .post(
+                "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users",
+                jsonData,
+                {
+                    headers: {
+                        "Content-Type": `application/json`,
+                    },
+                }
+            )
+            .then((res) => {
+                navigate("/");
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("error");
+            });
+    };
+    // calendar
+    const handleClickOutSide = (e) => {
+        if (iscalendarClick && !calendarRef.current.contains(e.target)) {
+            setCalendarClick(false);
+        }
+    };
+    useEffect(() => {
+        if (iscalendarClick) document.addEventListener("mousedown", handleClickOutSide);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutSide);
+        };
+    });
+
+    // const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+    //     <button className="example-custom-input" onClick={onClick} ref={ref}>
+    //         {value}
+    //     </button>
+    // ));
 
     return (
         <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
@@ -95,11 +167,32 @@ const Postform = (props) => {
                     <div css={ContentsBody}>
                         <div css={ComContent}>
                             <span>카테고리</span>
-                            <span>혼자 여행</span>
+                            <Dropdown
+                                options={options}
+                                value={defaultOption}
+                                placeholder="Select an option"
+                                onChange={(e) => setCategory(e.value)}
+                            />
+                            {/* <span>혼자 여행</span> */}
                         </div>
                         <div css={ComContent}>
                             <span>여행일</span>
-                            <span>2023.02.08</span>
+                            <div ref={calendarRef}>
+                                <FaRegCalendarAlt
+                                    onClick={() => {
+                                        setCalendarClick(!iscalendarClick);
+                                    }}
+                                />
+                                {iscalendarClick ? (
+                                    <DatePicker
+                                        selected={startDate}
+                                        dateFormat="yyyy/MM/dd일"
+                                        onChange={(date) => setStartDate(date)}
+                                        onSelect={(date) => setStartDate(date)}
+                                        // customInput={<ExampleCustomInput />}
+                                    />
+                                ) : null}
+                            </div>
                         </div>
                         <div css={ComContent}>
                             <span>총 여행 경비</span>
@@ -128,11 +221,12 @@ const Postform = (props) => {
                                     right: 10px;
                                 `}
                             />,
-                            "가치갈래!",
+                            "작성완료!",
                         ]}
                         ftweight="700"
                         ftsize="1.4rem"
                         color="white"
+                        onClick={putdate}
                     />
                     <Button
                         width="5vw"
@@ -177,8 +271,9 @@ const ComContent = css`
     display: flex;
     font-size: 1.1rem;
     justify-content: space-between;
+    align-items: center;
     font-weight: 600;
-    padding: 8px 20px;
+    padding: 15px;
 `;
 
 export default Postform;

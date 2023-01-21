@@ -6,13 +6,14 @@ export const PALETTE = {
 
     /* identity */
     default_color: "#0f7586",
-    default_hover: "#05696938",
+    default_hover: "#056969",
     default_active: "#659156",
     second_color: "#65bcbe",
     //
 
     /* layout */
-    border: "2px solid rgba(0, 0, 0, 0.3)",
+    border: "1px solid rgba(0, 0, 0, 0.3)",
+    hover_border: "1px solid #056969",
     border_default: "2px solid #0f7586",
     border_radius: "5px",
     border_round: "50px",
