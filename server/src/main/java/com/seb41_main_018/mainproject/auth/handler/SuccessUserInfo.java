@@ -9,6 +9,5 @@ public class SuccessUserInfo {
     private long memberId;
     private String email;
     private String nickname;
-    private Boolean email_subscribe;
     private UserStatus userStatus;
 }
