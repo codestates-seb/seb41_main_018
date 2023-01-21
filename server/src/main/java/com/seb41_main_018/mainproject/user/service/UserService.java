@@ -1,12 +1,21 @@
 package com.seb41_main_018.mainproject.user.service;
 
 import com.seb41_main_018.mainproject.auth.utils.CustomAuthorityUtils;
+import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
+import com.seb41_main_018.mainproject.content.dto.ContentDto;
+import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
+import com.seb41_main_018.mainproject.heart.repository.HeartRepository;
+import com.seb41_main_018.mainproject.response.SingleResponseDto;
+import com.seb41_main_018.mainproject.user.dto.UserAllResponseDto;
+import com.seb41_main_018.mainproject.user.mapper.UserMapper;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +23,7 @@ import org.springframework.stereotype.Service;
 import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +35,11 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
+
+    private final UserMapper userMapper;
+    private final HeartRepository heartRepository;
+    private final ContentRepository contentRepository;
+    private final CommentRepository commentRepository;
     //private final CustomBeanUtils<Member> beanUtils;
 
     public User createUser(User user) {
@@ -51,8 +65,6 @@ public class UserService {
                 .ifPresent(phone -> findUser.setPhone(phone));
         Optional.ofNullable(user.getPassword())
                 .ifPresent(password -> findUser.setPassword(passwordEncoder.encode(password)));
-        Optional.ofNullable(user.getEmail_subscribe())
-                .ifPresent(email_subscribe -> findUser.setEmail_subscribe(email_subscribe));
 
         return userRepository.save(findUser);
     }
@@ -105,5 +117,14 @@ public class UserService {
 
         return user;
     }
+    @Transactional(readOnly = true)
+    public ResponseEntity detail(User user) {
+
+        UserAllResponseDto userAllResponseDto = userMapper.InfoResponse(user, contentRepository, commentRepository, heartRepository);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(userAllResponseDto), HttpStatus.OK
+        );
+    }
+
 
 }
