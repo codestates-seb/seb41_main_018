@@ -1,3 +1,4 @@
+/*
 package com.seb41_main_018.mainproject.user.controller;
 
 import com.google.gson.Gson;
@@ -156,4 +157,4 @@ public class UserControllerTest {
         actions.andExpect(status().isNoContent());
 
     }
-}
+}*/

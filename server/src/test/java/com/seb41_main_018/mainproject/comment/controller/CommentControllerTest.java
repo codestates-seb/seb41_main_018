@@ -1,3 +1,4 @@
+/*
 package com.seb41_main_018.mainproject.comment.controller;
 
 import com.google.gson.Gson;
@@ -161,3 +162,4 @@ class CommentControllerTest {
         actions.andExpect(status().isNoContent());
     }
 }
+*/

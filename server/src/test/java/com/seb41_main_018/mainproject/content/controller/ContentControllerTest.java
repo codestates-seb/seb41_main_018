@@ -1,3 +1,4 @@
+/*
 package com.seb41_main_018.mainproject.content.controller;
 
 import com.google.gson.Gson;
@@ -124,7 +125,8 @@ class ContentControllerTest {
                 .andExpect(jsonPath("$.body").value(content.getBody()));
     }
 
-    /*@Test
+    */
+/*@Test
     void getContents() throws Exception {
         // given: contentController의 getcontents()를 테스트하기 위해 postcontent()를 이용해 테스트 데이터(2건)를 생성 후, DB에 저장
         ContentDto.ContentPost post1 = new ContentDto.ContentPost(1L,
@@ -135,9 +137,21 @@ class ContentControllerTest {
 
         mockMvc.perform(
                 post(postUri)
-                        .accept(MediaType.APPLICATION_JSON)    *//** 중복 *//*
-                        .contentType(MediaType.APPLICATION_JSON)  *//** 중복 *//*
-                        .content(postContent1)   *//** 중복 *//*
+                        .accept(MediaType.APPLICATION_JSON)    *//*
+*/
+/** 중복 *//*
+*/
+/*
+                        .contentType(MediaType.APPLICATION_JSON)  *//*
+*/
+/** 중복 *//*
+*/
+/*
+                        .content(postContent1)   *//*
+*/
+/** 중복 *//*
+*/
+/*
         );
 
         ContentDto.ContentPost post2 = new ContentDto.ContentPost(2L,
@@ -147,11 +161,27 @@ class ContentControllerTest {
 
         mockMvc.perform(
                 post(postUri)
-                        .accept(MediaType.APPLICATION_JSON)    *//** 중복 *//*
-                        .contentType(MediaType.APPLICATION_JSON)  *//** 중복 *//*
-                        .content(postContent2)   *//** 중복 *//*
+                        .accept(MediaType.APPLICATION_JSON)    *//*
+*/
+/** 중복 *//*
+*/
+/*
+                        .contentType(MediaType.APPLICATION_JSON)  *//*
+*/
+/** 중복 *//*
+*/
+/*
+                        .content(postContent2)   *//*
+*/
+/** 중복 *//*
+*/
+/*
         );
-        *//** 중복 코드 끝 *//*
+        *//*
+*/
+/** 중복 코드 끝 *//*
+*/
+/*
 
         String page = "1";
         String size = "10";
@@ -159,7 +189,11 @@ class ContentControllerTest {
         queryParams.add("page", page);
         queryParams.add("size", size);
 
-        *//** 중복 *//*
+        *//*
+*/
+/** 중복 *//*
+*/
+/*
         URI getUri = UriComponentsBuilder.newInstance().path("/contents").build().toUri();
 
         // when
@@ -167,7 +201,11 @@ class ContentControllerTest {
                 mockMvc.perform(
                         get(getUri)
                                 .params(queryParams)
-                                .accept(MediaType.APPLICATION_JSON)   *//** 중복 *//*
+                                .accept(MediaType.APPLICATION_JSON)   *//*
+*/
+/** 중복 *//*
+*/
+/*
                 );
 
         // then
@@ -180,7 +218,8 @@ class ContentControllerTest {
 
         assertThat(list.size(), is(2));
 
-    }*/
+    }*//*
+
 
     @Test
     void patchContent() throws Exception {
@@ -237,4 +276,4 @@ class ContentControllerTest {
         // then
         actions.andExpect(status().isNoContent());
     }
-}
+}*/

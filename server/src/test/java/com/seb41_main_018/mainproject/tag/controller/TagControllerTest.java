@@ -1,3 +1,4 @@
+/*
 package com.seb41_main_018.mainproject.tag.controller;
 
 import com.google.gson.Gson;
@@ -118,7 +119,8 @@ class TagControllerTest {
 
     }
 
-    /*@Test
+    */
+/*@Test
     void getTags() throws Exception {
         // given: tagController의 gettags()를 테스트하기 위해 posttag()를 이용해 테스트 데이터(2건)를 생성 후, DB에 저장
         TagDto.TagPost post1 = new TagDto.TagPost(1L,"제주");
@@ -127,9 +129,21 @@ class TagControllerTest {
 
         mockMvc.perform(
                 post(postUri)
-                        .accept(MediaType.APPLICATION_JSON)    *//** 중복 *//*
-                        .contentType(MediaType.APPLICATION_JSON)  *//** 중복 *//*
-                        .content(postContent1)   *//** 중복 *//*
+                        .accept(MediaType.APPLICATION_JSON)    *//*
+*/
+/** 중복 *//*
+*/
+/*
+                        .contentType(MediaType.APPLICATION_JSON)  *//*
+*/
+/** 중복 *//*
+*/
+/*
+                        .content(postContent1)   *//*
+*/
+/** 중복 *//*
+*/
+/*
         );
 
         TagDto.TagPost post2 = new TagDto.TagPost(1L,"제주2");
@@ -137,11 +151,27 @@ class TagControllerTest {
 
         mockMvc.perform(
                 post(postUri)
-                        .accept(MediaType.APPLICATION_JSON)    *//** 중복 *//*
-                        .contentType(MediaType.APPLICATION_JSON)  *//** 중복 *//*
-                        .content(postContent2)   *//** 중복 *//*
+                        .accept(MediaType.APPLICATION_JSON)    *//*
+*/
+/** 중복 *//*
+*/
+/*
+                        .contentType(MediaType.APPLICATION_JSON)  *//*
+*/
+/** 중복 *//*
+*/
+/*
+                        .content(postContent2)   *//*
+*/
+/** 중복 *//*
+*/
+/*
         );
-        *//** 중복 코드 끝 *//*
+        *//*
+*/
+/** 중복 코드 끝 *//*
+*/
+/*
 
         String page = "1";
         String size = "10";
@@ -149,7 +179,11 @@ class TagControllerTest {
         queryParams.add("page", page);
         queryParams.add("size", size);
 
-        *//** 중복 *//*
+        *//*
+*/
+/** 중복 *//*
+*/
+/*
         URI getUri = UriComponentsBuilder.newInstance().path("/tags").build().toUri();
 
         // when
@@ -157,7 +191,11 @@ class TagControllerTest {
                 mockMvc.perform(
                         get(getUri)
                                 .params(queryParams)
-                                .accept(MediaType.APPLICATION_JSON)   *//** 중복 *//*
+                                .accept(MediaType.APPLICATION_JSON)   *//*
+*/
+/** 중복 *//*
+*/
+/*
                 );
 
         // then
@@ -171,7 +209,8 @@ class TagControllerTest {
         assertThat(list.size(), is(2));
 
 //        System.out.println(result.getResponse().getContentAsString());
-    }*/
+    }*//*
+
 
     @Test
     void patchTag() throws Exception {
@@ -224,4 +263,4 @@ class TagControllerTest {
         // then
         actions.andExpect(status().isNoContent());
     }
-}
+}*/

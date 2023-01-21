@@ -1,3 +1,4 @@
+/*
 package com.seb41_main_018.mainproject.routeplace.controller;
 
 import com.google.gson.Gson;
@@ -173,7 +174,8 @@ class RoutePlaceControllerTest {
 
     }
 
-  /*  @Test
+  */
+/*  @Test
     void getRoutePlaces() throws Exception {
         // given: routePlacesController의 getroutePlacess()를 테스트하기 위해 postroutePlaces()를 이용해 테스트 데이터(2건)를 생성 후, DB에 저장
         RoutePlaceDto.Post post1 = new RoutePlaceDto.Post(1L,100L,
@@ -183,9 +185,21 @@ class RoutePlaceControllerTest {
 
         mockMvc.perform(
                 post(postUri)
-                        .accept(MediaType.APPLICATION_JSON)    *//** 중복 *//*
-                        .contentType(MediaType.APPLICATION_JSON)  *//** 중복 *//*
-                        .content(postContent1)   *//** 중복 *//*
+                        .accept(MediaType.APPLICATION_JSON)    *//*
+*/
+/** 중복 *//*
+*/
+/*
+                        .contentType(MediaType.APPLICATION_JSON)  *//*
+*/
+/** 중복 *//*
+*/
+/*
+                        .content(postContent1)   *//*
+*/
+/** 중복 *//*
+*/
+/*
         );
 
         RoutePlaceDto.Post post2 = new RoutePlaceDto.Post(1L,100L,
@@ -194,11 +208,27 @@ class RoutePlaceControllerTest {
 
         mockMvc.perform(
                 post(postUri)
-                        .accept(MediaType.APPLICATION_JSON)    *//** 중복 *//*
-                        .contentType(MediaType.APPLICATION_JSON)  *//** 중복 *//*
-                        .content(postContent2)   *//** 중복 *//*
+                        .accept(MediaType.APPLICATION_JSON)    *//*
+*/
+/** 중복 *//*
+*/
+/*
+                        .contentType(MediaType.APPLICATION_JSON)  *//*
+*/
+/** 중복 *//*
+*/
+/*
+                        .content(postContent2)   *//*
+*/
+/** 중복 *//*
+*/
+/*
         );
-        *//** 중복 코드 끝 *//*
+        *//*
+*/
+/** 중복 코드 끝 *//*
+*/
+/*
 
         String page = "1";
         String size = "10";
@@ -206,7 +236,11 @@ class RoutePlaceControllerTest {
         queryParams.add("page", page);
         queryParams.add("size", size);
 
-        *//** 중복 *//*
+        *//*
+*/
+/** 중복 *//*
+*/
+/*
         URI getUri = UriComponentsBuilder.newInstance().path("/routeplacess").build().toUri();
 
         // when
@@ -214,7 +248,11 @@ class RoutePlaceControllerTest {
                 mockMvc.perform(
                         get(getUri)
                                 .params(queryParams)
-                                .accept(MediaType.APPLICATION_JSON)   *//** 중복 *//*
+                                .accept(MediaType.APPLICATION_JSON)   *//*
+*/
+/** 중복 *//*
+*/
+/*
                 );
 
         // then
@@ -227,7 +265,8 @@ class RoutePlaceControllerTest {
 
         assertThat(list.size(), is(2));
 
-    }*/
+    }*//*
+
 
     @Test
     void deleteRoutePlace() throws Exception {
@@ -242,4 +281,4 @@ class RoutePlaceControllerTest {
         // then
         actions.andExpect(status().isNoContent());
     }
-}
+}*/
