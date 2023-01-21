@@ -1,12 +1,12 @@
 import React from "react";
-import Postfrom from "../../components/Postform";
+import Postform from "../../components/Postform";
+import TitleCard from "../../components/TitleCard";
 import Map from "./searchMap";
 
 const Post = () => {
     return (
         <>
-            <Map />
-            <Postfrom />
+            <TitleCard />
         </>
     );
 };
