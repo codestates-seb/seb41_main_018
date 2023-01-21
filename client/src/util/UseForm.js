@@ -3,6 +3,8 @@ import { useForm, FormProvider, useFormContext, Controller, useFieldArray } from
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../Common";
+import PostformItems from "../components/Post_components/PostformItems";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 // route= {
 //     name: string;
 //     address: string;
@@ -106,6 +108,113 @@ export const Post = (props) => {
         <FormProvider {...methods}>
             <form>
                 <Input placeholder={props.placeholder} width={props.width} />
+            </form>
+        </FormProvider>
+    );
+};
+
+export const AddRoute = () => {
+    const { control } = useFormContext();
+    const { fields, append, remove, move } = useFieldArray({
+        control,
+        name: "routes",
+    });
+
+    return (
+        <ul>
+            {fields.map((item, index) => (
+                <li
+                    key={item.id}
+                    css={css`
+                        display: flex;
+                    `}
+                >
+                    <Controller
+                        render={({ field }) => <PostformItems {...field} />}
+                        name={`routes.${index}.name`}
+                        control={control}
+                    />
+                    <button type="button" onClick={() => remove(index)}>
+                        delete
+                    </button>
+                </li>
+            ))}
+            <button type="button" onClick={() => append()}>
+                add
+            </button>
+        </ul>
+    );
+};
+
+export const Route = (props) => {
+    const methods = useForm({ defaultValues });
+    const { control, handleSubmit, watch } = methods;
+    const { fields, append, remove, move } = useFieldArray({
+        control,
+        name: "routes",
+    });
+
+    const submit = (data) => {
+        console.log(data);
+    };
+
+    const handleDrag = ({ source, destination }) => {
+        if (destination) {
+            move(source.index, destination.index);
+        }
+    };
+
+    console.log(watch("routes"));
+    return (
+        <FormProvider {...methods}>
+            <form>
+                <DragDropContext onDragEnd={handleDrag}>
+                    <Droppable droppableId="test-items">
+                        {(provided, snapshot) => (
+                            <div {...provided.droppableProps} ref={provided.innerRef}>
+                                {fields.map((item, index) => {
+                                    return (
+                                        <Draggable
+                                            key={`test[${index}]`}
+                                            draggableId={`item-${index}`}
+                                            index={index}
+                                        >
+                                            {(provided, snapshot) => (
+                                                <li
+                                                    key={item.id}
+                                                    css={css`
+                                                        display: flex;
+                                                    `}
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                >
+                                                    <Controller
+                                                        render={({ field }) => (
+                                                            <PostformItems {...field} />
+                                                        )}
+                                                        name={`routes.${index}.name`}
+                                                        control={control}
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => remove(index)}
+                                                    >
+                                                        delete
+                                                    </button>
+                                                </li>
+                                            )}
+                                        </Draggable>
+                                    );
+                                })}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+                <button type="button" onClick={() => append()}>
+                    add
+                </button>
             </form>
         </FormProvider>
     );
