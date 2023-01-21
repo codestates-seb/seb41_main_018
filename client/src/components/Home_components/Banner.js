@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { css } from "@emotion/react";
-import { PALETTE } from "../Common";
-import 배너이미지1 from "../assets/bannerImg/배너이미지1.png";
-import 배너이미지2 from "../assets/bannerImg/배너이미지2.png";
-import 배너이미지3 from "../assets/bannerImg/배너이미지3.png";
-import right from "../assets/right.png";
-import left from "../assets/left.png";
+import { PALETTE } from "../../Common";
+import 배너이미지1 from "../../assets/bannerImg/배너이미지1.png";
+import 배너이미지2 from "../../assets/bannerImg/배너이미지2.png";
+import 배너이미지3 from "../../assets/bannerImg/배너이미지3.png";
+import right from "../../assets/right.png";
+import left from "../../assets/left.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/css";

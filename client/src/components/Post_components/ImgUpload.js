@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { PALETTE } from "../Common";
-import Button from "../components/Button";
+import { PALETTE } from "../../Common";
+import Button from "../Button";
 import { useRecoilState } from "recoil";
-import { imgState } from "../state/atom";
+import { imgState } from "../../state/atom";
 
 const ImgUpload = () => {
     const [imgList, setImgList] = useRecoilState(imgState);

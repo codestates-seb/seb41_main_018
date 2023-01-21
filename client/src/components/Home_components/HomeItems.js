@@ -2,12 +2,12 @@
 import React from "react";
 import { useState } from "react";
 import { css } from "@emotion/react";
-import { PALETTE } from "../Common";
+import { PALETTE } from "../../Common";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { BsStarFill } from "react-icons/bs";
-import sample from "../assets/sampleImg/sample.jpg";
+import sample from "../../assets/sampleImg/sample.jpg";
 
-const Postitems = () => {
+const HomeItems = () => {
     const [isFavoriteClcik, setFavoriteClick] = useState(false);
     const handleFavoriteClick = () => {
         setFavoriteClick(!isFavoriteClcik);
@@ -174,4 +174,4 @@ const priceStyle = css`
     }
 `;
 
-export default Postitems;
+export default HomeItems;

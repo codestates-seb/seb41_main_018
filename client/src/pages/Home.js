@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { css } from "@emotion/react";
-import Postitems from "../components/Postitems";
-import Regionitems from "../components/RegionItems";
+import HomeItems from "../components/Home_components/HomeItems";
+import Regionitems from "../components/Home_components/RegionItems";
 import Categorybar from "../components/Categorybar";
-import Banner from "../components/Banner";
+import Banner from "../components/Home_components/Banner";
 import Footer from "../components/Footer";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
@@ -79,28 +79,28 @@ const Home = () => {
             <Swiper {...swiperOption} css={postStyle}>
                 <div>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                 </div>
             </Swiper>
@@ -108,28 +108,28 @@ const Home = () => {
             <Swiper {...swiperOption} css={postStyle}>
                 <div>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <Postitems />
+                        <HomeItems />
                     </SwiperSlide>
                 </div>
             </Swiper>

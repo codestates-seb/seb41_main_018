@@ -5,9 +5,9 @@ import { useState, useRef, useEffect } from "react";
 import { css } from "@emotion/react";
 
 import PostformItems from "./PostformItems";
-import Button from "./Button";
+import Button from "../Button";
 import Tag from "./Tag";
-import { PALETTE } from "../Common";
+import { PALETTE } from "../../Common";
 
 import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
@@ -19,7 +19,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Dropdown from "react-dropdown";
 import DatePicker from "react-datepicker";
 import { useRecoilState } from "recoil";
-import { addBtnClickState } from "../state/atom";
+import { addBtnClickState } from "../../state/atom";
 
 import "react-dropdown/style.css";
 import "react-datepicker/dist/react-datepicker.css";

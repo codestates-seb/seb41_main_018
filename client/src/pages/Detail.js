@@ -2,9 +2,9 @@
 import React from "react";
 import { css } from "@emotion/react";
 
-import Detial_Img from "../components/Detail_Img";
-import Detailform from "../components/Detailform";
-import Reviewform from "../components/Reviewform";
+import Detial_Img from "../components/Detail_components/Detail_Img";
+import Detailform from "../components/Detail_components/Detailform";
+import Reviewform from "../components/Detail_components/Reviewform";
 
 // 후기 등록
 /* const postReview = async () => {

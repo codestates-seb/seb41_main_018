@@ -11,18 +11,18 @@ import "swiper/css/thumbs";
 
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper";
-import right from "../assets/right.png";
-import left from "../assets/left.png";
+import right from "../../assets/right.png";
+import left from "../../assets/left.png";
 import { useRecoilState } from "recoil";
-import { selectedRouteState } from "../state/atom";
+import { selectedRouteState } from "../../state/atom";
 
 // import sample img (추후 삭제 예정)
-import sam1_1 from "../assets/sampleImg/sam1_1.png";
-import sam1_2 from "../assets/sampleImg/sam1_2.jpeg";
-import sam1_3 from "../assets/sampleImg/sam1_3.jpg";
-import sam2 from "../assets/sampleImg/sam2.jpg";
-import sam3_1 from "../assets/sampleImg/sam3_1.jpeg";
-import sam3_2 from "../assets/sampleImg/sam3_2.jpeg";
+import sam1_1 from "../../assets/sampleImg/sam1_1.png";
+import sam1_2 from "../../assets/sampleImg/sam1_2.jpeg";
+import sam1_3 from "../../assets/sampleImg/sam1_3.jpg";
+import sam2 from "../../assets/sampleImg/sam2.jpg";
+import sam3_1 from "../../assets/sampleImg/sam3_1.jpeg";
+import sam3_2 from "../../assets/sampleImg/sam3_2.jpeg";
 
 // 경로 데이터 더미
 const routeDummy = [
