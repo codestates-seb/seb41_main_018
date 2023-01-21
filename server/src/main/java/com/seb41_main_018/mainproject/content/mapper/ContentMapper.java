@@ -86,6 +86,8 @@ public interface ContentMapper {
                 .createdAt(content.getCreatedAt())
                 .modifiedAt(content.getModifiedAt())
                 //.totalPrice(routes.stream().mapToLong(Route::getPrice).sum())
+                .date(content.getDate())
+                .routeName(content.getRouteName())
                 .build();
     }
     default List<CommentDto.Response> commentsToCommentResponseDtos(List<Comment> comments){
@@ -98,6 +100,7 @@ public interface ContentMapper {
                         .ratingType(comment.getRatingType())
                         .createdAt(comment.getCreatedAt())
                         .modifiedAt(comment.getModifiedAt())
+                        .title(comment.getContent().getTitle())
                         .build())
                 .collect(Collectors.toList());
     }
