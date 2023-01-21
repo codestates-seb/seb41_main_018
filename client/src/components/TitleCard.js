@@ -65,11 +65,11 @@ const TitleCard = () => {
 };
 
 const wrap = css`
-    width: 380px;
+    width: 370px;
     height: 250px;
     border: ${PALETTE.border};
     border-radius: ${PALETTE.border_radius};
-    margin: 10px;
+    margin: 10px 0;
 `;
 
 const ComContainer = css`
