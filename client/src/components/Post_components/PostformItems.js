@@ -6,24 +6,15 @@ import { css } from "@emotion/react";
 import { Turn as Hamburger } from "hamburger-react";
 import ImgUpload from "./ImgUpload";
 
+import { IoMdArrowDropdownCircle } from "react-icons/io";
+import { IoMdArrowDropupCircle } from "react-icons/io";
 const PostformItems = (props) => {
     const [isClick, setClick] = useState(false);
     const [isOpen, setOpen] = useState(false);
-    const [isInput, setInput] = useState(true);
-    const [isValue, setValue] = useState("");
-    const inputRef = useRef();
 
     const handleClick = () => {
         setClick(!isClick);
     };
-
-    const handleInputValue = () => {
-        setInput(!isInput);
-    };
-
-    // const enterkey = () => {
-    //     if (window.event.keyCode == 13) return handleInputValue();
-    // };
 
     return (
         <>
@@ -34,45 +25,11 @@ const PostformItems = (props) => {
                         justify-content: space-between;
                     `}
                 >
-                    {isInput ? (
-                        <input
-                            css={css`
-                                min-height: 35px;
-                                width: 26vw;
-                                min-width: 180px;
-                                font-size: 1.4rem;
-                                font-weight: 600;
-                            `}
-                            onChange={(e) => {
-                                setValue(e.target.value);
-                            }}
-                            // onKeyUp={enterkey}
-                            value={isValue}
-                        ></input>
-                    ) : (
-                        <div
-                            css={css`
-                                font-size: 1.4rem;
-                                font-weight: 600;
-                                text-align: center;
-                                width: 26vw;
-                                min-width: 180px;
-                                max-width: 400px;
-                                margin: 0px auto;
-                                padding: 5px;
-                            `}
-                        >
-                            {isValue}
-                        </div>
-                    )}
-                    <Hamburger
-                        toggled={isOpen}
-                        toggle={setOpen}
-                        size={25}
-                        onToggle={handleInputValue}
-                    />
+                    {/* <Hamburger toggled={isOpen} toggle={setOpen} size={25} /> */}
+                    <div>아르떼 뮤지엄</div>
+                    {isClick ? <IoMdArrowDropupCircle /> : <IoMdArrowDropdownCircle />}
                 </div>
-                {isOpen ? (
+                {isClick ? (
                     <div css={clicked}>
                         <ul>
                             <li>
@@ -104,12 +61,8 @@ const wrap = css`
     text-align: center;
     border: 3px solid ${PALETTE.default_color};
     border-radius: ${PALETTE.border_radius};
-    width: 27vw;
-    min-height: 47px;
-    min-width: 250px;
-    max-width: 400px;
-    margin: 10px auto;
-    padding: 5px;
+    width: 370px;
+    padding: 10px;
 `;
 
 const clicked = css`
@@ -167,17 +120,4 @@ const ListInput = css`
     margin: 15px auto;
 `;
 
-const close = css`
-    animation: closed 1s ease-in-out;
-    @keyframes closed {
-        0% {
-            max-height: 300px;
-            opacity: 1;
-        }
-        100% {
-            max-height: 0px;
-            opacity: 0;
-        }
-    }
-`;
 export default PostformItems;
