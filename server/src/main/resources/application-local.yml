@@ -10,14 +10,32 @@ spring:
       matching-strategy: ant_path_matcher
   jpa:
     hibernate:
-      ddl-auto: none  # (1) ??? ?? ??
+      ddl-auto: create  # (1) ??? ?? ??
     show-sql: true      # (2) SQL ?? ??
     properties:
       hibernate:
         format_sql: true
     open-in-view: false
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAZNSQ7RLFKQHJIHLQ
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+    s3:
+      bucket: gachigalle-route-image
+
+    stack:
+      auto: false
+
 jwt:
-  key: ${JWT_SECRET_KEY}
+  secret-key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 1440
   refresh-token-expiration-minutes: 20160
 
