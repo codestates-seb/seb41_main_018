@@ -28,6 +28,4 @@ public class UserPostDto {
     @ApiModelProperty(notes = "유저 전화번호", example = "010-1111-1111", required = true)
     @NotBlank
     private String phone;
-    @ApiModelProperty(notes = "이메일 구독여부", example = "true", required = true)
-    private Boolean email_subscribe;
 }

@@ -33,8 +33,6 @@ public class User extends Auditable {
 
     @Column(nullable = false)
     private String nickname;
-    @Column(columnDefinition = "TEXT")
-    private Boolean email_subscribe;
 
     @Column
     @Enumerated(value = EnumType.STRING)
@@ -63,13 +61,11 @@ public class User extends Auditable {
     public User(
             String email,
             String password,
-            String nickname,
-            Boolean email_subscribe
+            String nickname
     ) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-        this.email_subscribe = email_subscribe;
     }
 
     public void addHeart(Heart heart) { hearts.add(heart); }

@@ -1,5 +1,7 @@
 package com.seb41_main_018.mainproject.user.controller;
 
+import com.seb41_main_018.mainproject.response.SingleResponseDto;
+import com.seb41_main_018.mainproject.user.dto.UserAllResponseDto;
 import com.seb41_main_018.mainproject.user.dto.UserPatchDto;
 import com.seb41_main_018.mainproject.user.dto.UserPostDto;
 import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
@@ -73,16 +75,16 @@ public class UserController {
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
-//    // 유저 상세 정보 조회 //
-//    @GetMapping("/{userId}/Info")
-//    public ResponseEntity getUser(@PathVariable("userId") @Positive Long userId) {
-//        User user = userService.findUser(userId);
-//        return null;
-////        UserAllResponseDto userAllResponseDto = userMapper.InfoResponse(member, questionRepository, answerRepository);
-////        return new ResponseEntity<>(
-////                new SingleResponseDto<>(userAllResponseDto), HttpStatus.OK
-////        );
-//    }
+    // 유저 상세 정보 조회 //
+    @ApiOperation(value = "유저 상세 정보 조회", notes = "유저가 쓴 컨텐츠, 덧글 ,좋아요 등 유저의 모든 정보를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 404, message = "User not found")})
+    @GetMapping("/{userId}/Info")
+    public ResponseEntity getUserInfo(@PathVariable("userId") @Positive Long userId) {
+        User user = userService.findUser(userId);
+
+        return userService.detail(user);
+    }
     // 유저 삭제 //
     @ApiOperation(value = "유저 삭제", notes = "유저를 삭제합니다.")
     @ApiResponses(value = {

@@ -1,12 +1,18 @@
 package com.seb41_main_018.mainproject.user.dto;
 
+import com.seb41_main_018.mainproject.comment.dto.CommentDto;
+import com.seb41_main_018.mainproject.content.dto.ContentDto;
+import com.seb41_main_018.mainproject.heart.dto.HeartDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 @ApiModel("User All Response")
 @Builder
 @Getter
@@ -22,15 +28,18 @@ public class UserAllResponseDto {
     private String password;
     @ApiModelProperty(notes = "유저 전화번호", example = "010-1111-1111", required = true)
     private String phone;
-    @ApiModelProperty(notes = "이메일 구독여부", example = "true", required = true)
-    private Boolean email_subscribe;
 
-    //private List<ContentResponseDto> contents;
+    @ApiModelProperty(notes = "유저가 작성한 컨텐츠들", example = "서울 여행 컨텐츠, 부산 여행 컨텐츠", required = true)
+    private List<ContentDto.UserContentResponseDto> contents;
 
-    //private List<CommentResponseDto> comments;
+    @ApiModelProperty(notes = "유저가 작성한 후기들", example = "짱좋아요, 좀 별로임", required = true)
+    private List<CommentDto.UserCommentResponse> comments;
 
-    //private List<LikeResponseDto> likes;
+    @ApiModelProperty(notes = "유저가 좋아요한 컨텐츠들", example = "서울 여행 컨텐츠(좋아요)", required = true)
+    private List<HeartDto.UserHeartResponse> hearts;
+    @ApiModelProperty(notes = "가입한 날짜와 시간", example = "2023-01-22T03:18:40.365773", required = true)
     private LocalDateTime createdAt;
+    @ApiModelProperty(notes = "유저 정보 수정한 날짜와 시간", example = "2023-01-22T03:18:40.365773", required = true)
     private LocalDateTime modifiedAt;
 
 }
