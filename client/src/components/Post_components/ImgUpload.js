@@ -43,7 +43,8 @@ const ImgUpload = () => {
             />
             <Button
                 text="사진 업로드"
-                width="130px"
+                width="90px"
+                height="40px"
                 margin="15px"
                 onClick={uploadBtnClick}
             ></Button>
