@@ -2,15 +2,17 @@
 import React from "react";
 import { useState, useRef } from "react";
 import { PALETTE } from "../../Common";
+import Map from "../../pages/PostPage/searchMap";
 import { css } from "@emotion/react";
-import { Turn as Hamburger } from "hamburger-react";
+
 import ImgUpload from "./ImgUpload";
+import UseForm, { Post, Input } from "../../util/UseForm";
 
 import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { IoMdArrowDropupCircle } from "react-icons/io";
+
 const PostformItems = (props) => {
     const [isClick, setClick] = useState(false);
-    const [isOpen, setOpen] = useState(false);
 
     const handleClick = () => {
         setClick(!isClick);
@@ -18,32 +20,43 @@ const PostformItems = (props) => {
 
     return (
         <>
-            <div onClick={handleClick} css={wrap}>
+            <div css={isClick ? clickedwrap : wrap}>
                 <div
                     css={css`
                         display: flex;
                         justify-content: space-between;
                     `}
+                    onClick={handleClick}
                 >
-                    {/* <Hamburger toggled={isOpen} toggle={setOpen} size={25} /> */}
-                    <div>아르떼 뮤지엄</div>
+                    <div
+                        css={css`
+                            margin: 0 auto;
+                        `}
+                    >
+                        아르떼 뮤지엄
+                    </div>
                     {isClick ? <IoMdArrowDropupCircle /> : <IoMdArrowDropdownCircle />}
                 </div>
                 {isClick ? (
                     <div css={clicked}>
                         <ul>
-                            <li>
+                            <li css={listStyle}>
+                                <div css={ListName}>장소</div>
+                                <Post></Post>
+                            </li>
+                            <li css={listStyle}>
                                 <div css={ListName}>경비</div>
-                                <input css={ListInput}></input>
+                                <Post></Post>
                             </li>
-                            <li>
+                            <li css={listStyle}>
                                 <div css={ListName}>이동 수단</div>
-                                <input css={ListInput}></input>
+                                <Post></Post>
                             </li>
-                            <li>
+                            <li css={listStyle}>
                                 <div css={ListName}>상세 설명</div>
-                                <input css={ListInput}></input>
+                                <Post></Post>
                             </li>
+
                             <li>
                                 <ImgUpload />
                             </li>
@@ -56,21 +69,27 @@ const PostformItems = (props) => {
 };
 
 const wrap = css`
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 600;
     text-align: center;
-    border: 3px solid ${PALETTE.default_color};
+    border: ${PALETTE.border};
     border-radius: ${PALETTE.border_radius};
     width: 370px;
     padding: 10px;
 `;
 
+const clickedwrap = css`
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    border: ${PALETTE.border};
+    border-radius: ${PALETTE.border_radius};
+    width: 370px;
+    padding: 10px;
+`;
 const clicked = css`
     margin: 5px auto;
     text-align: start;
-    border-radius: ${PALETTE.border_radius};
-    font-size: 1.2rem;
-    font-weight: 500;
     animation: identifier 0.5s ease-in-out;
 
     @keyframes identifier {
@@ -105,10 +124,16 @@ const ListName = css`
     text-align: center;
     font-weight: 600;
     font-size: 1rem;
-    margin: 10px auto;
-    min-width: 180px;
-    max-width: 350px;
+    margin: 10px;
+    width: fit-content;
 `;
+
+const listStyle = css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
 const ListInput = css`
     display: flex;
     border-radius: ${PALETTE.border_radius};
