@@ -1,19 +1,19 @@
 package com.seb41_main_018.mainproject.content.service;
 
 import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
-import com.seb41_main_018.mainproject.content.dto.ContentDto;
+import com.seb41_main_018.mainproject.content.dto.ContentAllResponseDto;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.content.mapper.ContentMapper;
 import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
+import com.seb41_main_018.mainproject.route.repository.RouteRepository;
+import com.seb41_main_018.mainproject.route.service.RouteService;
 import com.seb41_main_018.mainproject.tag.repository.TagRepository;
-import com.seb41_main_018.mainproject.tag.service.TagService;
 import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
 import com.seb41_main_018.mainproject.user.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -25,8 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
-@Transactional
 public class ContentService {
     private final UserRepository userRepository;
     private final ContentRepository contentRepository;
@@ -36,6 +34,19 @@ public class ContentService {
 
     private final CommentRepository commentRepository;
     private final TagRepository tagRepository;
+    private final RouteService routeService;
+    private final RouteRepository routeRepository;
+
+    public ContentService(UserRepository userRepository, ContentRepository contentRepository, UserService userService, ContentMapper contentMapper, CommentRepository commentRepository, TagRepository tagRepository, RouteService routeService, RouteRepository routeRepository) {
+        this.userRepository = userRepository;
+        this.contentRepository = contentRepository;
+        this.userService = userService;
+        this.contentMapper = contentMapper;
+        this.commentRepository = commentRepository;
+        this.tagRepository = tagRepository;
+        this.routeService = routeService;
+        this.routeRepository = routeRepository;
+    }
 
     // 게시글 생성 //
     public Content createContent(Content content) {
@@ -45,8 +56,8 @@ public class ContentService {
     }
 
     // 게시글 수정 //
-    public Content updateContent(Long contentId, Content content) {
-        Content findContent = findVerifiedContent(contentId);
+    public Content updateContent(Content content) {
+        Content findContent = findVerifiedContent(content.getContentId());
 
         User writer = userService.findVerifiedUser(findContent.getUser().getUserId()); // 작성자 찾기
         if(userService.getLoginMember().getUserId() != writer.getUserId()) // 작성자와 로그인한 사람이 다를 경우
@@ -66,6 +77,9 @@ public class ContentService {
 
         Optional.ofNullable(content.getRouteName())
                 .ifPresent(findContent::setRouteName);
+
+        routeService.deleteRoutes(findContent);
+        findContent.setRoutes(routeService.createRoutes(content.getRoutes()));
 
         return contentRepository.save(findContent);
     }
@@ -109,11 +123,14 @@ public class ContentService {
 
         return findContent;
     }
+    public Content updateViewCount(Content content){
+        return contentRepository.save(content);
+    }
 
     @Transactional(readOnly = true)
     public ResponseEntity detail(Content content) {
 
-        ContentDto.ContentAllResponse response = contentMapper.contentToContentAllResponse(content, commentRepository, tagRepository);
+        ContentAllResponseDto response = contentMapper.contentToContentAllResponse(content, commentRepository, tagRepository,routeRepository);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.OK
