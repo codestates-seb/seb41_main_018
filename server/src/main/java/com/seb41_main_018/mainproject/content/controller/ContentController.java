@@ -2,35 +2,44 @@ package com.seb41_main_018.mainproject.content.controller;
 
 import com.seb41_main_018.mainproject.constant.ThemeType;
 import com.seb41_main_018.mainproject.content.dto.ContentDto;
+import com.seb41_main_018.mainproject.content.dto.ContentPatchDto;
+import com.seb41_main_018.mainproject.content.dto.ContentPostDto;
+import com.seb41_main_018.mainproject.content.dto.ContentResponseDto;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.content.mapper.ContentMapper;
 import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.content.service.ContentService;
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
-import com.seb41_main_018.mainproject.tag.repository.TagRepository;
+import com.seb41_main_018.mainproject.route.service.RouteService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 @ApiOperation(value = "컨텐트 API", tags = {"Content Controller"})
 @RestController
 @Validated
-@RequiredArgsConstructor
 @RequestMapping("/contents")
 public class ContentController {
     private final ContentService contentService;
     private final ContentMapper contentMapper;
     private final ContentRepository contentRepository;
+    private final RouteService routeService;
 
+    public ContentController(ContentService contentService, ContentMapper contentMapper, ContentRepository contentRepository, RouteService routeService) {
+        this.contentService = contentService;
+        this.contentMapper = contentMapper;
+        this.contentRepository = contentRepository;
+        this.routeService = routeService;
+    }
 
 
     // 게시글 생성 //
@@ -38,11 +47,13 @@ public class ContentController {
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Content not found")})
     @PostMapping
-    public ResponseEntity postContent(@RequestBody ContentDto.ContentPost requestBody) {
+    public ResponseEntity postContent(@Valid @RequestBody ContentPostDto requestBody) {
         Content content = contentService.createContent(contentMapper.contentPostDtoToContent(requestBody));
-        ContentDto.ContentResponse contentResponse = contentMapper.contentToContentResponse(content);
+        ContentResponseDto contentResponse = contentMapper.contentToContentResponse(content);
 
-        return new ResponseEntity<>(contentResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(contentResponse) , HttpStatus.CREATED
+        );
     }
 
     // 게시글 단건 조회 //
@@ -53,9 +64,10 @@ public class ContentController {
     public ResponseEntity getContent( @ApiParam(name = "ContentId", value = "컨텐트 식별자", example = "1")
             @PathVariable("contentId") Long contentId) {
         Content content = contentService.findContent(contentId);
-        int view = content.getViewCount();
-        content.setViewCount(++view); //조회수 증가
-        contentRepository.save(content);
+        int viewCount = content.getViewCount();
+        content.setViewCount(++viewCount);
+        contentService.updateViewCount(content);
+
         return contentService.detail(content);
     }
 
@@ -68,6 +80,7 @@ public class ContentController {
                                       @RequestParam("size") int size) {
         Page<Content> pageContents = contentService.findContents(page-1, size);
         List<Content> contents = pageContents.getContent();
+        contents.stream().forEach(content -> content.setRoutes(routeService.findRoutesByContentId(content.getContentId())));
 
         return new ResponseEntity<>(
                 new MultiResponseDto<>(
@@ -81,13 +94,13 @@ public class ContentController {
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Content not found")})
     @PatchMapping("/{contentId}")
-    public ResponseEntity patchContent(@RequestBody ContentDto.ContentPatch requestBody,
+    public ResponseEntity patchContent(@RequestBody ContentPatchDto requestBody,
                                        @PathVariable("contentId") Long contentId) {
+        requestBody.updateId(contentId);
         Content content = contentService.updateContent(
-                contentId,
                 contentMapper.contentPatchDtoToContent(requestBody));
 
-        ContentDto.ContentResponse contentResponse = contentMapper.contentToContentResponse(content);
+        ContentResponseDto contentResponse = contentMapper.contentToContentResponse(content);
 
         return new ResponseEntity<>(contentResponse, HttpStatus.OK);
     }
