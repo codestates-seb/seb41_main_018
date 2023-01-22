@@ -1,6 +1,7 @@
 package com.seb41_main_018.mainproject.route.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.seb41_main_018.mainproject.audit.Auditable;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import lombok.Getter;
@@ -9,17 +10,21 @@ import lombok.Setter;
 import com.seb41_main_018.mainproject.route.entity.Route;
 import javax.persistence.*;
 
-@NoArgsConstructor
+
+
+@Entity
 @Getter
 @Setter
-@Entity
+@NoArgsConstructor
 public class Route extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ROUTE_ID")
     private Long routeId;
 
     @ManyToOne
-    @JoinColumn(name = "ContentId")
+    @JsonBackReference
+    @JoinColumn(name = "CONTENT_ID")
     private Content content;
 
     @Column(nullable = false)
@@ -55,5 +60,9 @@ public class Route extends Auditable {
         this.place = place;
         this.x = x;
         this.y = y;
+    }
+    public void addContent(Content content) {
+        this.content = content;
+        content.getRoutes().add(this);
     }
 }
