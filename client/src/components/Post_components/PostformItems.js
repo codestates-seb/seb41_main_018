@@ -6,17 +6,20 @@ import Map from "../../pages/PostPage/searchMap";
 import { css } from "@emotion/react";
 
 import ImgUpload from "./ImgUpload";
-import UseForm, { Post, Input } from "../../util/UseForm";
+import { Post } from "../../util/UseForm";
 
 import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { IoMdArrowDropupCircle } from "react-icons/io";
 
+import { FiPlus } from "react-icons/fi";
+
 const PostformItems = (props) => {
-    const [isClick, setClick] = useState(false);
+    const [isClick, setClick] = useState(true);
 
     const handleClick = () => {
         setClick(!isClick);
     };
+    console.log(props.onClick);
 
     return (
         <>
@@ -60,6 +63,20 @@ const PostformItems = (props) => {
                             <li>
                                 <ImgUpload />
                             </li>
+                            <div
+                                css={css`
+                                    display: flex;
+                                    justify-content: end;
+                                `}
+                            >
+                                <button type="button" css={addBtnStyle} onClick={props.onClick[0]}>
+                                    <FiPlus />
+                                    Add to Route
+                                </button>
+                                <button type="button" onClick={props.onClick[1]} css={delBtnStyle}>
+                                    delete
+                                </button>
+                            </div>
                         </ul>
                     </div>
                 ) : null}
@@ -134,15 +151,37 @@ const listStyle = css`
     align-items: center;
 `;
 
-const ListInput = css`
+const addBtnStyle = css`
     display: flex;
-    border-radius: ${PALETTE.border_radius};
-    width: 23vw;
-    min-height: 40px;
-    min-width: 180px;
-    max-width: 350px;
-    font-size: 1.15rem;
-    margin: 15px auto;
+    align-self: center;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid ${PALETTE.default_active};
+    background-color: ${PALETTE.default_active};
+    box-shadow: ${PALETTE.box_shadow};
+    color: white;
+    border-radius: 100px;
+    width: fit-content;
+    font-size: 0.8rem;
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
+const delBtnStyle = css`
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 0.8rem;
+    width: 100px;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid ${PALETTE.default_active};
+    background-color: ${PALETTE.default_active};
+    border-radius: 100px;
+    box-shadow: ${PALETTE.box_shadow};
+    &:hover {
+        cursor: pointer;
+    }
+`;
 export default PostformItems;

@@ -9,7 +9,8 @@ import { imgState } from "../../state/atom";
 const ImgUpload = () => {
     const [imgList, setImgList] = useRecoilState(imgState);
     const inputRef = useRef(null);
-    const uploadBtnClick = () => {
+    const uploadBtnClick = (event) => {
+        event.preventDefault();
         inputRef.current.click();
     };
     const handleUploadImg = (event) => {
