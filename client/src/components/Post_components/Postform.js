@@ -79,42 +79,11 @@ const Postform = (props) => {
     };
 
     return (
-        <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+        <>
             <div css={container}>
                 <TitleCard />
-                {/* <Droppable droppableId="droppable">
-                    {(provided) => (
-                        <div {...provided.droppableProps} ref={provided.innerRef}>
-                            {countList.map((e, i) => (
-                                <Draggable draggableId={`${e}`} index={i} key={`${e}`}>
-                                    {(provided, snapshot) => {
-                                        return (
-                                            <div
-                                                {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
-                                                ref={provided.innerRef}
-                                            >
-                                                <Route isDragging={snapshot.isDragging} />
-                                            </div>
-                                        );
-                                    }}
-                                </Draggable>
-                            ))}
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable> */}
-                <Route />
-                {/* <Button
-                    width="27vw"
-                    maxWidth="400px"
-                    minWidth="250px"
-                    minheigth="47px"
-                    text="추가하기"
-                    margin="0 auto"
-                    onClick={onAddBtnClick}
-                /> */}
                 <Tag />
+                <Route />
             </div>
             <div
                 css={css`
@@ -156,7 +125,7 @@ const Postform = (props) => {
                     text=<FiShare />
                 />
             </div>
-        </DragDropContext>
+        </>
     );
 };
 
