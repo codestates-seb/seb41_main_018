@@ -4,22 +4,32 @@ import { useForm } from "react-hook-form";
 
 import { useNavigate, Link } from "react-router-dom";
 
-import axios from 'axios';
+import axios from "axios";
 
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import { css } from "@emotion/react";
 
-import { LoginpageBg, LoginpageContainer, LoginLogoContainer, LoginContainer, LoginLabelBox, LoginInputBox } from "./loginstyle";
+import {
+    LoginpageBg,
+    LoginpageContainer,
+    LoginLogoContainer,
+    LoginContainer,
+    LoginLabelBox,
+    LoginInputBox,
+} from "./loginstyle";
 import Button from "../../components/Button";
 import SocialButton from "../../components/SocialButton";
 import logo3 from "../../assets/logo3.png";
+// import { useRecoilState } from "recoil";
+// import { userEmail } from "../state/atom";
 
 const defaultValues = {
-    email:'',
-    password:'',
-    nickname: '',
-    phonenumber: '',
-    }
+    email: "",
+    email_subscribe: true,
+    nickname: "",
+    password: "",
+    phone: "",
+};
 
 const SignUp = () => {
     const navigate = useNavigate();
@@ -27,18 +37,17 @@ const SignUp = () => {
     const [phoneNum, setphoneNum] = useState("");
 
     const handlePhone = (value) => {
-
         const regex = /^[0-9\b -]{0,11}$/;
 
-        if (regex.test(value)){
+        if (regex.test(value)) {
             setphoneNum(value);
         }
 
         value = value.replace(/[^0-9]/g, "");
-        
+
         let result = [];
         let restNumber = "";
-        
+
         // 지역번호와 나머지 번호로 나누기
         if (value.startsWith("02")) {
             // 서울 02 지역번호
@@ -54,7 +63,7 @@ const SignUp = () => {
             result.push(value.substr(0, 3));
             restNumber = value.substring(3);
         }
-        
+
         if (restNumber.length === 7) {
             // 7자리만 남았을 때는 xxx-yyyy
             result.push(restNumber.substring(0, 3));
@@ -64,11 +73,9 @@ const SignUp = () => {
             result.push(restNumber.substring(4));
         }
 
-
-        
         setphoneNum(result.filter((val) => val).join("-"));
-        console.log(phoneNum)
-    }
+        console.log(phoneNum);
+    };
 
     const emailCheck = async (e) => {
         const emailregex = /\S+@\S+\.\S+/;
@@ -76,53 +83,53 @@ const SignUp = () => {
         e.preventDefault();
         if (emailregex.test(email.current)) {
             const emailjsonData = JSON.stringify(email.current);
-            console.log(emailjsonData)
-                
-            await axios.get("url", emailjsonData,
-            {
-            headers: {
-                "Content-Type": `application/json`
-            }
+            console.log(emailjsonData);
+
+            await axios
+                .get("api", emailjsonData, {
+                    headers: {
+                        "Content-Type": `application/json`,
+                    },
+                })
+                .then((res) => {
+                    if (res === true) {
+                        alert("사용할수 있는 이메일입니다");
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                    console.log(emailjsonData);
+                    alert("존재하는 이메일입니다");
+                });
+        }
+    };
+
+    const onSignUpSubmit = async (data) => {
+        const jsonData = JSON.stringify(data);
+        console.log(jsonData);
+
+        await axios
+            .post("/users", jsonData, {
+                headers: {
+                    "Content-Type": `application/json`,
+                },
             })
             .then((res) => {
-                if(res === true) {
-                    alert('사용할수 있는 이메일입니다')
-                };
+                navigate("/login");
             })
             .catch((err) => {
-                console.log(err)
-                        console.log(emailjsonData)
-                alert('존재하는 이메일입니다');
-            })
-        }
-    }
+                console.log(err);
+                console.log(data);
+                alert("회원가입에 실패했습니다.");
+            });
+    };
 
-    const onSignUpSubmit = async () => {
-        const jsonData = JSON.stringify(defaultValues);
-        console.log(jsonData)
-            
-        await axios.post("url", jsonData,
-        {
-        headers: {
-            "Content-Type": `application/json`
-        }
-        })
-        .then((res) => {
-            navigate("/login");
-        })
-        .catch((err) => {
-            console.log(err)
-            alert('회원가입에 실패했습니다.');
-        })
-    }
-
-        
     const {
         register,
         watch,
         handleSubmit,
         formState: { errors },
-    } = useForm({mode: 'onChange', defaultValues});
+    } = useForm({ mode: "onChange", defaultValues });
 
     const email = useRef();
     email.current = watch("email");
@@ -134,12 +141,14 @@ const SignUp = () => {
         <div css={LoginpageBg}>
             <div css={LoginpageContainer}>
                 <div css={LoginLogoContainer}>
-                    <Link to={'/'}>
+                    <Link to={"/"}>
                         <img src={logo3} alt="logo" />
                     </Link>
                 </div>
                 <form css={LoginContainer}>
-                    <label htmlFor="email" css={LoginLabelBox}>이메일</label>
+                    <label htmlFor="email" css={LoginLabelBox}>
+                        이메일
+                    </label>
                     <div css={SignupEmailBox}>
                         <input
                             id="email"
@@ -151,13 +160,15 @@ const SignUp = () => {
                                 pattern: {
                                     value: /\S+@\S+\.\S+/,
                                     message: "이메일 형식에 맞지 않습니다",
-                                }, 
+                                },
                             })}
                         />
-                        <Button type="button" text={"중복검사"} onClick={emailCheck}/>
+                        <Button type="button" text={"중복검사"} onClick={emailCheck} />
                     </div>
                     {errors.email && <small role="alert">{errors.email.message}</small>}
-                    <label htmlFor="password" css={LoginLabelBox}>비밀번호</label>
+                    <label htmlFor="password" css={LoginLabelBox}>
+                        비밀번호
+                    </label>
                     <input
                         id="password"
                         type="password"
@@ -173,7 +184,9 @@ const SignUp = () => {
                         css={LoginInputBox}
                     />
                     {errors.password && <small role="alert">{errors.password.message}</small>}
-                    <label htmlFor="password" css={LoginLabelBox}>비밀번호 확인</label>
+                    <label htmlFor="password" css={LoginLabelBox}>
+                        비밀번호 확인
+                    </label>
                     <input
                         id="passwordConfirm"
                         type="password"
@@ -181,13 +194,14 @@ const SignUp = () => {
                         placeholder="비밀번호 확인"
                         {...register("passwordConfirm", {
                             required: "비밀번호를 확인해주세요",
-                            validate: (value) => 
-                                value === password.current
+                            validate: (value) => value === password.current,
                         })}
                         css={LoginInputBox}
                     />
                     {errors.passwordConfirm && <small role="alert">"hi"</small>}
-                    <label htmlFor="password" css={LoginLabelBox}>닉네임</label>
+                    <label htmlFor="password" css={LoginLabelBox}>
+                        닉네임
+                    </label>
                     <input
                         id="nickname"
                         type="text"
@@ -199,22 +213,26 @@ const SignUp = () => {
                         css={LoginInputBox}
                     />
                     {errors.nickname && <small role="alert">{errors.nickname.message}</small>}
-                    <label htmlFor="password" css={LoginLabelBox}>휴대폰 번호</label>
+                    <label htmlFor="password" css={LoginLabelBox}>
+                        휴대폰 번호
+                    </label>
                     <input
-                        id="phonenumber"
+                        id="phone"
                         type="tel"
-                        name="phonenumber"
+                        name="phone"
                         value={phoneNum}
                         placeholder="010-1234-5678"
-                        {...register("phonenumber", {
-                            onChange: (e) => {handlePhone(e.target.value)},
+                        {...register("phone", {
+                            onChange: (e) => {
+                                handlePhone(e.target.value);
+                            },
                             required: "휴대폰 번호를 입력해주세요",
                         })}
                         css={LoginInputBox}
                     />
-                    {errors.phonenumber && <small role="alert">{errors.phonenumber.message}</small>}
-                    <Button type="button" text="Sign Up" onClick={handleSubmit(onSignUpSubmit)}/>
-                <SocialButton />
+                    {errors.phone && <small role="alert">{errors.phonenum.message}</small>}
+                    <Button type="button" text="Sign Up" onClick={handleSubmit(onSignUpSubmit)} />
+                    <SocialButton />
                 </form>
             </div>
         </div>
@@ -232,8 +250,7 @@ const SignupEmailBox = css`
     margin-bottom: 20px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 
-
-    input{
+    input {
         width: 80%;
         height: 50px;
         font-size: 20px;
@@ -242,7 +259,7 @@ const SignupEmailBox = css`
         outline: none;
     }
 
-    button{
+    button {
         width: 20%;
         height: 30px;
         margin: 5px;

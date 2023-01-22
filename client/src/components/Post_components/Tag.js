@@ -1,7 +1,7 @@
 import { useState } from "react";
 /** @jsxImportSource @emotion/react */
 import React from "react";
-import { PALETTE } from "../Common";
+import { PALETTE } from "../../Common";
 import { css } from "@emotion/react";
 import { AiOutlineClose } from "react-icons/ai";
 

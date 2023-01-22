@@ -18,3 +18,13 @@ export const addBtnClickState = atom({
     key: "addBtnClickState",
     default: 1,
 });
+
+export const getAuthorization = atom({
+    key: "getAuthorization",
+    default: "",
+});
+
+export const getRefresh = atom({
+    key: "getRefresh",
+    default: "",
+});
