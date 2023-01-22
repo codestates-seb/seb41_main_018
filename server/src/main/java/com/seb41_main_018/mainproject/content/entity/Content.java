@@ -1,5 +1,6 @@
 package com.seb41_main_018.mainproject.content.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.seb41_main_018.mainproject.audit.Auditable;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.constant.ThemeType;
@@ -21,6 +22,7 @@ import java.util.List;
 public class Content extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="CONTENT_ID")
     private Long contentId;
 
     @Column(nullable = false)
@@ -60,7 +62,8 @@ public class Content extends Auditable {
     private List<Comment> comments = new ArrayList<>();
 
     @OrderBy("routeId")
-    @OneToMany(mappedBy = "content", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "content", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Route> routes = new ArrayList<>();
 
     @OrderBy("tagId")
@@ -72,10 +75,6 @@ public class Content extends Auditable {
     private User user;
 
     // 생성자 //
-    public Content(String title, String body) {
-        this.title = title;
-        this.body = body;
-    }
 
     // 연관관계 메소드 //
     public void addHeart(Heart heart) {
