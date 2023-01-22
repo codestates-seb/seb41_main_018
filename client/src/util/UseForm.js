@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, FormProvider, useFormContext, Controller, useFieldArray } from "react-hook-form";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../Common";
+import Button from "../components/Button";
 import PostformItems from "../components/Post_components/PostformItems";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { GrAddCircle } from "react-icons/gr";
+import { FiPlus } from "react-icons/fi";
+import { AiFillDelete } from "react-icons/ai";
 // route= {
 //     name: string;
 //     address: string;
@@ -147,6 +151,7 @@ export const AddRoute = () => {
 };
 
 export const Route = (props) => {
+    const [ishover, setHover] = useState(false);
     const methods = useForm({ defaultValues });
     const { control, handleSubmit, watch } = methods;
     const { fields, append, remove, move } = useFieldArray({
@@ -182,12 +187,19 @@ export const Route = (props) => {
                                             {(provided, snapshot) => (
                                                 <li
                                                     key={item.id}
-                                                    css={css`
-                                                        display: flex;
-                                                    `}
                                                     ref={provided.innerRef}
                                                     {...provided.draggableProps}
                                                     {...provided.dragHandleProps}
+                                                    css={css`
+                                                        display: flex;
+                                                        margin: 10px 0;
+                                                    `}
+                                                    onMouseEnter={() => {
+                                                        setHover(true);
+                                                    }}
+                                                    onMouseLeave={() => {
+                                                        setHover(false);
+                                                    }}
                                                 >
                                                     <Controller
                                                         render={({ field }) => (
@@ -196,12 +208,20 @@ export const Route = (props) => {
                                                         name={`routes.${index}.name`}
                                                         control={control}
                                                     />
-                                                    <button
+                                                    <AiFillDelete
                                                         type="button"
                                                         onClick={() => remove(index)}
-                                                    >
-                                                        delete
-                                                    </button>
+                                                        css={
+                                                            ishover
+                                                                ? css`
+                                                                      font-size: 1.2rem;
+                                                                      margin: auto 10px;
+                                                                  `
+                                                                : css`
+                                                                      display: none;
+                                                                  `
+                                                        }
+                                                    />
                                                 </li>
                                             )}
                                         </Draggable>
@@ -212,8 +232,27 @@ export const Route = (props) => {
                         )}
                     </Droppable>
                 </DragDropContext>
-                <button type="button" onClick={() => append()}>
-                    add
+                <button
+                    type="button"
+                    css={css`
+                        display: flex;
+                        align-self: center;
+                        padding: 10px;
+                        border: 1px solid ${PALETTE.default_active};
+                        background-color: ${PALETTE.default_active};
+                        box-shadow: ${PALETTE.box_shadow};
+                        color: white;
+                        border-radius: 100px;
+                        width: fit-content;
+                        font-size: 0.8rem;
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    `}
+                    onClick={() => append()}
+                >
+                    <FiPlus />
+                    Add to Route
                 </button>
             </form>
         </FormProvider>
