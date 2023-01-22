@@ -4,9 +4,11 @@ import com.seb41_main_018.mainproject.comment.dto.CommentDto;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
 import com.seb41_main_018.mainproject.constant.ThemeType;
-import com.seb41_main_018.mainproject.content.dto.ContentDto;
+import com.seb41_main_018.mainproject.content.dto.*;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.content.repository.ContentRepository;
+import com.seb41_main_018.mainproject.route.dto.RoutePostDto;
+import com.seb41_main_018.mainproject.route.dto.RouteResponseDto;
 import com.seb41_main_018.mainproject.route.entity.Route;
 import com.seb41_main_018.mainproject.route.repository.RouteRepository;
 import com.seb41_main_018.mainproject.tag.dto.TagDto;
@@ -20,23 +22,36 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface ContentMapper {
-    Content contentPostDtoToContent(ContentDto.ContentPost requestBody);
-    default Content contentPatchDtoToContent(ContentDto.ContentPatch requestBody){
+    default Content contentPostDtoToContent(ContentPostDto requestBody){
+        Content content = new Content();
+
+        List<Route> routes = routesDtosToRoutes(requestBody.getRoutes(),content);
+        content.setRoutes(routes);
+        content.setTitle(requestBody.getTitle());
+        content.setRouteName(requestBody.getRouteName());
+        content.setDate(requestBody.getDate());
+        content.setThemeType(requestBody.getThemeType());
+        content.setBody(requestBody.getBody());
+        return content;
+    }
+    default Content contentPatchDtoToContent(ContentPatchDto requestBody){
         Content content = new Content();
 
         content.setContentId(requestBody.getContentId());
+        List<Route> routes = routesDtosToRoutes(requestBody.getRoutes(),content);
 
         content.setBody(requestBody.getBody());
         content.setTitle(requestBody.getTitle());
         content.setThemeType(requestBody.getThemeType());
         content.setDate(requestBody.getDate());
         content.setRouteName(requestBody.getRouteName());
+        content.setRoutes(routes);
         return content;
     }
-    default ContentDto.ContentResponse contentToContentResponse(Content content){
+    default ContentResponseDto contentToContentResponse(Content content){
         User user = content.getUser();
 
-        return ContentDto.ContentResponse.builder()
+        return ContentResponseDto.builder()
                 .contentId(content.getContentId())
                 .userId(user.getUserId())
                 .title(content.getTitle())
@@ -44,14 +59,46 @@ public interface ContentMapper {
                 .heartCount(content.getHeartCount())
                 .themeType(content.getThemeType())
                 .viewCount(content.getViewCount())
-                .totalPrice(content.getTotalPrice())
+                .totalPrice(content.getRoutes().stream().mapToLong(Route::getPrice).sum())
                 .date(content.getDate())
                 .routeName(content.getRouteName())
                 .createdAt(content.getCreatedAt())
                 .modifiedAt(content.getModifiedAt())
+                .routes(routesToRouteResponseDtos(content.getRoutes()))
                 .build();
     }
-    List<ContentDto.ContentResponse> contentsToContentResponse(List<Content> contents);
+    default List<Route> routesDtosToRoutes(List<RoutePostDto> routePostDtos, Content content){
+        //tag 또한 변환해줘야함(dto -> entity)
+
+        return routePostDtos.stream().map(routePostDto -> {
+            Route route = new Route();
+            route.addContent(content);
+            route.setPrice(routePostDto.getPrice());
+            route.setVehicle(routePostDto.getVehicle());
+            route.setPlace(routePostDto.getPlace());
+            route.setBody(routePostDto.getBody());
+            route.setX(routePostDto.getX());
+            route.setY(routePostDto.getY());
+
+            return route;
+        }).collect(Collectors.toList());
+    }
+    default List<RouteResponseDto> routesToRouteResponseDtos(List<Route> routes){
+        return routes.stream()
+                .map(route-> RouteResponseDto.builder()
+                        .contentId(route.getContent().getContentId())
+                        .price(route.getPrice())
+                        .vehicle(route.getVehicle())
+                        .place(route.getPlace())
+                        .body(route.getBody())
+                        .x(route.getX())
+                        .y(route.getY())
+                        .routeId(route.getRouteId())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    List<ContentResponseDto> contentsToContentResponse(List<Content> contents);
     default ContentDto.ThemeTypeResponse themeTypeResponse(ThemeType themeType, ContentRepository contentRepository){
         List<Content> contents = contentRepository.findAllByThemeType(themeType);
 
@@ -69,12 +116,12 @@ public interface ContentMapper {
                 .collect(Collectors.toList());
     }
 
-    default ContentDto.ContentAllResponse contentToContentAllResponse(Content content, CommentRepository commentRepository, TagRepository tagRepository){
+    default ContentAllResponseDto contentToContentAllResponse(Content content, CommentRepository commentRepository, TagRepository tagRepository,RouteRepository routeRepository){
         User user = content.getUser();
         List<Comment> comments = commentRepository.findAllByContentId(content.getContentId());
-        //List<Route> routes = routeRepository.findAllByContentId(content.getContentId());
+        List<Route> routes = routeRepository.findAllByContentId(content.getContentId());
 
-        return ContentDto.ContentAllResponse.builder()
+        return ContentAllResponseDto.builder()
                 .contentId(content.getContentId())
                 .userId(user.getUserId())
                 .title(content.getTitle())
@@ -85,9 +132,11 @@ public interface ContentMapper {
                 .tags(tagsToTagResponseDtos(tagRepository.findAllByContentId(content.getContentId())))
                 .createdAt(content.getCreatedAt())
                 .modifiedAt(content.getModifiedAt())
-                //.totalPrice(routes.stream().mapToLong(Route::getPrice).sum())
+                .totalPrice(routes.stream().mapToLong(Route::getPrice).sum())
                 .date(content.getDate())
                 .routeName(content.getRouteName())
+                .routes(routesToRouteResponseDtos(routeRepository.findAllByContentId(content.getContentId())))
+                .viewCount(content.getViewCount())
                 .build();
     }
     default List<CommentDto.Response> commentsToCommentResponseDtos(List<Comment> comments){
@@ -101,6 +150,7 @@ public interface ContentMapper {
                         .createdAt(comment.getCreatedAt())
                         .modifiedAt(comment.getModifiedAt())
                         .title(comment.getContent().getTitle())
+                        .nickName(comment.getUser().getNickname())
                         .build())
                 .collect(Collectors.toList());
     }

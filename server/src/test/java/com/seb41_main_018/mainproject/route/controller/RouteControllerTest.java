@@ -121,7 +121,7 @@
 //                .andExpect(jsonPath("$.name").value(route.getName()));
 //    }
 //
-// @Test
+//   /* @Test
 //    void getRoutes() throws Exception {
 //        // given: routeController의 getroutes()를 테스트하기 위해 postroute()를 이용해 테스트 데이터(2건)를 생성 후, DB에 저장
 //        RouteDto.RoutePost post1 = new RouteDto.RoutePost(1L,"제주");
@@ -130,12 +130,9 @@
 //
 //        mockMvc.perform(
 //                post(postUri)
-//                        .accept(MediaType.APPLICATION_JSON)
-//* 중복
-//                        .contentType(MediaType.APPLICATION_JSON)
-//* 중복
-//                        .content(postContent1)
-//* 중복
+//                        .accept(MediaType.APPLICATION_JSON)    *//** 중복 *//*
+//                        .contentType(MediaType.APPLICATION_JSON)  *//** 중복 *//*
+//                        .content(postContent1)   *//** 중복 *//*
 //        );
 //
 //        RouteDto.RoutePost post2 = new RouteDto.RoutePost(1L,"제주2");
@@ -143,15 +140,11 @@
 //
 //        mockMvc.perform(
 //                post(postUri)
-//                        .accept(MediaType.APPLICATION_JSON)
-//* 중복
-//                        .contentType(MediaType.APPLICATION_JSON)
-//* 중복
-//                        .content(postContent2)
-//* 중복
+//                        .accept(MediaType.APPLICATION_JSON)    *//** 중복 *//*
+//                        .contentType(MediaType.APPLICATION_JSON)  *//** 중복 *//*
+//                        .content(postContent2)   *//** 중복 *//*
 //        );
-//
-//* 중복 코드 끝
+//        *//** 중복 코드 끝 *//*
 //
 //        String page = "1";
 //        String size = "10";
@@ -159,8 +152,7 @@
 //        queryParams.add("page", page);
 //        queryParams.add("size", size);
 //
-//
-//* 중복
+//        *//** 중복 *//*
 //        URI getUri = UriComponentsBuilder.newInstance().path("/routes").build().toUri();
 //
 //        // when
@@ -168,8 +160,7 @@
 //                mockMvc.perform(
 //                        get(getUri)
 //                                .params(queryParams)
-//                                .accept(MediaType.APPLICATION_JSON)
-//* 중복
+//                                .accept(MediaType.APPLICATION_JSON)   *//** 중복 *//*
 //                );
 //
 //        // then
@@ -183,8 +174,7 @@
 //        assertThat(list.size(), is(2));
 //
 //
-//    }
-//
+//    }*/
 //
 //    @Test
 //    void patchRoute() throws Exception {
