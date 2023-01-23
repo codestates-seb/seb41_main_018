@@ -6,7 +6,6 @@ import DetailformItems from "./DetailformItems";
 import Button from "../Button";
 import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
-import Tag from "../Post_components/Tag";
 
 // 경로 데이터 더미
 const routeDummy = [
@@ -41,29 +40,8 @@ const Detailform = () => {
                         />
                     ))}
                 </div>
-
-                {/* 공통 정보 */}
-                <div css={ContentsBody}>
-                    <div css={ComContent}>
-                        <span>카테고리</span>
-                        <span>혼자 여행</span>
-                    </div>
-                    <div css={ComContent}>
-                        <span>여행일</span>
-                        <span>2023.02.08</span>
-                    </div>
-                    <div css={ComContent}>
-                        <span>총 여행 경비</span>
-                        <span>700,000원</span>
-                    </div>
-                </div>
-                <Tag />
             </div>
-            <div
-                css={css`
-                    display: flex;
-                `}
-            >
+            <div css={ButtonBox}>
                 <Button
                     width="23.5vw"
                     minWidth="240px"
@@ -106,28 +84,23 @@ const wrap = css`
     top: 50px;
     right: 10px;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 `;
 
 const container = css`
-    width: 30vw;
-    min-width: 300px;
-    max-width: 450px;
+    width: 90vw;
+    /*  min-width: 300px;
+    max-width: 450px; */
     border-radius: ${PALETTE.border_radius};
     box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2);
     margin: 10px 40px;
     padding: 20px;
 `;
-
-const ContentsBody = css`
-    padding-top: 20px;
-`;
-
-const ComContent = css`
+const ButtonBox = css`
     display: flex;
-    font-size: 1.1rem;
-    justify-content: space-between;
-    font-weight: 600;
-    padding: 8px 20px;
+    align-self: flex-end;
+    padding-right: 40px;
 `;
 
 export default Detailform;
