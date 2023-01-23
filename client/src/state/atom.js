@@ -1,5 +1,6 @@
 import { atom } from "recoil";
 /* import { recoilPersist } from "recoil-persist";*/
+import { getContent } from "../util/axiosDetail";
 
 // const { persistAtom } = recoilPersist();
 
@@ -26,4 +27,9 @@ export const getAuthorization = atom({
 export const getRefresh = atom({
     key: "getRefresh",
     default: "",
+});
+
+export const ContentDetail = atom({
+    key: "ContentDetail",
+    default: {},
 });
