@@ -10,8 +10,10 @@ import com.seb41_main_018.mainproject.auth.jwt.JwtTokenizer;
 import com.seb41_main_018.mainproject.auth.utils.CustomAuthorityUtils;
 import com.seb41_main_018.mainproject.auth.utils.RedisUtil;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
+import com.seb41_main_018.mainproject.user.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -78,6 +80,9 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.PATCH, "/comments/**").hasRole("USER") // 후기 수정
                         .antMatchers(HttpMethod.POST, "**/hearts").hasRole("USER") // 좋아요
                         .antMatchers(HttpMethod.DELETE).hasRole("USER") // 질문, 답변 삭제
+            /*    )
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, userRepository, userService, redisUtil))*/
                 );
 
         return http.build();
