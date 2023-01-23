@@ -2,89 +2,125 @@
 import React from "react";
 import { useState, useRef } from "react";
 import { PALETTE } from "../../Common";
+import { useForm, FormProvider, Controller } from "react-hook-form";
 import Map from "../../pages/PostPage/searchMap";
 import { css } from "@emotion/react";
 
 import ImgUpload from "./ImgUpload";
-import { Post } from "../../util/UseForm";
+import { Post, Input } from "../../util/UseForm";
 
 import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { IoMdArrowDropupCircle } from "react-icons/io";
 
 import { FiPlus } from "react-icons/fi";
 
+const defaultValues = {
+    title: "",
+    body: "",
+    themeType: "",
+    date: new Date(),
+    routeName: "",
+    routes: [
+        {
+            price: Number(),
+            vehicle: "",
+            place: "",
+            body: "",
+            x: "",
+            y: "",
+        },
+    ],
+};
+
 const PostformItems = (props) => {
     const [isClick, setClick] = useState(true);
+    const [data, setData] = useState("");
+    const [placeTitle, setPlaceTitle] = useState("");
+    const methods = useForm({ defaultValues });
+    const { control, handleSubmit, watch } = methods;
+
+    const submit = (data) => {
+        setData(JSON.stringify(data));
+        setPlaceTitle(data.place);
+    };
 
     const handleClick = () => {
         setClick(!isClick);
     };
-    console.log(props.onClick);
 
     return (
-        <>
-            <div css={isClick ? clickedwrap : wrap}>
-                <div
-                    css={css`
-                        display: flex;
-                        justify-content: space-between;
-                    `}
-                    onClick={handleClick}
-                >
+        <FormProvider {...methods}>
+            <form onChange={handleSubmit(submit)}>
+                <div css={isClick ? clickedwrap : wrap}>
                     <div
                         css={css`
-                            margin: 0 auto;
+                            display: flex;
+                            justify-content: space-between;
                         `}
+                        onClick={handleClick}
                     >
-                        아르떼 뮤지엄
+                        <div
+                            css={css`
+                                margin: 0 auto;
+                            `}
+                        >
+                            {String(placeTitle)}
+                        </div>
+                        {isClick ? <IoMdArrowDropupCircle /> : <IoMdArrowDropdownCircle />}
                     </div>
-                    {isClick ? <IoMdArrowDropupCircle /> : <IoMdArrowDropdownCircle />}
+                    {data}
+                    {isClick ? (
+                        <div css={clicked}>
+                            <ul>
+                                <li css={listStyle}>
+                                    <div css={ListName}>장소</div>
+                                    <Input name="routes[0].place" />
+                                </li>
+                                <li css={listStyle}>
+                                    <div css={ListName}>경비</div>
+                                    <Input name="price" />
+                                </li>
+                                <li css={listStyle}>
+                                    <div css={ListName}>이동 수단</div>
+                                    <Input name="vehicle" />
+                                </li>
+                                <li css={listStyle}>
+                                    <div css={ListName}>상세 설명</div>
+                                    <Input name="body" />
+                                </li>
+                                <li>
+                                    <ImgUpload />
+                                </li>
+                                <div
+                                    css={css`
+                                        display: flex;
+                                        justify-content: end;
+                                    `}
+                                >
+                                    <button
+                                        type="button"
+                                        css={addBtnStyle}
+                                        onClick={props.onClick[0]}
+                                    >
+                                        <FiPlus />
+                                        Add to Route
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={props.onClick[1]}
+                                        css={delBtnStyle}
+                                    >
+                                        delete
+                                    </button>
+                                </div>
+                            </ul>
+                        </div>
+                    ) : null}
                 </div>
-                {isClick ? (
-                    <div css={clicked}>
-                        <ul>
-                            <li css={listStyle}>
-                                <div css={ListName}>장소</div>
-                                <Post></Post>
-                            </li>
-                            <li css={listStyle}>
-                                <div css={ListName}>경비</div>
-                                <Post></Post>
-                            </li>
-                            <li css={listStyle}>
-                                <div css={ListName}>이동 수단</div>
-                                <Post></Post>
-                            </li>
-                            <li css={listStyle}>
-                                <div css={ListName}>상세 설명</div>
-                                <Post></Post>
-                            </li>
-
-                            <li>
-                                <ImgUpload />
-                            </li>
-                            <div
-                                css={css`
-                                    display: flex;
-                                    justify-content: end;
-                                `}
-                            >
-                                <button type="button" css={addBtnStyle} onClick={props.onClick[0]}>
-                                    <FiPlus />
-                                    Add to Route
-                                </button>
-                                <button type="button" onClick={props.onClick[1]} css={delBtnStyle}>
-                                    delete
-                                </button>
-                            </div>
-                        </ul>
-                    </div>
-                ) : null}
-            </div>
-        </>
+            </form>
+        </FormProvider>
     );
 };
-
 const wrap = css`
     font-size: 1.2rem;
     font-weight: 600;
@@ -156,8 +192,8 @@ const addBtnStyle = css`
     align-self: center;
     padding: 10px;
     margin: 5px;
-    border: 1px solid ${PALETTE.default_active};
-    background-color: ${PALETTE.default_active};
+    border: 1px solid ${PALETTE.default_color};
+    background-color: ${PALETTE.default_color};
     box-shadow: ${PALETTE.box_shadow};
     color: white;
     border-radius: 100px;
@@ -171,13 +207,13 @@ const addBtnStyle = css`
 const delBtnStyle = css`
     display: flex;
     justify-content: center;
+    padding: 10px;
+    margin: 5px;
     color: white;
     font-size: 0.8rem;
     width: 100px;
-    padding: 10px;
-    margin: 5px;
-    border: 1px solid ${PALETTE.default_active};
-    background-color: ${PALETTE.default_active};
+    border: 1px solid ${PALETTE.default_color};
+    background-color: ${PALETTE.default_color};
     border-radius: 100px;
     box-shadow: ${PALETTE.box_shadow};
     &:hover {

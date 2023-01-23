@@ -10,7 +10,7 @@ import Button from "../components/Button";
 import Tag from "../components/Post_components/Tag";
 import Map from "./PostPage/searchMap";
 import { PALETTE } from "../Common";
-import { Route } from "../util/UseForm";
+import { AddRoute } from "../util/UseForm";
 
 import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
@@ -50,7 +50,7 @@ const Post = () => {
             <>
                 <div css={container}>
                     <TitleCard />
-                    <Route />
+                    <AddRoute />
                     <Tag />
                 </div>
                 <div

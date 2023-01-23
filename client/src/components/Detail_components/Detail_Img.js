@@ -5,12 +5,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { css } from "@emotion/react";
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/free-mode";
 import "swiper/css/navigation";
-import "swiper/css/thumbs";
+import "swiper/css/pagination";
 
 // import required modules
-import { FreeMode, Navigation, Thumbs } from "swiper";
+import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";
 import right from "../../assets/right.png";
 import left from "../../assets/left.png";
 import { useRecoilState } from "recoil";
@@ -47,78 +46,34 @@ const routeDummy = [
 ];
 
 const Detial_Img = () => {
-    const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const [selectedRoute, setSelectedRoute] = useRecoilState(selectedRouteState);
 
     /* 선택 된 경로만 filter */
     let selected = routeDummy.filter((routeplace) => routeplace.routeId === selectedRoute);
 
-    // 슬라이드 이동 (사용 안할 시 삭제)
-    /*  
-    const slide = () => {
-        console.log(swiper);
-        swiper.slideTo(3, 1000);
-    }; */
     return (
         <div css={Swiper_Wrap}>
             <Swiper
-                style={{
-                    "--swiper-navigation-color": "#fff",
-                    "--swiper-pagination-color": "#fff",
-                }}
-                loop={true}
-                spaceBetween={10}
+                cssMode={true}
                 navigation={true}
-                thumbs={{ swiper: thumbsSwiper }}
-                modules={[FreeMode, Navigation, Thumbs]}
-                watchOverflow={true} // 슬라이드가 1개 일 때 pager, button 숨김 여부 설정
-                className="gallery"
+                pagination={true}
+                mousewheel={true}
+                keyboard={true}
+                modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+                className="mySwiper"
             >
                 {selected[0].img.map((img) => (
                     <SwiperSlide key={img}>
                         <img src={img} alt={img.name} />
                     </SwiperSlide>
                 ))}
-            </Swiper>
-
-            <Swiper
-                onSwiper={setThumbsSwiper}
-                loop={false}
-                spaceBetween={10}
-                slidesPerView={selected[0].img.length}
-                freeMode={true}
-                watchSlidesProgress={true}
-                /* centeredSlides={true} */ /*썸네일 가운데 정렬 */
-                modules={[FreeMode, Navigation, Thumbs]}
-                className="gallery-thumbs"
-            >
-                {selected[0].img.map((img) => (
-                    <SwiperSlide key={img}>
-                        <img src={img} alt={img.name} />
-                    </SwiperSlide>
-                ))}
-                {/* 전체 이미지 불러오기 (사용 안할 시 삭제) */}
-                {/* {routeDummy.map((el) =>
-                    el.img.map((img) => (
-                        <SwiperSlide key={img}>
-                            <img src={img} alt={el.name} />
-                            <div>{el.name}</div>
-                        </SwiperSlide>
-                    ))
-                )} */}
             </Swiper>
         </div>
     );
 };
 
 const Swiper_Wrap = css`
-    width: 70%;
-    height: 100%;
-
-    @media (max-width: 768px) {
-        width: 300px;
-        height: 300px;
-    }
+    width: 60%;
 
     .swiper {
         width: 100%;
@@ -143,56 +98,6 @@ const Swiper_Wrap = css`
         -ms-flex-align: center;
         -webkit-align-items: center;
         align-items: center;
-    }
-
-    .swiper-slide img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 10px;
-    }
-
-    .swiper {
-        width: 100%;
-        height: 300px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .swiper-slide {
-        background-size: cover;
-        background-position: center;
-    }
-
-    .gallery {
-        height: 80%;
-        width: 100%;
-    }
-
-    .gallery-thumbs {
-        height: 20%;
-        box-sizing: border-box;
-        padding: 10px 0;
-    }
-
-    .gallery-thumbs .swiper-slide {
-        width: 25%;
-        height: 100%;
-        opacity: 0.4;
-        display: flex;
-        flex-direction: column;
-        font-size: 12px;
-    }
-
-    // 썸네일 개별 이미지
-    .gallery-thumbs .swiper-slide img {
-        width: 100px;
-        margin: 3px;
-    }
-
-    .gallery-thumbs .swiper-slide-thumb-active {
-        opacity: 1;
     }
 
     .swiper-slide img {

@@ -26,12 +26,21 @@ import { GrAddCircle } from "react-icons/gr";
 //     }
 
 const defaultValues = {
-    name: "",
-    category: "",
+    title: "",
+    body: "",
+    themeType: "",
     date: new Date(),
-    totalPrice: 0,
-    tags: [],
-    routes: [{ name: "" }],
+    routeName: "",
+    routes: [
+        {
+            price: Number(),
+            vehicle: "",
+            place: "",
+            body: "",
+            x: "",
+            y: "",
+        },
+    ],
 };
 
 export const AddInput = () => {
@@ -63,14 +72,14 @@ export const AddInput = () => {
 };
 
 export const Input = (props) => {
-    const { control, watch } = useFormContext();
-    console.log("watch", watch("name"));
+    const { control, watch, register } = useFormContext();
+    // console.log("watch", watch("place"));
     return (
         <Controller
             control={control}
-            name="name"
+            name={`${props.name}`}
             render={({ field }) => {
-                console.log(field);
+                // console.log(`field`, field);
                 return (
                     <input
                         css={css`
@@ -91,6 +100,7 @@ export const Input = (props) => {
                         onChange={field.onChange}
                         value={field.value}
                         placeholder={props.placeholder}
+                        {...register(`${props.name}`)}
                     ></input>
                 );
             }}
@@ -101,57 +111,24 @@ export const Input = (props) => {
 export const Post = (props) => {
     const methods = useForm({ defaultValues });
     const { control, handleSubmit, watch } = methods;
-
     const submit = (data) => {
         console.log(data);
     };
 
-    console.log(watch("routes"));
+    console.log(watch(`routes`, "routes"));
+
     return (
         <FormProvider {...methods}>
-            <form>
+            <form onChange={handleSubmit}>
                 <Input placeholder={props.placeholder} width={props.width} />
             </form>
         </FormProvider>
     );
 };
 
-export const AddRoute = () => {
-    const { control } = useFormContext();
-    const { fields, append, remove, move } = useFieldArray({
-        control,
-        name: "routes",
-    });
-
-    return (
-        <ul>
-            {fields.map((item, index) => (
-                <li
-                    key={item.id}
-                    css={css`
-                        display: flex;
-                    `}
-                >
-                    <Controller
-                        render={({ field }) => <PostformItems {...field} />}
-                        name={`routes.${index}.name`}
-                        control={control}
-                    />
-                    <button type="button" onClick={() => remove(index)}>
-                        delete
-                    </button>
-                </li>
-            ))}
-            <button type="button" onClick={() => append()}>
-                add
-            </button>
-        </ul>
-    );
-};
-
-export const Route = (props) => {
-    const [ishover, setHover] = useState(false);
+export const AddRoute = (props) => {
     const methods = useForm({ defaultValues });
+    const [data, setData] = useState("");
     const { control, handleSubmit, watch } = methods;
     const { fields, append, remove, move } = useFieldArray({
         control,
@@ -159,6 +136,7 @@ export const Route = (props) => {
     });
 
     const submit = (data) => {
+        // setData(JSON.stringify(data));
         console.log(data);
     };
 
@@ -168,10 +146,11 @@ export const Route = (props) => {
         }
     };
 
-    console.log(watch("routes"));
+    console.log(watch(`routes`, "routes"));
+    console.log(watch(`defaultValues`, "defaultValues"));
     return (
         <FormProvider {...methods}>
-            <form>
+            <form onChange={handleSubmit(submit)}>
                 <DragDropContext onDragEnd={handleDrag}>
                     <Droppable droppableId="test-items">
                         {(provided, snapshot) => (
