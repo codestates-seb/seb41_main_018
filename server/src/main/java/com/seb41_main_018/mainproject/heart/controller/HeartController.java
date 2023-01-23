@@ -37,6 +37,7 @@ public class HeartController {
     // 좋아요 등록 //
     @ApiOperation(value = "좋아요 등록", notes = "좋아요를 등록합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Comment not found")})
     @PostMapping("/{userId}/{contentId}/hearts")
     public ResponseEntity postHeart(

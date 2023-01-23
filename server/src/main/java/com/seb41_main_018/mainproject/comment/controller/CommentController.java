@@ -5,6 +5,7 @@ import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.mapper.CommentMapper;
 import com.seb41_main_018.mainproject.comment.service.CommentService;
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
+import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -31,6 +32,7 @@ public class CommentController {
     // 코멘트 생성 //
     @ApiOperation(value = "코멘트 등록", notes = "코멘트를 등록합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Comment not found")})
     @PostMapping
     public ResponseEntity postComment(@Valid @RequestBody CommentDto.Post requestBody
@@ -47,6 +49,7 @@ public class CommentController {
     // 코멘트 수정 //
     @ApiOperation(value = "코멘트 수정", notes = "코멘트를 수정합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Comment not found")})
     @PatchMapping("/{commentId}")
     public ResponseEntity patchComment(@Valid @RequestBody CommentDto.Patch requestBody,
@@ -65,6 +68,7 @@ public class CommentController {
     // 코멘트 조회 //
     @ApiOperation(value = "코멘트 조회", notes = "코멘트를 조회합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved", response = CommentDto.Response.class),
             @ApiResponse(code = 404, message = "Comment not found")})
     @GetMapping("/{commentId}")
     public ResponseEntity getComment(@ApiParam(name = "commentId", value = "코멘트 식별자", example = "1")
@@ -79,6 +83,7 @@ public class CommentController {
     // 코멘트 전체 조회 //
     @ApiOperation(value = "코멘트 전체 조회", notes = "코멘트를 전체 조회 합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved", response = CommentDto.Response.class),
             @ApiResponse(code = 404, message = "Comment not found")})
     @GetMapping
     public ResponseEntity getComments(@Positive @RequestParam("page") int page,
@@ -95,6 +100,7 @@ public class CommentController {
     // 코멘트 삭제 //
     @ApiOperation(value = "코멘트 삭제", notes = "코멘트를 삭제합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Comment not found")})
     @DeleteMapping("/{commentId}")
     public ResponseEntity deleteComment(@PathVariable("commentId") @Positive Long commentId) {
