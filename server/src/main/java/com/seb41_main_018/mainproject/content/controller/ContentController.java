@@ -58,7 +58,7 @@ public class ContentController {
     // 게시글 단건 조회 //
     @ApiOperation(value = "컨텐트 조회", notes = "컨텐트를 조회합니다.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved", response = ContentResponseDto.class),
+            @ApiResponse(code = 200, message = "Successfully retrieved", response = ContentAllResponseDto.class),
             @ApiResponse(code = 404, message = "Content not found")})
     @GetMapping("/{contentId}")
     public ResponseEntity getContent( @ApiParam(name = "ContentId", value = "컨텐트 식별자", example = "1")
@@ -74,7 +74,7 @@ public class ContentController {
     // 게시글 전체 조회 //
     @ApiOperation(value = "컨텐트 전체 조회", notes = "컨텐트를 전체 조회 합니다.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved", response = ContentAllResponseDto.class),
+            @ApiResponse(code = 200, message = "Successfully retrieved", response = ContentResponseDto.class),
             @ApiResponse(code = 404, message = "Content not found")})
     @GetMapping
     public ResponseEntity getContents(@RequestParam("page") int page,
