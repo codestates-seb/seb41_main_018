@@ -1,5 +1,9 @@
 package com.seb41_main_018.mainproject.user.controller;
 
+import com.seb41_main_018.mainproject.auth.jwt.JwtTokenizer;
+import com.seb41_main_018.mainproject.auth.utils.RedisUtil;
+import com.seb41_main_018.mainproject.exception.BusinessLogicException;
+import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
 import com.seb41_main_018.mainproject.user.dto.UserAllResponseDto;
 import com.seb41_main_018.mainproject.user.dto.UserPatchDto;
@@ -19,6 +23,7 @@ import com.seb41_main_018.mainproject.user.entity.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 @ApiOperation(value = "유저 API", tags = {"User Controller"})
 @RestController
@@ -29,6 +34,8 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final JwtTokenizer jwtTokenizer;
+    private final RedisUtil redisUtil;
 
     //private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -108,10 +115,26 @@ public class UserController {
         return ResponseEntity.ok(userService.emailCheck(email));
     }
 
-//    @DeleteMapping("/logout")
-//    public ResponseEntity logout(@RequestHeader String Refresh) {
-//        jwtRepository.deleteJwtToken(refreshToken);
-//        return new ResponseEntity(HttpStatus.NO_CONTENT);
-//    }
+    @ApiOperation(value = "유저 로그아웃", notes = "홈페이지에서 로그아웃합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 404, message = "User not found")})
+    @DeleteMapping("/logout")
+    public ResponseEntity logout(
+            @PathVariable("userId") @Positive Long userId,
+            @RequestHeader("Authorization") @NotBlank String token) {
+
+        userService.findUser(userId);
+
+        String accessToken = token.replace("Bearer ", "");
+        String encodeBase64SecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
+
+        try {
+            redisUtil.setBlackList(accessToken, "accessToken", jwtTokenizer.getBlacklistTime(
+                    jwtTokenizer.getExpiration(accessToken, encodeBase64SecretKey)));
+        } catch (NullPointerException e) {
+            throw new BusinessLogicException(ExceptionCode.USER_NOT_LOGIN);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 }

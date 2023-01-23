@@ -8,9 +8,12 @@ import com.seb41_main_018.mainproject.auth.handler.UserAuthenticationFailureHand
 import com.seb41_main_018.mainproject.auth.handler.UserAuthenticationSuccessHandler;
 import com.seb41_main_018.mainproject.auth.jwt.JwtTokenizer;
 import com.seb41_main_018.mainproject.auth.utils.CustomAuthorityUtils;
+import com.seb41_main_018.mainproject.auth.utils.RedisUtil;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
+import com.seb41_main_018.mainproject.user.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,11 +29,19 @@ public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final UserRepository userRepository;
+    private final UserService userService;
+    private final RedisUtil redisUtil;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils, UserRepository userRepository) {
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer,
+                                 CustomAuthorityUtils authorityUtils,
+                                 UserRepository userRepository,
+                                 @Lazy UserService userService,
+                                 RedisUtil redisUtil) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
         this.userRepository = userRepository;
+        this.userService = userService;
+        this.redisUtil = redisUtil;
     }
 
     @Bean
@@ -46,6 +57,10 @@ public class SecurityConfiguration {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(new UserAuthenticationEntryPoint())
                 .accessDeniedHandler(new UserAccessDeniedHandler())
@@ -55,6 +70,7 @@ public class SecurityConfiguration {
                 .authorizeRequests(authorize -> authorize
                         .antMatchers(HttpMethod.GET, "/users/emailCheck/*").permitAll()//이메일 중복 체크
                         .antMatchers(HttpMethod.POST, "/users/").permitAll() // 회원 가입
+                        .antMatchers(HttpMethod.POST, "/users/logout").permitAll()
                         .antMatchers(HttpMethod.GET, "/users/*/Info").permitAll() // 회원 상세 정보 조회
                         .antMatchers(HttpMethod.GET, "/users/**").hasAnyRole("USER", "ADMIN") // 회원 조회
                         .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER") // 회원 삭제
@@ -64,6 +80,9 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.PATCH, "/comments/**").hasRole("USER") // 후기 수정
                         .antMatchers(HttpMethod.POST, "**/hearts").hasRole("USER") // 좋아요
                         .antMatchers(HttpMethod.DELETE).hasRole("USER") // 질문, 답변 삭제
+            /*    )
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, userRepository, userService, redisUtil))*/
                 );
 
         return http.build();
@@ -82,13 +101,13 @@ public class SecurityConfiguration {
 
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer, redisUtil);
             jwtAuthenticationFilter.setFilterProcessesUrl("/users/login");
 
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new UserAuthenticationSuccessHandler(userRepository));
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());
 
-            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils, redisUtil);
 
             builder
                     .addFilter(jwtAuthenticationFilter)

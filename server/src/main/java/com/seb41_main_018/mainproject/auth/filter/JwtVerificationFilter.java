@@ -1,5 +1,8 @@
 package com.seb41_main_018.mainproject.auth.filter;
 
+import com.seb41_main_018.mainproject.auth.utils.RedisUtil;
+import com.seb41_main_018.mainproject.exception.BusinessLogicException;
+import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import io.jsonwebtoken.ExpiredJwtException;
 import com.seb41_main_018.mainproject.auth.jwt.JwtTokenizer;
 import com.seb41_main_018.mainproject.auth.utils.CustomAuthorityUtils;
@@ -22,10 +25,14 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
+    private final RedisUtil redisUtil;
 
-    public JwtVerificationFilter(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils) {
+    public JwtVerificationFilter(JwtTokenizer jwtTokenizer,
+                                 CustomAuthorityUtils authorityUtils,
+                                 RedisUtil redisUtil) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
+        this.redisUtil = redisUtil;
     }
 
     @Override
@@ -33,6 +40,9 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
         try {
             Map<String, Object> claims = verifyJwt(request);
+            if(redisUtil.hasKeyBlackList(request.getHeader("Authorization").replace("Bearer ", ""))){
+                throw new BusinessLogicException(ExceptionCode.INVALID_USER_STATUS);
+            }
             setAuthenticationToContext(claims);
         } catch (SignatureException se) {
             request.setAttribute("exception", se);
