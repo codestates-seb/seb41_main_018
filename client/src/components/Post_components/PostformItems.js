@@ -2,122 +2,147 @@
 import React from "react";
 import { useState, useRef } from "react";
 import { PALETTE } from "../../Common";
+import { useForm, FormProvider, Controller } from "react-hook-form";
+import Map from "../../pages/PostPage/searchMap";
 import { css } from "@emotion/react";
-import { Turn as Hamburger } from "hamburger-react";
+
 import ImgUpload from "./ImgUpload";
+import { Post, Input } from "../../util/UseForm";
+
+import { IoMdArrowDropdownCircle } from "react-icons/io";
+import { IoMdArrowDropupCircle } from "react-icons/io";
+
+import { FiPlus } from "react-icons/fi";
+
+const defaultValues = {
+    title: "",
+    body: "",
+    themeType: "",
+    date: new Date(),
+    routeName: "",
+    routes: [
+        {
+            price: Number(),
+            vehicle: "",
+            place: "",
+            body: "",
+            x: "",
+            y: "",
+        },
+    ],
+};
 
 const PostformItems = (props) => {
-    const [isClick, setClick] = useState(false);
-    const [isOpen, setOpen] = useState(false);
-    const [isInput, setInput] = useState(true);
-    const [isValue, setValue] = useState("");
-    const inputRef = useRef();
+    const [isClick, setClick] = useState(true);
+    const [data, setData] = useState("");
+    const [placeTitle, setPlaceTitle] = useState("");
+    const methods = useForm({ defaultValues });
+    const { control, handleSubmit, watch } = methods;
+
+    const submit = (data) => {
+        setData(JSON.stringify(data));
+        setPlaceTitle(data.place);
+    };
 
     const handleClick = () => {
         setClick(!isClick);
     };
 
-    const handleInputValue = () => {
-        setInput(!isInput);
-    };
-
-    // const enterkey = () => {
-    //     if (window.event.keyCode == 13) return handleInputValue();
-    // };
-
     return (
-        <>
-            <div onClick={handleClick} css={wrap}>
-                <div
-                    css={css`
-                        display: flex;
-                        justify-content: space-between;
-                    `}
-                >
-                    {isInput ? (
-                        <input
-                            css={css`
-                                min-height: 35px;
-                                width: 26vw;
-                                min-width: 180px;
-                                font-size: 1.4rem;
-                                font-weight: 600;
-                            `}
-                            onChange={(e) => {
-                                setValue(e.target.value);
-                            }}
-                            // onKeyUp={enterkey}
-                            value={isValue}
-                        ></input>
-                    ) : (
+        <FormProvider {...methods}>
+            <form onChange={handleSubmit(submit)}>
+                <div css={isClick ? clickedwrap : wrap}>
+                    <div
+                        css={css`
+                            display: flex;
+                            justify-content: space-between;
+                        `}
+                        onClick={handleClick}
+                    >
                         <div
                             css={css`
-                                font-size: 1.4rem;
-                                font-weight: 600;
-                                text-align: center;
-                                width: 26vw;
-                                min-width: 180px;
-                                max-width: 400px;
-                                margin: 0px auto;
-                                padding: 5px;
+                                margin: 0 auto;
                             `}
                         >
-                            {isValue}
+                            {String(placeTitle)}
                         </div>
-                    )}
-                    <Hamburger
-                        toggled={isOpen}
-                        toggle={setOpen}
-                        size={25}
-                        onToggle={handleInputValue}
-                    />
-                </div>
-                {isOpen ? (
-                    <div css={clicked}>
-                        <ul>
-                            <li>
-                                <div css={ListName}>경비</div>
-                                <input css={ListInput}></input>
-                            </li>
-                            <li>
-                                <div css={ListName}>이동 수단</div>
-                                <input css={ListInput}></input>
-                            </li>
-                            <li>
-                                <div css={ListName}>상세 설명</div>
-                                <input css={ListInput}></input>
-                            </li>
-                            <li>
-                                <ImgUpload />
-                            </li>
-                        </ul>
+                        {isClick ? <IoMdArrowDropupCircle /> : <IoMdArrowDropdownCircle />}
                     </div>
-                ) : null}
-            </div>
-        </>
+                    {data}
+                    {isClick ? (
+                        <div css={clicked}>
+                            <ul>
+                                <li css={listStyle}>
+                                    <div css={ListName}>장소</div>
+                                    <Input name="routes[0].place" />
+                                </li>
+                                <li css={listStyle}>
+                                    <div css={ListName}>경비</div>
+                                    <Input name="price" />
+                                </li>
+                                <li css={listStyle}>
+                                    <div css={ListName}>이동 수단</div>
+                                    <Input name="vehicle" />
+                                </li>
+                                <li css={listStyle}>
+                                    <div css={ListName}>상세 설명</div>
+                                    <Input name="body" />
+                                </li>
+                                <li>
+                                    <ImgUpload />
+                                </li>
+                                <div
+                                    css={css`
+                                        display: flex;
+                                        justify-content: end;
+                                    `}
+                                >
+                                    <button
+                                        type="button"
+                                        css={addBtnStyle}
+                                        onClick={props.onClick[0]}
+                                    >
+                                        <FiPlus />
+                                        Add to Route
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={props.onClick[1]}
+                                        css={delBtnStyle}
+                                    >
+                                        delete
+                                    </button>
+                                </div>
+                            </ul>
+                        </div>
+                    ) : null}
+                </div>
+            </form>
+        </FormProvider>
     );
 };
-
 const wrap = css`
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 600;
     text-align: center;
-    border: 3px solid ${PALETTE.default_color};
+    border: ${PALETTE.border};
     border-radius: ${PALETTE.border_radius};
-    width: 27vw;
-    min-height: 47px;
-    min-width: 250px;
-    max-width: 400px;
-    margin: 10px auto;
-    padding: 5px;
+    width: 370px;
+    padding: 10px;
 `;
 
+const clickedwrap = css`
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    border: ${PALETTE.border};
+    border-radius: ${PALETTE.border_radius};
+    width: 370px;
+    padding: 10px;
+`;
 const clicked = css`
     margin: 5px auto;
     text-align: start;
-    border-radius: ${PALETTE.border_radius};
-    font-size: 1.2rem;
-    font-weight: 500;
     animation: identifier 0.5s ease-in-out;
 
     @keyframes identifier {
@@ -152,32 +177,47 @@ const ListName = css`
     text-align: center;
     font-weight: 600;
     font-size: 1rem;
-    margin: 10px auto;
-    min-width: 180px;
-    max-width: 350px;
-`;
-const ListInput = css`
-    display: flex;
-    border-radius: ${PALETTE.border_radius};
-    width: 23vw;
-    min-height: 40px;
-    min-width: 180px;
-    max-width: 350px;
-    font-size: 1.15rem;
-    margin: 15px auto;
+    margin: 10px;
+    width: fit-content;
 `;
 
-const close = css`
-    animation: closed 1s ease-in-out;
-    @keyframes closed {
-        0% {
-            max-height: 300px;
-            opacity: 1;
-        }
-        100% {
-            max-height: 0px;
-            opacity: 0;
-        }
+const listStyle = css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+const addBtnStyle = css`
+    display: flex;
+    align-self: center;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid ${PALETTE.default_color};
+    background-color: ${PALETTE.default_color};
+    box-shadow: ${PALETTE.box_shadow};
+    color: white;
+    border-radius: 100px;
+    width: fit-content;
+    font-size: 0.8rem;
+    &:hover {
+        cursor: pointer;
+    }
+`;
+
+const delBtnStyle = css`
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin: 5px;
+    color: white;
+    font-size: 0.8rem;
+    width: 100px;
+    border: 1px solid ${PALETTE.default_color};
+    background-color: ${PALETTE.default_color};
+    border-radius: 100px;
+    box-shadow: ${PALETTE.box_shadow};
+    &:hover {
+        cursor: pointer;
     }
 `;
 export default PostformItems;
