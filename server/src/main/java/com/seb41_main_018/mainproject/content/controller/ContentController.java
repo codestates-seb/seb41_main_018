@@ -1,10 +1,7 @@
 package com.seb41_main_018.mainproject.content.controller;
 
 import com.seb41_main_018.mainproject.constant.ThemeType;
-import com.seb41_main_018.mainproject.content.dto.ContentDto;
-import com.seb41_main_018.mainproject.content.dto.ContentPatchDto;
-import com.seb41_main_018.mainproject.content.dto.ContentPostDto;
-import com.seb41_main_018.mainproject.content.dto.ContentResponseDto;
+import com.seb41_main_018.mainproject.content.dto.*;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.content.mapper.ContentMapper;
 import com.seb41_main_018.mainproject.content.repository.ContentRepository;
@@ -12,6 +9,7 @@ import com.seb41_main_018.mainproject.content.service.ContentService;
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
 import com.seb41_main_018.mainproject.route.service.RouteService;
+import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -45,6 +43,7 @@ public class ContentController {
     // 게시글 생성 //
     @ApiOperation(value = "컨텐트 등록", notes = "컨텐트를 등록합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Content not found")})
     @PostMapping
     public ResponseEntity postContent(@Valid @RequestBody ContentPostDto requestBody) {
@@ -59,6 +58,7 @@ public class ContentController {
     // 게시글 단건 조회 //
     @ApiOperation(value = "컨텐트 조회", notes = "컨텐트를 조회합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved", response = ContentResponseDto.class),
             @ApiResponse(code = 404, message = "Content not found")})
     @GetMapping("/{contentId}")
     public ResponseEntity getContent( @ApiParam(name = "ContentId", value = "컨텐트 식별자", example = "1")
@@ -74,6 +74,7 @@ public class ContentController {
     // 게시글 전체 조회 //
     @ApiOperation(value = "컨텐트 전체 조회", notes = "컨텐트를 전체 조회 합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved", response = ContentAllResponseDto.class),
             @ApiResponse(code = 404, message = "Content not found")})
     @GetMapping
     public ResponseEntity getContents(@RequestParam("page") int page,
@@ -92,6 +93,7 @@ public class ContentController {
     // 게시글 수정 //
     @ApiOperation(value = "컨텐트 수정", notes = "컨텐트를 수정합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Content not found")})
     @PatchMapping("/{contentId}")
     public ResponseEntity patchContent(@RequestBody ContentPatchDto requestBody,
@@ -108,6 +110,7 @@ public class ContentController {
     // 게시글 삭제 //
     @ApiOperation(value = "컨텐트 삭제", notes = "컨텐트를 삭제합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Content not found")})
     @DeleteMapping("/{contentId}")
     public ResponseEntity deleteContent(@PathVariable("contentId") Long contentId) {
@@ -118,6 +121,7 @@ public class ContentController {
 
     @ApiOperation(value = "카테고리 별 컨텐트 조회", notes = "카테고리 별 컨텐트를 조회합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Content not found")})
     @GetMapping("/category/{themeType}")
     public ResponseEntity getContentFromThemeType(@PathVariable("themeType")ThemeType themeType){

@@ -1,52 +1,48 @@
-#spring:
-#  datasource:
-#    url: jdbc:mysql://database-gachigalle-deploy.cwzy7toscnyc.ap-northeast-2.rds.amazonaws.com:3306/test?serverTimezone=UTC&characterEncoding=UTF-8
-#    username: admin
-#    password: gachigalle18
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#  mvc:
-#    pathmatch:
-#      matching-strategy: ant_path_matcher
-#  jpa:
-#    hibernate:
-#      ddl-auto: none  # (1) ??? ?? ??
-#    show-sql: true      # (2) SQL ?? ??
-#    properties:
-#      hibernate:
-#        format_sql: true
-#    open-in-view: false
-#    database: mysql
-#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-#  servlet:
-#    multipart:
-#      max-file-size: 5MB
-#      max-request-size: 5MB
-#
-#cloud:
-#  aws:
-#    credentials:
-#      access-key: 
-#      secret-key: 
-#    region:
-#      static: ap-northeast-2
-#    s3:
-#      bucket: gachigalle-route-image
-#
-#    stack:
-#      auto: false
-#
-#config:
-#  domain: http://gachigallae.s3-website.ap-northeast-2.amazonaws.com
-#
-#jwt:
-#  secret-key: ato12345678910fghgjkliygfbfghjhggjytdfdgbcnvjhhgjgyfthato12345678910fghgjkliygfbfghjhggjytdfdgbcnvjhhgjgyfthato12345678910fghgjkliygfbfghjhggjytdfdgbcnvjhhgjgyfthato123456789>
-#  access-token-expiration-minutes: 1440
-#  refresh-token-expiration-minutes: 20160
-#
-#mail:
-#  address:
-#    admin: admin@email.com
-#
-#logging.level:
-#  org.hibernate.SQL: debug
-#  org.hibernate.type: trace
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  datasource:
+    url: jdbc:h2:mem:test
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jpa:
+    hibernate:
+      ddl-auto: create  # (1) ??? ?? ??
+    show-sql: true      # (2) SQL ?? ??
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+cloud:
+  aws:
+    credentials:
+      access-key: 
+      secret-key: 
+    region:
+      static: ap-northeast-2
+    s3:
+      bucket: gachigalle-route-image
+
+    stack:
+      auto: false
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 1440
+  refresh-token-expiration-minutes: 20160
+
+mail:
+  address:
+    admin: admin@email.com
+
+logging.level:
+  org.hibernate.SQL: debug
+  org.hibernate.type: trace
