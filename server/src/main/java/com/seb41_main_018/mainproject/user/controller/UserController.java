@@ -12,10 +12,7 @@ import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
 import com.seb41_main_018.mainproject.user.mapper.UserMapper;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
 import com.seb41_main_018.mainproject.user.service.UserService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +43,7 @@ public class UserController {
     // 유저 생성 //
     @ApiOperation(value = "유저 등록", notes = "유저를 등록합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "User not found")})
     @PostMapping
     public ResponseEntity postUser(@Valid @RequestBody UserPostDto userPostDto ){
@@ -57,6 +55,7 @@ public class UserController {
     // 유저 정보 수정 //
     @ApiOperation(value = "유저 수정", notes = "유저를 수정합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "User not found")})
     @PatchMapping("/{userId}")
     public ResponseEntity patchUser(@PathVariable("userId") @Positive Long userId,
@@ -71,7 +70,9 @@ public class UserController {
 
     // 유저 단건 조회 //
     @ApiOperation(value = "유저 조회", notes = "유저를 조회합니다.")
+    @ApiImplicitParam(name = "id", value = "유저 아이디", paramType = "path")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved", response = UserResponseDto.class),
             @ApiResponse(code = 404, message = "User not found")})
     @GetMapping("/{userId}")
     public ResponseEntity getUser(@ApiParam(name = "UserId", value = "유저 식별자", example = "1")
@@ -85,6 +86,7 @@ public class UserController {
     // 유저 상세 정보 조회 //
     @ApiOperation(value = "유저 상세 정보 조회", notes = "유저가 쓴 컨텐츠, 덧글 ,좋아요 등 유저의 모든 정보를 조회합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved", response = UserAllResponseDto.class),
             @ApiResponse(code = 404, message = "User not found")})
     @GetMapping("/{userId}/Info")
     public ResponseEntity getUserInfo(@PathVariable("userId") @Positive Long userId) {
@@ -95,6 +97,7 @@ public class UserController {
     // 유저 삭제 //
     @ApiOperation(value = "유저 삭제", notes = "유저를 삭제합니다.")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "User not found")})
     @DeleteMapping("/{userId}")
     public ResponseEntity deleteUser(@PathVariable("userId") @Positive Long userId){
@@ -104,6 +107,9 @@ public class UserController {
     }
     // 이메일 검사 //
     @ApiOperation(value = "유저 이메일 유효성 검사", notes = "유저 이메일 유효성을 검사합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
+            @ApiResponse(code = 404, message = "User not found")})
     @GetMapping("/emailCheck/{email}")
     public ResponseEntity<Boolean> verifyExistsEmail(@PathVariable("email") String email){
         return ResponseEntity.ok(userService.emailCheck(email));
