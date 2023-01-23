@@ -33,14 +33,13 @@ cloud:
       static: ap-northeast-2
     s3:
       bucket: gachigalle-route-image
-
     stack:
       auto: false
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 1440
-  refresh-token-expiration-minutes: 20160
+  refresh-token-expiration-minutes: 1440
 
 mail:
   address:
