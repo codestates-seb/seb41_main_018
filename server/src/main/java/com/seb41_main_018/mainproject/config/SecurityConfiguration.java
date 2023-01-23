@@ -72,12 +72,16 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.POST, "/users/").permitAll() // 회원 가입
                         .antMatchers(HttpMethod.POST, "/users/logout").permitAll()
                         .antMatchers(HttpMethod.GET, "/users/*/Info").permitAll() // 회원 상세 정보 조회
+                        .antMatchers(HttpMethod.PATCH, "/users/*").hasRole("USER")
                         .antMatchers(HttpMethod.GET, "/users/**").hasAnyRole("USER", "ADMIN") // 회원 조회
                         .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER") // 회원 삭제
                         .antMatchers(HttpMethod.POST, "/contents/").hasRole("USER") // 컨텐츠 등록
                         .antMatchers(HttpMethod.PATCH, "/contents/**").hasRole("USER") // 컨텐츠 편집
                         .antMatchers(HttpMethod.POST, "/comments/**").hasRole("USER") // 후기 생성
                         .antMatchers(HttpMethod.PATCH, "/comments/**").hasRole("USER") // 후기 수정
+                        .antMatchers(HttpMethod.POST, "/tags/**").hasRole("USER") // 태그 생성
+                        .antMatchers(HttpMethod.PATCH, "/tags/**").hasRole("USER")//태그 수정
+                        .antMatchers(HttpMethod.DELETE, "/tags/**").hasRole("USER") //태그 삭제
                         .antMatchers(HttpMethod.POST, "**/hearts").hasRole("USER") // 좋아요
                         .antMatchers(HttpMethod.DELETE).hasRole("USER") // 질문, 답변 삭제
             /*    )
