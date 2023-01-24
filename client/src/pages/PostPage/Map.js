@@ -5,7 +5,7 @@ import { css } from "@emotion/react";
 
 // import { searchMap } from './mp';
 
-const Map = () => {
+const Map = (props) => {
     const [keyword, setKeyword] = useState("");
 
     const [place, setPlace] = useState({

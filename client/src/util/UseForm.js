@@ -7,7 +7,7 @@ import Button from "../components/Button";
 import PostformItems from "../components/Post_components/PostformItems";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { GrAddCircle } from "react-icons/gr";
-import { PostFormIndex } from "../state/atom";
+import { PostFormIndex, PostFormData } from "../state/atom";
 import { useRecoilState } from "recoil";
 
 //테스트
@@ -127,8 +127,6 @@ export const Post = (props) => {
         console.log(data);
     };
 
-    /* console.log(watch(`routes`, "routes")); */
-
     return (
         <FormProvider {...methods}>
             <form onChange={handleSubmit}>
@@ -140,22 +138,20 @@ export const Post = (props) => {
 
 export const AddRoute = (props) => {
     const [index, setIndex] = useRecoilState(PostFormIndex);
+    const [postFormData, setPostFormData] = useRecoilState(PostFormData);
     const methods = useForm({ defaultValues });
-    // const [data, setData] = useState();
+    const [data, setData] = useState();
     const { control, handleSubmit, watch } = methods;
     const { fields, append, remove, move } = useFieldArray({
         control,
         name: "routes",
     });
 
-    const submit = (data) => {
-        // setData(JSON.stringify(data));
-
-        console.log(data);
-        console.log(data.routes[index].place);
+    const submit = (obj) => {
+        setPostFormData(obj);
     };
 
-    // console.log(`data`, data);
+    console.log(`data가 잘뽑히나요`, data);
 
     /*    useEffect(() => {
     }, [data]);
@@ -205,6 +201,7 @@ export const AddRoute = (props) => {
                                                                     () => remove(index),
                                                                 ]}
                                                                 index={index}
+                                                                data={data}
                                                             />
                                                         )}
                                                         // name={`routes.${index}.name`}
