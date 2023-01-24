@@ -22,6 +22,8 @@ import sam1_3 from "../../assets/sampleImg/sam1_3.jpg";
 import sam2 from "../../assets/sampleImg/sam2.jpg";
 import sam3_1 from "../../assets/sampleImg/sam3_1.jpeg";
 import sam3_2 from "../../assets/sampleImg/sam3_2.jpeg";
+import { Palette } from "@mui/icons-material";
+import { PALETTE } from "../../Common";
 
 // 경로 데이터 더미
 const routeDummy = [
@@ -73,7 +75,13 @@ const Detial_Img = () => {
 };
 
 const Swiper_Wrap = css`
-    width: 60%;
+    width: 75vw;
+    height: 100%;
+    border: ${PALETTE.border};
+    border-radius: 10px;
+    @media (min-width: 769px) {
+        width: 50vw;
+    }
 
     .swiper {
         width: 100%;

@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useRef } from "react";
 import { PALETTE } from "../../Common";
 import { useForm, FormProvider, Controller } from "react-hook-form";
-import Map from "../../pages/PostPage/searchMap";
+import Map from "../../pages/PostPage/Map";
 import { css } from "@emotion/react";
 import { useRecoilState } from "recoil";
 

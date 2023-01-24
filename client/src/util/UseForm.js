@@ -39,6 +39,14 @@ const defaultValues = {
         {
             price: Number(),
             vehicle: "",
+            place: "아르떼 뮤지엄",
+            body: "",
+            x: "",
+            y: "",
+        },
+        {
+            price: Number(),
+            vehicle: "",
             place: "",
             body: "",
             x: "",
@@ -83,8 +91,7 @@ export const Input = (props) => {
             control={control}
             name={`${props.name}`}
             render={({ field }) => {
-                /*  console.log(`field`, field); */
-
+                // console.log(`field`, field);
                 return (
                     <input
                         css={css`
