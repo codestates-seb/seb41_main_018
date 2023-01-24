@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UseForm, { Post, Input } from "../util/UseForm";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -8,15 +8,19 @@ import "react-dropdown/style.css";
 import { PALETTE } from "../Common";
 import { Calendar } from "../util/Calendar";
 import { AiOutlineConsoleSql } from "react-icons/ai";
+import { useRecoilState } from "recoil";
+import { CategoryData, PostFormData, PostFormData2 } from "../state/atom";
 
 const TitleCard = () => {
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useRecoilState(CategoryData);
+    const [postFormData, setPostFormData] = useRecoilState(PostFormData);
+    const [postFormData2, setPostFormData2] = useRecoilState(PostFormData2);
     console.log(category);
 
     const options = [
         "국내여행",
         "해외여행",
-        "효도여행",
+        "가족여행",
         "커플여행",
         "친구여행",
         "혼자여행",
@@ -24,6 +28,41 @@ const TitleCard = () => {
         "맛집투어",
     ];
     const defaultOption = options[0];
+
+    const getCategroy = (e) => {
+        if (e.value === "국내여행") {
+            return setCategory("DOMESTIC");
+        } else if (e.value === "해외여행") {
+            return setCategory("ABROAD");
+        } else if (e.value === "가족여행") {
+            return setCategory("FAMILY");
+        } else if (e.value === "커플여행") {
+            return setCategory("COUPLE");
+        } else if (e.value === "친구여행") {
+            return setCategory("FRIENDS");
+        } else if (e.value === "혼자여행") {
+            return setCategory("ALONE");
+        } else if (e.value === "카페투어") {
+            return setCategory("CAFE");
+        } else if (e.value === "맛집투어") {
+            return setCategory("FOOD");
+        }
+    };
+
+    useEffect(() => {
+        // form onchange 실행할 수 있는 친구
+        let tmp = postFormData;
+        console.log(`tmp:`, tmp);
+        // tmp.themeType = category;
+        setPostFormData2(tmp);
+        console.log(postFormData2);
+
+        // console.log(postFormData);
+        // let themeType = postFormData.themeType;
+        // themeType = category;
+        // console.log(themeType);
+        // setPostFormData(themeType);
+    }, [category]);
 
     return (
         <div css={wrap}>
@@ -41,7 +80,7 @@ const TitleCard = () => {
                         options={options}
                         value={defaultOption}
                         placeholder="Select an option"
-                        onChange={(e) => setCategory(e.value)}
+                        onChange={getCategroy}
                     />
                 </div>
                 <div css={ComContainer}>

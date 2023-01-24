@@ -9,6 +9,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { GrAddCircle } from "react-icons/gr";
 import { PostFormIndex, PostFormData } from "../state/atom";
 import { useRecoilState } from "recoil";
+import { CategoryData } from "../state/atom";
 
 //테스트
 
@@ -32,14 +33,14 @@ import { useRecoilState } from "recoil";
 const defaultValues = {
     title: "",
     body: "",
-    themeType: "",
+    themeType: "DOMESTIC",
     date: new Date(),
     routeName: "",
     routes: [
         {
             price: Number(),
             vehicle: "",
-            place: "아르떼 뮤지엄",
+            place: "",
             body: "",
             x: "",
             y: "",
@@ -139,8 +140,9 @@ export const Post = (props) => {
 export const AddRoute = (props) => {
     const [index, setIndex] = useRecoilState(PostFormIndex);
     const [postFormData, setPostFormData] = useRecoilState(PostFormData);
+    const [category, setCategory] = useRecoilState(CategoryData);
     const methods = useForm({ defaultValues });
-    const [data, setData] = useState();
+
     const { control, handleSubmit, watch } = methods;
     const { fields, append, remove, move } = useFieldArray({
         control,
@@ -148,10 +150,12 @@ export const AddRoute = (props) => {
     });
 
     const submit = (obj) => {
+        console.log(`이거슨 카테고리 입니다.`, obj.themeType);
+        obj.themeType = category;
         setPostFormData(obj);
     };
 
-    console.log(`data가 잘뽑히나요`, data);
+    console.log(`data가 잘뽑히나요`, postFormData);
 
     /*    useEffect(() => {
     }, [data]);
@@ -201,7 +205,7 @@ export const AddRoute = (props) => {
                                                                     () => remove(index),
                                                                 ]}
                                                                 index={index}
-                                                                data={data}
+                                                                data={postFormData}
                                                             />
                                                         )}
                                                         // name={`routes.${index}.name`}
