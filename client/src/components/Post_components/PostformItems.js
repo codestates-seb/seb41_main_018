@@ -45,7 +45,6 @@ const PostformItems = (props) => {
     const submit = (data) => {
         // setData(JSON.stringify(data));
         // setPlaceTitle(data.place);
-        console.log(props);
     };
 
     const handleClick = () => {
@@ -68,7 +67,7 @@ const PostformItems = (props) => {
                             margin: 0 auto;
                         `}
                     >
-                        {String(placeTitle)}
+                        {String(props.data && props.data.routes[index].place)}
                     </div>
                     {isClick ? <IoMdArrowDropupCircle /> : <IoMdArrowDropdownCircle />}
                 </div>
@@ -111,6 +110,7 @@ const PostformItems = (props) => {
                         </ul>
                     </div>
                 ) : null}
+                <Map />
             </div>
         </form>
         // </FormProvider>

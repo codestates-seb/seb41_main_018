@@ -36,3 +36,8 @@ export const PostFormIndex = atom({
     key: "PostFormIndex",
     default: 0,
 });
+
+export const PostFormData = atom({
+    key: "PostFormData",
+    default: {},
+});
