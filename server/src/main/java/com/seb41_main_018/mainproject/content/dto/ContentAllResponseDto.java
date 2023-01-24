@@ -53,7 +53,7 @@ public class ContentAllResponseDto {
     @ApiModelProperty(notes = "총 여행 비용", example = "120000", required = true)
     private Long totalPrice;
     @ApiModelProperty(notes = "여행 날짜", example = "2023.01.20", required = true)
-    private String date;
+    private String duration;
 
     @ApiModelProperty(notes = "후기들", example = "저도 너무 좋았어요!", required = true)
     private List<CommentDto.Response> comments;
