@@ -74,6 +74,7 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/users/*/Info").permitAll() // 회원 상세 정보 조회
                         .antMatchers(HttpMethod.PATCH, "/users/*").hasRole("USER")
                         .antMatchers(HttpMethod.GET, "/users/**").hasAnyRole("USER", "ADMIN") // 회원 조회
+                        .antMatchers(HttpMethod.GET, "/contents/**").permitAll()//게시글 조회
                         .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("USER") // 회원 삭제
                         .antMatchers(HttpMethod.POST, "/contents/").hasRole("USER") // 컨텐츠 등록
                         .antMatchers(HttpMethod.PATCH, "/contents/**").hasRole("USER") // 컨텐츠 편집
