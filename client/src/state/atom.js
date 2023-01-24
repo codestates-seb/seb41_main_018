@@ -1,6 +1,5 @@
 import { atom } from "recoil";
 /* import { recoilPersist } from "recoil-persist";*/
-
 // const { persistAtom } = recoilPersist();
 
 export const selectedRouteState = atom({
@@ -11,7 +10,6 @@ export const selectedRouteState = atom({
 export const imgState = atom({
     key: "imgState",
     default: [],
-    dangerouslyAllowMutability: true,
 });
 
 export const addBtnClickState = atom({
@@ -27,4 +25,14 @@ export const getAuthorization = atom({
 export const getRefresh = atom({
     key: "getRefresh",
     default: "",
+});
+
+export const ContentDetail = atom({
+    key: "ContentDetail",
+    default: {},
+});
+
+export const PostFormIndex = atom({
+    key: "PostFormIndex",
+    default: 0,
 });

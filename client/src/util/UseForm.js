@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, FormProvider, useFormContext, Controller, useFieldArray } from "react-hook-form";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../Common";
+import Button from "../components/Button";
+import PostformItems from "../components/Post_components/PostformItems";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { GrAddCircle } from "react-icons/gr";
+import { PostFormIndex } from "../state/atom";
+import { useRecoilState } from "recoil";
+
+//테스트
+
 // route= {
 //     name: string;
 //     address: string;
@@ -21,12 +30,21 @@ import { PALETTE } from "../Common";
 //     }
 
 const defaultValues = {
-    name: "",
-    category: "",
+    title: "",
+    body: "",
+    themeType: "",
     date: new Date(),
-    totalPrice: 0,
-    tags: [],
-    routes: [{ name: "" }],
+    routeName: "",
+    routes: [
+        {
+            price: Number(),
+            vehicle: "",
+            place: "",
+            body: "",
+            x: "",
+            y: "",
+        },
+    ],
 };
 
 export const AddInput = () => {
@@ -58,14 +76,15 @@ export const AddInput = () => {
 };
 
 export const Input = (props) => {
-    const { control, watch } = useFormContext();
-    console.log("watch", watch("name"));
+    const { control, watch, register } = useFormContext();
+    // console.log("watch", watch("place"));
     return (
         <Controller
             control={control}
-            name="name"
+            name={`${props.name}`}
             render={({ field }) => {
-                console.log(field);
+                /*  console.log(`field`, field); */
+
                 return (
                     <input
                         css={css`
@@ -86,6 +105,7 @@ export const Input = (props) => {
                         onChange={field.onChange}
                         value={field.value}
                         placeholder={props.placeholder}
+                        {...register(`${props.name}`)}
                     ></input>
                 );
             }}
@@ -96,16 +116,104 @@ export const Input = (props) => {
 export const Post = (props) => {
     const methods = useForm({ defaultValues });
     const { control, handleSubmit, watch } = methods;
-
     const submit = (data) => {
         console.log(data);
     };
 
-    console.log(watch("routes"));
+    /* console.log(watch(`routes`, "routes")); */
+
     return (
         <FormProvider {...methods}>
-            <form>
+            <form onChange={handleSubmit}>
                 <Input placeholder={props.placeholder} width={props.width} />
+            </form>
+        </FormProvider>
+    );
+};
+
+export const AddRoute = (props) => {
+    const [index, setIndex] = useRecoilState(PostFormIndex);
+    const methods = useForm({ defaultValues });
+    // const [data, setData] = useState();
+    const { control, handleSubmit, watch } = methods;
+    const { fields, append, remove, move } = useFieldArray({
+        control,
+        name: "routes",
+    });
+
+    const submit = (data) => {
+        // setData(JSON.stringify(data));
+
+        console.log(data);
+        console.log(data.routes[index].place);
+    };
+
+    // console.log(`data`, data);
+
+    /*    useEffect(() => {
+    }, [data]);
+ */
+
+    const handleDrag = ({ source, destination }) => {
+        if (destination) {
+            move(source.index, destination.index);
+        }
+    };
+
+    /* console.log(watch(`routes`, "routes"));
+    console.log(watch(`defaultValues`, "defaultValues")); */
+    return (
+        <FormProvider {...methods}>
+            <form onChange={handleSubmit(submit)}>
+                <DragDropContext onDragEnd={handleDrag}>
+                    <Droppable droppableId="test-items">
+                        {(provided, snapshot) => (
+                            <div {...provided.droppableProps} ref={provided.innerRef}>
+                                {fields.map((item, index) => {
+                                    /*  {
+                                        setIndex(index);
+                                    } */
+                                    return (
+                                        <Draggable
+                                            key={`test[${index}]`}
+                                            draggableId={`item-${index}`}
+                                            index={index}
+                                        >
+                                            {(provided, snapshot) => (
+                                                <li
+                                                    key={item.id}
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                    css={css`
+                                                        margin: 20px 0;
+                                                    `}
+                                                >
+                                                    <Controller
+                                                        render={({ field }) => (
+                                                            <PostformItems
+                                                                {...field}
+                                                                onClick={[
+                                                                    () => append(index),
+                                                                    () => remove(index),
+                                                                ]}
+                                                                index={index}
+                                                            />
+                                                        )}
+                                                        // name={`routes.${index}.name`}
+                                                        name="title"
+                                                        control={control}
+                                                    />
+                                                </li>
+                                            )}
+                                        </Draggable>
+                                    );
+                                })}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
             </form>
         </FormProvider>
     );
