@@ -39,8 +39,8 @@ public class ContentResponseDto {
     @ApiModelProperty(notes = "조회 수", example = "1", required = true)
     private int viewCount;
 
-    @ApiModelProperty(notes = "경로 이름", example = "서울", required = true)
-    private String routeName;
+//    @ApiModelProperty(notes = "경로 이름", example = "서울", required = true)
+//    private String routeName;
 
     @ApiModelProperty(notes = "총 여행 비용", example = "120000", required = true)
     private Long totalPrice;

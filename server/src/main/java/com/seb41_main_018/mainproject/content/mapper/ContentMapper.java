@@ -28,7 +28,7 @@ public interface ContentMapper {
         List<Route> routes = routesDtosToRoutes(requestBody.getRoutes(),content);
         content.setRoutes(routes);
         content.setTitle(requestBody.getTitle());
-        content.setRouteName(requestBody.getRouteName());
+        //content.setRouteName(requestBody.getRouteName());
         content.setTravelDate(requestBody.getTravelDate());
         content.setThemeType(requestBody.getThemeType());
         content.setBody(requestBody.getBody());
@@ -44,7 +44,7 @@ public interface ContentMapper {
         content.setTitle(requestBody.getTitle());
         content.setThemeType(requestBody.getThemeType());
         content.setTravelDate(requestBody.getTravelDate());
-        content.setRouteName(requestBody.getRouteName());
+        //content.setRouteName(requestBody.getRouteName());
         content.setRoutes(routes);
         return content;
     }
@@ -61,7 +61,7 @@ public interface ContentMapper {
                 .viewCount(content.getViewCount())
                 .totalPrice(content.getRoutes().stream().mapToLong(Route::getPrice).sum())
                 .travelDate(content.getTravelDate())
-                .routeName(content.getRouteName())
+                //.routeName(content.getRouteName())
                 .createdAt(content.getCreatedAt())
                 .modifiedAt(content.getModifiedAt())
                 .routes(routesToRouteResponseDtos(content.getRoutes()))
@@ -134,7 +134,7 @@ public interface ContentMapper {
                 .modifiedAt(content.getModifiedAt())
                 .totalPrice(routes.stream().mapToLong(Route::getPrice).sum())
                 .travelDate(content.getTravelDate())
-                .routeName(content.getRouteName())
+                //.routeName(content.getRouteName())
                 .routes(routesToRouteResponseDtos(routeRepository.findAllByContentId(content.getContentId())))
                 .viewCount(content.getViewCount())
                 .build();

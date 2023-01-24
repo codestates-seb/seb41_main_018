@@ -43,8 +43,8 @@ public class Content extends Auditable {
     @Column(nullable = false)
     private String travelDate;
 
-    @Column(nullable = false)
-    private String routeName;
+//    @Column(nullable = false)
+//    private String routeName;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)

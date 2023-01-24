@@ -24,9 +24,9 @@ public class ContentPostDto {
     @NotBlank
     private String travelDate;
 
-    @ApiModelProperty(notes = "경로 이름", example = "서울", required = true)
-    @NotBlank
-    private String routeName;
+//    @ApiModelProperty(notes = "경로 이름", example = "서울", required = true)
+//    @NotBlank
+//    private String routeName;
 
     @ApiModelProperty(notes = "컨텐트 카테고리", example = "DOMESTIC", required = true)
     @NotNull
