@@ -12,7 +12,6 @@ import axios from "axios";
 
 import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { IoMdArrowDropupCircle } from "react-icons/io";
-import axios from "axios";
 
 // const content = {
 //     contentId: 1,
