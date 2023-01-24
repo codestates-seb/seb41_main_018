@@ -19,6 +19,7 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
+@Table(name = "CONTENTS")
 public class Content extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

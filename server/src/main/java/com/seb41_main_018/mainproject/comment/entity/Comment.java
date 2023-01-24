@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@Table(name = "COMMENTS")
 public class Comment extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
