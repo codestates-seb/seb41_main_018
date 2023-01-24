@@ -28,7 +28,7 @@ public class Route extends Auditable {
     private Content content;
 
     @Column(nullable = false)
-    private Long price;
+    private int price;
 
     @Column(nullable = false)
     private String vehicle;
@@ -47,7 +47,7 @@ public class Route extends Auditable {
     private String y;
 
     public Route(
-            Long price,
+            int price,
             String vehicle,
             String body,
             String place,

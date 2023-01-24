@@ -14,7 +14,7 @@ public class RoutePostDto {
     @ApiModelProperty(notes = "컨텐츠아이디", example = "1", required = true)
     private Long ContentId;
     @ApiModelProperty(notes = "금액", example = "100,000", required = true)
-    private Long price;
+    private int price;
     @ApiModelProperty(notes = "교통 수단", example = "버스", required = true)
     @NotSpace(message = "내용을 채워주세요.")
     private String vehicle;
