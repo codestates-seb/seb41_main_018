@@ -38,7 +38,7 @@ public class Content extends Auditable {
     private int heartCount = 0;
 
     @Column(nullable = false)
-    private Long totalPrice = 0L;
+    private Long total_price = 0L;
 
     @Column(nullable = false)
     private String travelDate;

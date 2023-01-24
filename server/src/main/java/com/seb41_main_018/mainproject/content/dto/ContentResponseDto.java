@@ -43,7 +43,7 @@ public class ContentResponseDto {
 //    private String routeName;
 
     @ApiModelProperty(notes = "총 여행 비용", example = "120000", required = true)
-    private Long totalPrice;
+    private Long total_price;
     @ApiModelProperty(notes = "여행 날짜", example = "2023.01.20", required = true)
     private String travelDate;
 
