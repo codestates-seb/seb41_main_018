@@ -5,6 +5,7 @@ import { PALETTE } from "../../Common";
 import { useForm, FormProvider, Controller } from "react-hook-form";
 import Map from "../../pages/PostPage/searchMap";
 import { css } from "@emotion/react";
+import { useRecoilState } from "recoil";
 
 import ImgUpload from "./ImgUpload";
 import { Post, Input } from "../../util/UseForm";
@@ -13,6 +14,7 @@ import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { IoMdArrowDropupCircle } from "react-icons/io";
 
 import { FiPlus } from "react-icons/fi";
+import { PostFormIndex } from "../../state/atom";
 
 const defaultValues = {
     title: "",
@@ -38,10 +40,12 @@ const PostformItems = (props) => {
     const [placeTitle, setPlaceTitle] = useState("");
     const methods = useForm({ defaultValues });
     const { control, handleSubmit, watch } = methods;
+    const [index, setIndex] = useRecoilState(PostFormIndex);
 
     const submit = (data) => {
-        setData(JSON.stringify(data));
-        setPlaceTitle(data.place);
+        // setData(JSON.stringify(data));
+        // setPlaceTitle(data.place);
+        console.log(props);
     };
 
     const handleClick = () => {
@@ -49,76 +53,67 @@ const PostformItems = (props) => {
     };
 
     return (
-        <FormProvider {...methods}>
-            <form onChange={handleSubmit(submit)}>
-                <div css={isClick ? clickedwrap : wrap}>
+        // <FormProvider {...methods}>
+        <form onChange={handleSubmit(submit)}>
+            <div css={isClick ? clickedwrap : wrap}>
+                <div
+                    css={css`
+                        display: flex;
+                        justify-content: space-between;
+                    `}
+                    onClick={handleClick}
+                >
                     <div
                         css={css`
-                            display: flex;
-                            justify-content: space-between;
+                            margin: 0 auto;
                         `}
-                        onClick={handleClick}
                     >
-                        <div
-                            css={css`
-                                margin: 0 auto;
-                            `}
-                        >
-                            {String(placeTitle)}
-                        </div>
-                        {isClick ? <IoMdArrowDropupCircle /> : <IoMdArrowDropdownCircle />}
+                        {String(placeTitle)}
                     </div>
-                    {data}
-                    {isClick ? (
-                        <div css={clicked}>
-                            <ul>
-                                <li css={listStyle}>
-                                    <div css={ListName}>장소</div>
-                                    <Input name="routes[0].place" />
-                                </li>
-                                <li css={listStyle}>
-                                    <div css={ListName}>경비</div>
-                                    <Input name="price" />
-                                </li>
-                                <li css={listStyle}>
-                                    <div css={ListName}>이동 수단</div>
-                                    <Input name="vehicle" />
-                                </li>
-                                <li css={listStyle}>
-                                    <div css={ListName}>상세 설명</div>
-                                    <Input name="body" />
-                                </li>
-                                <li>
-                                    <ImgUpload />
-                                </li>
-                                <div
-                                    css={css`
-                                        display: flex;
-                                        justify-content: end;
-                                    `}
-                                >
-                                    <button
-                                        type="button"
-                                        css={addBtnStyle}
-                                        onClick={props.onClick[0]}
-                                    >
-                                        <FiPlus />
-                                        Add to Route
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={props.onClick[1]}
-                                        css={delBtnStyle}
-                                    >
-                                        delete
-                                    </button>
-                                </div>
-                            </ul>
-                        </div>
-                    ) : null}
+                    {isClick ? <IoMdArrowDropupCircle /> : <IoMdArrowDropdownCircle />}
                 </div>
-            </form>
-        </FormProvider>
+                {isClick ? (
+                    <div css={clicked}>
+                        <ul>
+                            <li css={listStyle}>
+                                <div css={ListName}>장소</div>
+                                <Input name={`routes[${props.index}].place`} />
+                            </li>
+                            <li css={listStyle}>
+                                <div css={ListName}>경비</div>
+                                <Input name={`routes[${props.index}].price`} />
+                            </li>
+                            <li css={listStyle}>
+                                <div css={ListName}>이동 수단</div>
+                                <Input name={`routes[${props.index}].vehicle`} />
+                            </li>
+                            <li css={listStyle}>
+                                <div css={ListName}>상세 설명</div>
+                                <Input name={`routes[${props.index}].body`} />
+                            </li>
+                            <li>
+                                <ImgUpload />
+                            </li>
+                            <div
+                                css={css`
+                                    display: flex;
+                                    justify-content: end;
+                                `}
+                            >
+                                <button type="button" css={addBtnStyle} onClick={props.onClick[0]}>
+                                    <FiPlus />
+                                    Add to Route
+                                </button>
+                                <button type="button" onClick={props.onClick[1]} css={delBtnStyle}>
+                                    delete
+                                </button>
+                            </div>
+                        </ul>
+                    </div>
+                ) : null}
+            </div>
+        </form>
+        // </FormProvider>
     );
 };
 const wrap = css`

@@ -8,6 +8,7 @@ import Reviewform from "../components/Detail_components/Reviewform";
 import Tag from "../components/Post_components/Tag";
 import { getContent } from "../util/axiosDetail";
 import { ContentDetail } from "../state/atom";
+import axios from "axios";
 
 /* const content = {
     contentId: 1,
@@ -51,12 +52,20 @@ import { ContentDetail } from "../state/atom";
 
 const Detail = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
-    const getContentDetail = (id) => {
+    /* const getContentDetail = (id) => {
         getContent(id).then((res) => {
-            setContentDetail(res.data);
+            setContentDetail(res);
             //setReview(res.data.comment);
         });
     };
+
+    getContentDetail();
+    console.log(contentDetail); */
+
+    axios.get("/constents").then((res) => {
+        console.log(res);
+    });
+
     return (
         <div className="Detail" css={Wrap}>
             <h1>제주도 1일차 여행 추천 경로!</h1>
