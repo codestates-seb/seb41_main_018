@@ -16,26 +16,27 @@ import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 
+import { PostFormData } from "../state/atom";
+import { useRecoilState } from "recoil";
 import axios from "axios";
 
 const Post = () => {
+    const [postFormData, setPostFormData] = useRecoilState(PostFormData);
     const defaultValues = {
         title: "자동차",
         body: "강남역",
     };
 
+    /*  console.log(`postFormData`, data); */
+
     const putdate = async () => {
-        const jsonData = JSON.stringify(defaultValues);
+        const JsonData = JSON.stringify(postFormData);
         await axios
-            .post(
-                "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users",
-                jsonData,
-                {
-                    headers: {
-                        "Content-Type": `application/json`,
-                    },
-                }
-            )
+            .post("/post", JsonData, {
+                headers: {
+                    "Content-Type": `application/json`,
+                },
+            })
             .then((res) => {
                 navigate("/");
             })

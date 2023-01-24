@@ -80,7 +80,7 @@ const Swiper_Wrap = css`
     border: ${PALETTE.border};
     border-radius: 10px;
     @media (min-width: 769px) {
-        width: 50vw;
+        width: 30vw;
     }
 
     .swiper {
