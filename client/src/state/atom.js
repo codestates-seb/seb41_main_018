@@ -39,5 +39,47 @@ export const PostFormIndex = atom({
 
 export const PostFormData = atom({
     key: "PostFormData",
-    default: {},
+    default: {
+        title: "",
+        body: "",
+        themeType: "",
+        date: new Date(),
+        routeName: "",
+        routes: [
+            {
+                price: Number(),
+                vehicle: "",
+                place: "",
+                body: "",
+                x: "",
+                y: "",
+            },
+        ],
+    },
+});
+
+export const PostFormData2 = atom({
+    key: "PostFormData2",
+    default: {
+        title: "",
+        body: "",
+        themeType: "",
+        date: new Date(),
+        routeName: "",
+        routes: [
+            {
+                price: Number(),
+                vehicle: "",
+                place: "",
+                body: "",
+                x: "",
+                y: "",
+            },
+        ],
+    },
+});
+
+export const CategoryData = atom({
+    key: "CategoryData",
+    default: "",
 });

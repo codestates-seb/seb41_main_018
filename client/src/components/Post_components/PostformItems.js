@@ -67,7 +67,7 @@ const PostformItems = (props) => {
                             margin: 0 auto;
                         `}
                     >
-                        {String(props.data && props.data.routes[index].place)}
+                        {String(props.postFormData && props.postFormData.routes[index].place)}
                     </div>
                     {isClick ? <IoMdArrowDropupCircle /> : <IoMdArrowDropdownCircle />}
                 </div>
@@ -110,7 +110,7 @@ const PostformItems = (props) => {
                         </ul>
                     </div>
                 ) : null}
-                <Map />
+                {/* <Map /> */}
             </div>
         </form>
         // </FormProvider>
