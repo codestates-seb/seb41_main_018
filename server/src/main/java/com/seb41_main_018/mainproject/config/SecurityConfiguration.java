@@ -69,7 +69,7 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeRequests(authorize -> authorize
                         .antMatchers(HttpMethod.GET, "/users/emailCheck/*").permitAll()//이메일 중복 체크
-                        .antMatchers(HttpMethod.POST, "/users/").permitAll() // 회원 가입
+                        .antMatchers(HttpMethod.POST, "/users/", "/users/login").permitAll() // 회원 가입
                         .antMatchers(HttpMethod.POST, "/users/logout").permitAll()
                         .antMatchers(HttpMethod.GET, "/users/*/Info").permitAll() // 회원 상세 정보 조회
                         .antMatchers(HttpMethod.PATCH, "/users/*").hasRole("USER")

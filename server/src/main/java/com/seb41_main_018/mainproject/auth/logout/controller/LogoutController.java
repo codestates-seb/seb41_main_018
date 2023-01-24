@@ -26,6 +26,7 @@ public class LogoutController {
     private final RedisUtil redisUtil;
     private final UserService userService;
 
+    // 로그아웃 //
     @PostMapping("/logout")
     public ResponseEntity logout(@RequestHeader("Authorization") @NotBlank String token){
         User user = userService.getLoginMember();
