@@ -297,16 +297,14 @@ const Map = () => {
 
 const SearchMap = css`
     display: flex;
-
+    flex-direction: column;
     #map {
-        width: 620px;
-        height: 600px;
+        width: 75vw;
+        height: 45vh;
         overflow: hidden;
     }
 
     #menu_wrap {
-        height: 600px;
-        width: 300px;
         overflow-y: scroll;
         padding: 10px;
     }

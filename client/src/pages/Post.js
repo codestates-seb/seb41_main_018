@@ -8,7 +8,7 @@ import PostformItems from "../components/Post_components/PostformItems";
 import TitleCard from "../components/TitleCard";
 import Button from "../components/Button";
 import Tag from "../components/Post_components/Tag";
-import Map from "./PostPage/searchMap";
+import Map from "./PostPage/Map";
 import { PALETTE } from "../Common";
 import { AddRoute } from "../util/UseForm";
 

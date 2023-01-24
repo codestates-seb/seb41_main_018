@@ -10,62 +10,57 @@ import { getContent } from "../util/axiosDetail";
 import { ContentDetail } from "../state/atom";
 import axios from "axios";
 
-/* const content = {
-    contentId: 1,
-    title: "커플 여행",
-    body: "해피",
-    themeType: "COUPLE",
-    date: "2023.01.21",
-    routeName: "서울에서 놀자",
-    routes: [
-        {
-            routeId: 1,
-            price: 20000,
-            vehicle: "자동차",
-            place: "아르떼 뮤지엄",
-            body: "넘 이쁨",
-            x: "1",
-            y: "1",
-        },
+import { IoMdArrowDropdownCircle } from "react-icons/io";
+import { IoMdArrowDropupCircle } from "react-icons/io";
 
-        {
-            routeId: 2,
-            price: 10000,
-            vehicle: "자동차",
-            place: "금오름",
-            body: "조하용",
-            x: "1",
-            y: "1",
-        },
-        {
-            routeId: 3,
-            price: 10000,
-            vehicle: "자동차",
-            place: "경복궁",
-            body: "한복 체험 잼남",
-            x: "1",
-            y: "1",
-        },
-    ],
-    comment: [],
-}; */
+// const content = {
+//     contentId: 1,
+//     title: "커플 여행",
+//     body: "해피",
+//     themeType: "COUPLE",
+//     date: "2023.01.21",
+//     routeName: "서울에서 놀자",
+//     routes: [
+//         {
+//             routeId: 1,
+//             price: 20000,
+//             vehicle: "자동차",
+//             place: "아르떼 뮤지엄",
+//             body: "넘 이쁨",
+//             x: "1",
+//             y: "1",
+//         },
+
+//         {
+//             routeId: 2,
+//             price: 10000,
+//             vehicle: "자동차",
+//             place: "금오름",
+//             body: "조하용",
+//             x: "1",
+//             y: "1",
+//         },
+//         {
+//             routeId: 3,
+//             price: 10000,
+//             vehicle: "자동차",
+//             place: "경복궁",
+//             body: "한복 체험 잼남",
+//             x: "1",
+//             y: "1",
+//         },
+//     ],
+//     comment: [],
+// };
 
 const Detail = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
-    /* const getContentDetail = (id) => {
+    const getContentDetail = (id) => {
         getContent(id).then((res) => {
-            setContentDetail(res);
+            setContentDetail(res.data);
             //setReview(res.data.comment);
         });
     };
-
-    getContentDetail();
-    console.log(contentDetail); */
-
-    axios.get("/constents").then((res) => {
-        console.log(res);
-    });
-
     return (
         <div className="Detail" css={Wrap}>
             <h1>제주도 1일차 여행 추천 경로!</h1>

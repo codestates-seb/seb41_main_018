@@ -2,14 +2,55 @@
 import React from "react";
 import { useState } from "react";
 import { PALETTE } from "../../Common";
+import Map from "../../pages/PostPage/Map";
 import { css } from "@emotion/react";
 import Detial_Img from "./Detail_Img";
 import sam2 from "../../assets/sampleImg/sam2.jpg";
+import { IoMdArrowDropdownCircle } from "react-icons/io";
+import { IoMdArrowDropupCircle } from "react-icons/io";
 
 // 경로 선택 상태관리 필요 import
 import { useRecoilState } from "recoil";
 import { selectedRouteState } from "../../state/atom";
+const content = {
+    contentId: 1,
+    title: "커플 여행",
+    body: "해피",
+    themeType: "COUPLE",
+    date: "2023.01.21",
+    routeName: "서울에서 놀자",
+    routes: [
+        {
+            routeId: 1,
+            price: 20000,
+            vehicle: "자동차",
+            place: "아르떼 뮤지엄",
+            body: "넘 이쁨",
+            x: "1",
+            y: "1",
+        },
 
+        {
+            routeId: 2,
+            price: 10000,
+            vehicle: "자동차",
+            place: "금오름",
+            body: "조하용",
+            x: "1",
+            y: "1",
+        },
+        {
+            routeId: 3,
+            price: 10000,
+            vehicle: "자동차",
+            place: "경복궁",
+            body: "한복 체험 잼남",
+            x: "1",
+            y: "1",
+        },
+    ],
+    comment: [],
+};
 const DetailformItems = (props) => {
     const [isClick, setClick] = useState(false);
     // 경로 선택 상태
@@ -19,64 +60,122 @@ const DetailformItems = (props) => {
         // 선택 된 routeId 저장
         setSelectedRoute(routeId);
     };
+    console.log(props.content);
+
     return (
         <>
-            <div onClick={() => handleClick(props.routeId)} css={wrap}>
-                {props.text}
+            <div css={isClick ? clickedwrap : wrap}>
+                <div css={placeTitle} onClick={() => handleClick(props.routeId)}>
+                    {/* <div
+                        css={css`
+                            margin: 0 auto;
+                        `}
+                    > */}
+                    {props.text}
+                    {/* </div> */}
+                    {isClick ? <IoMdArrowDropupCircle /> : <IoMdArrowDropdownCircle />}
+                </div>
                 {isClick ? (
                     <div css={clicked}>
-                        <ul>
-                            <li>
-                                <span>경비</span>
-                                <div>50000원</div>
-                            </li>
-                            <li>
-                                <span>이동 수단</span>
-                                <div>자동차</div>
-                            </li>
-                            <li>
-                                <span>상세 설명</span>
-                                <div>아이들도 입장 가능합니다!</div>
-                            </li>
-                        </ul>
-                        <img src={sam2} alt="map_sample" width="200px" height="400px" />
-                        <div css={Img}>
-                            <img src={sam2} alt="img" width="200px" height="400px" />
-                            <img src={sam2} alt="img" width="200px" height="400px" />
-                            <img src={sam2} alt="img" width="200px" height="400px" />
+                        <div
+                            css={css`
+                                margin: 10px auto;
+                                display: flex;
+                                flex-direction: column;
+                                @media (min-width: 769px) {
+                                    flex-direction: row;
+                                }
+                            `}
+                        >
+                            {/* <div
+                                css={css`
+                                    @media (min-width: 769px) {
+                                        display: none;
+                                    }
+                                `}
+                            >
+                                <Detial_Img />
+                            </div> */}
+                            <ul>
+                                <li>
+                                    <span>경비</span>
+                                    <div>50000원</div>
+                                </li>
+                                <li>
+                                    <span>이동 수단</span>
+                                    <div>자동차</div>
+                                </li>
+                                <li
+                                    css={css`
+                                        flex-direction: column;
+                                    `}
+                                >
+                                    <span>상세 설명</span>
+                                    <div
+                                        css={css`
+                                            font-size: 0.9rem;
+                                            margin: 20px 15px 0;
+                                        `}
+                                    >
+                                        아이들도 입장 가능합니다!
+                                    </div>
+                                </li>
+                            </ul>
+                            <div>
+                                <Detial_Img />
+                            </div>
                         </div>
-                        {/*  <Detial_Img /> */}
+                        <div
+                            css={css`
+                                margin: 10px auto;
+                            `}
+                        >
+                            <Map />
+                        </div>
                     </div>
-                ) : (
-                    false
-                )}
+                ) : null}
             </div>
         </>
     );
 };
 
 const wrap = css`
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 600;
     text-align: center;
-    border: 3px solid ${PALETTE.default_color};
+    border: ${PALETTE.border};
     border-radius: ${PALETTE.border_radius};
-    max-width: 1000px;
-    /*    
-    min-width: 250px;
-    max-width: 400px; */
-    margin: 10px auto;
-    padding: 5px;
+    width: 80vw;
+    margin: 0 auto;
+    padding: 10px;
+
     &:hover {
         cursor: pointer;
     }
+`;
+
+const placeTitle = css`
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+`;
+
+const clickedwrap = css`
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    border: ${PALETTE.border};
+    border-radius: ${PALETTE.border_radius};
+    width: 80vw;
+    margin: 0 auto;
+    padding: 10px;
 `;
 
 const clicked = css`
     margin: 5px auto;
     text-align: start;
     border-radius: ${PALETTE.border_radius};
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 500;
     animation: identifier 0.5s ease-in-out;
     display: flex;
@@ -92,9 +191,20 @@ const clicked = css`
             opacity: 1;
         }
     }
-
+    ul {
+        @media (min-width: 769px) {
+            width: 25vw;
+            height: 100%;
+            max-width: 370px;
+            background-color: red;
+            margin: 10px;
+        }
+    }
     li {
-        margin: 30px 0;
+        display: flex;
+        margin: 40px 0;
+        justify-content: space-between;
+        align-items: start;
         animation: fadein 1s ease-in-out;
         @keyframes fadein {
             0% {
@@ -114,12 +224,7 @@ const clicked = css`
         text-align: center;
         font-weight: 600;
         font-size: 1rem;
-        margin: 10px;
-    }
-
-    div {
-        font-size: 1.15rem;
-        margin: 15px;
+        margin: 0 10px;
     }
     ul,
     img {
@@ -127,6 +232,7 @@ const clicked = css`
         flex-grow: 1;
     }
 `;
+
 const Img = css`
     display: flex;
     flex-wrap: wrap;
