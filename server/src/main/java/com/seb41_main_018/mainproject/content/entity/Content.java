@@ -41,7 +41,7 @@ public class Content extends Auditable {
     private Long totalPrice = 0L;
 
     @Column(nullable = false)
-    private String duration;
+    private String travelDate;
 
     @Column(nullable = false)
     private String routeName;

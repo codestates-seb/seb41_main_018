@@ -22,7 +22,7 @@ public class ContentPostDto {
     private String body;
     @ApiModelProperty(notes = "여행 날짜", example = "2023.01.20", required = true)
     @NotBlank
-    private String duration;
+    private String travelDate;
 
     @ApiModelProperty(notes = "경로 이름", example = "서울", required = true)
     @NotBlank

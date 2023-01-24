@@ -27,7 +27,7 @@ public class ContentPatchDto {
     @ApiModelProperty(notes = "경로 이름", example = "서울", required = true)
     private String routeName;
     @ApiModelProperty(notes = "여행 날짜", example = "2023.01.20", required = true)
-    private String duration;
+    private String travelDate;
 
     @ApiModelProperty(notes = "컨텐트 카테고리", example = "DOMESTIC", required = true)
     private ThemeType themeType;

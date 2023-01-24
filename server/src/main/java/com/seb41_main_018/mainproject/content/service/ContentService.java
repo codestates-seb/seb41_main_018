@@ -72,8 +72,8 @@ public class ContentService {
         Optional.ofNullable(content.getThemeType())
                 .ifPresent(findContent::setThemeType);
 
-        Optional.ofNullable(content.getDuration())
-                .ifPresent(findContent::setDuration);
+        Optional.ofNullable(content.getTravelDate())
+                .ifPresent(findContent::setTravelDate);
 
         Optional.ofNullable(content.getRouteName())
                 .ifPresent(findContent::setRouteName);
