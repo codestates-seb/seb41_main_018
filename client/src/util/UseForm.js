@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, FormProvider, useFormContext, Controller, useFieldArray } from "react-hook-form";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -7,6 +7,10 @@ import Button from "../components/Button";
 import PostformItems from "../components/Post_components/PostformItems";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { GrAddCircle } from "react-icons/gr";
+import { PostFormIndex } from "../state/atom";
+import { useRecoilState } from "recoil";
+
+//테스트
 
 // route= {
 //     name: string;
@@ -79,7 +83,8 @@ export const Input = (props) => {
             control={control}
             name={`${props.name}`}
             render={({ field }) => {
-                // console.log(`field`, field);
+                /*  console.log(`field`, field); */
+
                 return (
                     <input
                         css={css`
@@ -115,7 +120,7 @@ export const Post = (props) => {
         console.log(data);
     };
 
-    console.log(watch(`routes`, "routes"));
+    /* console.log(watch(`routes`, "routes")); */
 
     return (
         <FormProvider {...methods}>
@@ -127,8 +132,9 @@ export const Post = (props) => {
 };
 
 export const AddRoute = (props) => {
+    const [index, setIndex] = useRecoilState(PostFormIndex);
     const methods = useForm({ defaultValues });
-    const [data, setData] = useState("");
+    // const [data, setData] = useState();
     const { control, handleSubmit, watch } = methods;
     const { fields, append, remove, move } = useFieldArray({
         control,
@@ -137,8 +143,16 @@ export const AddRoute = (props) => {
 
     const submit = (data) => {
         // setData(JSON.stringify(data));
+
         console.log(data);
+        console.log(data.routes[index].place);
     };
+
+    // console.log(`data`, data);
+
+    /*    useEffect(() => {
+    }, [data]);
+ */
 
     const handleDrag = ({ source, destination }) => {
         if (destination) {
@@ -146,8 +160,8 @@ export const AddRoute = (props) => {
         }
     };
 
-    console.log(watch(`routes`, "routes"));
-    console.log(watch(`defaultValues`, "defaultValues"));
+    /* console.log(watch(`routes`, "routes"));
+    console.log(watch(`defaultValues`, "defaultValues")); */
     return (
         <FormProvider {...methods}>
             <form onChange={handleSubmit(submit)}>
@@ -156,6 +170,9 @@ export const AddRoute = (props) => {
                         {(provided, snapshot) => (
                             <div {...provided.droppableProps} ref={provided.innerRef}>
                                 {fields.map((item, index) => {
+                                    /*  {
+                                        setIndex(index);
+                                    } */
                                     return (
                                         <Draggable
                                             key={`test[${index}]`}
@@ -180,9 +197,11 @@ export const AddRoute = (props) => {
                                                                     () => append(index),
                                                                     () => remove(index),
                                                                 ]}
+                                                                index={index}
                                                             />
                                                         )}
-                                                        name={`routes.${index}.name`}
+                                                        // name={`routes.${index}.name`}
+                                                        name="title"
                                                         control={control}
                                                     />
                                                 </li>
