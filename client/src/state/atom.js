@@ -46,7 +46,7 @@ export const PostFormData = atom({
     default: {
         title: "",
         body: "",
-        themeType: "",
+        themeType: "DOMESTIC",
         date: new Date(),
         routeName: "",
         routes: [
@@ -65,6 +65,21 @@ export const PostFormData = atom({
 export const CategoryData = atom({
     key: "CategoryData",
     default: "",
+});
+
+export const TitleData = atom({
+    key: "TitleData",
+    default: "",
+});
+
+export const DateData = atom({
+    key: "DateData",
+    default: "",
+});
+
+export const ContentsList = atom({
+    key: "ContentsList",
+    default: [],
 });
 
 export const xPosition = atom({
@@ -137,4 +152,8 @@ export const detailPositionFour = atom({
 export const detailPositionFive = atom({
     key: "detailPositionFive",
     default: 2,
+});
+export const userInfoState = atom({
+    key: "userInfoState",
+    default: {},
 });

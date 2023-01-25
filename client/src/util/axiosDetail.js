@@ -1,5 +1,3 @@
-import { useRecoilState } from "recoil";
-import { ContentDetail } from "../state/atom";
 import axios from "axios";
 
 export const getContent = async (contentId = 0) => {
