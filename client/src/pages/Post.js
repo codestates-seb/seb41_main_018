@@ -16,18 +16,16 @@ import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 
-import { PostFormData, postFormData2 } from "../state/atom";
+import { PostFormData } from "../state/atom";
 import { useRecoilState } from "recoil";
 import axios from "axios";
 
 const Post = () => {
     const [postFormData, setPostFormData] = useRecoilState(PostFormData);
-    const [postFormData2, setPostFormData2] = useRecoilState(PostFormData);
     const defaultValues = {
         title: "자동차",
         body: "강남역",
     };
-    const JsonData = JSON.stringify(postFormData2);
 
     /*  console.log(`postFormData`, data); */
 
