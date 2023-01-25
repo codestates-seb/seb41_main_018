@@ -249,7 +249,7 @@ const Header = () => {
 const wrap = css`
     display: flex;
     width: 100vw;
-    height: 100px;
+    height: 60px;
     justify-content: center;
     align-items: center;
     margin-top: 20px;

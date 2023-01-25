@@ -32,6 +32,10 @@ export const ContentDetail = atom({
     default: {},
 });
 
+export const TabIndex = atom({
+    key: "TabIndex",
+    default: 0,
+});
 export const PostFormIndex = atom({
     key: "PostFormIndex",
     default: 0,
