@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emailjs/browser": "^3.10.0",
+    "@emotion/css": "^11.10.5",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/roboto": "^4.5.8",
@@ -11,13 +13,21 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.2.2",
+    "bootstrap": "^5.2.3",
+    "date-fns": "^2.29.3",
+    "dayjs": "^1.11.7",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
+    "react-dropdown": "^1.11.0",
     "react-hook-form": "^7.41.5",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
     "recoil": "^0.7.6",
+    "swiper": "^8.4.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -43,5 +53,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^8.6.0"
+  },
+  "proxy": "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/"
 }

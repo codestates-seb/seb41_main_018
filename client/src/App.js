@@ -1,30 +1,35 @@
-import logo from "./logo.svg";
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import ScrollToTop from "./util/ScrollToTop";
+import Header from "./components/Header";
+import Home from "../src/pages/Home";
+import Login from "../src/pages/Login,SignUp page/Login";
+import SignUp from "../src/pages/Login,SignUp page/SignUp";
+import Mypage from "../src/pages/Mypage";
+import Detail from "../src/pages/Detail";
+import Post from "../src/pages/Post";
+import Result from "../src/pages/Result";
+import Footer from "./components/Footer";
 import "./App.css";
 
-function App() {
+const App = () => {
     return (
-        <div className="App">
-            <header className="App-header">
-                <img
-                    src={logo}
-                    className="App-logo"
-                    alt="logo"
-                />
-                <p>
-                    Edit <code>src/App.js</code> and save to
-                    reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
+        <BrowserRouter>
+            <ScrollToTop />
+            <Header />
+            {/* {!["/signup", "/login"].includes(location.pathname.slice(0, 6)) && <Footer />} */}
+            <Routes>
+                <Route path="/" element={<Home />}></Route>
+                <Route path="/login" element={<Login />}></Route>
+                <Route path="/signup" element={<SignUp />}></Route>
+                <Route path="/mypage" element={<Mypage />}></Route>
+                <Route path="/detail/:contentId" element={<Detail />}></Route>
+                <Route path="/post" element={<Post />}></Route>
+                <Route path="/result" element={<Result />}></Route>
+            </Routes>
+        </BrowserRouter>
     );
-}
+};
 
 export default App;
