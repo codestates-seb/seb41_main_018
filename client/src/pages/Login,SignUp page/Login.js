@@ -30,6 +30,8 @@ const defaultValues = {
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const [Authorization, setAuthorization] = useRecoilState(getAuthorization);
+    const [Refresh, setRefresh] = useRecoilState(getRefresh);
 
     const {
         register,
@@ -50,12 +52,9 @@ const LoginPage = () => {
             })
             .then((res) => {
                 navigate("/");
-                const [getAuthorization, setGetAuthorization] = useRecoilState(getAuthorization);
-                const [getRefresh, setGetRefresh] = useRecoilState(getRefresh);
-                setGetAuthorization(res.headers.get("Authorization"));
-                setGetRefresh(res.headers.get("Refresh"));
-                console.log(getAuthorization);
-                console.log(getRefresh);
+                setAuthorization(res.headers.get("Authorization"));
+                setRefresh(res.headers.get("Refresh"));
+                alert("로그인 성공!");
             })
             .catch((err) => {
                 console.log(err);
