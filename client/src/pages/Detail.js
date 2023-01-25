@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../Common";
@@ -13,14 +13,53 @@ import axios from "axios";
 import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { IoMdArrowDropupCircle } from "react-icons/io";
 
+// 경로 데이터 더미
+const contents = {
+    routes: [
+        {
+            routeId: 1,
+            price: 20000,
+            vehicle: "자동차",
+            place: "아르떼 뮤지엄",
+            body: "넘 이쁨",
+            x: "1",
+            y: "1",
+        },
+
+        {
+            routeId: 2,
+            price: 10000,
+            vehicle: "자동차",
+            place: "금오름",
+            body: "조하용",
+            x: "1",
+            y: "1",
+        },
+        {
+            routeId: 3,
+            price: 10000,
+            vehicle: "자동차",
+            place: "경복궁",
+            body: "한복 체험 잼남",
+            x: "1",
+            y: "1",
+        },
+    ],
+};
+
 const Detail = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
-    const getContentDetail = (id) => {
-        getContent(id).then((res) => {
+    const getContentDetail = () => {
+        getContent(1).then((res) => {
+            /* setContentDetail(res); */
             setContentDetail(res.data);
             //setReview(res.data.comment);
         });
     };
+    useEffect(() => {
+        getContentDetail();
+    }, []);
+
     return (
         <div className="Detail" css={Wrap}>
             <h2>제주도 1일차 여행 추천 경로!</h2>

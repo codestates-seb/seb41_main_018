@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useState } from "react";
 import { PALETTE } from "../../Common";
 import { css } from "@emotion/react";
 import DetailformItems from "./DetailformItems";
@@ -7,39 +7,46 @@ import Button from "../Button";
 import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
 
-// 경로 데이터 더미
-const routeDummy = [
-    {
-        contentId: 1,
-        name: "아르떼 뮤지엄",
-        routeId: 1,
-    },
-    {
-        contentId: 1,
-        name: "금오름",
-        routeId: 2,
-    },
-    {
-        contentId: 1,
-        name: "명월국민학교",
-        routeId: 3,
-    },
-];
+//recoil
+import { useRecoilState } from "recoil";
+import { ContentDetail } from "../../state/atom";
 
 const Detailform = () => {
+    const [currentTab, setcurrentTab] = useState(0);
+    const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
+
+    const selectMenuHandler = (index) => {
+        setcurrentTab(index);
+    };
+
+    console.log(contentDetail);
+
     return (
         <div css={wrap}>
             <div css={container}>
                 {/* 경로 아이템 불러오기 */}
-                <div>
-                    {routeDummy.map((routeplace) => (
-                        <DetailformItems
-                            key={routeplace.routeId}
-                            text={routeplace.name}
-                            routeId={routeplace.routeId}
-                        />
-                    ))}
+                <div
+                    css={css`
+                        display: flex;
+                    `}
+                >
+                    {contentDetail.data &&
+                        contentDetail.data.routes.map((el, index) => (
+                            <div
+                                key={
+                                    contentDetail.data &&
+                                    contentDetail.data.routes &&
+                                    contentDetail.data.routes[index].routeId
+                                }
+                                onClick={() => selectMenuHandler(index)}
+                                css={currentTab === index ? SelectTab : NoSelect}
+                            >
+                                {el.place}
+                            </div>
+                        ))}
                 </div>
+
+                <DetailformItems index={currentTab} />
             </div>
             <div css={ButtonBox}>
                 <Button
@@ -90,8 +97,6 @@ const wrap = css`
 
 const container = css`
     width: 90vw;
-    /*  min-width: 300px;
-    max-width: 450px; */
     border-radius: ${PALETTE.border_radius};
     box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2);
     margin: 10px 40px;
@@ -101,6 +106,19 @@ const ButtonBox = css`
     display: flex;
     align-self: flex-end;
     padding-right: 40px;
+`;
+
+const SelectTab = css`
+    font-size: 1.2rem;
+    padding: 10px;
+    border: 2px solid purple;
+    background-color: purple;
+`;
+
+const NoSelect = css`
+    font-size: 1.2rem;
+    padding: 10px;
+    border: 2px solid #eeedf0;
 `;
 
 export default Detailform;
