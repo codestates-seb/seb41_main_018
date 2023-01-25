@@ -6,6 +6,7 @@ import { PALETTE } from "../../Common";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { BsStarFill } from "react-icons/bs";
 import sample from "../../assets/sampleImg/sample.jpg";
+import { Link } from "react-router-dom";
 
 const HomeItems = (content) => {
     const [isFavoriteClcik, setFavoriteClick] = useState(false);
@@ -37,7 +38,9 @@ const HomeItems = (content) => {
                 </div>
             </div>
             <div css={textContainer}>
-                <div css={titleStyle}>{content.content && content.content.title}</div>
+                <Link to={`/detail/${content.content && content.content.contentId}`}>
+                    <div css={titleStyle}>{content.content && content.content.title}</div>
+                </Link>
                 <div css={sideTextStyle}>
                     <FaHeart
                         css={css`

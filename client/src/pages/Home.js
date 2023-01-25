@@ -27,7 +27,6 @@ const Home = () => {
     useEffect(() => {
         getContent().then((res) => {
             setLoading(false);
-            console.log(res.data.data);
             setcontentsList(res.data.data);
         });
     }, []);
