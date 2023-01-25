@@ -3,6 +3,7 @@ package com.seb41_main_018.mainproject.content.mapper;
 import com.seb41_main_018.mainproject.comment.dto.CommentDto;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
+import com.seb41_main_018.mainproject.config.S3Uploader;
 import com.seb41_main_018.mainproject.constant.ThemeType;
 import com.seb41_main_018.mainproject.content.dto.*;
 import com.seb41_main_018.mainproject.content.entity.Content;
@@ -16,16 +17,17 @@ import com.seb41_main_018.mainproject.tag.entity.Tag;
 import com.seb41_main_018.mainproject.tag.repository.TagRepository;
 import com.seb41_main_018.mainproject.user.entity.User;
 import org.mapstruct.Mapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface ContentMapper {
-    default Content contentPostDtoToContent(ContentPostDto requestBody){
+    default Content contentPostDtoToContent(ContentPostDto requestBody,List<String> imgUrls){
         Content content = new Content();
 
-        List<Route> routes = routesDtosToRoutes(requestBody.getRoutes(),content);
+        List<Route> routes = routesDtosToRoutes(requestBody.getRoutes(),content,imgUrls);
         content.setRoutes(routes);
         content.setTitle(requestBody.getTitle());
         //content.setRouteName(requestBody.getRouteName());
@@ -33,11 +35,11 @@ public interface ContentMapper {
         content.setThemeType(requestBody.getThemeType());
         return content;
     }
-    default Content contentPatchDtoToContent(ContentPatchDto requestBody){
+    default Content contentPatchDtoToContent(ContentPatchDto requestBody,List<String> imgUrls){
         Content content = new Content();
 
         content.setContentId(requestBody.getContentId());
-        List<Route> routes = routesDtosToRoutes(requestBody.getRoutes(),content);
+        List<Route> routes = routesDtosToRoutes(requestBody.getRoutes(),content,imgUrls);
 
         content.setTitle(requestBody.getTitle());
         content.setThemeType(requestBody.getThemeType());
@@ -64,11 +66,12 @@ public interface ContentMapper {
                 .routes(routesToRouteResponseDtos(content.getRoutes()))
                 .build();
     }
-    default List<Route> routesDtosToRoutes(List<RoutePostDto> routePostDtos, Content content){
+    default List<Route> routesDtosToRoutes(List<RoutePostDto> routePostDtos, Content content, List<String> imgUrls){
         //tag 또한 변환해줘야함(dto -> entity)
 
         return routePostDtos.stream().map(routePostDto -> {
             Route route = new Route();
+            route.addRouteImages(imgUrls);
             route.addContent(content);
             route.setPrice(routePostDto.getPrice());
             route.setVehicle(routePostDto.getVehicle());
