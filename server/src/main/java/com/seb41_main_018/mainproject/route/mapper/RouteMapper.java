@@ -52,6 +52,7 @@ public interface RouteMapper {
                 .y(route.getY())
                 .address(route.getAddress())
                 .place(route.getPlace())
+                .routeImages(route.getRouteImages())
                 .build();
 
     }

@@ -1,8 +1,6 @@
 package com.seb41_main_018.mainproject.route.controller;
 
-import com.seb41_main_018.mainproject.content.dto.ContentAllResponseDto;
-import com.seb41_main_018.mainproject.content.dto.ContentDto;
-import com.seb41_main_018.mainproject.response.MultiResponseDto;
+import com.seb41_main_018.mainproject.config.S3Uploader;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
 import com.seb41_main_018.mainproject.route.dto.RoutePatchDto;
 import com.seb41_main_018.mainproject.route.dto.RoutePostDto;
@@ -10,16 +8,17 @@ import com.seb41_main_018.mainproject.route.dto.RouteResponseDto;
 import com.seb41_main_018.mainproject.route.entity.Route;
 import com.seb41_main_018.mainproject.route.mapper.RouteMapper;
 import com.seb41_main_018.mainproject.route.service.RouteService;
-import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
 import io.swagger.annotations.*;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.io.IOException;
 import java.util.List;
 @ApiOperation(value = "경로 API", tags = {"Route Controller"})
 @RestController
@@ -28,10 +27,12 @@ import java.util.List;
 public class RouteController {
     private final RouteService routeService;
     private final RouteMapper routeMapper;
+    private final S3Uploader s3Uploader;
 
-    public RouteController(RouteService routeService, RouteMapper routeMapper) {
+    public RouteController(RouteService routeService, RouteMapper routeMapper, S3Uploader s3Uploader) {
         this.routeService = routeService;
         this.routeMapper = routeMapper;
+        this.s3Uploader = s3Uploader;
     }
 
     // 경로 생성 //
@@ -39,12 +40,13 @@ public class RouteController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Route not found")})
-    @PostMapping("/{contentId}/routes")
+    @PostMapping(path = "/{contentId}/routes",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity postRoute(@PathVariable("contentId") Long contentId,
-            @Valid @RequestBody RoutePostDto requestBody) {
+                                    @Valid @RequestPart(value="requestBody") RoutePostDto requestBody,
+                                    @RequestPart(value="imgFiles")MultipartFile[] imgFiles) throws IOException {
         requestBody.updateContentId(contentId);
         Route route = routeService.createRoute(
-                routeMapper.routePostDtoToRoute(requestBody));
+                routeMapper.routePostDtoToRoute(requestBody),imgFiles);
 
         RouteResponseDto routeResponseDto =
                 routeMapper.routeToRouteResponseDto(route);

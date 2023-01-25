@@ -8,8 +8,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.seb41_main_018.mainproject.route.entity.Route;
-import javax.persistence.*;
+import org.hibernate.annotations.BatchSize;
 
+import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -49,6 +51,12 @@ public class Route extends Auditable {
     @Column(nullable = false)
     private String address;
 
+    @BatchSize(size = 10)
+    @Column(nullable = false)
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name="route_image")
+    private List<String> routeImages;
+
     public Route(
             int price,
             String vehicle,
@@ -67,5 +75,8 @@ public class Route extends Auditable {
     public void addContent(Content content) {
         this.content = content;
         content.getRoutes().add(this);
+    }
+    public void addRouteImages(List<String> routeImages) {
+        this.routeImages = routeImages;
     }
 }
