@@ -39,5 +39,36 @@ export const PostFormIndex = atom({
 
 export const PostFormData = atom({
     key: "PostFormData",
-    default: {},
+    default: {
+        title: "",
+        body: "",
+        themeType: "DOMESTIC",
+        date: new Date(),
+        routeName: "",
+        routes: [
+            {
+                price: Number(),
+                vehicle: "",
+                place: "",
+                body: "",
+                x: "",
+                y: "",
+            },
+        ],
+    },
+});
+
+export const CategoryData = atom({
+    key: "CategoryData",
+    default: "",
+});
+
+export const TitleData = atom({
+    key: "TitleData",
+    default: "",
+});
+
+export const DateData = atom({
+    key: "DateData",
+    default: "",
 });

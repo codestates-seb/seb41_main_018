@@ -7,8 +7,8 @@ import Button from "../components/Button";
 import PostformItems from "../components/Post_components/PostformItems";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { GrAddCircle } from "react-icons/gr";
-import { PostFormIndex, PostFormData } from "../state/atom";
 import { useRecoilState } from "recoil";
+import { PostFormIndex, PostFormData, CategoryData, TitleData, DateData } from "../state/atom";
 
 //테스트
 
@@ -32,18 +32,10 @@ import { useRecoilState } from "recoil";
 const defaultValues = {
     title: "",
     body: "",
-    themeType: "",
+    themeType: "DOMESTIC",
     date: new Date(),
     routeName: "",
     routes: [
-        {
-            price: Number(),
-            vehicle: "",
-            place: "아르떼 뮤지엄",
-            body: "",
-            x: "",
-            y: "",
-        },
         {
             price: Number(),
             vehicle: "",
@@ -123,14 +115,16 @@ export const Input = (props) => {
 export const Post = (props) => {
     const methods = useForm({ defaultValues });
     const { control, handleSubmit, watch } = methods;
-    const submit = (data) => {
-        console.log(data);
+    const submit = (obj) => {
+        {
+            console.log(obj);
+        }
     };
 
     return (
         <FormProvider {...methods}>
-            <form onChange={handleSubmit}>
-                <Input placeholder={props.placeholder} width={props.width} />
+            <form onChange={handleSubmit(submit)}>
+                <Input name="title" placeholder={props.placeholder} width={props.width} />
             </form>
         </FormProvider>
     );
@@ -139,8 +133,11 @@ export const Post = (props) => {
 export const AddRoute = (props) => {
     const [index, setIndex] = useRecoilState(PostFormIndex);
     const [postFormData, setPostFormData] = useRecoilState(PostFormData);
+    const [category, setCategory] = useRecoilState(CategoryData);
+    const [title, setTitle] = useRecoilState(TitleData);
+    const [date, setDate] = useRecoilState(DateData);
     const methods = useForm({ defaultValues });
-    const [data, setData] = useState();
+
     const { control, handleSubmit, watch } = methods;
     const { fields, append, remove, move } = useFieldArray({
         control,
@@ -148,14 +145,14 @@ export const AddRoute = (props) => {
     });
 
     const submit = (obj) => {
+        obj.themeType = category;
+        /*  
+        obj.title = title;
+        obj.date = date; */
         setPostFormData(obj);
     };
 
-    console.log(`data가 잘뽑히나요`, data);
-
-    /*    useEffect(() => {
-    }, [data]);
- */
+    console.log(`data가 잘뽑히나요`, postFormData);
 
     const handleDrag = ({ source, destination }) => {
         if (destination) {
@@ -201,7 +198,7 @@ export const AddRoute = (props) => {
                                                                     () => remove(index),
                                                                 ]}
                                                                 index={index}
-                                                                data={data}
+                                                                data={postFormData}
                                                             />
                                                         )}
                                                         // name={`routes.${index}.name`}
