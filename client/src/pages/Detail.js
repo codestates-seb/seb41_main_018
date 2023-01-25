@@ -57,12 +57,26 @@ const Detail = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const getContentDetail = (id) => {
         getContent(id).then((res) => {
-            setContentDetail(res.data);
+            /* setContentDetail(res); */
+            console.log(res);
             //setReview(res.data.comment);
         });
     };
+
+    const getTest = async (contentId = 0) => {
+        await axios
+            .get(`/contents/1`)
+            .then((res) => {
+                console.log(res.data.data);
+                return res.data.data;
+            })
+            .catch((err) => {
+                console.error(err.message);
+            });
+    };
     return (
         <div className="Detail" css={Wrap}>
+            <button onClick={getTest}>get</button>
             <h1>제주도 1일차 여행 추천 경로!</h1>
             <div css={ContentInfo}>
                 <span>작성자 : 원할머니멱살</span>

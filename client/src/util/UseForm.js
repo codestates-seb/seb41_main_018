@@ -7,9 +7,8 @@ import Button from "../components/Button";
 import PostformItems from "../components/Post_components/PostformItems";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { GrAddCircle } from "react-icons/gr";
-import { PostFormIndex, PostFormData } from "../state/atom";
 import { useRecoilState } from "recoil";
-import { CategoryData } from "../state/atom";
+import { PostFormIndex, PostFormData, CategoryData, TitleData, DateData } from "../state/atom";
 
 //테스트
 
@@ -37,14 +36,6 @@ const defaultValues = {
     date: new Date(),
     routeName: "",
     routes: [
-        {
-            price: Number(),
-            vehicle: "",
-            place: "",
-            body: "",
-            x: "",
-            y: "",
-        },
         {
             price: Number(),
             vehicle: "",
@@ -124,14 +115,16 @@ export const Input = (props) => {
 export const Post = (props) => {
     const methods = useForm({ defaultValues });
     const { control, handleSubmit, watch } = methods;
-    const submit = (data) => {
-        console.log(data);
+    const submit = (obj) => {
+        {
+            console.log(obj);
+        }
     };
 
     return (
         <FormProvider {...methods}>
-            <form onChange={handleSubmit}>
-                <Input placeholder={props.placeholder} width={props.width} />
+            <form onChange={handleSubmit(submit)}>
+                <Input name="title" placeholder={props.placeholder} width={props.width} />
             </form>
         </FormProvider>
     );
@@ -141,6 +134,8 @@ export const AddRoute = (props) => {
     const [index, setIndex] = useRecoilState(PostFormIndex);
     const [postFormData, setPostFormData] = useRecoilState(PostFormData);
     const [category, setCategory] = useRecoilState(CategoryData);
+    const [title, setTitle] = useRecoilState(TitleData);
+    const [date, setDate] = useRecoilState(DateData);
     const methods = useForm({ defaultValues });
 
     const { control, handleSubmit, watch } = methods;
@@ -149,17 +144,15 @@ export const AddRoute = (props) => {
         name: "routes",
     });
 
-    const submit = (obj) => {
-        console.log(`이거슨 카테고리 입니다.`, obj.themeType);
+    const submit = (data) => {
         obj.themeType = category;
-        setPostFormData(obj);
+        /*  
+        obj.title = title;
+        obj.date = date; */
+        setPostFormData(data);
     };
 
     console.log(`data가 잘뽑히나요`, postFormData);
-
-    /*    useEffect(() => {
-    }, [data]);
- */
 
     const handleDrag = ({ source, destination }) => {
         if (destination) {
