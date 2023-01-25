@@ -37,7 +37,7 @@ export const LoginContainer = css`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 70px 20px;
     border-radius: 10px;
     background: #ffffff;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -53,7 +53,6 @@ export const LoginLabelBox = css`
     width: 80%;
     margin: 10px;
     font-size: 1.1rem;
-    /* padding-left: 40px; */
 `;
 
 export const LoginInputBox = css`

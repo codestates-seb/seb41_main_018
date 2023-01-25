@@ -169,7 +169,7 @@ const SignUp = () => {
                             width="100px"
                             color="white"
                             text="중복검사"
-                            margin="40px"
+                            // margin="40px"
                             padding="10px"
                             bdradius="50px"
                             boxShadow="1px 2px 2px rgb(0,0,0,0.3)"
@@ -268,15 +268,14 @@ const SignupEmailBox = css`
     align-items: center;
 
     width: 80%;
-    height: 50px;
+    height: 30px;
     margin-bottom: 20px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 
     input {
         width: 80%;
-        height: 50px;
-        font-size: 20px;
-
+        height: 30px;
+        font-size: 1rem;
         border: none;
         outline: none;
     }
