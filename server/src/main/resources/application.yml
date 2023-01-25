@@ -1,22 +1,21 @@
 spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2
   datasource:
-    url: jdbc:mysql://database-gachigalle-deploy.cwzy7toscnyc.ap-northeast-2.rds.amazonaws.com:3306/test?serverTimezone=UTC&characterEncoding=UTF-8
-    username: admin
-    password: gachigalle18
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:h2:mem:test
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
         format_sql: true
     open-in-view: false
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   servlet:
     multipart:
       max-file-size: 5MB
@@ -24,6 +23,8 @@ spring:
   redis:
     host: localhost
     port: 6379
+  profiles:
+    include: oauth
 
 cloud:
   aws:
@@ -37,11 +38,8 @@ cloud:
     stack:
       auto: false
 
-config:
-  domain: http://gachigallae.s3-website.ap-northeast-2.amazonaws.com
-
 jwt:
-  secret-key: ato12345678910fghgjkliygfbfghjhggjytdfdgbcnvjhhgjgyfthato12345678910fghgjkliygfbfghjhggjytdfdgbcnvjhhgjgyfthato12345678910fghgjkliygfbfghjhggjytdfdgbcnvjhhgjgyfthato123456789>
+  secret-key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 1440
   refresh-token-expiration-minutes: 1440
 

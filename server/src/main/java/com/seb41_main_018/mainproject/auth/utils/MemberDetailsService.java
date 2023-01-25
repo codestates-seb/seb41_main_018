@@ -1,5 +1,6 @@
 package com.seb41_main_018.mainproject.auth.utils;
 
+import com.seb41_main_018.mainproject.constant.UserStatus;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.user.entity.User;
@@ -18,9 +19,12 @@ public class MemberDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     private final CustomAuthorityUtils authorityUtils;
 
-    public MemberDetailsService(UserRepository userRepository, CustomAuthorityUtils authorityUtils) {
+    public MemberDetailsService(UserRepository userRepository,
+                                CustomAuthorityUtils authorityUtils
+                               ) {
         this.userRepository = userRepository;
         this.authorityUtils = authorityUtils;
+
     }
 
     @Override

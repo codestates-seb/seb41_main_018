@@ -37,6 +37,8 @@ public enum ExceptionCode {
     NOT_IMPLEMENTATION(501, "NOT IMPLEMENTATION"),
     USER_NOT_LOGIN(400, "USER NOT LOGIN"),
     INVALID_USER_STATUS(400, "INVALID USER STATUS"),
+    INVALID_VALUES(400, "Invalid Values"),
+    INVALID_REFRESH_TOKEN(400, "Invalid refresh token"),
 
     UNAUTHORIZED(401, "Unauthorized");
 
