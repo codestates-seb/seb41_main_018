@@ -49,7 +49,6 @@ const LoginPage = () => {
                 navigate("/");
                 sessionStorage.setItem("Authorization", res.headers.get("Authorization"));
                 sessionStorage.setItem("Refresh", res.headers.get("Refresh"));
-                alert("로그인 성공!");
             })
             .catch((err) => {
                 console.log(err);
@@ -73,7 +72,7 @@ const LoginPage = () => {
                         id="email"
                         type="email"
                         name="email"
-                        placeholder="test@email.com"
+                        placeholder="이메일을 입력해주세요."
                         {...register("email", {
                             required: "이메일은 필수 입력입니다.",
                             pattern: {
@@ -91,7 +90,7 @@ const LoginPage = () => {
                         id="password"
                         type="password"
                         name="password"
-                        placeholder="비밀번호"
+                        placeholder="비밀번호를 입력해주세요."
                         {...register("password", {
                             required: "비밀번호는 필수 입력입니다.",
                             minLength: {
@@ -103,7 +102,16 @@ const LoginPage = () => {
                     />
                     {errors.password && <small role="alert">{errors.password.message}</small>}
                     <SocialButton />
-                    <Button type="button" text="Login" />
+                    <Button
+                        type="button"
+                        width="100px"
+                        color="white"
+                        text="Login"
+                        margin="40px"
+                        padding="10px"
+                        bdradius="50px"
+                        boxShadow="1px 2px 2px 1px rgb(0,0,0,0.3)"
+                    />
                     <div css={UserInfoButton}>아이디 / 비밀번호 찾기</div>
                     <div css={UserInfoButton}>회원가입</div>
                 </form>

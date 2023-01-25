@@ -4,16 +4,17 @@ import { PALETTE } from "../../Common";
 
 export const LoginpageBg = css`
     overflow: auto;
-
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
 `;
 
 export const LoginpageContainer = css`
     display: flex;
     flex-direction: column;
-    width: 600px;
-    margin: 100px auto;
+    width: 60vw;
+    min-width: 370px;
+    max-width: 600px;
+    margin: 15px auto;
 `;
 
 export const LoginLogoContainer = css`
@@ -26,7 +27,8 @@ export const LoginLogoContainer = css`
     }
 
     img {
-        width: 60%;
+        width: 200px;
+        height: 120px;
     }
 `;
 
@@ -39,8 +41,6 @@ export const LoginContainer = css`
     border-radius: 10px;
     background: #ffffff;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    height: 100%;
-    width: 100%;
 
     small {
         color: rgba(248, 112, 112, 1);
@@ -50,17 +50,17 @@ export const LoginContainer = css`
 `;
 
 export const LoginLabelBox = css`
+    width: 80%;
     margin: 10px;
-    padding-left: 40px;
-    align-self: flex-start;
+    font-size: 1.1rem;
 `;
 
 export const LoginInputBox = css`
     width: 80%;
-    height: 50px;
+    height: 30px;
+    font-size: 1rem;
     margin-bottom: 20px;
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     outline: none;
-    font-size: 20px;
 `;
