@@ -79,6 +79,7 @@ public interface ContentMapper {
             route.setBody(routePostDto.getBody());
             route.setX(routePostDto.getX());
             route.setY(routePostDto.getY());
+            route.setAddress(routePostDto.getAddress());
 
             return route;
         }).collect(Collectors.toList());
@@ -94,6 +95,7 @@ public interface ContentMapper {
                         .x(route.getX())
                         .y(route.getY())
                         .routeId(route.getRouteId())
+                        .address(route.getAddress())
                         .build())
                 .collect(Collectors.toList());
     }
