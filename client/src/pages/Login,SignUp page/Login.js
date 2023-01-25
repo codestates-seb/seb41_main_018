@@ -103,7 +103,16 @@ const LoginPage = () => {
                     />
                     {errors.password && <small role="alert">{errors.password.message}</small>}
                     <SocialButton />
-                    <Button type="button" text="Login" />
+                    <Button
+                        type="button"
+                        width="100px"
+                        color="white"
+                        text="Login"
+                        margin="40px"
+                        padding="10px"
+                        bdradius="50px"
+                        boxShadow="1px 2px 2px 1px rgb(0,0,0,0.3)"
+                    />
                     <div css={UserInfoButton}>아이디 / 비밀번호 찾기</div>
                     <div css={UserInfoButton}>회원가입</div>
                 </form>
