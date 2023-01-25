@@ -63,7 +63,6 @@ export const CategoryData = atom({
     default: "",
 });
 
-
 export const TitleData = atom({
     key: "TitleData",
     default: "",
@@ -79,38 +78,29 @@ export const ContentsList = atom({
     default: [],
 });
 
-
 export const xPosition = atom({
     key: "xPosition",
     default: 37.365264512305174,
 });
 
-
 export const xPositionTwo = atom({
     key: "xPositionTwo",
     default: 37.365264512305174,
-
 });
-
 
 export const xPositionThree = atom({
     key: "xPositionThree",
     default: 37.365264512305174,
-
 });
-
 
 export const xPositionFour = atom({
     key: "xPositionFour",
     default: 37.365264512305174,
-
 });
-
 
 export const xPositionFive = atom({
     key: "xPositionFive",
     default: 37.365264512305174,
-
 });
 
 export const yPosition = atom({
@@ -138,17 +128,14 @@ export const yPositionFive = atom({
     default: 127.10676860117488,
 });
 
-
 export const detailPosition = atom({
     key: "detailPosition",
     default: 2,
-
 });
 
 export const detailPositionTwo = atom({
     key: "detailPositionTwo",
     default: 2,
-
 });
 export const detailPositionThree = atom({
     key: "detailPositionThree",
@@ -162,4 +149,7 @@ export const detailPositionFive = atom({
     key: "detailPositionFive",
     default: 2,
 });
-
+export const userInfoState = atom({
+    key: "userInfoState",
+    default: {},
+});
