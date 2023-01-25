@@ -7,7 +7,7 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { BsStarFill } from "react-icons/bs";
 import sample from "../../assets/sampleImg/sample.jpg";
 
-const HomeItems = () => {
+const HomeItems = (content) => {
     const [isFavoriteClcik, setFavoriteClick] = useState(false);
     const handleFavoriteClick = () => {
         setFavoriteClick(!isFavoriteClcik);
@@ -37,25 +37,24 @@ const HomeItems = () => {
                 </div>
             </div>
             <div css={textContainer}>
-                <div css={titleStyle}>발리 : 우붓 타나롯 투어</div>
+                <div css={titleStyle}>{content.content && content.content.title}</div>
                 <div css={sideTextStyle}>
-                    <BsStarFill
+                    <FaHeart
                         css={css`
                             margin: 0 7px;
+                            color: #ff5675;
                         `}
                     />
-                    4.5
+                    {content.content && content.content.heartCount}
                 </div>
             </div>
             <div>
                 <ul css={ulStyle}>
-                    <li css={liStyle}>#강남역</li>
-                    <li css={liStyle}>#11번출구</li>
-                    <li css={liStyle}>#우붓</li>
-                    <li css={liStyle}>#타나 롯</li>
+                    {content.content &&
+                        content.content.routes.map((el) => <li css={liStyle}># {el.place}</li>)}
                 </ul>
             </div>
-            <div css={priceStyle}>₩1,000,000</div>
+            <div css={priceStyle}>{content.content && `₩ ${content.content.amount}`}</div>
         </div>
     );
 };
