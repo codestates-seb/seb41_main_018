@@ -25,7 +25,7 @@ public class Comment extends Auditable {
 
     @Column
     @Enumerated(value = EnumType.STRING)
-    private RatingType ratingType = RatingType.ZERO;
+    private RatingType ratingType = RatingType.FIVE;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
