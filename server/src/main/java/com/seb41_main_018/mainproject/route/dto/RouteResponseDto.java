@@ -29,8 +29,11 @@ public class RouteResponseDto {
     @NotSpace(message = "내용을 채워주세요.")
     private String body;
     @ApiModelProperty(notes = "경로의 x좌표", example = "126.99571824238", required = true)
-    private String x;
+    private double x;
 
     @ApiModelProperty(notes = "경로의 y좌표", example = "37.5428216732984", required = true)
-    private String y;
+    private double y;
+
+    @ApiModelProperty(notes = "경로의 주소", example = "서울시 종로구", required = true)
+    private String address;
 }

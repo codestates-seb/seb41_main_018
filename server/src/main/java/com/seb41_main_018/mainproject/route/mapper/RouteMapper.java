@@ -20,6 +20,7 @@ public interface RouteMapper {
         route.setContent(content);
         route.setX(requestBody.getX());
         route.setY(requestBody.getY());
+        route.setAddress(requestBody.getAddress());
         route.setPrice(requestBody.getPrice());
         route.setBody(requestBody.getBody());
         route.setPlace(requestBody.getPlace());
@@ -33,6 +34,7 @@ public interface RouteMapper {
         route.setRouteId(requestBody.getRouteId());
         route.setPrice(requestBody.getPrice());
         route.setVehicle(requestBody.getVehicle());
+        route.setAddress(requestBody.getAddress());
         route.setBody(requestBody.getBody());
         route.setX(requestBody.getX());
         route.setY(requestBody.getY());
@@ -48,6 +50,7 @@ public interface RouteMapper {
                 .body(route.getBody())
                 .x(route.getX())
                 .y(route.getY())
+                .address(route.getAddress())
                 .place(route.getPlace())
                 .build();
 

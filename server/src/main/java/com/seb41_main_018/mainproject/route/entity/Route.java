@@ -41,18 +41,21 @@ public class Route extends Auditable {
 
 
     @Column(nullable = false)
-    private String x;
+    private double x;
 
     @Column(nullable = false)
-    private String y;
+    private double y;
+
+    @Column(nullable = false)
+    private String address;
 
     public Route(
             int price,
             String vehicle,
             String body,
             String place,
-            String x,
-            String y
+            double x,
+            double y
     ) {
         this.price = price;
         this.vehicle = vehicle;
