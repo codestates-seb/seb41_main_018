@@ -3,42 +3,54 @@ import React, { useEffect, useState } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-// import { searchMap } from './mp';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
-const Map = () => {
+import { useRecoilState } from "recoil";
+import { detailPositionFive, xPositionFive, yPositionFive } from "../../../state/atom";
+
+const PostMapFive = (props) => {
+
+    const [ xpo, setXpo ] = useRecoilState(xPositionFive);
+    const [ ypo, setYpo ] = useRecoilState(yPositionFive);
+    const [ dpo, setDpo ] = useRecoilState(detailPositionFive);
+
     const [ keyword, setKeyword ] = useState('');
-
-    const [ place, setPlace ] = useState({
-        name: '',
-        x: '',
-        y: '',
-    });
-
+    
     let xposition = '';
     let yposition = '';
-    let listName = '';
     
     const { kakao } = window;
 
     function searchMap (keyword) {
 
         // 마커를 담을 배열입니다
-        var markers = [];
+        var markers5 = [];
 
-        const mapContainer = document.getElementById('map');
-        const mapOptions = {
+        var mapContainer5 = document.getElementById('map5');
+        var mapOptions5 = {
             center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
-            level: 3
+            level: 4
         };
-        const map = new kakao.maps.Map(mapContainer, mapOptions);
+        const map5 = new kakao.maps.Map(mapContainer5, mapOptions5);
 
         console.log("loading kakaomap");
 
         // 장소 검색 객체를 생성합니다
-        var ps = new kakao.maps.services.Places();  
+        var ps5 = new kakao.maps.services.Places();  
 
         // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-        var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+        var infowindow5 = new kakao.maps.InfoWindow({zIndex:1});
+
+
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        var callback = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                setDpo(result[0].address.address_name);
+            }
+        };
+
+        geocoder.coord2Address(xposition, yposition, callback);
 
         // 검색결과 항목을 Element로 반환하는 함수입니다
         function getListItem(index, places) {
@@ -47,6 +59,9 @@ const Map = () => {
             itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
                         '<div class="info">' +
                         '   <h5>' + places.place_name + '</h5>';
+
+
+            // setDpo(places.address_name[0]);
 
             if (places.road_address_name) {
                 itemStr += '    <span>' + places.road_address_name + '</span>' +
@@ -66,42 +81,42 @@ const Map = () => {
 
         // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
         function addMarker(position, idx, title) {
-            var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-                imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-                imgOptions =  {
+            var imageSrc5 = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+                imageSize5 = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
+                imgOptions5 =  {
                     spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
                     spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
                     offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
                 },
-                markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
-                    marker = new kakao.maps.Marker({
+                markerImage5 = new kakao.maps.MarkerImage(imageSrc5, imageSize5, imgOptions5),
+                    marker5 = new kakao.maps.Marker({
                     position: position, // 마커의 위치
-                    image: markerImage 
+                    image: markerImage5
                 });
 
-            marker.setMap(map); // 지도 위에 마커를 표출합니다
-            markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+            marker5.setMap(map5); // 지도 위에 마커를 표출합니다
+            markers5.push(marker5);  // 배열에 생성된 마커를 추가합니다
 
-            return marker;
+            return marker5;
         }
 
         // 지도 위에 표시되고 있는 마커를 모두 제거합니다
         function removeMarker() {
-            for ( var i = 0; i < markers.length; i++ ) {
-                markers[i].setMap(null);
+            for ( var i = 0; i < markers5.length; i++ ) {
+                markers5[i].setMap(null);
             }   
-            markers = [];
+            markers5 = [];
         }
 
         // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
         function displayPagination(pagination) {
-            var paginationEl = document.getElementById('pagination');
-            var fragment = document.createDocumentFragment();
+            var paginationEl5 = document.getElementById('pagination5');
+            var fragment5 = document.createDocumentFragment();
             var i;
 
             // 기존에 추가된 페이지번호를 삭제합니다
-            while (paginationEl.hasChildNodes()) {
-                paginationEl.removeChild (paginationEl.lastChild);
+            while (paginationEl5.hasChildNodes()) {
+                paginationEl5.removeChild (paginationEl5.lastChild);
             }
 
             for (i=1; i<=pagination.last; i++) {
@@ -119,18 +134,18 @@ const Map = () => {
                     })(i);
                 }
 
-                fragment.appendChild(el);
+                fragment5.appendChild(el);
             }
-            paginationEl.appendChild(fragment);
+            paginationEl5.appendChild(fragment5);
         }
 
         // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
         // 인포윈도우에 장소명을 표시합니다
         function displayInfowindow(marker, title) {
-            var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+            var content5 = '<div style="padding:5px;z-index:1;">' + title + '</div>';
 
-            infowindow.setContent(content);
-            infowindow.open(map, marker);
+            infowindow5.setContent(content5);
+            infowindow5.open(map5, marker);
         }
 
          // 검색결과 목록의 자식 Element를 제거하는 함수입니다
@@ -143,14 +158,14 @@ const Map = () => {
         // 검색 결과 목록과 마커를 표출하는 함수입니다
         function displayPlaces(places) {
 
-            var listEl = document.getElementById('placesList'), 
-            menuEl = document.getElementById('menu_wrap'),
-            fragment = document.createDocumentFragment(), 
-            bounds = new kakao.maps.LatLngBounds(), 
+            var listEl5 = document.getElementById('placesList5'), 
+            menuEl5 = document.getElementById('menu_wrap5'),
+            fragment5 = document.createDocumentFragment(), 
+            bounds5 = new kakao.maps.LatLngBounds(), 
             listStr = '';
             
             // 검색 결과 목록에 추가된 항목들을 제거합니다
-            removeAllChildNods(listEl);
+            removeAllChildNods(listEl5);
 
             // 지도에 표시되고 있는 마커를 제거합니다
             removeMarker();
@@ -158,17 +173,17 @@ const Map = () => {
             for ( var i=0; i<places.length; i++ ) {
 
                 // 마커를 생성하고 지도에 표시합니다
-                var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-                    marker = addMarker(placePosition, i), 
-                    itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+                var placePosition5 = new kakao.maps.LatLng(places[i].y, places[i].x),
+                    marker5 = addMarker(placePosition5, i), 
+                    itemEl5 = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
 
                     console.log(places[i].y, places[i].x); ////////////////////
-
+                    console.log(places)
 
                 // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
                 // LatLngBounds 객체에 좌표를 추가합니다
-                bounds.extend(placePosition);
+                bounds5.extend(placePosition5);
                 // 마커와 검색결과 항목에 mouseover 했을때
                 // 해당 장소에 인포윈도우에 장소명을 표시합니다
                 // mouseout 했을 때는 인포윈도우를 닫습니다
@@ -178,39 +193,40 @@ const Map = () => {
                     });
 
                     kakao.maps.event.addListener(marker, 'mouseout', function() {
-                        infowindow.close();
+                        infowindow5.close();
                     });
 
-                    itemEl.onmouseover =  function () {
+                    itemEl5.onmouseover =  function () {
                         displayInfowindow(marker, title);
-                        ps.keywordSearch( title , listSearchCB)
-                        console.log(title);
-                    };
+                        ps5.keywordSearch( title , listSearchCB)
 
+                    };
 
                     /////
-                    itemEl.onmousedown = function () {
-                        listName = title;
-                        // console.log(listName)
+                    itemEl5.onmousedown = function () {
+                        setXpo(xposition);
+                        setYpo(yposition);
+                        // console.log(xposition);
+                        geocoder.coord2Address(xposition, yposition, callback)
                     };
                     /////
 
 
 
-                    itemEl.onmouseout =  function () {
-                        infowindow.close();
+                    itemEl5.onmouseout = function () {
+                        infowindow5.close();
                     };
-                })(marker, places[i].place_name);
+                })(marker5, places[i].place_name);
 
-                fragment.appendChild(itemEl);
+                fragment5.appendChild(itemEl5);
             }
 
             // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
-            listEl.appendChild(fragment);
-            menuEl.scrollTop = 0;
+            listEl5.appendChild(fragment5);
+            menuEl5.scrollTop = 0;
 
             // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-            map.setBounds(bounds);
+            map5.setBounds(bounds5);
         }
 
         // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
@@ -258,12 +274,12 @@ const Map = () => {
         // 키워드 검색을 요청하는 함수입니다
         function searchPlaces () {
 
-            if (!keyword.replace(/^\s+|\s+$/g, '')) {
-                return;
-            }
+            // if (!keyword.replace(/^\s+|\s+$/g, '')) {
+            //     return;
+            // }
         
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-            ps.keywordSearch( keyword, placesSearchCB); 
+            ps5.keywordSearch( keyword, placesSearchCB); 
 
         }
 
@@ -274,29 +290,24 @@ const Map = () => {
 
 }
 
-
     useEffect(()=>{
-        searchMap(keyword)
-    }, [keyword])
-
-    const hi = () => {
-        console.log(listName)
-    }
+        searchMap(props.placeword)
+    }, [props.placeword])
 
     return (
         <div css={SearchMap}>
             <div>
-                <div id="map"></div>
+                <div id="map5"></div>
             </div>
-            <div id="menu_wrap">
-                <div id="map_title">검색결과</div>
-                <div id="searchBar">
-                    <input id="keyword" type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder="검색어를 입력해주세요"></input>
-                    <button id="submit_btn" type="submit">검색하기</button>
-                    <button onClick={hi}>gdd</button>
+            <div id="menu_wrap5">
+                <div id="map_title5">검색결과</div>
+                <div id="searchBar5">
+                    <input id="keyword5" type='text'placeholder="검색어를 입력해주세요"></input>
+                    {console.log(props.placeword)}
+                    <button id="submit_btn5" type="submit">검색하기</button>
                 </div>
-                <ul id="placesList"></ul>
-                <div id="pagination"></div>
+                <ul id="placesList5"></ul>
+                <div id="pagination5"></div>
             </div>
         </div>
     )
@@ -305,20 +316,20 @@ const Map = () => {
 const SearchMap = css`
     display: flex;
 
-    #map {
-        width: 620px;
-        height: 600px;
+    #map5 {
+        width: 300px;
+        height: 300px;
         overflow: hidden;
     }
 
-    #menu_wrap {
-        height:600px;
+    #menu_wrap5 {
+        height:300px;
         width:300px;
         overflow-y: scroll;
         padding: 10px;
     }
 
-    #map_title {
+    #map_title5 {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -326,18 +337,18 @@ const SearchMap = css`
         padding: 10px;
     }
 
-    #searchBar {
+    #searchBar5 {
         display: flex;
         justify-content: space-between;
         padding: 0px 15px 10px 15px;
     }
 
-    #keyword {
+    #keyword5 {
         width: 70%;
         outline: none;
     }
 
-    #submit_btn {
+    #submit_btn5 {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -346,45 +357,45 @@ const SearchMap = css`
         outline: none;
     }
 
-    #placesList h5 {
+    #placesList5 h5 {
         color: #ff6e30;
     }
 
-    #placesList li {
+    #placesList5 li {
         list-style: square;
     }
-    #placesList .item {
+    #placesList5 .item {
         border-bottom: 1px solid #888;
         overflow: hidden;
         cursor: pointer;
     }
 
-    #placesList .item .info {
+    #placesList5 .item .info {
         padding: 10px 0 10px 5px;
     }
 
-    #placesList .item span {
+    #placesList5 .item span {
         display: block;
         margin-top: 4px;
     }
-    #placesList .info .gray {
+    #placesList5 .info .gray {
         color: #8a8a8a;
     }
 
-    #placesList .info .tel {
+    #placesList5 .info .tel {
         color: #009900;
     }
 
-    #pagination {
+    #pagination5 {
         margin: 10px auto;
         text-align: center;
     }
-    #pagination a {
+    #pagination5 a {
         display: inline-block;
         margin-right: 10px;
         color: #7b7b7b;
     }
-    #pagination .on {
+    #pagination5 .on {
         font-weight: bold;
         cursor: default;
         color: #ff6e30;
@@ -393,4 +404,4 @@ const SearchMap = css`
 
 
 
-export default Map;
+export default PostMapFive;

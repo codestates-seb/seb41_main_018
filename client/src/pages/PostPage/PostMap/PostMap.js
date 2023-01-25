@@ -1,17 +1,35 @@
-const { kakao } = window;
+import React, { useEffect, useState } from "react";
 
-export let xposition = '';
-export let yposition = '';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 
-export function searchMap (keyword) {
+import { useFieldArray, useFormContext } from 'react-hook-form';
+
+import { useRecoilState } from "recoil";
+import { detailPosition, xPosition, yPosition } from "../../../state/atom";
+
+const PostMap = (props) => {
+
+    const [ xpo, setXpo ] = useRecoilState(xPosition);
+    const [ ypo, setYpo ] = useRecoilState(yPosition);
+    const [ dpo, setDpo ] = useRecoilState(detailPosition);
+
+    const [ keyword, setKeyword ] = useState('');
+    
+    let xposition = '';
+    let yposition = '';
+    
+    const { kakao } = window;
+
+    function searchMap (keyword) {
 
         // 마커를 담을 배열입니다
         var markers = [];
 
-        const mapContainer = document.getElementById('map');
-        const mapOptions = {
+        var mapContainer = document.getElementById('map');
+        var mapOptions = {
             center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
-            level: 3
+            level: 4
         };
         const map = new kakao.maps.Map(mapContainer, mapOptions);
 
@@ -23,6 +41,17 @@ export function searchMap (keyword) {
         // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
         var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
+
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        var callback = function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                setDpo(result[0].address.address_name);
+            }
+        };
+
+        geocoder.coord2Address(xposition, yposition, callback);
+
         // 검색결과 항목을 Element로 반환하는 함수입니다
         function getListItem(index, places) {
 
@@ -30,6 +59,9 @@ export function searchMap (keyword) {
             itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
                         '<div class="info">' +
                         '   <h5>' + places.place_name + '</h5>';
+
+
+            // setDpo(places.address_name[0]);
 
             if (places.road_address_name) {
                 itemStr += '    <span>' + places.road_address_name + '</span>' +
@@ -147,7 +179,7 @@ export function searchMap (keyword) {
 
 
                     console.log(places[i].y, places[i].x); ////////////////////
-
+                    console.log(places)
 
                 // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
                 // LatLngBounds 객체에 좌표를 추가합니다
@@ -167,9 +199,21 @@ export function searchMap (keyword) {
                     itemEl.onmouseover =  function () {
                         displayInfowindow(marker, title);
                         ps.keywordSearch( title , listSearchCB)
+
                     };
 
-                    itemEl.onmouseout =  function () {
+                    /////
+                    itemEl.onmousedown = function () {
+                        setXpo(xposition);
+                        setYpo(yposition);
+                        // console.log(xposition);
+                        geocoder.coord2Address(xposition, yposition, callback)
+                    };
+                    /////
+
+
+
+                    itemEl.onmouseout = function () {
                         infowindow.close();
                     };
                 })(marker, places[i].place_name);
@@ -214,7 +258,6 @@ export function searchMap (keyword) {
 
             xposition = data[0].x;
             yposition = data[0].y;
-            // console.log(data[0].x, data[0].y);
                 
         } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
             // alert('검색 결과가 존재하지 않습니다.');
@@ -231,9 +274,9 @@ export function searchMap (keyword) {
         // 키워드 검색을 요청하는 함수입니다
         function searchPlaces () {
 
-            if (!keyword.replace(/^\s+|\s+$/g, '')) {
-                return;
-            }
+            // if (!keyword.replace(/^\s+|\s+$/g, '')) {
+            //     return;
+            // }
         
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
             ps.keywordSearch( keyword, placesSearchCB); 
@@ -246,3 +289,120 @@ export function searchMap (keyword) {
 
 
 }
+
+
+    useEffect(()=>{
+        searchMap(props.placeword)
+    }, [props.placeword])
+
+    return (
+        <div css={SearchMap}>
+            <div>
+                <div id="map"></div>
+            </div>
+            <div id="menu_wrap">
+                <div id="map_title">검색결과</div>
+                <div id="searchBar">
+                    <input id="keyword" type='text'placeholder="검색어를 입력해주세요"></input>
+                    {console.log(props.placeword)}
+                    <button id="submit_btn" type="submit">검색하기</button>
+                </div>
+                <ul id="placesList"></ul>
+                <div id="pagination"></div>
+            </div>
+        </div>
+    )
+}
+
+const SearchMap = css`
+    display: flex;
+
+    #map {
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
+    }
+
+    #menu_wrap {
+        height:300px;
+        width:300px;
+        overflow-y: scroll;
+        padding: 10px;
+    }
+
+    #map_title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 10px;
+    }
+
+    #searchBar {
+        display: flex;
+        justify-content: space-between;
+        padding: 0px 15px 10px 15px;
+    }
+
+    #keyword {
+        width: 70%;
+        outline: none;
+    }
+
+    #submit_btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #ff6e30;
+        border: none;
+        outline: none;
+    }
+
+    #placesList h5 {
+        color: #ff6e30;
+    }
+
+    #placesList li {
+        list-style: square;
+    }
+    #placesList .item {
+        border-bottom: 1px solid #888;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    #placesList .item .info {
+        padding: 10px 0 10px 5px;
+    }
+
+    #placesList .item span {
+        display: block;
+        margin-top: 4px;
+    }
+    #placesList .info .gray {
+        color: #8a8a8a;
+    }
+
+    #placesList .info .tel {
+        color: #009900;
+    }
+
+    #pagination {
+        margin: 10px auto;
+        text-align: center;
+    }
+    #pagination a {
+        display: inline-block;
+        margin-right: 10px;
+        color: #7b7b7b;
+    }
+    #pagination .on {
+        font-weight: bold;
+        cursor: default;
+        color: #ff6e30;
+    }
+`;
+
+
+
+export default PostMap;

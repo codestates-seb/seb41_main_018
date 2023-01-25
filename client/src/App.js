@@ -13,6 +13,8 @@ import Result from "../src/pages/Result";
 import Footer from "./components/Footer";
 import "./App.css";
 
+import TestPost from "./pages/PostPage/NewPost";
+
 const App = () => {
     return (
         <BrowserRouter>

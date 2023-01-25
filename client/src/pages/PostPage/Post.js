@@ -1,12 +1,13 @@
 import React from "react";
 import Postfrom from "../../components/Postform";
-import Map from "./searchMap";
+import Map from "./PostMap/PostMap";
+import TestPost from "./NewPost";
 
 const Post = () => {
     return (
         <>
-            <Map />
-            <Postfrom />
+            <TestPost/>
+            {/* <Postfrom /> */}
         </>
     );
 };
