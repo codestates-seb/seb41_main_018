@@ -30,7 +30,7 @@ const SocialLogin = css`
     justify-content: center;
     align-items: center;
 
-    margin-top: 20px;
+    margin: 20px;
 
     button {
         display: flex;
