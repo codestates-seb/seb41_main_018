@@ -66,17 +66,12 @@ public class ContentService {
         Optional.ofNullable(content.getTitle())
                 .ifPresent(findContent::setTitle);
 
-        Optional.ofNullable(content.getBody())
-                .ifPresent(findContent::setBody);
-
         Optional.ofNullable(content.getThemeType())
                 .ifPresent(findContent::setThemeType);
 
         Optional.ofNullable(content.getTravelDate())
                 .ifPresent(findContent::setTravelDate);
 
-//        Optional.ofNullable(content.getRouteName())
-//                .ifPresent(findContent::setRouteName);
 
         routeService.deleteRoutes(findContent);
         findContent.setRoutes(routeService.createRoutes(content.getRoutes()));

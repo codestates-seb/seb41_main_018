@@ -33,9 +33,6 @@ public class ContentAllResponseDto {
     @ApiModelProperty(notes = "컨텐트 제목", example = "기가 막힌 서울여행", required = true)
     @NotBlank(message = "게시글 제목을 입력해야합니다.")
     private String title;
-    @ApiModelProperty(notes = "컨텐트 내용", example = "너무 좋은 코스 추천합니당", required = true)
-    @NotBlank(message = "게시글 내용을 입력해야합니다.")
-    private String body;
 
 
     @ApiModelProperty(notes = "컨텐트 카테고리", example = "DOMESTIC", required = true)
@@ -46,9 +43,6 @@ public class ContentAllResponseDto {
     private int heartCount;
     @ApiModelProperty(notes = "조회 수", example = "1", required = true)
     private int viewCount;
-
-//    @ApiModelProperty(notes = "경로 이름", example = "서울", required = true)
-//    private String routeName;
 
     @ApiModelProperty(notes = "총 여행 비용", example = "120000", required = true)
     private int amount;

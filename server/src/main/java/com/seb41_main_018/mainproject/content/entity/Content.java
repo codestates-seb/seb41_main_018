@@ -28,10 +28,6 @@ public class Content extends Auditable {
 
     @Column(nullable = false)
     private String title;
-
-    @Column(nullable = false)
-    private String body;
-
     @Column(nullable = false)
     private int viewCount = 0;
 
@@ -43,9 +39,6 @@ public class Content extends Auditable {
 
     @Column(nullable = false)
     private String travelDate;
-
-//    @Column(nullable = false)
-//    private String routeName;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)

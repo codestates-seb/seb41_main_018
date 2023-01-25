@@ -31,7 +31,6 @@ public interface ContentMapper {
         //content.setRouteName(requestBody.getRouteName());
         content.setTravelDate(requestBody.getTravelDate());
         content.setThemeType(requestBody.getThemeType());
-        content.setBody(requestBody.getBody());
         return content;
     }
     default Content contentPatchDtoToContent(ContentPatchDto requestBody){
@@ -40,7 +39,6 @@ public interface ContentMapper {
         content.setContentId(requestBody.getContentId());
         List<Route> routes = routesDtosToRoutes(requestBody.getRoutes(),content);
 
-        content.setBody(requestBody.getBody());
         content.setTitle(requestBody.getTitle());
         content.setThemeType(requestBody.getThemeType());
         content.setTravelDate(requestBody.getTravelDate());
@@ -55,7 +53,6 @@ public interface ContentMapper {
                 .contentId(content.getContentId())
                 .userId(user.getUserId())
                 .title(content.getTitle())
-                .body(content.getBody())
                 .heartCount(content.getHeartCount())
                 .themeType(content.getThemeType())
                 .viewCount(content.getViewCount())
@@ -96,6 +93,7 @@ public interface ContentMapper {
                         .y(route.getY())
                         .routeId(route.getRouteId())
                         .address(route.getAddress())
+                        .routeImages(route.getRouteImages())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -127,7 +125,6 @@ public interface ContentMapper {
                 .contentId(content.getContentId())
                 .userId(user.getUserId())
                 .title(content.getTitle())
-                .body(content.getBody())
                 .heartCount(content.getHeartCount())
                 .themeType(content.getThemeType())
                 .comments(commentsToCommentResponseDtos(commentRepository.findAllByContentId(content.getContentId())))
