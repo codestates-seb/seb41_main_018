@@ -14,7 +14,6 @@ import { CategoryData, PostFormData, PostFormData2 } from "../state/atom";
 const TitleCard = () => {
     const [category, setCategory] = useRecoilState(CategoryData);
     const [postFormData, setPostFormData] = useRecoilState(PostFormData);
-    const [postFormData2, setPostFormData2] = useRecoilState(PostFormData2);
     console.log(category);
 
     const options = [
@@ -54,8 +53,6 @@ const TitleCard = () => {
         let tmp = postFormData;
         console.log(`tmp:`, tmp);
         // tmp.themeType = category;
-        setPostFormData2(tmp);
-        console.log(postFormData2);
 
         // console.log(postFormData);
         // let themeType = postFormData.themeType;
