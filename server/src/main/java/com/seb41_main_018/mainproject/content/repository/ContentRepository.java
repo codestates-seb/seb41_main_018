@@ -12,6 +12,6 @@ public interface ContentRepository extends JpaRepository<Content, Long> {
     //@Query(value = "select * from content where theme_type = :themeType", nativeQuery = true)
     List<Content> findAllByThemeType(ThemeType themeType);
 
-    @Query(value = "select * from content where user_id = :userId", nativeQuery = true)
+    @Query(value = "select * from contents where user_id = :userId", nativeQuery = true)
     List<Content> findAllByUserId(long userId);
 }
