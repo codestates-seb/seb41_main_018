@@ -37,7 +37,7 @@ export const LoginContainer = css`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 70px 20px;
+    padding: 20px;
     border-radius: 10px;
     background: #ffffff;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;

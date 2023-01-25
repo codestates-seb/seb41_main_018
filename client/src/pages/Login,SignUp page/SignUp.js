@@ -19,7 +19,7 @@ import {
 } from "./loginstyle";
 import Button from "../../components/Button";
 import SocialButton from "../../components/SocialButton";
-import logo3 from "../../assets/logo3.png";
+import logo9 from "../../assets/logo9.png";
 // import { useRecoilState } from "recoil";
 // import { userEmail } from "../state/atom";
 
@@ -143,7 +143,7 @@ const SignUp = () => {
             <div css={LoginpageContainer}>
                 <div css={LoginLogoContainer}>
                     <Link to={"/"}>
-                        <img src={logo3} alt="logo" />
+                        <img src={logo9} alt="logo" />
                     </Link>
                 </div>
                 <form css={LoginContainer}>
@@ -164,7 +164,18 @@ const SignUp = () => {
                                 },
                             })}
                         />
-                        <Button type="button" text={"중복검사"} onClick={emailCheck} />
+                        <Button
+                            type="button"
+                            width="100px"
+                            color="white"
+                            text="중복검사"
+                            margin="40px"
+                            padding="10px"
+                            bdradius="50px"
+                            boxShadow="1px 2px 2px rgb(0,0,0,0.3)"
+                            ftsize="0.8rem"
+                            onClick={emailCheck}
+                        />
                     </div>
                     {errors.email && <small role="alert">{errors.email.message}</small>}
                     <label htmlFor="password" css={LoginLabelBox}>
@@ -232,8 +243,18 @@ const SignUp = () => {
                         css={LoginInputBox}
                     />
                     {errors.phone && <small role="alert">{errors.phonenum.message}</small>}
-                    <Button type="button" text="Sign Up" onClick={handleSubmit(onSignUpSubmit)} />
                     <SocialButton />
+                    <Button
+                        type="button"
+                        width="100px"
+                        color="white"
+                        text="Sign Up"
+                        margin="30px"
+                        padding="10px"
+                        bdradius="50px"
+                        boxShadow="1px 2px 2px 1px rgb(0,0,0,0.3)"
+                        onClick={handleSubmit(onSignUpSubmit)}
+                    />
                 </form>
             </div>
         </div>

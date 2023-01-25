@@ -49,7 +49,6 @@ const LoginPage = () => {
                 navigate("/");
                 sessionStorage.setItem("Authorization", res.headers.get("Authorization"));
                 sessionStorage.setItem("Refresh", res.headers.get("Refresh"));
-                alert("로그인 성공!");
             })
             .catch((err) => {
                 console.log(err);
@@ -73,7 +72,7 @@ const LoginPage = () => {
                         id="email"
                         type="email"
                         name="email"
-                        placeholder="test@email.com"
+                        placeholder="이메일을 입력해주세요."
                         {...register("email", {
                             required: "이메일은 필수 입력입니다.",
                             pattern: {
@@ -91,7 +90,7 @@ const LoginPage = () => {
                         id="password"
                         type="password"
                         name="password"
-                        placeholder="비밀번호"
+                        placeholder="비밀번호를 입력해주세요."
                         {...register("password", {
                             required: "비밀번호는 필수 입력입니다.",
                             minLength: {
