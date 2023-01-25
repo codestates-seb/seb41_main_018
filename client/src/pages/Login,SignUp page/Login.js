@@ -1,16 +1,14 @@
 import React from "react";
-
-import { useForm } from "react-hook-form";
-
-import { useNavigate, Link } from "react-router-dom";
-
-import axios from "axios";
-import { useRecoilState } from "recoil";
-import { getAuthorization, getRefresh } from "../../state/atom";
-
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-
+import { useNavigate, Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useRecoilState } from "recoil";
+import { getAuthorization, getRefresh } from "../../state/atom";
+import SocialButton from "../../components/SocialButton";
+import Button from "../../components/Button";
+import logo9 from "../../assets/logo9.png";
+import axios from "axios";
 import {
     LoginpageBg,
     LoginpageContainer,
@@ -19,9 +17,6 @@ import {
     LoginLabelBox,
     LoginInputBox,
 } from "./loginstyle";
-import SocialButton from "../../components/SocialButton";
-import Button from "../../components/Button";
-import logo3 from "../../assets/logo3.png";
 
 const defaultValues = {
     email: "",
@@ -30,6 +25,8 @@ const defaultValues = {
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const [Authorization, setAuthorization] = useRecoilState(getAuthorization);
+    const [Refresh, setRefresh] = useRecoilState(getRefresh);
 
     const {
         register,
@@ -50,12 +47,9 @@ const LoginPage = () => {
             })
             .then((res) => {
                 navigate("/");
-                const [getAuthorization, setGetAuthorization] = useRecoilState(getAuthorization);
-                const [getRefresh, setGetRefresh] = useRecoilState(getRefresh);
-                setGetAuthorization(res.headers.get("Authorization"));
-                setGetRefresh(res.headers.get("Refresh"));
-                console.log(getAuthorization);
-                console.log(getRefresh);
+                sessionStorage.setItem("Authorization", res.headers.get("Authorization"));
+                sessionStorage.setItem("Refresh", res.headers.get("Refresh"));
+                alert("로그인 성공!");
             })
             .catch((err) => {
                 console.log(err);
@@ -68,7 +62,7 @@ const LoginPage = () => {
             <div css={LoginpageContainer}>
                 <div css={LoginLogoContainer}>
                     <Link to={"/"}>
-                        <img src={logo3} alt="logo" />
+                        <img src={logo9} alt="logo" />
                     </Link>
                 </div>
                 <form css={LoginContainer} onSubmit={handleSubmit(onSubmit)}>

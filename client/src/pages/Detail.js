@@ -67,8 +67,8 @@ const Detail = () => {
         await axios
             .get(`/contents/1`)
             .then((res) => {
-                console.log(res);
-                return res;
+                console.log(res.data.data);
+                return res.data.data;
             })
             .catch((err) => {
                 console.error(err.message);

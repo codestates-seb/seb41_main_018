@@ -144,12 +144,12 @@ export const AddRoute = (props) => {
         name: "routes",
     });
 
-    const submit = (obj) => {
+    const submit = (data) => {
         obj.themeType = category;
         /*  
         obj.title = title;
         obj.date = date; */
-        setPostFormData(obj);
+        setPostFormData(data);
     };
 
     console.log(`data가 잘뽑히나요`, postFormData);

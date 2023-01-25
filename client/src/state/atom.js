@@ -72,3 +72,8 @@ export const DateData = atom({
     key: "DateData",
     default: "",
 });
+
+export const ContentsList = atom({
+    key: "ContentsList",
+    default: {},
+});

@@ -83,7 +83,12 @@ const TitleCard = () => {
                 `}
             >
                 <div>
-                    <Post placeholder="제목을 입력해주세요." width="340px" onChange={getTitle} />
+                    <Post
+                        name="title"
+                        placeholder="제목을 입력해주세요."
+                        width="340px"
+                        onChange={getTitle}
+                    />
                 </div>
                 <div css={ComContainer}>
                     <span>카테고리</span>
@@ -102,12 +107,12 @@ const TitleCard = () => {
                             align-items: center;
                         `}
                     >
-                        <Calendar onChange={getDate} />
+                        <Calendar />
                     </div>
                 </div>
                 <div css={ComContainer}>
                     <span>총 여행 경비</span>
-                    <Post placeholder="얼마를 사용하셨나요?" width="80px" />
+                    <Post name="totalprice" placeholder="얼마를 사용하셨나요?" width="80px" />
                 </div>
             </div>
         </div>

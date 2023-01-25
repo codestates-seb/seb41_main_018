@@ -5,11 +5,8 @@ import axios from "axios";
 // 컨텐트 전체 조회 & 컨텐트 조회
 export const getContent = async (contentId = 0) => {
     await axios
-        .get(`/constents${contentId !== 0 ? `/${contentId}` : "?page=1&size=10"}`)
+        .get(`/contents${contentId !== 0 ? `/${contentId}` : "/?page=1&size=10"}`)
         .then((res) => {
-            if (!res.ok) {
-                throw Error("error");
-            }
             return res;
         })
         .catch((err) => {

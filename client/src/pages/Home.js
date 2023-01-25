@@ -1,5 +1,5 @@
+import React, { useEffect } from "react";
 /** @jsxImportSource @emotion/react */
-import React from "react";
 import { css } from "@emotion/react";
 import HomeItems from "../components/Home_components/HomeItems";
 import Regionitems from "../components/Home_components/RegionItems";
@@ -14,9 +14,30 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import right from "../assets/right.png";
 import left from "../assets/left.png";
+import { getContent } from "../util/axiosDetail";
+import { useRecoilState } from "recoil";
+import { ContentsList } from "../state/atom";
+import axios from "axios";
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const Home = () => {
+    const [contentsList, setcontentsList] = useRecoilState(ContentsList);
+
+    const getTest = async () => {
+        await axios
+            .get(`/contents/?page=1&size=10`)
+            .then((res) => {
+                console.log(res.data.data);
+                setcontentsList(res.data.data);
+            })
+            .catch((err) => {
+                console.error(err.message);
+            });
+    };
+    useEffect(() => {
+        getTest();
+    }, []);
+
     const swiperOption = {
         spaceBetween: 10,
         slidesPerView: 5,
