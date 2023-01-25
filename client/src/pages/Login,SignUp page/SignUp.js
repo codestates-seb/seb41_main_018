@@ -283,7 +283,7 @@ const SignupEmailBox = css`
     button {
         width: 20%;
         height: 30px;
-        margin: 5px;
+        margin-bottom: 10px;
     }
 `;
 
