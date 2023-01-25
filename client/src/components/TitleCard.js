@@ -14,8 +14,10 @@ import { CategoryData, PostFormData, TitleData, DateData } from "../state/atom";
 const TitleCard = () => {
     const [category, setCategory] = useRecoilState(CategoryData);
     const [postFormData, setPostFormData] = useRecoilState(PostFormData);
+
     const [title, setTitle] = useRecoilState(TitleData);
     const [Date, setDate] = useRecoilState(DateData);
+
 
     const options = [
         "국내여행",
@@ -49,9 +51,11 @@ const TitleCard = () => {
         }
     };
 
+
     const getTitle = (e) => {
         console.log(e);
     };
+
 
     useEffect(() => {
         let tmp = { ...postFormData };
