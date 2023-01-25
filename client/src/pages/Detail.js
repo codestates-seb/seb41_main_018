@@ -13,46 +13,6 @@ import axios from "axios";
 import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { IoMdArrowDropupCircle } from "react-icons/io";
 
-// const content = {
-//     contentId: 1,
-//     title: "커플 여행",
-//     body: "해피",
-//     themeType: "COUPLE",
-//     date: "2023.01.21",
-//     routeName: "서울에서 놀자",
-//     routes: [
-//         {
-//             routeId: 1,
-//             price: 20000,
-//             vehicle: "자동차",
-//             place: "아르떼 뮤지엄",
-//             body: "넘 이쁨",
-//             x: "1",
-//             y: "1",
-//         },
-
-//         {
-//             routeId: 2,
-//             price: 10000,
-//             vehicle: "자동차",
-//             place: "금오름",
-//             body: "조하용",
-//             x: "1",
-//             y: "1",
-//         },
-//         {
-//             routeId: 3,
-//             price: 10000,
-//             vehicle: "자동차",
-//             place: "경복궁",
-//             body: "한복 체험 잼남",
-//             x: "1",
-//             y: "1",
-//         },
-//     ],
-//     comment: [],
-// };
-
 const Detail = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const getContentDetail = (id) => {
@@ -63,10 +23,10 @@ const Detail = () => {
     };
     return (
         <div className="Detail" css={Wrap}>
-            <h1>제주도 1일차 여행 추천 경로!</h1>
+            <h2>제주도 1일차 여행 추천 경로!</h2>
             <div css={ContentInfo}>
-                <span>작성자 : 원할머니멱살</span>
-                <span>2023. 01. 22</span>
+                {/* 🥲 */}
+                <span>혼자 여행</span>/<span>2023.02.08</span>/<span>700,000원</span>
             </div>
             {/* 공통 정보 */}
             <div css={ContentsBody}>
@@ -98,46 +58,33 @@ const Wrap = css`
     justify-content: center;
     align-items: center;
 
-    h1 {
-        padding: 30px;
+    h2 {
+        align-self: start;
+        margin: 30px 30px 5px;
     }
 `;
 const ContentInfo = css`
-    align-self: flex-end;
+    align-self: flex-start;
+    font-size: 0.9rem;
+    margin: 0 25px;
     span {
-        padding: 10px 30px;
+        margin: 5px;
     }
 `;
-
-const TotalContainer = css`
-    display: flex;
-    flex-direction: row;
-    padding-bottom: 30px;
-`;
-/* const Image = css`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 65%;
-    height: 500px;
-    padding: 20px;
-`; */
-
 const ContentsBody = css`
-    padding-top: 20px;
+    display: none;
+    /* padding-top: 20px;
     display: flex;
-    align-self: center;
+    align-self: center; */
 `;
-
 const ComContent = css`
     display: flex;
+    flex-direction: column;
     font-size: 1.1rem;
     align-items: center;
     font-weight: 600;
     padding: 8px 20px;
 `;
-
 const ContentName = css`
     border-radius: ${PALETTE.border_round};
     background-color: #eff5f5;
@@ -148,4 +95,10 @@ const ContentName = css`
     font-size: 1rem;
     margin: 10px;
 `;
+const TotalContainer = css`
+    display: flex;
+    flex-direction: row;
+    margin: 30px 0;
+`;
+
 export default Detail;
