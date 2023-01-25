@@ -1,5 +1,6 @@
 package com.seb41_main_018.mainproject.content.controller;
 
+import com.seb41_main_018.mainproject.config.S3Uploader;
 import com.seb41_main_018.mainproject.constant.ThemeType;
 import com.seb41_main_018.mainproject.content.dto.*;
 import com.seb41_main_018.mainproject.content.entity.Content;
@@ -9,18 +10,20 @@ import com.seb41_main_018.mainproject.content.service.ContentService;
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
 import com.seb41_main_018.mainproject.route.service.RouteService;
-import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 @ApiOperation(value = "컨텐트 API", tags = {"Content Controller"})
 @RestController
@@ -31,12 +34,14 @@ public class ContentController {
     private final ContentMapper contentMapper;
     private final ContentRepository contentRepository;
     private final RouteService routeService;
+    private final S3Uploader s3Uploader;
 
-    public ContentController(ContentService contentService, ContentMapper contentMapper, ContentRepository contentRepository, RouteService routeService) {
+    public ContentController(ContentService contentService, ContentMapper contentMapper, ContentRepository contentRepository, RouteService routeService, S3Uploader s3Uploader) {
         this.contentService = contentService;
         this.contentMapper = contentMapper;
         this.contentRepository = contentRepository;
         this.routeService = routeService;
+        this.s3Uploader = s3Uploader;
     }
 
 
@@ -45,9 +50,12 @@ public class ContentController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Content not found")})
-    @PostMapping
-    public ResponseEntity postContent(@Valid @RequestBody ContentPostDto requestBody) {
-        Content content = contentService.createContent(contentMapper.contentPostDtoToContent(requestBody));
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity postContent(@Valid @RequestPart(value="requestBody") ContentPostDto requestBody,
+                                        @RequestPart(value = "imgFiles") MultipartFile[] imgFiles) throws IOException {
+
+        List<String> imgUrls = s3Uploader.uploadRouteImages(imgFiles);
+        Content content = contentService.createContent(contentMapper.contentPostDtoToContent(requestBody,imgUrls));
         ContentResponseDto contentResponse = contentMapper.contentToContentResponse(content);
 
         return new ResponseEntity<>(
@@ -97,10 +105,12 @@ public class ContentController {
             @ApiResponse(code = 404, message = "Content not found")})
     @PatchMapping("/{contentId}")
     public ResponseEntity patchContent(@RequestBody ContentPatchDto requestBody,
-                                       @PathVariable("contentId") Long contentId) {
+                                       @PathVariable("contentId") Long contentId,
+                                       @RequestPart(value = "imgFiles") MultipartFile[] imgFiles) throws IOException {
         requestBody.updateId(contentId);
+        List<String> imgUrls = s3Uploader.uploadRouteImages(imgFiles);
         Content content = contentService.updateContent(
-                contentMapper.contentPatchDtoToContent(requestBody));
+                contentMapper.contentPatchDtoToContent(requestBody,imgUrls));
 
         ContentResponseDto contentResponse = contentMapper.contentToContentResponse(content);
 
