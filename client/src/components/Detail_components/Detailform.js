@@ -45,8 +45,9 @@ const Detailform = () => {
                             </div>
                         ))}
                 </div>
-
-                <DetailformItems index={currentTab} />
+                <div>
+                    <DetailformItems index={currentTab} />
+                </div>
             </div>
             <div css={ButtonBox}>
                 <Button
@@ -109,16 +110,18 @@ const ButtonBox = css`
 `;
 
 const SelectTab = css`
-    font-size: 1.2rem;
-    padding: 10px;
-    border: 2px solid purple;
-    background-color: purple;
+    padding: 10px 20px;
+    font-size: 0.975rem;
+    font-weight: 600;
+    color: ${PALETTE.default_color};
+    border-bottom: 0.2em solid ${PALETTE.default_color};
 `;
 
 const NoSelect = css`
-    font-size: 1.2rem;
-    padding: 10px;
-    border: 2px solid #eeedf0;
+    padding: 10px 20px;
+    font-size: 0.975rem;
+    color: ${PALETTE.gray};
+    border-bottom: 0.2em solid ${PALETTE.ligth_gray};
 `;
 
 export default Detailform;
