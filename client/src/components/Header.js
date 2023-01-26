@@ -14,9 +14,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import SignButton from "./SignButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "./Button.js";
+import { useRecoilState } from "recoil";
+import { loginState } from "../state/atom.js";
 
 const Header = () => {
-    const [isLogin, setislogin] = useState(false);
+    const [isLogin, setislogin] = useRecoilState(loginState);
     const [isResSearchIconClick, setResSearchIcon] = useState(false);
     const [isMenuClick, setMenuClick] = useState(false);
     const [isAccountClick, setAccontClick] = useState(false);
