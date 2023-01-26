@@ -58,11 +58,7 @@ const Detailform = () => {
         <div css={wrap}>
             <div css={container}>
                 {/* 경로 아이템 불러오기 */}
-                <div
-                    css={css`
-                        display: flex;
-                    `}
-                >
+                <div css={tabWrap}>
                     {data &&
                         data.routes.map((el, index) => (
                             <div
@@ -74,11 +70,17 @@ const Detailform = () => {
                             </div>
                         ))}
                 </div>
-                <div>
+                <div
+                    css={css`
+                        margin: 0 auto;
+                        /* background-color: greenyellow; */
+                    `}
+                >
                     <DetailformItems index={currentTab} />
                     <div
                         css={css`
                             display: flex;
+                            margin-top: 20px;
                         `}
                     >
                         {tagDummy.map((el, index) => (
@@ -89,6 +91,7 @@ const Detailform = () => {
                     </div>
                 </div>
             </div>
+            <h2>Map😀</h2>
             <DetailMap />
             <div css={ButtonBox}>
                 <Buttons icon={<BsFillHeartFill />} text="가치갈래" />
@@ -112,6 +115,9 @@ const container = css`
     box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2);
     margin: 10px 40px;
     padding: 20px;
+    @media (min-width: 768px) {
+        display: flex;
+    }
 `;
 const ButtonBox = css`
     display: flex;
@@ -125,6 +131,15 @@ const SelectTab = css`
     font-weight: 600;
     color: ${PALETTE.default_color};
     border-bottom: 0.2em solid ${PALETTE.default_color};
+`;
+
+const tabWrap = css`
+    display: flex;
+    @media (min-width: 768px) {
+        flex-direction: column;
+        width: 270px;
+        margin: 0 20px;
+    }
 `;
 
 const NoSelect = css`

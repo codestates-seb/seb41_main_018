@@ -48,7 +48,7 @@ const DetailformItems = (props) => {
 
 const wrap = css`
     font-size: 0.9rem;
-    padding: 20px 0;
+    /* background-color: red; */
     margin: 0 auto;
     display: flex;
     flex-direction: column;

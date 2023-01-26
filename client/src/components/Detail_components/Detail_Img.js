@@ -79,9 +79,10 @@ const Detial_Img = () => {
 
 const Swiper_Wrap = css`
     width: 80vw;
+
     height: 100%;
     border-radius: 10px;
-    margin: 0 auto;
+    margin: 20px auto;
     @media (min-width: 768px) {
         width: 50vw;
         height: 375px;
