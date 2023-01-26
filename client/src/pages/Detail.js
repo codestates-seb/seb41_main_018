@@ -5,47 +5,10 @@ import { PALETTE } from "../Common";
 import { useRecoilState } from "recoil";
 import Detailform from "../components/Detail_components/Detailform";
 import Reviewform from "../components/Detail_components/Reviewform";
-import Tag from "../components/Post_components/Tag";
 import { getContent } from "../util/axiosDetail";
 import { ContentDetail } from "../state/atom";
 import axios from "axios";
-
-import { IoMdArrowDropdownCircle } from "react-icons/io";
-import { IoMdArrowDropupCircle } from "react-icons/io";
-
-// 경로 데이터 더미
-const contents = {
-    routes: [
-        {
-            routeId: 1,
-            price: 20000,
-            vehicle: "자동차",
-            place: "아르떼 뮤지엄",
-            body: "넘 이쁨",
-            x: "1",
-            y: "1",
-        },
-
-        {
-            routeId: 2,
-            price: 10000,
-            vehicle: "자동차",
-            place: "금오름",
-            body: "조하용",
-            x: "1",
-            y: "1",
-        },
-        {
-            routeId: 3,
-            price: 10000,
-            vehicle: "자동차",
-            place: "경복궁",
-            body: "한복 체험 잼남",
-            x: "1",
-            y: "1",
-        },
-    ],
-};
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const Detail = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
@@ -60,28 +23,36 @@ const Detail = () => {
         getContentDetail();
     }, []);
 
+    const data = contentDetail.data;
+    console.log(data);
+
     return (
         <div className="Detail" css={Wrap}>
-            <h2>제주도 1일차 여행 추천 경로!</h2>
+            <h2>{data && data.title}</h2>
             <div css={ContentInfo}>
                 {/* 🥲 */}
-                <span>혼자 여행</span>/<span>2023.02.08</span>/<span>700,000원</span>
+                {/* <span>{data && data.themeType}</span>/<span>{data && data.createdAt}</span>/
+                <span>{`${data && data.amount}₩`}</span> */}
             </div>
             {/* 공통 정보 */}
             <div css={ContentsBody}>
                 <div css={ComContent}>
                     <span css={ContentName}>카테고리</span>
-                    <span>혼자 여행</span>
+                    <span>{`${data && data.themeType}`}</span>/
                 </div>
                 <div css={ComContent}>
                     <span css={ContentName}>여행일</span>
-                    <span>2023.02.08</span>
+                    <span>{`${data && data.createdAt}`}</span>/
                 </div>
                 <div css={ComContent}>
                     <span css={ContentName}>총 여행 경비</span>
-                    <span>700,000원</span>
+                    <span>{`${data && data.amount}₩`}</span>
                 </div>
             </div>
+            {/* <div>
+                <FavoriteIcon css={heartIcon} />
+                <span>{`${data && data.heartCount} likes`}</span>
+            </div> */}
             <div css={TotalContainer}>
                 <Detailform />
             </div>
@@ -111,20 +82,20 @@ const ContentInfo = css`
     }
 `;
 const ContentsBody = css`
-    display: none;
-    /* padding-top: 20px;
     display: flex;
-    align-self: center; */
+    align-self: flex-start;
+    margin: 0 27px;
+    margin-top: -5px;
 `;
 const ComContent = css`
-    display: flex;
-    flex-direction: column;
-    font-size: 1.1rem;
-    align-items: center;
-    font-weight: 600;
-    padding: 8px 20px;
+    font-size: 0.9rem;
+
+    span {
+        margin: 0 5px;
+    }
 `;
 const ContentName = css`
+    display: none;
     border-radius: ${PALETTE.border_round};
     background-color: #eff5f5;
     color: #497174;
@@ -140,4 +111,8 @@ const TotalContainer = css`
     margin: 30px 0;
 `;
 
+const heartIcon = css`
+    font-size: 0.9rem;
+    color: #ff6d75;
+`;
 export default Detail;

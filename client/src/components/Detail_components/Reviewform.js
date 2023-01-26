@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useForm } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
-import { useState } from "react";
 import ReviewItem from "./ReviewItem";
 import Button from "../Button";
 import Box from "@mui/material/Box";
@@ -10,6 +9,37 @@ import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Input } from "../../util/UseForm";
+
+//Button
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/styles.css";
+
+export const Buttons = (props) => {
+    return (
+        <AwesomeButton
+            type="primary"
+            before={props.icon}
+            css={css`
+                --button-default-height: 80px;
+                --button-default-font-size: 1.1rem;
+                --button-default-border-radius: 10px;
+                --button-horizontal-padding: 30px;
+                --button-raise-level: 3px;
+                --button-hover-pressure: 1.75;
+                --transform-speed: 0.185s;
+                --button-primary-color: #1e88e5;
+                --button-primary-color-dark: #1360a4;
+                --button-primary-color-light: #ffffff;
+                --button-primary-color-hover: #187bd1;
+                --button-primary-color-active: #166dba;
+                --button-primary-border: none;
+            `}
+        >
+            {props.text}
+        </AwesomeButton>
+    );
+};
 
 // 후기 더미 데이터
 const reviewDummy = [
@@ -74,17 +104,9 @@ const Reviewform = (props) => {
                 />
             </div>
             <div css={ReviewInput}>
-                <textarea placeholder="후기를 작성해주세요."></textarea>
-                <Button
-                    width="10vw"
-                    minWidth="60px"
-                    height="80px"
-                    margin="0 0 0 10px"
-                    text="등록하기"
-                    ftweight="700"
-                    ftsize="1.3rem"
-                    color="#00AEAE"
-                />
+                <textarea placeholder="후기를 작성해주세요." />
+
+                <Buttons text="등록하기" />
             </div>
             <div css={ReviewList}>
                 {/* reviewitem >> map */}
@@ -117,18 +139,18 @@ const ReviewCount = css`
 const ReviewInput = css`
     display: flex;
     justify-content: space-between;
-    width: 85vw;
     height: 80px;
-    /* margin: 0 auto; */
+    margin: 0 auto;
 
     textarea {
         border: none;
-        width: 90vw;
+        width: 70vw;
         height: 80px;
         border: 2px solid ${PALETTE.default_color};
         border-radius: ${PALETTE.border_radius};
         padding: 10px;
-        font-size: 1.2rem;
+        margin-right: 10px;
+        font-size: 1rem;
         color: gray;
     }
 `;
