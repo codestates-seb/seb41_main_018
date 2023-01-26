@@ -13,19 +13,14 @@ import MyReview from "../components/Mypage_components/MyReview";
 import logo9 from "../assets/logo9.png";
 import { userInfoState } from "../state/atom";
 import { useRecoilState } from "recoil";
-import { checkLogin } from "../util/axiosUser";
+import { getUserInfo, userEdit } from "../util/axiosUser";
 
 const Mypage = () => {
     const [isTab, setIsTab] = useState(0);
     const [editClick, setEditClick] = useState(false);
     const [inputName, setInputName] = useState("");
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-
-    useEffect(() => {
-        checkLogin().then((data) => {
-            console.log(data);
-        });
-    }, []);
+    const [update, setUpdate] = useState(true);
 
     const selectTabHandler = (index) => {
         setIsTab(index);
@@ -39,11 +34,25 @@ const Mypage = () => {
         setInputName(e.target.value);
     };
 
-    // inputName (필요 시 email까지) 받아서 patch 요청
-    const editNameHandler = (inputName) => {
-        setEditClick(!editClick);
+    const editNameHandler = () => {
+        userEdit(userInfo.userId, inputName).then((data) => {
+            if (data) {
+                /* setUpdate(true); */
+                getUserInfo(userInfo.userId).then((data) => {
+                    setUserInfo(data.data);
+                });
+
+                console.log("바뀐값", data);
+            }
+            editButtonHandler();
+        });
     };
 
+    /*   useEffect(() => {
+        if (update) {
+            setUpdate(false);
+        }
+    }, [update]); */
     return (
         <div css={Mypage_Wrap}>
             {console.log(userInfo)}

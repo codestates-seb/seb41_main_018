@@ -58,6 +58,28 @@ export const checkLogin = async () => {
         }
     });
 };
+
+// 닉네임 수정
+export const userEdit = async (userId, editName) => {
+    return await axios
+        .patch(
+            `/users/${userId}`,
+            { nickname: editName },
+            {
+                headers: {
+                    Authorization: sessionStorage.getItem("access_token"),
+                },
+            }
+        )
+        .then((res) => {
+            console.log("수정 완료");
+            return res.data;
+        })
+        .catch((err) => {
+            console.error(err.message);
+        });
+};
+
 //로그아웃
 export const userLogout = async () => {
     return await axios
