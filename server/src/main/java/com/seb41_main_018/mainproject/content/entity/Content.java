@@ -45,7 +45,7 @@ public class Content extends Auditable {
     private ThemeType themeType = ThemeType.BASIC;
 
 
- 
+
     // 연관 관계 //
     @OrderBy("heartId")
     @OneToMany(mappedBy = "content", cascade = CascadeType.REMOVE)

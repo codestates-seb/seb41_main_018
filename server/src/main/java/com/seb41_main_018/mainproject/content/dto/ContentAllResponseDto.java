@@ -49,6 +49,9 @@ public class ContentAllResponseDto {
     @ApiModelProperty(notes = "여행 날짜", example = "2023.01.20", required = true)
     private String travelDate;
 
+    @ApiModelProperty(notes = "작성자 닉네임", example = "강멋쟁이", required = true)
+    private String nickName;
+
     @ApiModelProperty(notes = "후기들", example = "저도 너무 좋았어요!", required = true)
     private List<CommentDto.Response> comments;
 
