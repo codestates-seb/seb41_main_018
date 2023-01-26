@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.List;
-
 @ApiModel("Route Response")
 @AllArgsConstructor
 @Getter
@@ -38,8 +36,4 @@ public class RouteResponseDto {
 
     @ApiModelProperty(notes = "경로의 주소", example = "서울시 종로구", required = true)
     private String address;
-
-    @ApiModelProperty(notes = "경로 이미지", example = "커플사진.jpg", required = true)
-    private List<String> routeImages;
-
 }
