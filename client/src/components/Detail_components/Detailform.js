@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { PALETTE } from "../../Common";
 import { css } from "@emotion/react";
 import DetailformItems from "./DetailformItems";
+import DetailMap from "../../pages/PostPage/DetailMap";
 import Button from "../Button";
 import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
@@ -19,7 +20,8 @@ const Detailform = () => {
         setcurrentTab(index);
     };
 
-    console.log(contentDetail);
+    const data = contentDetail.data;
+    const tagDummy = ["강릉", "아르떼뮤지엄", "경포"];
 
     return (
         <div css={wrap}>
@@ -30,14 +32,10 @@ const Detailform = () => {
                         display: flex;
                     `}
                 >
-                    {contentDetail.data &&
-                        contentDetail.data.routes.map((el, index) => (
+                    {data &&
+                        data.routes.map((el, index) => (
                             <div
-                                key={
-                                    contentDetail.data &&
-                                    contentDetail.data.routes &&
-                                    contentDetail.data.routes[index].routeId
-                                }
+                                key={data && data.routes && data.routes[index].routeId}
                                 onClick={() => selectMenuHandler(index)}
                                 css={currentTab === index ? SelectTab : NoSelect}
                             >
@@ -47,8 +45,20 @@ const Detailform = () => {
                 </div>
                 <div>
                     <DetailformItems index={currentTab} />
+                    <div
+                        css={css`
+                            display: flex;
+                        `}
+                    >
+                        {tagDummy.map((el, index) => (
+                            <span key={index} css={tagStyle}>
+                                {`#${el}`}
+                            </span>
+                        ))}
+                    </div>
                 </div>
             </div>
+            <DetailMap />
             <div css={ButtonBox}>
                 <Button
                     width="23.5vw"
@@ -110,7 +120,7 @@ const ButtonBox = css`
 `;
 
 const SelectTab = css`
-    padding: 10px 20px;
+    padding: 10px;
     font-size: 0.975rem;
     font-weight: 600;
     color: ${PALETTE.default_color};
@@ -118,10 +128,22 @@ const SelectTab = css`
 `;
 
 const NoSelect = css`
-    padding: 10px 20px;
+    padding: 10px;
     font-size: 0.975rem;
     color: ${PALETTE.gray};
     border-bottom: 0.2em solid ${PALETTE.ligth_gray};
 `;
 
+const tagStyle = css`
+    display: flex;
+    width: fit-content;
+    height: auto;
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    color: #497174;
+    border-radius: ${PALETTE.border_round};
+    background-color: #eff5f5;
+`;
 export default Detailform;
