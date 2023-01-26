@@ -5,47 +5,10 @@ import { PALETTE } from "../Common";
 import { useRecoilState } from "recoil";
 import Detailform from "../components/Detail_components/Detailform";
 import Reviewform from "../components/Detail_components/Reviewform";
-import Tag from "../components/Post_components/Tag";
 import { getContent } from "../util/axiosDetail";
 import { ContentDetail } from "../state/atom";
 import axios from "axios";
-
-import { IoMdArrowDropdownCircle } from "react-icons/io";
-import { IoMdArrowDropupCircle } from "react-icons/io";
-
-// 경로 데이터 더미
-const contents = {
-    routes: [
-        {
-            routeId: 1,
-            price: 20000,
-            vehicle: "자동차",
-            place: "아르떼 뮤지엄",
-            body: "넘 이쁨",
-            x: "1",
-            y: "1",
-        },
-
-        {
-            routeId: 2,
-            price: 10000,
-            vehicle: "자동차",
-            place: "금오름",
-            body: "조하용",
-            x: "1",
-            y: "1",
-        },
-        {
-            routeId: 3,
-            price: 10000,
-            vehicle: "자동차",
-            place: "경복궁",
-            body: "한복 체험 잼남",
-            x: "1",
-            y: "1",
-        },
-    ],
-};
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const Detail = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
@@ -61,6 +24,7 @@ const Detail = () => {
     }, []);
 
     const data = contentDetail.data;
+    console.log(data);
 
     return (
         <div className="Detail" css={Wrap}>
@@ -85,6 +49,10 @@ const Detail = () => {
                     <span>{`${data && data.amount}₩`}</span>
                 </div>
             </div>
+            {/* <div>
+                <FavoriteIcon css={heartIcon} />
+                <span>{`${data && data.heartCount} likes`}</span>
+            </div> */}
             <div css={TotalContainer}>
                 <Detailform />
             </div>
@@ -123,7 +91,7 @@ const ComContent = css`
     font-size: 0.9rem;
 
     span {
-        margin: 5px;
+        margin: 0 5px;
     }
 `;
 const ContentName = css`
@@ -143,4 +111,8 @@ const TotalContainer = css`
     margin: 30px 0;
 `;
 
+const heartIcon = css`
+    font-size: 0.9rem;
+    color: #ff6d75;
+`;
 export default Detail;

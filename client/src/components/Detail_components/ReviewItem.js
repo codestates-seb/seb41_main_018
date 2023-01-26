@@ -8,6 +8,37 @@ import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
+//Button
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/styles.css";
+
+export const Buttons = (props) => {
+    return (
+        <AwesomeButton
+            type="primary"
+            before={props.icon}
+            css={css`
+                margin: 10px;
+                --button-default-height: 50px;
+                --button-default-font-size: 1.5rem;
+                --button-default-border-radius: 10px;
+                --button-horizontal-padding: 20px;
+                --button-raise-level: 3px;
+                --button-hover-pressure: 1.75;
+                --transform-speed: 0.185s;
+                --button-primary-color: #1e88e5;
+                --button-primary-color-dark: #1360a4;
+                --button-primary-color-light: #ffffff;
+                --button-primary-color-hover: #187bd1;
+                --button-primary-color-active: #166dba;
+                --button-primary-border: none;
+            `}
+        >
+            {props.text}
+        </AwesomeButton>
+    );
+};
+
 const ReviewItem = ({ review }) => {
     const { content, createdAt, displayName, rate } = review;
     const starArray = [0, 1, 2, 3, 4];

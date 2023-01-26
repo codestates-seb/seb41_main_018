@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from "react";
-import { PALETTE } from "../../Common";
 import { css } from "@emotion/react";
+import { PALETTE } from "../../Common";
+
 import DetailformItems from "./DetailformItems";
 import DetailMap from "../../pages/PostPage/DetailMap";
 import Button from "../Button";
@@ -12,6 +13,36 @@ import { BsFillHeartFill } from "react-icons/bs";
 import { useRecoilState } from "recoil";
 import { ContentDetail } from "../../state/atom";
 
+//Button
+import { AwesomeButton } from "react-awesome-button";
+import "react-awesome-button/dist/styles.css";
+
+export const Buttons = (props) => {
+    return (
+        <AwesomeButton
+            type="primary"
+            before={props.icon}
+            css={css`
+                margin: 10px;
+                --button-default-height: 50px;
+                --button-default-font-size: 1.5rem;
+                --button-default-border-radius: 10px;
+                --button-horizontal-padding: 20px;
+                --button-raise-level: 3px;
+                --button-hover-pressure: 1.75;
+                --transform-speed: 0.185s;
+                --button-primary-color: #1e88e5;
+                --button-primary-color-dark: #1360a4;
+                --button-primary-color-light: #ffffff;
+                --button-primary-color-hover: #187bd1;
+                --button-primary-color-active: #166dba;
+                --button-primary-border: none;
+            `}
+        >
+            {props.text}
+        </AwesomeButton>
+    );
+};
 const Detailform = () => {
     const [currentTab, setcurrentTab] = useState(0);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
@@ -60,39 +91,8 @@ const Detailform = () => {
             </div>
             <DetailMap />
             <div css={ButtonBox}>
-                <Button
-                    width="23.5vw"
-                    minWidth="240px"
-                    maxWidth="340px"
-                    height="50px"
-                    margin="10px 10px 10px 40px"
-                    bgImg="linear-gradient(15deg, #008080 0%, #00AEAE 100%)"
-                    text={[
-                        <BsFillHeartFill
-                            css={css`
-                                position: relative;
-                                top: 5px;
-                                right: 10px;
-                            `}
-                        />,
-                        "가치갈래!",
-                    ]}
-                    ftweight="700"
-                    ftsize="1.4rem"
-                    color="white"
-                />
-                <Button
-                    width="5vw"
-                    minWidth="50px"
-                    maxWidth="100px"
-                    height="50px"
-                    margin="10px 5px"
-                    color="white"
-                    ftsize="1.4rem"
-                    ftweight="700"
-                    bgImg="linear-gradient(15deg, #008080 0%, #00AEAE 100%)"
-                    text=<FiShare />
-                />
+                <Buttons icon={<BsFillHeartFill />} text="가치갈래" />
+                <Buttons text={<FiShare />} />
             </div>
         </div>
     );
@@ -146,4 +146,5 @@ const tagStyle = css`
     border-radius: ${PALETTE.border_round};
     background-color: #eff5f5;
 `;
+
 export default Detailform;
