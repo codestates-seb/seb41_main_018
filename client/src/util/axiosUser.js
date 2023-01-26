@@ -54,3 +54,19 @@ export const checkLogin = async () => {
         }
     });
 };
+
+// 회원탈퇴
+export const deleteUser = async (userId) => {
+    return await axios
+        .delete(`/users/${userId}`, {
+            headers: {
+                Authorization: sessionStorage.getItem("access_token"),
+            },
+        })
+        .then(() => {
+            alert("탈퇴가 완료되었습니다.");
+        })
+        .catch((err) => {
+            console.error(err.message);
+        });
+};
