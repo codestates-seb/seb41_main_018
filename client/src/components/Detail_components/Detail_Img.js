@@ -82,6 +82,10 @@ const Swiper_Wrap = css`
     height: 100%;
     border-radius: 10px;
     margin: 0 auto;
+    @media (min-width: 768px) {
+        width: 50vw;
+        height: 375px;
+    }
 
     .swiper {
         width: 100%;
@@ -110,6 +114,7 @@ const Swiper_Wrap = css`
 
     .swiper-slide img {
         display: block;
+        border-radius: 10px;
         width: 100%;
         height: 100%;
         object-fit: cover;
