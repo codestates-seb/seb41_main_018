@@ -60,26 +60,29 @@ const Detail = () => {
         getContentDetail();
     }, []);
 
+    const data = contentDetail.data;
+
     return (
         <div className="Detail" css={Wrap}>
-            <h2>제주도 1일차 여행 추천 경로!</h2>
+            <h2>{data && data.title}</h2>
             <div css={ContentInfo}>
                 {/* 🥲 */}
-                <span>혼자 여행</span>/<span>2023.02.08</span>/<span>700,000원</span>
+                {/* <span>{data && data.themeType}</span>/<span>{data && data.createdAt}</span>/
+                <span>{`${data && data.amount}₩`}</span> */}
             </div>
             {/* 공통 정보 */}
             <div css={ContentsBody}>
                 <div css={ComContent}>
                     <span css={ContentName}>카테고리</span>
-                    <span>혼자 여행</span>
+                    <span>{`${data && data.themeType}`}</span>/
                 </div>
                 <div css={ComContent}>
                     <span css={ContentName}>여행일</span>
-                    <span>2023.02.08</span>
+                    <span>{`${data && data.createdAt}`}</span>/
                 </div>
                 <div css={ComContent}>
                     <span css={ContentName}>총 여행 경비</span>
-                    <span>700,000원</span>
+                    <span>{`${data && data.amount}₩`}</span>
                 </div>
             </div>
             <div css={TotalContainer}>
@@ -111,20 +114,20 @@ const ContentInfo = css`
     }
 `;
 const ContentsBody = css`
-    display: none;
-    /* padding-top: 20px;
     display: flex;
-    align-self: center; */
+    align-self: flex-start;
+    margin: 0 27px;
+    margin-top: -5px;
 `;
 const ComContent = css`
-    display: flex;
-    flex-direction: column;
-    font-size: 1.1rem;
-    align-items: center;
-    font-weight: 600;
-    padding: 8px 20px;
+    font-size: 0.9rem;
+
+    span {
+        margin: 5px;
+    }
 `;
 const ContentName = css`
+    display: none;
     border-radius: ${PALETTE.border_round};
     background-color: #eff5f5;
     color: #497174;
