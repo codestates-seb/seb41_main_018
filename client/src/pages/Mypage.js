@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../Common.js";
-import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { ImAirplane, ImHeart } from "react-icons/im";
 import { MdOutlineRateReview } from "react-icons/md";
@@ -12,11 +11,16 @@ import MyPost from "../components/Mypage_components/MyPost";
 import MyLike from "../components/Mypage_components/MyLike";
 import MyReview from "../components/Mypage_components/MyReview";
 import logo9 from "../assets/logo9.png";
+import { userInfoState } from "../state/atom";
+import { useRecoilState } from "recoil";
+import { getUserInfo, userEdit } from "../util/axiosUser";
 
 const Mypage = () => {
     const [isTab, setIsTab] = useState(0);
     const [editClick, setEditClick] = useState(false);
     const [inputName, setInputName] = useState("");
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const [update, setUpdate] = useState(true);
 
     const selectTabHandler = (index) => {
         setIsTab(index);
@@ -30,21 +34,39 @@ const Mypage = () => {
         setInputName(e.target.value);
     };
 
-    // inputName (필요 시 email까지) 받아서 patch 요청
-    const editNameHandler = (inputName) => {
-        setEditClick(!editClick);
+    const editNameHandler = () => {
+        userEdit(userInfo.userId, inputName).then((data) => {
+            if (data) {
+                /* setUpdate(true); */
+                getUserInfo(userInfo.userId).then((data) => {
+                    setUserInfo(data.data);
+                });
+
+                console.log("바뀐값", data);
+            }
+            editButtonHandler();
+        });
     };
 
+    /*   useEffect(() => {
+        if (update) {
+            setUpdate(false);
+        }
+    }, [update]); */
     return (
         <div css={Mypage_Wrap}>
+            {console.log(userInfo)}
             <div css={ProfileContainer}>
                 <img src={logo9} alt="프로필 사진"></img>
                 <div css={NameArea}>
                     <div css={NameBox}>
                         {editClick ? (
-                            <input defaultValue={"displayName"} onChange={inputNameHandler}></input>
+                            <input
+                                defaultValue={userInfo.nickname}
+                                onChange={inputNameHandler}
+                            ></input>
                         ) : (
-                            "displayName"
+                            userInfo.nickname
                         )}
                     </div>
                     {/* 수정 아이콘 클릭 시 수정/취소 버튼 */}

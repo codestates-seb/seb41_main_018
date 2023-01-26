@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
 import { PALETTE } from "../Common.js";
@@ -14,9 +14,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import SignButton from "./SignButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "./Button.js";
+import { useRecoilState } from "recoil";
+import { loginState, userInfoState } from "../state/atom";
+import { userLogout } from "../util/axiosUser";
 
 const Header = () => {
-    const [isLogin, setislogin] = useState(false);
+    const [isLogin, setIsLogin] = useRecoilState(loginState);
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [isResSearchIconClick, setResSearchIcon] = useState(false);
     const [isMenuClick, setMenuClick] = useState(false);
     const [isAccountClick, setAccontClick] = useState(false);
@@ -24,6 +28,7 @@ const Header = () => {
     const menuRef = useRef();
     const AccountRef = useRef();
     const location = useLocation();
+    const navigate = useNavigate();
 
     const menuClick = () => {
         setMenuClick(!isMenuClick);
@@ -77,6 +82,15 @@ const Header = () => {
         };
     });
 
+    // 로그아웃
+    const logout = () => {
+        userLogout().then(() => {
+            setIsLogin(false);
+            setUserInfo({});
+            navigate("/");
+        });
+    };
+
     if (window.location.pathname === "/login") return null;
     if (window.location.pathname === "/signup") return null;
 
@@ -106,6 +120,7 @@ const Header = () => {
                                             text="로그아웃"
                                             boxShadow="1px 1px 5px rgb(0,0,0,0.2)"
                                             margin="10px"
+                                            onClick={logout}
                                         />
                                     </div>
                                 ) : (
@@ -212,7 +227,9 @@ const Header = () => {
                                     >
                                         <li css={topDropMenu}>마이페이지</li>
                                     </Link>
-                                    <li css={bottomDropMenu}>로그아웃</li>
+                                    <li css={bottomDropMenu} onClick={logout}>
+                                        로그아웃
+                                    </li>
                                 </ul>
                             </div>
                         ) : (

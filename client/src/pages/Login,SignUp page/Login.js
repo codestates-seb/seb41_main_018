@@ -4,11 +4,10 @@ import { css } from "@emotion/react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
-import { getAuthorization, getRefresh, userInfoState } from "../../state/atom";
+import { getAuthorization, getRefresh, userInfoState, loginState } from "../../state/atom";
 import SocialButton from "../../components/SocialButton";
 import Button from "../../components/Button";
 import logo9 from "../../assets/logo9.png";
-import axios from "axios";
 import { Login, getUserInfo } from "../../util/axiosUser";
 import {
     LoginpageBg,
@@ -29,7 +28,7 @@ const LoginPage = () => {
     const [Authorization, setAuthorization] = useRecoilState(getAuthorization);
     const [Refresh, setRefresh] = useRecoilState(getRefresh);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useRecoilState(loginState);
 
     const {
         register,
@@ -45,6 +44,7 @@ const LoginPage = () => {
                 setIsLogin(true);
                 getUserInfo(res.data.memberId).then((data) => {
                     setUserInfo(data.data);
+                    console.log(data);
                     navigate("/");
                 });
             })
@@ -55,6 +55,7 @@ const LoginPage = () => {
 
     return (
         <div css={LoginpageBg}>
+            {console.log(userInfo)}
             <div css={LoginpageContainer}>
                 <div css={LoginLogoContainer}>
                     <Link to={"/"}>
