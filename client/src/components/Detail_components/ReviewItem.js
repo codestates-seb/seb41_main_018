@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import logo from "../../assets/logo.png";
@@ -7,6 +7,7 @@ import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import dayjs from "dayjs";
 
 //Button
 import { AwesomeButton } from "react-awesome-button";
@@ -40,8 +41,8 @@ export const Buttons = (props) => {
 };
 
 const ReviewItem = ({ review }) => {
-    const { content, createdAt, displayName, rate } = review;
-    const starArray = [0, 1, 2, 3, 4];
+    const { body, createdAt, nickName, ratingType } = review;
+
     return (
         <div css={Container}>
             <div css={ReviewContent}>
@@ -49,10 +50,17 @@ const ReviewItem = ({ review }) => {
                 <div>
                     <div css={RatingBox}>
                         <StyledRating
-                            name="customized-color"
-                            defaultValue={rate}
-                            getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
-                            precision={0.5}
+                            defaultValue={
+                                ratingType === "FIVE"
+                                    ? 5
+                                    : ratingType === "FOUR"
+                                    ? 4
+                                    : ratingType === "THREE"
+                                    ? 3
+                                    : ratingType === "TWO"
+                                    ? 2
+                                    : 1
+                            }
                             icon={<FavoriteIcon fontSize="inherit" />}
                             emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
                             readOnly
@@ -65,7 +73,7 @@ const ReviewItem = ({ review }) => {
                             font-weight: 700;
                         `}
                     >
-                        {displayName}
+                        {nickName}
                     </span>
                     <span
                         css={css`
@@ -74,14 +82,14 @@ const ReviewItem = ({ review }) => {
                             color: #333;
                         `}
                     >
-                        {createdAt}
+                        {dayjs(createdAt).format("YY.MM.DD")}
                     </span>
                     <div
                         css={css`
                             margin: 10px 0px;
                         `}
                     >
-                        {content}
+                        {body}
                     </div>
                 </div>
             </div>

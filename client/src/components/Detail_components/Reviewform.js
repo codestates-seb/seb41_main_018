@@ -1,4 +1,4 @@
-import React, { useState, useForm } from "react";
+import React, { useState, useEffect } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
@@ -10,7 +10,9 @@ import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Input } from "../../util/UseForm";
-
+import { useRecoilState } from "recoil";
+import { ContentDetail, ReviewListState } from "../../state/atom";
+import { getComment, createReview } from "../../util/axiosDetail";
 //Button
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
@@ -20,6 +22,7 @@ export const Buttons = (props) => {
         <AwesomeButton
             type="primary"
             before={props.icon}
+            onPress={props.onPress}
             css={css`
                 --button-default-height: 80px;
                 --button-default-font-size: 1.1rem;
@@ -41,77 +44,91 @@ export const Buttons = (props) => {
     );
 };
 
-// 후기 더미 데이터
-const reviewDummy = [
-    {
-        reviewId: 1,
-        content:
-            "저희 할머니와 함께 채이네 다이닝 룸 다녀왔는데요! 저희 할머니가 정말 좋아하셨어요!!",
-        postId: 1,
-        displayName: "원할머니멱살",
-        email: "test1@gmail.com",
-        rate: 3,
-        createdAt: "2023년 1월 18일",
-        modifiedAt: "2022-12-30T08:32:07.625506082",
-    },
-    {
-        reviewId: 2,
-        content: "review2",
-        postId: 1,
-        displayName: "displayName2",
-        email: "test2@gmail.com",
-        rate: 2,
-        createdAt: "2022-12-30T08:32:07.625506082",
-        modifiedAt: "2022-12-30T08:32:07.625506082",
-    },
-    {
-        reviewId: 3,
-        content: "review3",
-        postId: 1,
-        displayName: "displayName3",
-        email: "test3@gmail.com",
-        rate: 5,
-        createdAt: "2022-12-30T08:32:07.625506082",
-        modifiedAt: "2022-12-30T08:32:07.625506082",
-    },
-];
+/* {
+	"commentId": 7,
+	"userId": 14,
+	"contentId": 1,
+	"title": "즐거운 제주도 여행",
+	"body": "후기 남기기",
+	"ratingType": "TWO",
+	"nickName": "가치가치",
+	"createdAt": "2023-01-26T13:58:26",
+	"modifiedAt": "2023-01-26T13:58:26"
+} */
 
 const Reviewform = (props) => {
-    const starArray = [0, 1, 2, 3, 4];
-    const [ratingIndex, setRatingIndex] = useState(4);
     const [state, setState] = useState(0);
-    const [value, setValue] = useState(0);
+    const [rateType, setRateType] = useState("FIVE");
+    const [reviewText, setReviewText] = useState("");
+    const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
+    const [reviewList, setReviewList] = useRecoilState(ReviewListState);
 
+    const rateTypeSwitch = (num) => {
+        switch (num) {
+            case "5":
+                setRateType("FIVE");
+                break;
+            case "4":
+                setRateType("FOUR");
+                break;
+            case "3":
+                setRateType("THREE");
+                break;
+            case "2":
+                setRateType("TWO");
+                break;
+            case "1":
+                setRateType("ONE");
+                break;
+        }
+    };
+
+    useEffect(() => {
+        getComment().then((data) => {
+            setReviewList(data.data);
+            console.log(reviewList);
+        });
+    }, []);
+
+    const createReviewHandler = () => {
+        createReview(reviewText, contentDetail.data.contentId, rateType).then(() => {
+            setReviewText("");
+            setRateType("FIVE");
+        });
+        console.log("클릭");
+    };
     return (
         <div css={ReviewContainer}>
             <div css={ReviewCount}>
-                {reviewDummy.length !== 0
-                    ? `Review : ${reviewDummy.length} 개`
+                {reviewList.length !== 0
+                    ? `Review : ${reviewList.length} 개`
                     : "첫 번째 후기의 주인공이 되어주세요!"}
             </div>
             <div css={RatingBox}>
                 <StyledRating
                     name="customized-color"
-                    defaultValue={2}
+                    defaultValue={5}
                     getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
                     precision={1}
                     icon={<FavoriteIcon fontSize="inherit" />}
                     emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-                    onClick={(value) => setState(value)}
-                    onChange={(event, newValue) => {
-                        setValue(newValue);
-                    }}
+                    onChange={(e) => rateTypeSwitch(e.target.value)}
                 />
             </div>
             <div css={ReviewInput}>
-                <textarea placeholder="후기를 작성해주세요." />
-
-                <Buttons text="등록하기" />
+                <textarea
+                    placeholder="후기를 작성해주세요."
+                    onChange={(e) => {
+                        setReviewText(e.target.value);
+                    }}
+                />
+                <Buttons text="등록하기" onPress={createReviewHandler} />
             </div>
             <div css={ReviewList}>
                 {/* reviewitem >> map */}
-                {reviewDummy.map((review) => (
-                    <ReviewItem key={review.reviewId} review={review} />
+
+                {reviewList.map((review) => (
+                    <ReviewItem key={review.commentId} review={review} />
                 ))}
             </div>
             {/* mui */}
