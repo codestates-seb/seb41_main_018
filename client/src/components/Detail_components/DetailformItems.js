@@ -4,7 +4,6 @@ import React, { useState } from "react";
 
 //component
 import Detial_Img from "./Detail_Img";
-import Map from "../../pages/PostPage/Map";
 
 //utill
 import { PALETTE } from "../../Common";
@@ -19,29 +18,28 @@ const DetailformItems = (props) => {
 
     return (
         <div css={wrap}>
+            <Detial_Img />
             <ul>
+                <div css={PriceVehicleWrap}>
+                    <li>
+                        <span>경비</span>
+                        <div>{data && data.price}</div>
+                    </li>
+                    <li>
+                        <span>이동 수단</span>
+                        <div>{data && data.vehicle}</div>
+                    </li>
+                </div>
                 <li>
-                    <span>경비</span>
-                    <div>{data && data.price}</div>
-                </li>
-                <li>
-                    <span>이동 수단</span>
-                    <div>{data && data.vehicle}</div>
+                    <span>주소</span>
+                    <div>강원 강릉시 난설헌로 131</div>
                 </li>
                 <li
                     css={css`
                         flex-direction: column;
                     `}
                 >
-                    <span>상세 설명</span>
-                    <div
-                        css={css`
-                            font-size: 0.9rem;
-                            margin: 20px 15px 0;
-                        `}
-                    >
-                        {data && data.body}
-                    </div>
+                    <div css={comContents}>{data && data.body}</div>
                 </li>
             </ul>
         </div>
@@ -49,12 +47,13 @@ const DetailformItems = (props) => {
 };
 
 const wrap = css`
-    margin: 10px auto;
+    font-size: 0.9rem;
+    padding: 20px 0;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-
-    @media (min-width: 769px) {
-        flex-direction: row;
+    ul {
+        margin: 20px 0;
     }
 
     li {
@@ -62,11 +61,19 @@ const wrap = css`
     }
 
     span {
-    }
-    div {
+        font-weight: 600;
+        margin: 0 10px;
     }
 `;
 
+const comContents = css`
+    margin: 20px 10px 0;
+`;
+
+const PriceVehicleWrap = css`
+    display: flex;
+    margin-bottom: 10px;
+`;
 // 미사용부분
 const clicked = css`
     margin: 5px auto;
