@@ -23,13 +23,8 @@ spring:
   redis:
     host: localhost
     port: 6379
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            clientId:
-            clientSecret:
+  profiles:
+    include: oauth
 
 cloud:
   aws:
@@ -44,7 +39,7 @@ cloud:
       auto: false
 
 jwt:
-  secret-key: ato12345678910fghgjkliygfbfghjhggjytdfdgbcnvjhhgjgyfthato12345678910fghgjkliygfbfghjhggjytdfdgbcnvjhhgjgyfthato12345678910fghgjkliygfbfghjhggjytdfdgbcnvjhhgjgyfthato123456789>
+  secret-key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 1440
   refresh-token-expiration-minutes: 1440
 
