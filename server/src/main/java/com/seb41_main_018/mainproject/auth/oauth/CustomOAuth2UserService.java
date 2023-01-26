@@ -38,7 +38,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         if (userRepository.findByEmail(attributes.getEmail()).isEmpty()) {
             log.info("=============== 소셜 회원 신규 가입 ================");
-            saveMember(attributes.getEmail(), attributes.getName(), attributes.getPicture(), registrationId.toUpperCase());
+            saveUser(attributes.getEmail(), attributes.getName(), registrationId.toUpperCase());
         }
 
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("USER")),
@@ -47,14 +47,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
 
-    private void saveMember(String email, String name, String profileImage, String profileKey) {
+    private void saveUser(String email,
+                          String name,
+                          String password
+    ) {
         List<String> roles = authorityUtils.createRoles(email);
         User user = new User();
         user.setEmail(email);
         user.setNickname(name);
-        user.setPassword(profileKey);
-//        user.setProfileKey(profileKey);
-//        user.setProfileImage(profileImage);
+        user.setPassword(password);
         user.setRoles(roles);
         userRepository.save(user);
     }
