@@ -4,13 +4,14 @@ import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import Button from "../Button";
 import { deleteUser } from "../../util/axiosUser";
-import { userInfoState } from "../../state/atom";
+import { userInfoState, loginState } from "../../state/atom";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 
 const Modal = (props) => {
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const [isLogin, setIsLogin] = useRecoilState(loginState);
 
     // 모달 끄기
     const closeModal = () => {
@@ -18,7 +19,11 @@ const Modal = (props) => {
     };
     // 회원탈퇴 확인
     const deleteConfirm = () => {
-        deleteUser(userInfo.userId).then(() => navigate("/"));
+        deleteUser(userInfo.userId).then(() => {
+            setIsLogin(false);
+            setUserInfo({});
+            navigate("/");
+        });
     };
 
     return (

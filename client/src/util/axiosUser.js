@@ -1,7 +1,11 @@
 import axios from "axios";
 
 // http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080
-
+/* {
+	"email": "ppp@gmail.com",
+	"password": "12345678"
+ 
+ } */
 // 로그인
 export const Login = async (jsonData) => {
     return await axios
@@ -53,6 +57,25 @@ export const checkLogin = async () => {
             return res.data;
         }
     });
+};
+//로그아웃
+export const userLogout = async () => {
+    return await axios
+        .post(
+            "/users/logout",
+            {},
+            {
+                headers: {
+                    Authorization: sessionStorage.getItem("access_token"),
+                },
+            }
+        )
+        .then(() => {
+            alert("로그아웃 되었습니다.");
+        })
+        .catch((err) => {
+            console.error(err.message);
+        });
 };
 
 // 회원탈퇴
