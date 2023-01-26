@@ -5,20 +5,19 @@ import { PALETTE } from "../../Common";
 import { FaPencilAlt } from "react-icons/fa";
 import dayjs from "dayjs";
 
-const MyPostItem = ({ review }) => {
-    const { reviewId, postTitle, createdAt, displayName } = review;
+const MyPostItem = ({ post }) => {
+    const { title, createdAt } = post;
     return (
-        <div css={MyPostItem_Wrap} key={reviewId}>
+        <div css={MyPostItem_Wrap}>
             <div css={PostImg}>사진</div>
             <div css={MyPostItem_Content}>
                 <div css={MyPostItem_Header}>
-                    <h3 css={PostTitle}>{postTitle}</h3>
+                    <h3 css={PostTitle}>{title}</h3>
                     <FaPencilAlt size="25" />
                 </div>
                 <div css={MyPostItem_Body}>
                     <div>경로</div>
                     <div css={Right_Content}>{dayjs(createdAt).format("YY.MM.DD")}</div>
-                    <div css={Right_Content}>{displayName}</div>
                 </div>
             </div>
         </div>

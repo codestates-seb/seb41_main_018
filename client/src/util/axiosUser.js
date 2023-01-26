@@ -31,15 +31,26 @@ export const Login = async (jsonData) => {
 // user info 조회
 export const getUserInfo = async (userId) => {
     return await axios
-        .get(`/users/${userId}`, {
+        .get(`/users/${userId}/Info`, {
             headers: {
                 Authorization: sessionStorage.getItem("access_token"),
             },
         })
         .then((res) => {
-            return res;
+            return res.data;
         })
         .catch((err) => {
             console.error(err.message);
         });
+};
+
+// 로그인 상태 확인
+export const checkLogin = async () => {
+    return await getUserInfo().then((res) => {
+        if (!res) {
+            console.log("Please login");
+        } else {
+            return res.data;
+        }
+    });
 };

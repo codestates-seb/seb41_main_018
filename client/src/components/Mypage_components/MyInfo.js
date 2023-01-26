@@ -4,12 +4,15 @@ import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import { useState } from "react";
 import Button from "../Button";
-import Modal from "../Modal";
+import UserDeleteModal from "./UserDeleteModal";
+import { userInfoState } from "../../state/atom";
+import { useRecoilState } from "recoil";
 
 const MyInfo = () => {
     const [passEditClick, setPassEditClick] = useState(false);
     const [inputPass, setInputPass] = useState("");
     const [modalOpen, setModalOpen] = useState(false);
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
     const editButtonHandler = () => {
         setPassEditClick(!passEditClick);
@@ -27,7 +30,7 @@ const MyInfo = () => {
         <ul css={MyInfo_Wrap}>
             <li css={ListItem}>
                 <span css={ListName}>이메일</span>
-                <span>hello123@gmail.com</span>
+                <span>{userInfo.email}</span>
             </li>
             <li css={ListItem}>
                 <span css={ListName} className="password">
@@ -63,7 +66,7 @@ const MyInfo = () => {
             </li>
             <li css={ListItem}>
                 <span css={ListName}>전화번호</span>
-                <span>010-1234-5678</span>
+                <span>{userInfo.phone}</span>
             </li>
             <li css={ListItem}>
                 {passEditClick ? (
@@ -88,7 +91,9 @@ const MyInfo = () => {
                     />
                 )}
             </li>
-            {modalOpen && <Modal text="정말 탈퇴하시겠습니까?" setModalOpen={setModalOpen} />}
+            {modalOpen && (
+                <UserDeleteModal text="정말 탈퇴하시겠습니까?" setModalOpen={setModalOpen} />
+            )}
         </ul>
     );
 };

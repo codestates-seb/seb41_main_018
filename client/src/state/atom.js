@@ -141,19 +141,28 @@ export const detailPositionTwo = atom({
     key: "detailPositionTwo",
     default: 2,
 });
+
 export const detailPositionThree = atom({
     key: "detailPositionThree",
     default: 2,
 });
+
 export const detailPositionFour = atom({
     key: "detailPositionFour",
     default: 2,
 });
+
 export const detailPositionFive = atom({
     key: "detailPositionFive",
     default: 2,
 });
+
 export const userInfoState = atom({
     key: "userInfoState",
     default: {},
+});
+
+export const loginState = atom({
+    key: "loginState",
+    default: false,
 });

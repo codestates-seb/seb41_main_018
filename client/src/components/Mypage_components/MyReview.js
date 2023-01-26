@@ -3,57 +3,21 @@ import React from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import dayjs from "dayjs";
+import { userInfoState } from "../../state/atom";
+import { useRecoilState } from "recoil";
 
-// <나의 후기> 조회 가능한지 여부 확인
-// 후기에서 해당 글의 제목 확인 가능한지 여부 확인
-// API명세서 확인 후 경로 작성 가능한지 여부 확인
-
-const reviewDummy = [
-    {
-        reviewId: 1,
-        content: "review1",
-        postId: 1,
-        postTitle: "postTitle1",
-        displayName: "displayName1",
-        email: "test1@gmail.com",
-        rate: 3,
-        createdAt: "2022-12-30T08:32:07.625506082",
-        modifiedAt: "2022-12-30T08:32:07.625506082",
-    },
-    {
-        reviewId: 2,
-        content: "review2",
-        postId: 2,
-        postTitle: "postTitle2",
-        displayName: "displayName1",
-        email: "test1@gmail.com",
-        rate: 2,
-        createdAt: "2022-12-30T08:32:07.625506082",
-        modifiedAt: "2022-12-30T08:32:07.625506082",
-    },
-    {
-        reviewId: 3,
-        content: "review3",
-        postId: 3,
-        postTitle: "postTitle3",
-        displayName: "displayName3",
-        email: "test3@gmail.com",
-        rate: 5,
-        createdAt: `${dayjs().format()}`,
-        modifiedAt: "2022-12-30T08:32:07.625506082",
-    },
-];
 const MyReview = () => {
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
     return (
         <div css={MyReview_Wrap}>
-            {reviewDummy.map((review) => (
+            {userInfo.comments.map((review) => (
                 <div css={MyReview_Item} key={review.reviewId}>
                     <div css={PostImg}>사진</div>
                     <div css={MyReview_Content}>
-                        <h3 css={PostTitle}>{review.postTitle}</h3>
-                        <div>나의 후기</div>
+                        <h3 css={PostTitle}>{review.title}</h3>
+                        <div>{review.body}</div>
                         <div css={Right_Content}>{dayjs(review.createdAt).format("YY.MM.DD")}</div>
-                        <div css={Right_Content}>{review.displayName}</div>
                     </div>
                 </div>
             ))}

@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../Common.js";
-import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { ImAirplane, ImHeart } from "react-icons/im";
 import { MdOutlineRateReview } from "react-icons/md";
@@ -12,11 +11,21 @@ import MyPost from "../components/Mypage_components/MyPost";
 import MyLike from "../components/Mypage_components/MyLike";
 import MyReview from "../components/Mypage_components/MyReview";
 import logo9 from "../assets/logo9.png";
+import { userInfoState } from "../state/atom";
+import { useRecoilState } from "recoil";
+import { checkLogin } from "../util/axiosUser";
 
 const Mypage = () => {
     const [isTab, setIsTab] = useState(0);
     const [editClick, setEditClick] = useState(false);
     const [inputName, setInputName] = useState("");
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
+    useEffect(() => {
+        checkLogin().then((data) => {
+            console.log(data);
+        });
+    }, []);
 
     const selectTabHandler = (index) => {
         setIsTab(index);
@@ -37,14 +46,18 @@ const Mypage = () => {
 
     return (
         <div css={Mypage_Wrap}>
+            {console.log(userInfo)}
             <div css={ProfileContainer}>
                 <img src={logo9} alt="프로필 사진"></img>
                 <div css={NameArea}>
                     <div css={NameBox}>
                         {editClick ? (
-                            <input defaultValue={"displayName"} onChange={inputNameHandler}></input>
+                            <input
+                                defaultValue={userInfo.nickname}
+                                onChange={inputNameHandler}
+                            ></input>
                         ) : (
-                            "displayName"
+                            userInfo.nickname
                         )}
                     </div>
                     {/* 수정 아이콘 클릭 시 수정/취소 버튼 */}
