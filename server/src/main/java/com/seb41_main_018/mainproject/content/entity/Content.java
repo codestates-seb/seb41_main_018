@@ -51,11 +51,9 @@ public class Content extends Auditable {
     @OneToMany(mappedBy = "content", cascade = CascadeType.REMOVE)
     private List<Heart> hearts = new ArrayList<>();
 
-    @OrderBy("commentId")
     @OneToMany(mappedBy = "content", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-    @OrderBy("routeId")
     @OneToMany(mappedBy = "content", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Route> routes = new ArrayList<>();

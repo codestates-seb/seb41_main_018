@@ -8,6 +8,7 @@ import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.content.service.ContentService;
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
+import com.seb41_main_018.mainproject.route.repository.RouteRepository;
 import com.seb41_main_018.mainproject.route.service.RouteService;
 import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
 import io.swagger.annotations.ApiOperation;
@@ -31,12 +32,15 @@ public class ContentController {
     private final ContentMapper contentMapper;
     private final ContentRepository contentRepository;
     private final RouteService routeService;
+    private final RouteRepository routeRepository;
 
-    public ContentController(ContentService contentService, ContentMapper contentMapper, ContentRepository contentRepository, RouteService routeService) {
+    public ContentController(ContentService contentService, ContentMapper contentMapper, ContentRepository contentRepository, RouteService routeService,
+                             RouteRepository routeRepository) {
         this.contentService = contentService;
         this.contentMapper = contentMapper;
         this.contentRepository = contentRepository;
         this.routeService = routeService;
+        this.routeRepository = routeRepository;
     }
 
 
@@ -125,7 +129,7 @@ public class ContentController {
             @ApiResponse(code = 404, message = "Content not found")})
     @GetMapping("/category/{themeType}")
     public ResponseEntity getContentFromThemeType(@PathVariable("themeType")ThemeType themeType){
-        ContentDto.ThemeTypeResponse response = contentMapper.themeTypeResponse(themeType, contentRepository);
+        ContentDto.ThemeTypeResponse response = contentMapper.themeTypeResponse(themeType, contentRepository,routeRepository);
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.OK
         );

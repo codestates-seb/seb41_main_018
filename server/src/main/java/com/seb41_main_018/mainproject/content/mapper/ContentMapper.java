@@ -17,6 +17,7 @@ import com.seb41_main_018.mainproject.tag.repository.TagRepository;
 import com.seb41_main_018.mainproject.user.entity.User;
 import org.mapstruct.Mapper;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -98,19 +99,29 @@ public interface ContentMapper {
     }
 
     List<ContentResponseDto> contentsToContentResponse(List<Content> contents);
-    default ContentDto.ThemeTypeResponse themeTypeResponse(ThemeType themeType, ContentRepository contentRepository){
+    default ContentDto.ThemeTypeResponse themeTypeResponse(ThemeType themeType, ContentRepository contentRepository,RouteRepository routeRepository){
         List<Content> contents = contentRepository.findAllByThemeType(themeType);
 
         return ContentDto.ThemeTypeResponse.builder()
                 .themeType(themeType)
-                .contents(contentsToThemeTypeResponseDtos(contents))
+                .contents(contentsToThemeTypeResponseDtos(contents,routeRepository))
                 .build();
     }
-    default List<ContentDto.themeTypeResponseDto> contentsToThemeTypeResponseDtos(List<Content> contents){
+    default List<ContentDto.themeTypeResponseDto> contentsToThemeTypeResponseDtos(List<Content> contents,RouteRepository routeRepository){
         return contents.stream()
                 .map(content -> ContentDto.themeTypeResponseDto.builder()
                         .contentId(content.getContentId())
+                        .userId(content.getUser().getUserId())
+                        .nickName(content.getUser().getNickname())
                         .title(content.getTitle())
+                        .heartCount(content.getHeartCount())
+                        .themeType(content.getThemeType())
+                        .createdAt(content.getCreatedAt())
+                        .modifiedAt(content.getModifiedAt())
+                        .amount(routeRepository.findAllByContentId(content.getContentId()).stream().mapToInt(Route::getPrice).sum())
+                        .travelDate(content.getTravelDate())
+                        .routes(routesToRouteResponseDtos(routeRepository.findAllByContentId(content.getContentId())))
+                        .viewCount(content.getViewCount())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -118,6 +129,7 @@ public interface ContentMapper {
     default ContentAllResponseDto contentToContentAllResponse(Content content, CommentRepository commentRepository, TagRepository tagRepository,RouteRepository routeRepository){
         User user = content.getUser();
         List<Comment> comments = commentRepository.findAllByContentId(content.getContentId());
+        Collections.reverse(comments);
         List<Route> routes = routeRepository.findAllByContentId(content.getContentId());
 
         return ContentAllResponseDto.builder()
@@ -127,7 +139,7 @@ public interface ContentMapper {
                 .title(content.getTitle())
                 .heartCount(content.getHeartCount())
                 .themeType(content.getThemeType())
-                .comments(commentsToCommentResponseDtos(commentRepository.findAllByContentId(content.getContentId())))
+                .comments(commentsToCommentResponseDtos(comments))
                 .tags(tagsToTagResponseDtos(tagRepository.findAllByContentId(content.getContentId())))
                 .createdAt(content.getCreatedAt())
                 .modifiedAt(content.getModifiedAt())
