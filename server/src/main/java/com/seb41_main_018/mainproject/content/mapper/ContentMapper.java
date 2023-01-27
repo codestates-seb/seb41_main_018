@@ -75,9 +75,9 @@ public interface ContentMapper {
             route.setVehicle(routePostDto.getVehicle());
             route.setPlace(routePostDto.getPlace());
             route.setBody(routePostDto.getBody());
-            route.setX(126.30773703851709);
-            route.setY(33.354052786802654);
-            route.setAddress("제주특별자치도 제주시 한림읍 금악리 산 1-1");
+            route.setX(routePostDto.getX());
+            route.setY(routePostDto.getY());
+            route.setAddress(routePostDto.getAddress());
 
             return route;
         }).collect(Collectors.toList());
