@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -20,7 +20,7 @@ const Mypage = () => {
     const [editClick, setEditClick] = useState(false);
     const [inputName, setInputName] = useState("");
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const [update, setUpdate] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     const selectTabHandler = (index) => {
         setIsTab(index);
@@ -37,22 +37,15 @@ const Mypage = () => {
     const editNameHandler = () => {
         userEdit(userInfo.userId, inputName).then((data) => {
             if (data) {
-                /* setUpdate(true); */
                 getUserInfo(userInfo.userId).then((data) => {
                     setUserInfo(data.data);
+                    /*   setIsLoading(false); */
                 });
-
-                console.log("바뀐값", data);
             }
             editButtonHandler();
         });
     };
 
-    /*   useEffect(() => {
-        if (update) {
-            setUpdate(false);
-        }
-    }, [update]); */
     return (
         <div css={Mypage_Wrap}>
             {console.log(userInfo)}

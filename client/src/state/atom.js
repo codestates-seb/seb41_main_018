@@ -180,3 +180,13 @@ export const CategorySearchResultState = atom({
     key: "CategorySearchResultState",
     default: [],
 });
+
+export const KeywordFilterResultState = atom({
+    key: "KeywordFilterResultState",
+    default: [],
+});
+
+export const SearchKeywordState = atom({
+    key: "SearchKeywordState",
+    default: "",
+});

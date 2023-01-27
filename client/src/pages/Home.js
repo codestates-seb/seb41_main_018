@@ -22,11 +22,11 @@ SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const Home = () => {
     const [contentsList, setcontentsList] = useRecoilState(ContentsList);
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         getContent().then((res) => {
-            setLoading(false);
+            setIsLoading(false);
             setcontentsList(res.data.data);
         });
     }, []);
