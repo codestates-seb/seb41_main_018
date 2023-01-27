@@ -18,7 +18,7 @@ const Result = () => {
                     <div css={postStyle}>
                         {/* 백엔드에서 요소 추가 완료 후 주석 제거
 						  			 현재 개수만 확인 가능 */}
-                        <HomeItems /* content={content} */ />
+                        <HomeItems content={content} />
                     </div>
                 ))}
                 {/* <div css={postStyle}>

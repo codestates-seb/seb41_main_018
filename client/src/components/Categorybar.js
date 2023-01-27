@@ -29,11 +29,6 @@ const Categorybar = () => {
         { src: 맛집투어, title: "맛집투어", themeType: "FOOD" },
     ];
 
-    // 국내여행 버튼을 누른다
-    // get 요청을 보낸다
-    // 정보를 저장한다
-    // 결과페이지로 이동한다
-    // 결과페이지에서 정보를 받아 뿌려준다
     const searchHandler = (themeType) => {
         getCategory(themeType).then((data) => {
             console.log(data.data.contents);

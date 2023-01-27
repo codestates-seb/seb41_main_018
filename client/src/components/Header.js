@@ -175,7 +175,7 @@ const Header = () => {
                         autoComplete="string"
                         variant="outlined"
                         fullWidth
-                        placeholder="후기를 검색해보세요"
+                        placeholder="검색어를 입력해주세요."
                         css={search}
                         onChange={getInputText}
                     />
@@ -196,7 +196,7 @@ const Header = () => {
                                 <input
                                     type="text"
                                     css={responsiveSearchInput}
-                                    placeholder="후기를 검색해보세요."
+                                    placeholder="검색어를 입력해주세요."
                                     onChange={getInputText}
                                 ></input>
                                 <div css={recentKeyword}>최근 검색어</div>
