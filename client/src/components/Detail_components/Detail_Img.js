@@ -81,7 +81,11 @@ const Swiper_Wrap = css`
     width: 80vw;
     height: 100%;
     border-radius: 10px;
-    margin: 0 auto;
+    margin: 20px auto;
+    @media (min-width: 768px) {
+        width: 60vw;
+        height: 540px;
+    }
 
     .swiper {
         width: 100%;
@@ -92,8 +96,6 @@ const Swiper_Wrap = css`
         text-align: center;
         font-size: 18px;
         background: #fff;
-
-        /* Center slide text vertically */
         display: -webkit-box;
         display: -ms-flexbox;
         display: -webkit-flex;
@@ -110,6 +112,7 @@ const Swiper_Wrap = css`
 
     .swiper-slide img {
         display: block;
+        border-radius: 10px;
         width: 100%;
         height: 100%;
         object-fit: cover;

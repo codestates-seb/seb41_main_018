@@ -1,14 +1,28 @@
 import React, { useEffect } from "react";
+
+//css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { PALETTE } from "../Common";
-import { useRecoilState } from "recoil";
+
+//Icon
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
+//components
 import Detailform from "../components/Detail_components/Detailform";
 import Reviewform from "../components/Detail_components/Reviewform";
 import { getContent } from "../util/axiosDetail";
+import { PALETTE } from "../Common";
+import Total from "../components/Detail_components/Total";
+
+//recoil
+import { useRecoilState } from "recoil";
 import { ContentDetail, ReviewListState } from "../state/atom";
+
+//Etc
 import axios from "axios";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
+dayjs.locale("ko");
 
 const Detail = () => {
     const pathname = location.pathname;
@@ -23,37 +37,13 @@ const Detail = () => {
     useEffect(() => {
         getContentDetail(location.pathname.slice(8));
     }, []);
-
-    const data = contentDetail.data;
-    console.log(data);
-
+    // const data = contentDetail.data;
     return (
-        <div className="Detail" css={Wrap}>
-            <h2>{data && data.title}</h2>
-            <div css={ContentInfo}>
-                {/* 🥲 */}
-                {/* <span>{data && data.themeType}</span>/<span>{data && data.createdAt}</span>/
-                <span>{`${data && data.amount}₩`}</span> */}
-            </div>
-            {/* 공통 정보 */}
-            <div css={ContentsBody}>
-                <div css={ComContent}>
-                    <span css={ContentName}>카테고리</span>
-                    <span>{`${data && data.themeType}`}</span>/
-                </div>
-                <div css={ComContent}>
-                    <span css={ContentName}>여행일</span>
-                    <span>{`${data && data.createdAt}`}</span>/
-                </div>
-                <div css={ComContent}>
-                    <span css={ContentName}>총 여행 경비</span>
-                    <span>{`${data && data.amount}₩`}</span>
-                </div>
-            </div>
-            {/* <div>
-                <FavoriteIcon css={heartIcon} />
-                <span>{`${data && data.heartCount} likes`}</span>
-            </div> */}
+        <div css={Wrap}>
+            {/* <h1>{data && data.title}</h1> */}
+            <h1>즐거운 제주도 여행</h1>
+            <div css={ContentInfo}></div>
+            <Total />
             <div css={TotalContainer}>
                 <Detailform />
             </div>
@@ -68,10 +58,15 @@ const Wrap = css`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    h2 {
+    h1 {
         align-self: start;
         margin: 30px 30px 5px;
+        font-size: 1.675rem;
+        @media (min-width: 768px) {
+            width: 90vw;
+            font-size: 2em;
+            margin: 30px auto -20px;
+        }
     }
 `;
 const ContentInfo = css`
@@ -82,38 +77,11 @@ const ContentInfo = css`
         margin: 5px;
     }
 `;
-const ContentsBody = css`
-    display: flex;
-    align-self: flex-start;
-    margin: 0 27px;
-    margin-top: -5px;
-`;
-const ComContent = css`
-    font-size: 0.9rem;
 
-    span {
-        margin: 0 5px;
-    }
-`;
-const ContentName = css`
-    display: none;
-    border-radius: ${PALETTE.border_round};
-    background-color: #eff5f5;
-    color: #497174;
-    padding: 7px;
-    text-align: center;
-    font-weight: 600;
-    font-size: 1rem;
-    margin: 10px;
-`;
 const TotalContainer = css`
     display: flex;
     flex-direction: row;
     margin: 30px 0;
 `;
 
-const heartIcon = css`
-    font-size: 0.9rem;
-    color: #ff6d75;
-`;
 export default Detail;
