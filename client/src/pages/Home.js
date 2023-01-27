@@ -16,7 +16,7 @@ import right from "../assets/right.png";
 import left from "../assets/left.png";
 import { getContent } from "../util/axiosDetail";
 import { useRecoilState } from "recoil";
-import { ContentsList } from "../state/atom";
+import { ContentsList, loginState } from "../state/atom";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -30,6 +30,7 @@ const Home = () => {
             setcontentsList(res.data.data);
         });
     }, []);
+
     const swiperOption = {
         spaceBetween: 10,
         slidesPerView: 5,

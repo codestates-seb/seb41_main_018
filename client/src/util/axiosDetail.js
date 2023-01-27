@@ -47,7 +47,21 @@ export const createReview = async (body, id, rate) => {
         .catch((err) => {
             if (err.response.status === 401) {
                 alert("로그인이 필요합니다");
+                location.href = "/login";
             }
+            console.error(err.message);
+        });
+};
+
+// 카테고리별 컨텐츠 조회
+export const getCategory = async (themeType) => {
+    return await axios
+        .get(`/contents/category/${themeType}`)
+        .then((res) => {
+            console.log("잘 받아옴");
+            return res.data;
+        })
+        .catch((err) => {
             console.error(err.message);
         });
 };

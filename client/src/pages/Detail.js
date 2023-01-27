@@ -11,29 +11,24 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Detailform from "../components/Detail_components/Detailform";
 import Reviewform from "../components/Detail_components/Reviewform";
 import { getContent } from "../util/axiosDetail";
-import { PALETTE } from "../Common";
-
-//recoil
-import { useRecoilState } from "recoil";
 import { ContentDetail } from "../state/atom";
-
-//Etc
 import axios from "axios";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 dayjs.locale("ko");
 
 const Detail = () => {
+    const pathname = location.pathname;
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
-    const getContentDetail = () => {
-        getContent(1).then((res) => {
-            /* setContentDetail(res); */
+    const [reviewList, setReviewList] = useRecoilState(ReviewListState);
+    const getContentDetail = (contentId) => {
+        getContent(contentId).then((res) => {
             setContentDetail(res.data);
-            //setReview(res.data.comment);
+            setReviewList(res.data.data && res.data.data.comments);
         });
     };
     useEffect(() => {
-        getContentDetail();
+        getContentDetail(location.pathname.slice(8));
     }, []);
 
     const data = contentDetail.data;
