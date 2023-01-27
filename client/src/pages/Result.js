@@ -13,32 +13,16 @@ const Result = () => {
             <Categorybar />
             <div>
                 <div css={resultText}>검색결과</div>
-                {console.log(categorySearch)}
-                {categorySearch.map((content) => (
-                    <div css={postStyle}>
-                        {/* 백엔드에서 요소 추가 완료 후 주석 제거
-						  			 현재 개수만 확인 가능 */}
+                <div css={postStyle}>
+                    {categorySearch.map((content) => (
                         <HomeItems content={content} />
-                    </div>
-                ))}
-                {/* <div css={postStyle}>
+                    ))}
+                </div>
+                <div css={postStyle}>
                     <HomeItems />
                     <HomeItems />
                     <HomeItems />
-                    <HomeItems />
-                    <HomeItems />
-                    <HomeItems />
-                    <HomeItems />
-                    <HomeItems />
-                    <HomeItems />
-                    <HomeItems />
-                    <HomeItems />
-                    <HomeItems />
-                    <HomeItems />
-                    <HomeItems />
-                    <HomeItems />
-                    <HomeItems />
-                </div> */}
+                </div>
             </div>
         </div>
     );
