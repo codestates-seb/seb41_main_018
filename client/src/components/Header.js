@@ -191,7 +191,10 @@ const Header = () => {
                     <SearchIcon css={searchIcon} onClick={keywordSearch} />
 
                     {/* 모바일 기준 검색창 - 검색버튼 */}
-                    <SearchIcon css={resSearchIcon} onClick={handleResSearchIconClick} />
+                    <SearchIcon
+                        css={resSearchIcon}
+                        onClick={(handleResSearchIconClick, keywordSearch)}
+                    />
                     {isResSearchIconClick ? (
                         <div>
                             <div css={resSearchIconClick}>
@@ -209,7 +212,13 @@ const Header = () => {
                                     type="text"
                                     css={responsiveSearchInput}
                                     placeholder="검색어를 입력해주세요."
-                                    onChange={getInputText}
+                                    onChange={(e) => setKeyword(e.target.value)}
+                                    value={keyword}
+                                    onKeyUp={(e) => {
+                                        if (e.key == "Enter") {
+                                            keywordSearch();
+                                        }
+                                    }}
                                 ></input>
                                 <div css={recentKeyword}>최근 검색어</div>
                             </div>
@@ -409,7 +418,7 @@ const resSearchIconClick = css`
 `;
 
 const responsiveSearchInput = css`
-    width: 500px;
+    width: 95%;
     height: 50px;
     background-color: rgb(0, 0, 0, 0.05);
     border: solid 2px rgb(0, 0, 0, 0.05);
