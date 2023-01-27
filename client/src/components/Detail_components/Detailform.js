@@ -50,29 +50,7 @@ const Detailform = () => {
     const [currentTab, setcurrentTab] = useState(0);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const data = contentDetail.data;
-    const TravelDate = data && data.travelDate;
-    const Amount = data && data.amount;
     const tagDummy = ["강릉", "아르떼뮤지엄", "경포"];
-
-    const setCategroy = (data) => {
-        if (data && data.themeType === "DOMESTIC") {
-            return "국내여행";
-        } else if (data && data.themeType === "ABROAD") {
-            return "해외여행";
-        } else if (data && data.themeType === "FAMILY") {
-            return "가족여행";
-        } else if (data && data.themeType === "COUPLE") {
-            return "커플여행";
-        } else if (data && data.themeType === "FRIENDS") {
-            return "친구여행";
-        } else if (data && data.themeType === "ALONE") {
-            return "혼자여행";
-        } else if (data && data.themeTypee === "CAFE") {
-            return "카페투어";
-        } else if (data && data.themeType === "FOOD") {
-            return "맛집투어";
-        }
-    };
 
     const selectMenuHandler = (index) => {
         setcurrentTab(index);
