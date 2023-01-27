@@ -41,10 +41,9 @@ const LoginPage = () => {
 
         await Login(jsonData)
             .then((res) => {
-                setIsLogin(true);
-                getUserInfo(res.data.memberId).then((data) => {
+                getUserInfo(res.data.userId).then((data) => {
                     setUserInfo(data.data);
-                    console.log(data);
+                    setIsLogin(true);
                     navigate("/");
                 });
             })
