@@ -59,6 +59,9 @@ public class UserService {
     public User updateUser(User user) {
         User findUser = findVerifiedUser(user.getUserId()); //ID로 멤버 존재 확인하고 User 정보 반환
 
+        if(getLoginMember().getUserId() != findUser.getUserId()) // 다른 사람의 정보를 수정할 경우
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED); //예외 발생(권한 없음)
+
         Optional.ofNullable(user.getNickname())
                 .ifPresent(nickname -> findUser.setNickname(nickname));
         Optional.ofNullable(user.getPhone())
@@ -81,6 +84,8 @@ public class UserService {
     //유저 삭제
     public void deleteUser(long userId) {
         User findUser = findVerifiedUser(userId);
+        if(getLoginMember().getUserId() != findUser.getUserId()) // 다른 사람을 탈퇴시킬 경우
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED); //예외 발생(권한 없음)
 
         userRepository.delete(findUser);
     }
