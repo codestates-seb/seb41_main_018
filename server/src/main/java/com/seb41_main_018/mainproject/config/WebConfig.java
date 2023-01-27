@@ -1,4 +1,4 @@
-package sebpre018.com.stackOverflowClone.config;
+package com.seb41_main_018.mainproject.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
