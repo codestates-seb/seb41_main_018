@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface RouteRepository extends JpaRepository<Route, Long> {
     Optional<Route> findByRouteId(Long routeId);
-    @Query(value = "select * from route where content_id = :contentId", nativeQuery = true)
+    @Query(value = "select * from routes where content_id = :contentId", nativeQuery = true)
     List<Route> findAllByContentId(long contentId);
 
     List<Route> findAllByContent(Content content);

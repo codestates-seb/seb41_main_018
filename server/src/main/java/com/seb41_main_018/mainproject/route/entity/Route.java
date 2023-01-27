@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "ROUTES")
 public class Route extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
