@@ -31,11 +31,7 @@ public class S3Uploader {
     private String S3bucket;
 
     // MultipartFile 을 전달받아 File 로 전환한 후 S3에 업로드
-    public List<String> uploadRouteImages(MultipartFile[] multipartFileList) throws IOException {
-
-        List<String> imagePathList = new ArrayList<>();
-
-        for(MultipartFile multipartFile: multipartFileList) {
+    public String uploadRouteImages(MultipartFile multipartFile) throws IOException {
 
             String originalName = multipartFile.getOriginalFilename(); // 파일 이름
             Long size = multipartFile.getSize(); // 파일 크기
@@ -51,10 +47,8 @@ public class S3Uploader {
             );
 
             String imagePath = amazonS3Client.getUrl(S3bucket, originalName).toString(); // 접근가능한 URL 가져오기
-            imagePathList.add(imagePath);
-        }
 
-        return imagePathList;
+        return imagePath;
     }
 
     public String upload(MultipartFile multipartFile, String dirName) throws IOException {
