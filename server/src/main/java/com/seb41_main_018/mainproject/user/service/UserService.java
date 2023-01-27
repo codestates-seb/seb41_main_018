@@ -68,6 +68,8 @@ public class UserService {
                 .ifPresent(phone -> findUser.setPhone(phone));
         Optional.ofNullable(user.getPassword())
                 .ifPresent(password -> findUser.setPassword(passwordEncoder.encode(password)));
+//        Optional.ofNullable(user.getImage())
+//                .ifPresent(image -> findUser.setImage(image));
 
         return userRepository.save(findUser);
     }

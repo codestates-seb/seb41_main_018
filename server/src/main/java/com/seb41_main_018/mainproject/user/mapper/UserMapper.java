@@ -37,6 +37,7 @@ public interface UserMapper {
                 .password(user.getPassword())
                 .nickname(user.getNickname())
                 .phone(user.getPhone())
+                .image(user.getImage())
                 .createdAt(user.getCreatedAt())
                 .modifiedAt(user.getModifiedAt())
                 .comments(commentsToCommentResponseDtos(commentRepository.findAllByUserId(user.getUserId())))

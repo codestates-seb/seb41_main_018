@@ -2,6 +2,7 @@ package com.seb41_main_018.mainproject.user.controller;
 
 import com.seb41_main_018.mainproject.auth.jwt.JwtTokenizer;
 import com.seb41_main_018.mainproject.auth.utils.RedisUtil;
+import com.seb41_main_018.mainproject.config.S3Uploader;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
@@ -19,12 +20,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.seb41_main_018.mainproject.user.entity.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.io.IOException;
+
 @ApiOperation(value = "유저 API", tags = {"User Controller"})
 @RestController
 @Validated
@@ -33,6 +37,9 @@ import javax.validation.constraints.Positive;
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
+
+    private final S3Uploader s3Uploader;
+    private final UserRepository userRepository;
 
     //private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -43,8 +50,9 @@ public class UserController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "User not found")})
     @PostMapping
-    public ResponseEntity postUser(@Valid @RequestBody UserPostDto userPostDto ){
+    public ResponseEntity postUser(@Valid @RequestBody UserPostDto userPostDto){
         User user = userService.createUser(userMapper.userPostDtoToUser(userPostDto));
+
         UserResponseDto userResponseDto = userMapper.userToUserResponseDto(user);
 
         return new ResponseEntity(userResponseDto, HttpStatus.CREATED);
@@ -56,10 +64,30 @@ public class UserController {
             @ApiResponse(code = 404, message = "User not found")})
     @PatchMapping("/{userId}")
     public ResponseEntity patchUser(@PathVariable("userId") @Positive Long userId,
-                                    @Valid @RequestBody UserPatchDto userPatchDto){
+                                    @Valid @RequestBody UserPatchDto userPatchDto) {
         userPatchDto.setUserId(userId);
 
         User user = userService.updateUser(userMapper.userPatchDtoToUser(userPatchDto));
+        UserResponseDto userResponseDto = userMapper.userToUserResponseDto(user);
+
+        return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
+    }
+
+    //유저 이미지 수정//
+    @ApiOperation(value = "유저 프로필 이미지 수정", notes = "유저의 프로필 이미지를 수정합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved"),
+            @ApiResponse(code = 404, message = "User not found")})
+    @PatchMapping("/{userId}/image")
+    public ResponseEntity patchUser(@PathVariable("userId") @Positive Long userId,
+                                    @RequestPart(value = "imgFile", required = false) MultipartFile image
+    ) throws IOException {
+
+        User user = userService.findUser(userId);
+
+        String profileImage = s3Uploader.uploadRouteImages(image);
+        user.setImage(profileImage);
+        userRepository.save(user);
         UserResponseDto userResponseDto = userMapper.userToUserResponseDto(user);
 
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);

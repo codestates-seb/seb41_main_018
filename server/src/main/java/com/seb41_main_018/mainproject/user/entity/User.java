@@ -35,6 +35,9 @@ public class User extends Auditable {
     private String nickname;
 
     @Column
+    private String image;
+
+    @Column
     @Enumerated(value = EnumType.STRING)
     private UserStatus userStatus = UserStatus.ACTIVITY;
 
