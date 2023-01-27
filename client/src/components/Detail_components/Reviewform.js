@@ -63,7 +63,6 @@ const Reviewform = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [reviewList, setReviewList] = useRecoilState(ReviewListState);
     const [update, setUpdate] = useState(false);
-    const pathname = location.pathname;
 
     const rateTypeSwitch = (num) => {
         switch (num) {

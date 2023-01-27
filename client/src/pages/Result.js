@@ -1,27 +1,81 @@
+import React, { useState, useEffect } from "react";
 /** @jsxImportSource @emotion/react */
-import React from "react";
 import { css } from "@emotion/react";
 import Categorybar from "../components/Categorybar";
 import HomeItems from "../components/Home_components/HomeItems";
 import { useRecoilState } from "recoil";
-import { CategorySearchResultState } from "../../src/state/atom";
+import {
+    CategorySearchResultState,
+    KeywordFilterResultState,
+    SearchKeywordState,
+} from "../../src/state/atom";
 
 const Result = () => {
     const [categorySearch, setCategorySearch] = useRecoilState(CategorySearchResultState);
+    const [filterResult, setFilterResult] = useRecoilState(KeywordFilterResultState);
+    const [searchTargetArr, setSearchTargetArr] = useState([]);
+    const [searchTargetName, setSearchTargetName] = useState("");
+    const [keyword, setKeyword] = useRecoilState(SearchKeywordState);
+
+    const themeTypeSwitch = (themeType) => {
+        switch (themeType) {
+            case "DOMESTIC":
+                setSearchTargetName("국내여행");
+                break;
+            case "ABROAD":
+                setSearchTargetName("해외여행");
+                break;
+            case "FAMILY":
+                setSearchTargetName("효도여행");
+                break;
+            case "COUPLE":
+                setSearchTargetName("커플여행");
+                break;
+            case "FRIENDS":
+                setSearchTargetName("친구여행");
+                break;
+
+            case "ALONE":
+                setSearchTargetName("혼자여행");
+                break;
+
+            case "CAFE":
+                setSearchTargetName("카페투어");
+                break;
+
+            case "FOOD":
+                setSearchTargetName("맛집투어");
+                break;
+        }
+    };
+
+    useEffect(() => {
+        setSearchTargetArr(categorySearch.contents);
+        themeTypeSwitch(categorySearch.themeType);
+    }, [categorySearch]);
+
+    useEffect(() => {
+        setSearchTargetArr(filterResult);
+        setSearchTargetName(keyword);
+    }, [filterResult]);
+
     return (
         <div>
             <Categorybar />
             <div>
-                <div css={resultText}>검색결과</div>
-                <div css={postStyle}>
-                    {categorySearch.map((content) => (
-                        <HomeItems content={content} />
-                    ))}
+                <div css={resultText}>
+                    {`" ${searchTargetName} "에 대한 검색결과 : ${searchTargetArr.length}건`}
                 </div>
                 <div css={postStyle}>
-                    <HomeItems />
-                    <HomeItems />
-                    <HomeItems />
+                    {searchTargetArr.length === 0 ? (
+                        <div css={noResultMessage}>검색 결과가 없습니다 ㅠ.ㅠ</div>
+                    ) : (
+                        <>
+                            {searchTargetArr.map((content) => (
+                                <HomeItems content={content} />
+                            ))}
+                        </>
+                    )}
                 </div>
             </div>
         </div>
@@ -69,6 +123,11 @@ const postStyle = css`
         grid-template-columns: repeat(1, 1fr);
         width: 460px;
     }
+`;
+
+const noResultMessage = css`
+    margin: 20px;
+    font-size: 20px;
 `;
 
 export default Result;

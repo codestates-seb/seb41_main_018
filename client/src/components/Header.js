@@ -15,16 +15,24 @@ import SignButton from "./SignButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "./Button.js";
 import { useRecoilState } from "recoil";
-import { loginState, userInfoState } from "../state/atom";
+import {
+    loginState,
+    userInfoState,
+    ContentsList,
+    KeywordFilterResultState,
+    SearchKeywordState,
+} from "../state/atom";
 import { userLogout } from "../util/axiosUser";
 
 const Header = () => {
     const [isLogin, setIsLogin] = useRecoilState(loginState);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const [contentsList, setcontentsList] = useRecoilState(ContentsList);
+    const [filterResult, setFilterResult] = useRecoilState(KeywordFilterResultState);
     const [isResSearchIconClick, setResSearchIcon] = useState(false);
     const [isMenuClick, setMenuClick] = useState(false);
     const [isAccountClick, setAccontClick] = useState(false);
-    const [keyword, setKeyword] = useState("");
+    const [keyword, setKeyword] = useRecoilState(SearchKeywordState);
     const menuRef = useRef();
     const AccountRef = useRef();
     const location = useLocation();
@@ -38,21 +46,18 @@ const Header = () => {
         setResSearchIcon(!isResSearchIconClick);
     };
 
+    // 검색 버튼 클릭 시 작동 함수
+    const keywordSearch = () => {
+        setFilterResult(contentsList.filter((content) => content.title.includes(keyword)));
+        navigate("/result");
+    };
+
     const handleClose = () => {
         setResSearchIcon(false);
     };
 
     const handleAccountClick = () => {
         setAccontClick(!isAccountClick);
-    };
-
-    const getInputText = (e) => {
-        setKeyword(e.target.value);
-        console.log(keyword);
-    };
-
-    const searchIconClick = () => {
-        console.log(keyword);
     };
 
     // 외부클릭시 닫히게하기
@@ -170,16 +175,22 @@ const Header = () => {
                         display: flex;
                     `}
                 >
-                    <TextField
-                        id="outlined-basic"
-                        autoComplete="string"
-                        variant="outlined"
-                        fullWidth
+                    {/* 데스크탑 기준 검색창 */}
+                    <input
+                        type="text"
+                        css={responsiveSearchInput}
                         placeholder="검색어를 입력해주세요."
-                        css={search}
-                        onChange={getInputText}
-                    />
-                    <SearchIcon css={searchIcon} onClick={searchIconClick} />
+                        onChange={(e) => setKeyword(e.target.value)}
+                        value={keyword}
+                        onKeyUp={(e) => {
+                            if (e.key == "Enter") {
+                                keywordSearch();
+                            }
+                        }}
+                    ></input>
+                    <SearchIcon css={searchIcon} onClick={keywordSearch} />
+
+                    {/* 모바일 기준 검색창 - 검색버튼 */}
                     <SearchIcon css={resSearchIcon} onClick={handleResSearchIconClick} />
                     {isResSearchIconClick ? (
                         <div>
@@ -193,6 +204,7 @@ const Header = () => {
                                         align-self: start;
                                     `}
                                 />
+                                {/* 모바일 기준 검색창 - 검색 input */}
                                 <input
                                     type="text"
                                     css={responsiveSearchInput}
@@ -397,7 +409,7 @@ const resSearchIconClick = css`
 `;
 
 const responsiveSearchInput = css`
-    width: 95%;
+    width: 500px;
     height: 50px;
     background-color: rgb(0, 0, 0, 0.05);
     border: solid 2px rgb(0, 0, 0, 0.05);

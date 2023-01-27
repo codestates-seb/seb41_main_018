@@ -31,7 +31,7 @@ const Categorybar = () => {
 
     const searchHandler = (themeType) => {
         getCategory(themeType).then((data) => {
-            setCategorySearch(data.data.contents);
+            setCategorySearch(data && data.data);
             navigate("/result");
         });
     };
