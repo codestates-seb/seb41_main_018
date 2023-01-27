@@ -2,18 +2,14 @@ package com.seb41_main_018.mainproject.config;
 
 import com.seb41_main_018.mainproject.auth.filter.JwtAuthenticationFilter;
 import com.seb41_main_018.mainproject.auth.filter.JwtVerificationFilter;
-import com.seb41_main_018.mainproject.auth.handler.UserAccessDeniedHandler;
-import com.seb41_main_018.mainproject.auth.handler.UserAuthenticationEntryPoint;
-import com.seb41_main_018.mainproject.auth.handler.UserAuthenticationFailureHandler;
-import com.seb41_main_018.mainproject.auth.handler.UserAuthenticationSuccessHandler;
+import com.seb41_main_018.mainproject.auth.handler.*;
 import com.seb41_main_018.mainproject.auth.jwt.JwtTokenizer;
 import com.seb41_main_018.mainproject.auth.utils.CustomAuthorityUtils;
 import com.seb41_main_018.mainproject.auth.utils.RedisUtil;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
-import com.seb41_main_018.mainproject.user.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,27 +18,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
+@RequiredArgsConstructor
 @Configuration
 public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final UserRepository userRepository;
-    private final UserService userService;
     private final RedisUtil redisUtil;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer,
-                                 CustomAuthorityUtils authorityUtils,
-                                 UserRepository userRepository,
-                                 @Lazy UserService userService,
-                                 RedisUtil redisUtil) {
-        this.jwtTokenizer = jwtTokenizer;
-        this.authorityUtils = authorityUtils;
-        this.userRepository = userRepository;
-        this.userService = userService;
-        this.redisUtil = redisUtil;
-    }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -85,9 +70,9 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.DELETE, "/tags/**").hasRole("USER") //태그 삭제
                         .antMatchers(HttpMethod.POST, "**/hearts").hasRole("USER") // 좋아요
                         .antMatchers(HttpMethod.DELETE).hasRole("USER") // 질문, 답변 삭제
-            /*    )
+                )
                 .oauth2Login(oauth2 -> oauth2
-                        .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, userRepository, userService, redisUtil))*/
+                        .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, userRepository, redisUtil))
                 );
 
         return http.build();
