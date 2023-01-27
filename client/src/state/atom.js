@@ -1,5 +1,6 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
+import Categorybar from "../components/Categorybar";
 
 const { persistAtom } = recoilPersist();
 
@@ -172,5 +173,10 @@ export const loginState = atom({
 
 export const ReviewListState = atom({
     key: "ReviewListState",
+    default: [],
+});
+
+export const CategorySearchResultState = atom({
+    key: "CategorySearchResultState",
     default: [],
 });

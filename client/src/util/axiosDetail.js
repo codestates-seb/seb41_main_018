@@ -52,3 +52,16 @@ export const createReview = async (body, id, rate) => {
             console.error(err.message);
         });
 };
+
+// 카테고리별 컨텐츠 조회
+export const getCategory = async (themeType) => {
+    return await axios
+        .get(`/contents/category/${themeType}`)
+        .then((res) => {
+            console.log("잘 받아옴");
+            return res.data;
+        })
+        .catch((err) => {
+            console.error(err.message);
+        });
+};
