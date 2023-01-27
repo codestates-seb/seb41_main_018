@@ -25,6 +25,7 @@
     "react-dropdown": "^1.11.0",
     "react-hook-form": "^7.41.5",
     "react-icons": "^4.7.1",
+    "react-kakao-maps-sdk": "^1.1.5",
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
     "recoil": "^0.7.6",
