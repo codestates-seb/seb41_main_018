@@ -12,7 +12,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Input } from "../../util/UseForm";
 import { useRecoilState } from "recoil";
 import { ContentDetail, ReviewListState } from "../../state/atom";
-import { getComment, createReview } from "../../util/axiosDetail";
+import { createReview } from "../../util/axiosDetail";
 //Button
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
@@ -82,13 +82,6 @@ const Reviewform = (props) => {
                 break;
         }
     };
-
-    useEffect(() => {
-        getComment().then((data) => {
-            setReviewList(data.data);
-            console.log(reviewList);
-        });
-    }, []);
 
     const createReviewHandler = () => {
         createReview(reviewText, contentDetail.data.contentId, rateType).then(() => {

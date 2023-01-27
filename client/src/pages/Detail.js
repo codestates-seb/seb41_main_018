@@ -6,21 +6,22 @@ import { useRecoilState } from "recoil";
 import Detailform from "../components/Detail_components/Detailform";
 import Reviewform from "../components/Detail_components/Reviewform";
 import { getContent } from "../util/axiosDetail";
-import { ContentDetail } from "../state/atom";
+import { ContentDetail, ReviewListState } from "../state/atom";
 import axios from "axios";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const Detail = () => {
+    const pathname = location.pathname;
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
-    const getContentDetail = () => {
-        getContent(1).then((res) => {
-            /* setContentDetail(res); */
+    const [reviewList, setReviewList] = useRecoilState(ReviewListState);
+    const getContentDetail = (contentId) => {
+        getContent(contentId).then((res) => {
             setContentDetail(res.data);
-            //setReview(res.data.comment);
+            setReviewList(res.data.data && res.data.data.comments);
         });
     };
     useEffect(() => {
-        getContentDetail();
+        getContentDetail(location.pathname.slice(8));
     }, []);
 
     const data = contentDetail.data;
