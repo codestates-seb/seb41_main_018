@@ -12,7 +12,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Input } from "../../util/UseForm";
 import { useRecoilState } from "recoil";
 import { ContentDetail, ReviewListState } from "../../state/atom";
-import { getComment, createReview } from "../../util/axiosDetail";
+import { createReview, getContent } from "../../util/axiosDetail";
 //Button
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
@@ -56,12 +56,14 @@ export const Buttons = (props) => {
 	"modifiedAt": "2023-01-26T13:58:26"
 } */
 
-const Reviewform = (props) => {
+const Reviewform = () => {
     const [state, setState] = useState(0);
     const [rateType, setRateType] = useState("FIVE");
     const [reviewText, setReviewText] = useState("");
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [reviewList, setReviewList] = useRecoilState(ReviewListState);
+    const [update, setUpdate] = useState(false);
+    const pathname = location.pathname;
 
     const rateTypeSwitch = (num) => {
         switch (num) {
@@ -83,20 +85,25 @@ const Reviewform = (props) => {
         }
     };
 
-    useEffect(() => {
-        getComment().then((data) => {
-            setReviewList(data.data);
-            console.log(reviewList);
-        });
-    }, []);
-
     const createReviewHandler = () => {
         createReview(reviewText, contentDetail.data.contentId, rateType).then(() => {
             setReviewText("");
             setRateType("FIVE");
+            setUpdate(true);
         });
-        console.log("클릭");
     };
+
+    useEffect(() => {
+        if (update) {
+            getContent(location.pathname.slice(8)).then((res) => {
+                setContentDetail(res.data);
+                setReviewList(res.data.data && res.data.data.comments);
+            });
+            setReviewText("");
+            setRateType("FIVE");
+        }
+    }, [update]);
+
     return (
         <div css={ReviewContainer}>
             <div css={ReviewCount}>
@@ -107,7 +114,17 @@ const Reviewform = (props) => {
             <div css={RatingBox}>
                 <StyledRating
                     name="customized-color"
-                    defaultValue={5}
+                    defaultValue={
+                        rateType === "FIVE"
+                            ? 5
+                            : rateType === "FOUR"
+                            ? 4
+                            : rateType === "THREE"
+                            ? 3
+                            : rateType === "TWO"
+                            ? 2
+                            : 1
+                    }
                     getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
                     precision={1}
                     icon={<FavoriteIcon fontSize="inherit" />}
@@ -118,6 +135,7 @@ const Reviewform = (props) => {
             <div css={ReviewInput}>
                 <textarea
                     placeholder="후기를 작성해주세요."
+                    value={reviewText}
                     onChange={(e) => {
                         setReviewText(e.target.value);
                     }}

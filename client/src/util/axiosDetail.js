@@ -47,6 +47,7 @@ export const createReview = async (body, id, rate) => {
         .catch((err) => {
             if (err.response.status === 401) {
                 alert("로그인이 필요합니다");
+                location.href = "/login";
             }
             console.error(err.message);
         });
