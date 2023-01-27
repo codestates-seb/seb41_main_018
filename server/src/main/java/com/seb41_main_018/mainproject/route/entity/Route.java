@@ -54,7 +54,8 @@ public class Route extends Auditable {
             String body,
             String place,
             double x,
-            double y
+            double y,
+            String address
     ) {
         this.price = price;
         this.vehicle = vehicle;
@@ -62,6 +63,7 @@ public class Route extends Auditable {
         this.place = place;
         this.x = x;
         this.y = y;
+        this.address = address;
     }
     public void addContent(Content content) {
         this.content = content;
