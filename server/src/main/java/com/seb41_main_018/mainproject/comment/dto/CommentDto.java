@@ -72,6 +72,9 @@ public class CommentDto {
 
         @ApiModelProperty(notes = "코멘트 수정 날짜와 시간", example = "2023.01.20", required = true)
         private LocalDateTime modifiedAt;
+
+        @ApiModelProperty(notes = "코멘트 작성자 프로필 사진", example = "셀카.png", required = true)
+        private String image;
     }
     @ApiModel("Comment Response")
     @AllArgsConstructor
