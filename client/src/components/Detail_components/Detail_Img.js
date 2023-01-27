@@ -79,13 +79,12 @@ const Detial_Img = () => {
 
 const Swiper_Wrap = css`
     width: 80vw;
-
     height: 100%;
     border-radius: 10px;
     margin: 20px auto;
     @media (min-width: 768px) {
-        width: 50vw;
-        height: 375px;
+        width: 60vw;
+        height: 540px;
     }
 
     .swiper {
@@ -97,8 +96,6 @@ const Swiper_Wrap = css`
         text-align: center;
         font-size: 18px;
         background: #fff;
-
-        /* Center slide text vertically */
         display: -webkit-box;
         display: -ms-flexbox;
         display: -webkit-flex;

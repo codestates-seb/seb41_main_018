@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React, { useState } from "react";
+import { BsFillHeartFill } from "react-icons/bs";
 
 //component
 import Detial_Img from "./Detail_Img";
@@ -14,44 +15,55 @@ import { ContentDetail } from "../../state/atom";
 
 const DetailformItems = (props) => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
-    const data = contentDetail.data && contentDetail.data.routes[props.index];
+    const data = contentDetail.data;
+    const RouteData = contentDetail.data && contentDetail.data.routes[props.index];
 
     return (
         <div css={wrap}>
             <Detial_Img />
-            <ul>
+            <div
+                css={css`
+                    margin-left: 10px;
+                `}
+            >
+                <BsFillHeartFill css={heartIcon} />
+                <span>{`${data && data.heartCount} likes`}</span>
+            </div>
+            <ul
+                css={css`
+                    @media (min-width: 768px) {
+                        display: flex;
+                    }
+                `}
+            >
                 <div css={PriceVehicleWrap}>
                     <li>
                         <span>경비</span>
-                        <div>{data && data.price}</div>
+                        <div>{RouteData && RouteData.price}</div>
                     </li>
                     <li>
                         <span>이동 수단</span>
-                        <div>{data && data.vehicle}</div>
+                        <div>{RouteData && RouteData.vehicle}</div>
                     </li>
                 </div>
                 <li>
                     <span>주소</span>
                     <div>강원 강릉시 난설헌로 131</div>
                 </li>
-                <li
-                    css={css`
-                        flex-direction: column;
-                    `}
-                >
-                    <div css={comContents}>{data && data.body}</div>
-                </li>
             </ul>
+            <div css={Contents}>{RouteData && RouteData.body}</div>
         </div>
     );
 };
 
 const wrap = css`
     font-size: 0.9rem;
-    /* background-color: red; */
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    @media (min-width: 768px) {
+        font-size: 1.175rem;
+    }
     ul {
         margin: 20px 0;
     }
@@ -66,8 +78,8 @@ const wrap = css`
     }
 `;
 
-const comContents = css`
-    margin: 20px 10px 0;
+const Contents = css`
+    margin: 10px;
 `;
 
 const PriceVehicleWrap = css`
@@ -142,4 +154,9 @@ const Img = css`
     }
 `;
 
+const heartIcon = css`
+    font-size: 1rem;
+    margin-top: 7px;
+    color: #ff6d75;
+`;
 export default DetailformItems;

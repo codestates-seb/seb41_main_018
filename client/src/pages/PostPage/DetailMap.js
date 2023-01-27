@@ -60,6 +60,10 @@ const Map = css`
         overflow: hidden;
         margin: 0 auto;
         @media (min-width: 768px) {
+            /* width: 370px;
+            position: relative;
+            bottom: 320px;
+            right: 640px; */
             height: 500px;
             margin: 40px auto;
         }
