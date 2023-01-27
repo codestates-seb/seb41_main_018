@@ -4,7 +4,7 @@ import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 
 import DetailformItems from "./DetailformItems";
-import DetailMap from "../../pages/PostPage/DetailMap";
+import DetailMap from "./DetailMap";
 import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
 
