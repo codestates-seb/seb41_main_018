@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SuccessUserInfo {
     private int httpStatus;
-    private long memberId;
+    private Long userId;
     private String email;
     private String nickname;
     private UserStatus userStatus;
