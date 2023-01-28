@@ -48,7 +48,7 @@ const DetailformItems = (props) => {
                 </div>
                 <li>
                     <span>주소</span>
-                    <div>강원 강릉시 난설헌로 131</div>
+                    <div>{RouteData && RouteData.address}</div>
                 </li>
             </ul>
             <div css={Contents}>{RouteData && RouteData.body}</div>
