@@ -9,9 +9,7 @@ import logo9 from "../assets/logo9.png";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
-import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
-import SignButton from "./SignButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "./Button.js";
 import { useRecoilState } from "recoil";
@@ -119,32 +117,26 @@ const Header = () => {
                                                 margin="10px"
                                             />
                                         </Link>
-                                        <Button
-                                            width="250px"
-                                            height="60px"
-                                            text="로그아웃"
-                                            boxShadow="1px 1px 5px rgb(0,0,0,0.2)"
-                                            margin="10px"
-                                            onClick={logout}
-                                        />
                                     </div>
                                 ) : (
                                     <div>
                                         <Link to="/login">
                                             <Button
+                                                bgColor="white"
                                                 width="250px"
                                                 height="60px"
                                                 text="로그인"
-                                                boxShadow="1px 1px 5px rgb(0,0,0,0.2)"
+                                                boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px;"
                                                 margin="10px"
                                             />
                                         </Link>
                                         <Link to="/signup">
                                             <Button
+                                                bgColor="white"
                                                 width="250px"
                                                 height="60px"
                                                 text="회원가입"
-                                                boxShadow="1px 1px 5px rgb(0,0,0,0.2)"
+                                                boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px;"
                                                 margin="10px"
                                             />
                                         </Link>
@@ -165,20 +157,27 @@ const Header = () => {
                     align-items: center;
                 `}
             >
-                <div>
+                <div
+                    css={css`
+                        @media (max-width: 768px) {
+                            margin: 0 auto;
+                            padding-right: 30px;
+                        }
+                    `}
+                >
                     <Link to="/">
                         <img src={logo9} alt="같이갈래 logo" css={logoStyle}></img>
                     </Link>
                 </div>
+                {/* 데스크탑 기준 검색창 */}
                 <div
                     css={css`
                         display: flex;
                     `}
                 >
-                    {/* 데스크탑 기준 검색창 */}
                     <input
                         type="text"
-                        css={responsiveSearchInput}
+                        css={SearchInput}
                         placeholder="검색어를 입력해주세요."
                         onChange={(e) => setKeyword(e.target.value)}
                         value={keyword}
@@ -191,20 +190,19 @@ const Header = () => {
                     <SearchIcon css={searchIcon} onClick={keywordSearch} />
 
                     {/* 모바일 기준 검색창 - 검색버튼 */}
-                    <SearchIcon
-                        css={resSearchIcon}
-                        onClick={(handleResSearchIconClick, keywordSearch)}
-                    />
+                    <SearchIcon css={resSearchIcon} onClick={handleResSearchIconClick} />
                     {isResSearchIconClick ? (
                         <div>
                             <div css={resSearchIconClick}>
                                 <CloseIcon
                                     onClick={handleClose}
                                     css={css`
-                                        width: 30px;
-                                        height: 30px;
+                                        position: relative;
+                                        top: 7px;
+                                        width: 25px;
+                                        height: 25px;
                                         margin: 20px;
-                                        align-self: start;
+                                        align-self: end;
                                     `}
                                 />
                                 {/* 모바일 기준 검색창 - 검색 input */}
@@ -217,6 +215,7 @@ const Header = () => {
                                     onKeyUp={(e) => {
                                         if (e.key == "Enter") {
                                             keywordSearch();
+                                            setResSearchIcon(false);
                                         }
                                     }}
                                 ></input>
@@ -253,27 +252,27 @@ const Header = () => {
                                     </li>
                                 </ul>
                             </div>
-                        ) : (
-                            false
-                        )}
+                        ) : null}
                     </div>
                 ) : (
                     <div css={divAccount}>
                         <Link to="/login">
                             <Button
                                 width="100px"
+                                bgColor="white"
                                 height="50px"
                                 text="로그인"
-                                boxShadow="1px 1px 5px rgb(0,0,0,0.2)"
+                                boxShadow="rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;"
                                 margin="10px"
                             />
                         </Link>
                         <Link to="/signup">
                             <Button
                                 width="100px"
+                                bgColor="white"
                                 height="50px"
                                 text="회원가입"
-                                boxShadow="1px 1px 5px rgb(0,0,0,0.2)"
+                                boxShadow="rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;"
                                 margin="10px"
                             />
                         </Link>
@@ -338,27 +337,9 @@ const buttonContainer = css`
 const logoStyle = css`
     width: 140px;
     height: 80px;
-    margin-top: 10px;
-
-    @media (max-width: 768px) {
-        margin: 0;
-    }
-`;
-
-const search = css`
-    display: flex;
-    width: 400px;
-
-    .MuiInputBase-root {
-        height: 50px;
-        border-radius: 50px;
-        box-shadow: 1px 1px 10px 2px rgba(60, 60, 60, 0.2);
-    }
-    @media (max-width: 1080px) {
-        width: 300px;
-    }
-    @media (max-width: 768px) {
-        display: none;
+    margin: 0 auto;
+    @media (min-width: 768px) {
+        margin-left: 40px;
     }
 `;
 
@@ -384,8 +365,6 @@ const searchIcon = css`
 `;
 
 const resSearchIcon = css`
-    display: none;
-    position: relative;
     width: 34px;
     height: 34px;
     border: solid 10px ${PALETTE.default_color};
@@ -399,8 +378,8 @@ const resSearchIcon = css`
         border: solid 10px ${PALETTE.default_hover};
         cursor: pointer;
     }
-    @media (max-width: 768px) {
-        display: block;
+    @media (min-width: 768px) {
+        display: none;
         margin: 0 20px 0 0;
     }
 `;
@@ -417,23 +396,42 @@ const resSearchIconClick = css`
     align-items: center;
 `;
 
-const responsiveSearchInput = css`
-    width: 95%;
-    height: 50px;
-    background-color: rgb(0, 0, 0, 0.05);
-    border: solid 2px rgb(0, 0, 0, 0.05);
-    border-radius: ${PALETTE.border_radius};
-    &:focus {
-        background-color: white;
-        box-shadow: ${PALETTE.box_shaodw};
+const SearchInput = css`
+    @media (max-width: 768px) {
+        display: none;
     }
+    @media (min-width: 768px) {
+        dispaly: inline;
+        width: 25vw;
+        min-width: 260px;
+        height: 50px;
+        padding: 10px 20px;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        background-color: rgb(0, 0, 0, 0.02);
+        border: solid 2px rgb(0, 0, 0, 0.05);
+        border-radius: ${PALETTE.border_round};
+        &:focus {
+            background-color: white;
+            box-shadow: ${PALETTE.box_shaodw};
+        }
+    }
+`;
+
+const responsiveSearchInput = css`
+    width: 80vw;
+    height: 50px;
+    padding: 10px 20px;
+    margin-top: -50px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: rgb(0, 0, 0, 0.02);
+    border: solid 2px rgb(0, 0, 0, 0.05);
 `;
 
 const recentKeyword = css`
     display: flex;
     align-self: start;
     margin-top: 30px;
-    margin-left: 10px;
+    margin-left: 30px;
     font-weight: 600;
 `;
 const divAccount = css`
@@ -483,8 +481,8 @@ const menuicon = css`
 
 const dropMenu = css`
     position: absolute;
-    margin-top: 50px;
-    right: 100px;
+    top: 70px;
+    margin-left: 60px;
     background-color: white;
     border-radius: 10px;
     box-shadow: ${PALETTE.box_shaodw};
@@ -515,4 +513,88 @@ const bottomDropMenu = css`
     border-bottom-right-radius: 10px;
 `;
 
+const buttonss = css`
+    width: 130px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: "Lato", sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
+        4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+    outline: none;
+
+    background-color: #4dccc6;
+    background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+    line-height: 42px;
+    padding: 0;
+    border: none;
+
+    &:hover {
+        background-color: #89d8d3;
+        background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
+    }
+    span {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    &:before,
+    &:after {
+        position: absolute;
+        content: "";
+        right: 0;
+        top: 0;
+        box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.9), -4px -4px 6px 0 rgba(116, 125, 136, 0.2),
+            inset -4px -4px 6px 0 rgba(255, 255, 255, 0.9),
+            inset 4px 4px 6px 0 rgba(116, 125, 136, 0.3);
+        transition: all 0.3s ease;
+    }
+    &:before {
+        height: 0%;
+        width: 0.1px;
+    }
+    &:after {
+        width: 0%;
+        height: 0.1px;
+    }
+    &:hover:before {
+        height: 100%;
+    }
+    &:hover:after {
+        width: 100%;
+    }
+    span:before,
+    span:after {
+        position: absolute;
+        content: "";
+        left: 0;
+        bottom: 0;
+        box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.9), -4px -4px 6px 0 rgba(116, 125, 136, 0.2),
+            inset -4px -4px 6px 0 rgba(255, 255, 255, 0.9),
+            inset 4px 4px 6px 0 rgba(116, 125, 136, 0.3);
+        transition: all 0.3s ease;
+    }
+    span:before {
+        width: 0.1px;
+        height: 0%;
+    }
+    span:after {
+        width: 0%;
+        height: 0.1px;
+    }
+    span:hover:before {
+        height: 100%;
+    }
+    span:hover:after {
+        width: 100%;
+    }
+`;
 export default Header;

@@ -92,6 +92,7 @@ const categoryContainer = css`
     align-items: center;
     width: 100px;
     height: 100px;
+    cursor: pointer;
     &:hover {
         font-weight: 900;
     }

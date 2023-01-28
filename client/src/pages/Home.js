@@ -17,6 +17,15 @@ import left from "../assets/left.png";
 import { getContent } from "../util/axiosContents";
 import { useRecoilState } from "recoil";
 import { ContentsList, loginState } from "../state/atom";
+import 서울 from "../assets/sampleImg/region/서울.png";
+import 부산 from "../assets/sampleImg/region/부산.png";
+import 제주 from "../assets/sampleImg/region/제주.png";
+import 담양 from "../assets/sampleImg/region/제주.png";
+import 파주 from "../assets/sampleImg/region/제주.png";
+import 포천 from "../assets/sampleImg/region/제주.png";
+import 강릉 from "../assets/sampleImg/region/제주.png";
+import 여수 from "../assets/sampleImg/region/제주.png";
+import 전주 from "../assets/sampleImg/region/제주.png";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -57,6 +66,20 @@ const Home = () => {
             },
         },
     };
+
+    const data = [
+        { text: "서울", img: "서울" },
+        { text: "부산", img: "부산" },
+        { text: "제주", img: "제주" },
+        { text: "여수", img: "여수" },
+        { text: "전주", img: "전주" },
+        { text: "강릉", img: "강릉" },
+        { text: "대구", img: "대구" },
+        { text: "포천", img: "포천" },
+        { text: "파주", img: "파주" },
+        { text: "담양", img: "담양" },
+    ];
+
     return (
         <div>
             {isLoading ? (
@@ -66,29 +89,37 @@ const Home = () => {
                     <Categorybar />
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
+                            {/* {data.map((el, index) => {
+                                <SwiperSlide>
+                                    <Regionitems img={`${el.img}`} text={`${el.text}`} />
+                                </SwiperSlide>;
+                            })} */}
                             <SwiperSlide>
-                                <Regionitems />
+                                <Regionitems img={`${서울}`} text="서울" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems />
+                                <Regionitems img={`${부산}`} text="부산" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems />
+                                <Regionitems img={`${제주}`} text="제주" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems />
+                                <Regionitems img={`${담양}`} text="담양" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems />
+                                <Regionitems img={`${강릉}`} text="강릉" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems />
+                                <Regionitems img={`${전주}`} text="전주" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems />
+                                <Regionitems img={`${여수}`} text="여수" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems />
+                                <Regionitems img={`${파주}`} text="파주" />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <Regionitems img={`${포천}`} text="포천" />
                             </SwiperSlide>
                         </div>
                     </Swiper>
