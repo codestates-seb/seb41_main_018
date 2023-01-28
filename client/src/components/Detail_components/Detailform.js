@@ -108,7 +108,10 @@ const wrap = css`
     flex-direction: column;
 
     h2 {
-        margin: 50px 0 -30px 40px;
+        margin: 30px 0 10px 47px;
+        @media (min-width: 768px) {
+            margin: 30px 0 -30px 47px;
+        }
     }
 `;
 
