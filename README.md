@@ -1,4 +1,6 @@
+![header](https://capsule-render.vercel.app/api?type=waving&&color=timeGradient&height=300&section=header&text=Gachi%20Galle&fontSize=90&animation=twinkling&desc=seb41_main_018&descAlign=68&descAlignY=65&)
 # seb41_main_018 
+
 
 ##  ![image](https://user-images.githubusercontent.com/108250233/215278635-93dfb954-5f85-4f53-8bd8-b05063aec9dc.png) 가치 갈래? ( Gachi Galle? )
 
