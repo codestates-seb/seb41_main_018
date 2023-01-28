@@ -137,7 +137,7 @@ export const yPositionFive = atom({
 export const detailPosition = atom({
     key: "detailPosition",
     default: 1,
-})
+});
 
 export const detailPositionTwo = atom({
     key: "detailPositionTwo",
@@ -147,15 +147,15 @@ export const detailPositionTwo = atom({
 export const detailPositionThree = atom({
     key: "detailPositionThree",
     default: 3,
-})
+});
 export const detailPositionFour = atom({
     key: "detailPositionFour",
     default: 4,
-})
+});
 export const detailPositionFive = atom({
     key: "detailPositionFive",
     default: 5,
-})
+});
 
 export const userInfoState = atom({
     key: "userInfoState",
@@ -186,5 +186,10 @@ export const KeywordFilterResultState = atom({
 
 export const SearchKeywordState = atom({
     key: "SearchKeywordState",
+    default: "",
+});
+
+export const TagsStringState = atom({
+    key: "TagsStringState",
     default: "",
 });

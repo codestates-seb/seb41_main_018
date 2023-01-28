@@ -80,11 +80,16 @@ export const postContent = async (data) => {
     return await axios
         .post(
             "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents",
-
-            data,
-
+            {
+                title: data.title,
+                themeType: data.themeType,
+                travelDate: data.travelDate,
+                tag: data.tag,
+                routes: data.routes,
+            },
             {
                 headers: {
+                    "Content-Type": `application/json`,
                     Authorization: sessionStorage.getItem("access_token"),
                 },
             }
@@ -93,8 +98,6 @@ export const postContent = async (data) => {
             return res;
         })
         .catch((err) => {
-            if (err) {
-            }
-            console.error(err.message);
+            console.log(err);
         });
 };

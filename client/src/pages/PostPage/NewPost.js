@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 /** @jsxImportSource @emotion/react */
@@ -35,7 +35,10 @@ import {
     detailPositionThree,
     detailPositionFour,
     detailPositionFive,
+    TagsStringState,
 } from "../../state/atom";
+
+import { postContent } from "../../util/axiosContents";
 
 const defaultValues = {
     title: "",
@@ -97,7 +100,6 @@ const AddInput = () => {
                             control={control}
                             name={`routes.${index}.place`}
                             render={({ field }) => {
-                                console.log("", field);
                                 return (
                                     <input
                                         {...field}
@@ -198,7 +200,6 @@ const Title = () => {
             control={control}
             name="title"
             render={({ field }) => {
-                console.log(field);
                 return (
                     <input
                         css={TitleInput}
@@ -228,8 +229,6 @@ const Category = () => {
         { value: "FOOD", label: "맛집투어" },
     ];
 
-    console.log("watch", watch("themeType"));
-
     return (
         <Controller
             control={control}
@@ -250,7 +249,6 @@ const Category = () => {
                                 }}
                             />
                         </div>
-                        {console.log(value.value)}
                     </div>
                 );
             }}
@@ -280,36 +278,19 @@ const TravelDate = () => {
 };
 
 const NewPost = () => {
+    const navigate = useNavigate();
+    const [tagsStr, setTagsStr] = useRecoilState(TagsStringState);
     const methods = useForm({ defaultValues });
     const { control, handleSubmit, watch } = methods;
 
     const submit = async (data) => {
-        console.log(data);
-
-        const jsonData = JSON.stringify(data);
-        console.log(jsonData);
-
-        await axios
-            .post(
-                "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents",
-                jsonData,
-                {
-                    headers: {
-                        "Content-Type": `application/json`,
-                        Authorization: sessionStorage.getItem("accessToken"),
-                    },
-                }
-            )
-            .then((res) => {
-                navigate(`/`);
-            })
-            .catch((err) => {
-                console.log(err);
-                // alert('회원가입에 실패했습니다.');
-            });
+        // 태그 추가
+        data.tag = tagsStr;
+        postContent(data).then(() => {
+            navigate("/");
+        });
     };
 
-    console.log(watch("routes"));
     return (
         <FormProvider {...methods}>
             <form
