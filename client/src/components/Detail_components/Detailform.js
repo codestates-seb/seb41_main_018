@@ -19,12 +19,14 @@ import "react-awesome-button/dist/styles.css";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 dayjs.locale("ko");
+import { postHeart } from "../../util/axiosContents";
 
 export const Buttons = (props) => {
     return (
         <AwesomeButton
             type="primary"
             before={props.icon}
+            onPress={props.onPress}
             css={css`
                 margin: 10px;
                 --button-default-height: 50px;
@@ -51,10 +53,14 @@ const Detailform = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const data = contentDetail.data;
-    const tagDummy = ["강릉", "아르떼뮤지엄", "경포"];
 
     const selectMenuHandler = (index) => {
         setcurrentTab(index);
+    };
+
+    // 좋아요 post요청 함수
+    const HeartHandler = () => {
+        postHeart(userInfo.userId, data.contentId);
     };
 
     return (
@@ -99,18 +105,20 @@ const Detailform = () => {
                             margin-top: 20px;
                         `}
                     >
-                        {tagDummy.map((el, index) => (
-                            <span key={index} css={tagStyle}>
-                                {`#${el}`}
-                            </span>
-                        ))}
+                        {data &&
+                            data.tag &&
+                            data.tag.split(",").map((el, index) => (
+                                <span key={index} css={tagStyle}>
+                                    {`#${el}`}
+                                </span>
+                            ))}
                     </div>
                 </div>
             </div>
             <h2>✈️ 지도로 경로 확인하기</h2>
             <DetailMap />
             <div css={ButtonBox}>
-                <Buttons icon={<BsFillHeartFill />} text="가치갈래" />
+                <Buttons icon={<BsFillHeartFill />} text="가치갈래" onPress={HeartHandler} />
                 <Buttons text={<FiShare />} />
             </div>
         </div>

@@ -103,8 +103,8 @@ const MyInfo_Wrap = css`
     flex-direction: column;
     align-items: flex-start;
     padding: 50px;
-    width: 700px;
-    height: 450px;
+    width: 100%;
+    height: 100%;
 
     .none {
         display: none;

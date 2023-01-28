@@ -4,20 +4,25 @@ import React from "react";
 import { PALETTE } from "../../Common";
 import { css } from "@emotion/react";
 import { AiOutlineClose } from "react-icons/ai";
+import { useRecoilState } from "recoil";
+import { TagsStringState } from "../../state/atom";
 
 const Tag = () => {
-    const [tags, setTags] = useState([]);
+    const [tagsArr, setTagsArr] = useState([]);
+    const [tagsStr, setTagsStr] = useRecoilState(TagsStringState);
+
     const removeTags = (indexToRemove) => {
-        const filter = tags.filter((el, index) => index !== indexToRemove);
-        setTags(filter);
+        const filter = tagsArr.filter((el, index) => index !== indexToRemove);
+        setTagsArr(filter);
+        setTagsStr(tagsArr.join());
     };
 
-    console.log(tags);
     const addTags = (event) => {
         const inputVal = event.target.value;
-        if (event.key === "Enter" && inputVal !== "" && !tags.includes(inputVal)) {
-            setTags([...tags, inputVal]);
+        if (event.key === "Enter" && inputVal !== "" && !tagsArr.includes(inputVal)) {
+            setTagsArr([...tagsArr, inputVal]);
             event.target.value = "";
+            setTagsStr(tagsArr.join());
         }
     };
 
@@ -25,7 +30,7 @@ const Tag = () => {
         <>
             <div css={TagsInput}>
                 <ul id="tags">
-                    {tags.map((tag, index) => (
+                    {tagsArr.map((tag, index) => (
                         <li key={index}>
                             <span css={tagStyle}>
                                 {tag}

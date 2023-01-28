@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
@@ -10,10 +10,16 @@ import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 
 const ImgUpload = () => {
     const [imgList, setImgList] = useRecoilState(imgState);
+    const [previewList, setPreviewList] = useState([]);
     const inputRef = useRef(null);
     const uploadBtnClick = () => {
+        console.log("버튼클릭");
         inputRef.current.click();
     };
+
+    useEffect(() => {
+        setImgList(previewList);
+    }, [previewList]);
 
     // img upload function
     const handleUploadImg = (event) => {
@@ -27,17 +33,16 @@ const ImgUpload = () => {
         }
 
         // img의 상대경로 반환
-        let previewList = [];
         for (let i = 0; i < selectedImg.length; i++) {
             const imgUrl = URL.createObjectURL(selectedImg[i]);
-            previewList.push(imgUrl);
+            setPreviewList((previewList) => [...previewList, imgUrl]);
         }
-        setImgList(previewList);
     };
 
     // img delete function
     const handleDeleteImg = (i) => {
         setImgList(imgList.filter((_, index) => index !== i));
+        setPreviewList(imgList.filter((_, index) => index !== i));
     };
 
     return (
@@ -50,7 +55,7 @@ const ImgUpload = () => {
                 multiple
             />
             <button css={PhotoButton} onClick={uploadBtnClick}>
-                <MdOutlineAddPhotoAlternate size='20' color='#fff'/>
+                <MdOutlineAddPhotoAlternate size="20" color="#fff" />
             </button>
             {/* <Button
                 text="사진 업로드"

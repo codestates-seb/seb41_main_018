@@ -3,54 +3,24 @@ import React from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import dayjs from "dayjs";
+import { userInfoState } from "../../state/atom";
+import { useRecoilState } from "recoil";
+import { Link } from "react-router-dom";
 
-// 제목 말줄임
-const reviewDummy = [
-    {
-        reviewId: 1,
-        content: "review1",
-        postId: 1,
-        postTitle: "postTitle1",
-        displayName: "displayName1",
-        email: "test1@gmail.com",
-        rate: 3,
-        createdAt: "2022-12-30T08:32:07.625506082",
-        modifiedAt: "2022-12-30T08:32:07.625506082",
-    },
-    {
-        reviewId: 2,
-        content: "review2",
-        postId: 2,
-        postTitle: "postTitle2",
-        displayName: "displayName1",
-        email: "test1@gmail.com",
-        rate: 2,
-        createdAt: "2022-12-30T08:32:07.625506082",
-        modifiedAt: "2022-12-30T08:32:07.625506082",
-    },
-    {
-        reviewId: 3,
-        content: "review3",
-        postId: 3,
-        postTitle: "postTitle3",
-        displayName: "displayName3",
-        email: "test3@gmail.com",
-        rate: 5,
-        createdAt: `${dayjs().format()}`,
-        modifiedAt: "2022-12-30T08:32:07.625506082",
-    },
-];
 const MyLike = () => {
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
     return (
         <div css={MyLike_Wrap}>
-            {reviewDummy.map((review) => (
-                <div css={MyLike_Item} key={review.reviewId}>
+            {userInfo.hearts.map((hearts) => (
+                <div css={MyLike_Item} key={hearts.contentId}>
                     <div css={PostImg}>사진</div>
                     <div css={MyLike_Content}>
-                        <h3 css={PostTitle}>{review.postTitle}</h3>
+                        <Link to={`/detail/${hearts.contentId}`}>
+                            <h3 css={PostTitle}>{hearts.title}</h3>
+                        </Link>
                         <div>경로</div>
-                        <div css={Right_Content}>{dayjs(review.createdAt).format("YY.MM.DD")}</div>
-                        <div css={Right_Content}>{review.displayName}</div>
+                        <div css={Right_Content}>{dayjs(hearts.createdAt).format("YY.MM.DD")}</div>
                     </div>
                 </div>
             ))}
@@ -84,7 +54,7 @@ const PostImg = css`
 `;
 
 const MyLike_Content = css`
-    padding: 5px 20px;
+    padding: 20px;
     width: 100%;
     text-align: left;
 `;

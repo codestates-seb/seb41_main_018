@@ -217,6 +217,7 @@ const ContentBox = css`
     border-radius: ${PALETTE.border_radius};
     width: 700px;
     height: 450px;
+    overflow: auto;
 `;
 
 export default Mypage;

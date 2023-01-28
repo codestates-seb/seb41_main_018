@@ -5,6 +5,7 @@ import { PALETTE } from "../../Common";
 import dayjs from "dayjs";
 import { userInfoState } from "../../state/atom";
 import { useRecoilState } from "recoil";
+import { Link } from "react-router-dom";
 
 const MyReview = () => {
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
@@ -15,7 +16,10 @@ const MyReview = () => {
                 <div css={MyReview_Item} key={review.reviewId}>
                     <div css={PostImg}>사진</div>
                     <div css={MyReview_Content}>
-                        <h3 css={PostTitle}>{review.title}</h3>
+                        {console.log(review.contentId)}
+                        <Link to={`/detail/${review.contentId}`}>
+                            <h3 css={PostTitle}>{review.title}</h3>
+                        </Link>
                         <div>{review.body}</div>
                         <div css={Right_Content}>{dayjs(review.createdAt).format("YY.MM.DD")}</div>
                     </div>
@@ -41,7 +45,7 @@ const MyReview_Item = css`
 
     border: ${PALETTE.border};
     border-radius: ${PALETTE.border_radius};
-    box-shadow: ${PALETTE.box_shaodw};
+    box-shadow: ${PALETTE.box_shadow};
 `;
 const PostImg = css`
     padding: 20px;

@@ -2,19 +2,19 @@ import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
-import { FaPencilAlt } from "react-icons/fa";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 
 const MyPostItem = ({ post }) => {
-    const { title, createdAt } = post;
+    const { title, createdAt, contentId } = post;
     return (
         <div css={MyPostItem_Wrap}>
             <div css={PostImg}>사진</div>
             <div css={MyPostItem_Content}>
-                <div css={MyPostItem_Header}>
+                <Link to={`/detail/${contentId}`}>
                     <h3 css={PostTitle}>{title}</h3>
-                    <FaPencilAlt size="25" />
-                </div>
+                </Link>
+
                 <div css={MyPostItem_Body}>
                     <div>경로</div>
                     <div css={Right_Content}>{dayjs(createdAt).format("YY.MM.DD")}</div>
@@ -42,19 +42,9 @@ const PostImg = css`
     height: 90px;
 `;
 const MyPostItem_Content = css`
+    padding: 5px 20px;
     width: 100%;
-    padding-left: 15px;
-`;
-
-const MyPostItem_Header = css`
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-
-    h3 {
-        width: 75%;
-        text-align: left;
-    }
+    text-align: left;
 `;
 
 const PostTitle = css`

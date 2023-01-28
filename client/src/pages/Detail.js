@@ -39,8 +39,7 @@ const Detail = () => {
     }, []);
     return (
         <div css={Wrap}>
-            {/* <h1>{data && data.title}</h1> */}
-            <h1>즐거운 제주도 여행</h1>
+            <h1>{contentDetail.data && contentDetail.data.title}</h1>
             <div css={ContentInfo}></div>
             <Total />
             <div css={TotalContainer}>
