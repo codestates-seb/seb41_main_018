@@ -10,7 +10,7 @@ import { BsFillHeartFill } from "react-icons/bs";
 
 //recoil
 import { useRecoilState } from "recoil";
-import { ContentDetail } from "../../state/atom";
+import { ContentDetail, userInfoState } from "../../state/atom";
 
 //Button
 import { AwesomeButton } from "react-awesome-button";
@@ -49,6 +49,7 @@ export const Buttons = (props) => {
 const Detailform = () => {
     const [currentTab, setcurrentTab] = useState(0);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const data = contentDetail.data;
     const tagDummy = ["강릉", "아르떼뮤지엄", "경포"];
 
@@ -60,18 +61,32 @@ const Detailform = () => {
         <div css={wrap}>
             <div css={container}>
                 {/* 경로 아이템 불러오기 */}
-                <div css={tabWrap}>
-                    {data &&
-                        data.routes.map((el, index) => (
-                            <div
-                                key={data && data.routes && data.routes[index].routeId}
-                                onClick={() => selectMenuHandler(index)}
-                                css={currentTab === index ? SelectTab : NoSelect}
-                            >
-                                {el.place}
-                            </div>
-                        ))}
+                <div
+                    css={css`
+                        margin: 0 auto;
+                    `}
+                >
+                    <div css={UserProfile}>
+                        <img
+                            src="https://images-ext-2.discordapp.net/external/AyGGds_QNPK1IcGsGfyEQzYE3ez132reqOCTQtvOJUE/https/gachigalle-route-image.s3.ap-northeast-2.amazonaws.com/ato4.jpeg?width=1344&height=1008"
+                            css={imgStyle}
+                        />
+                        <h3>{`${data && data.nickName}님의 추천 경로`}</h3>
+                    </div>
+                    <div css={tabWrap}>
+                        {data &&
+                            data.routes.map((el, index) => (
+                                <div
+                                    key={data && data.routes && data.routes[index].routeId}
+                                    onClick={() => selectMenuHandler(index)}
+                                    css={currentTab === index ? SelectTab : NoSelect}
+                                >
+                                    {el.place}
+                                </div>
+                            ))}
+                    </div>
                 </div>
+
                 <div
                     css={css`
                         margin: 0 auto;
@@ -122,7 +137,42 @@ const container = css`
     margin: 10px 40px;
     padding: 20px;
     @media (min-width: 768px) {
+        min-width: 768px;
         display: flex;
+    }
+
+    h3 {
+        margin-top: 10px;
+        /* background-color: red; */
+        @media (min-width: 768px) {
+            margin: 0 auto;
+            padding: 10px 0;
+            border-bottom: 0.175rem solid rgb(0, 0, 0, 0.2);
+        }
+    }
+`;
+
+const UserProfile = css`
+    display: flex;
+    @media (min-width: 768px) {
+        min-width: 270px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+`;
+
+const imgStyle = css`
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 10px;
+    @media (min-width: 768px) {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 20px auto;
     }
 `;
 const ButtonBox = css`
@@ -133,7 +183,8 @@ const ButtonBox = css`
 
 const tabWrap = css`
     display: flex;
-    margin-left: 15px;
+    margin: 30px 0 -15px 10px;
+
     @media (min-width: 768px) {
         flex-direction: column;
         width: 270px;
@@ -149,19 +200,17 @@ const SelectTab = css`
         font-size: 0.975rem;
         font-weight: 600;
         color: ${PALETTE.default_color};
-        border-bottom: 0.2em solid ${PALETTE.default_color};
     }
     @media (min-width: 768px) {
         font-size: 1.375rem;
+        font-weight: 600;
         padding: 15px;
         margin: 10px 0;
-        border-radius: 50px;
-        box-shadow: inset 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
-        &:hover {
-            transform: translateY(-5px);
-            transition-duration: 100ms;
-            transition-duration: 250ms;
-        }
+        margin-right: 10px;
+        display: inline;
+        cursor: pointer;
+        position: relative;
+        color: ${PALETTE.default_color};
     }
 `;
 
@@ -171,19 +220,48 @@ const NoSelect = css`
     @media (max-width: 768px) {
         padding: 10px;
         font-size: 0.975rem;
-        border-bottom: 0.2em solid ${PALETTE.ligth_gray};
+        position: relative;
+        &:before {
+            width: 0%;
+            transition: width 0.3s;
+            transform: translateX(-50%);
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            height: 0.175rem;
+            background: ${PALETTE.default_color};
+            content: "";
+            display: block;
+        }
+        &:hover::before {
+            width: 100%;
+            transition: width 0.3s;
+        }
     }
     @media (min-width: 768px) {
         font-size: 1.375rem;
         padding: 15px;
         margin: 10px 0;
-        border-radius: 50px;
+        margin-right: 10px;
+        display: inline;
+        cursor: pointer;
+        position: relative;
 
-        box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
-        &:hover {
-            transform: translateY(-5px);
-            transition-duration: 100ms;
-            transition-duration: 250ms;
+        &:before {
+            width: 0%;
+            transition: width 0.3s;
+            transform: translateX(-50%);
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            height: 0.275rem;
+            background: ${PALETTE.default_color};
+            content: "";
+            display: block;
+        }
+        &:hover::before {
+            width: 100%;
+            transition: width 0.3s;
         }
     }
 `;
