@@ -32,22 +32,14 @@ const Button = (props) => {
                 border: ${props.border || `${PALETTE.border_default}`};
                 box-shadow: ${props.boxShadow || null};
 
-                transition: ${props.transition || "all 0.2s"};
+                transition: ${props.transition || "all 0.2s ease"};
 
                 cursor: pointer;
 
-                /* &:hover {
-                    transform: scale(1.1, 1.1);
-                    -ms-transform: scale(1.1, 1.1);
-                    -webkit-transform: scale(1.1, 1.1);
-                    background-color: ${PALETTE.default_hover};
-                    color: ${PALETTE.white};
-                    transition-duration: 250ms;
+                :hover {
+                    box-shadow: -7px -7px 20px 0px #fff9, -4px -4px 5px 0px #fff9,
+                        7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
                 }
-
-                &:active {
-                    background-color: rgba(251, 181, 181, 1);
-                } */
             `}
         >
             <div
@@ -56,10 +48,6 @@ const Button = (props) => {
                     font-weight: ${props.ftweight || "400"};
                     align-items: center;
                     color: ${props.color || "black"};
-
-                    /* &:hover {
-                        color: white;
-                    } */
                 `}
             >
                 {props.text}
