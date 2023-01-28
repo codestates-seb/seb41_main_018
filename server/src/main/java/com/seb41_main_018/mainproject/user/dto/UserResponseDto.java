@@ -25,4 +25,7 @@ public class UserResponseDto {
     private String phone;
     @ApiModelProperty(notes = "유저 상태", example = "ACTIVITY", required = true)
     private UserStatus userStatus;
+
+    @ApiModelProperty(notes = "유저 프로필 이미지", example = "셀카.png", required = true)
+    private String image;
 }

@@ -52,6 +52,9 @@ public class ContentAllResponseDto {
     @ApiModelProperty(notes = "작성자 닉네임", example = "강멋쟁이", required = true)
     private String nickName;
 
+    @ApiModelProperty(notes = "작성자 프로필 사진", example = "셀카.png", required = true)
+    private String image;
+
     @ApiModelProperty(notes = "후기들", example = "저도 너무 좋았어요!", required = true)
     private List<CommentDto.Response> comments;
 

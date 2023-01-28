@@ -29,6 +29,9 @@ public class UserAllResponseDto {
     @ApiModelProperty(notes = "유저 전화번호", example = "010-1111-1111", required = true)
     private String phone;
 
+    @ApiModelProperty(notes = "유저 프로필 이미지", example = "셀카.png", required = true)
+    private String image;
+
     @ApiModelProperty(notes = "유저가 작성한 컨텐츠들", example = "서울 여행 컨텐츠, 부산 여행 컨텐츠", required = true)
     private List<ContentDto.UserContentResponseDto> contents;
 
