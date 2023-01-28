@@ -72,6 +72,9 @@ public class ContentService {
         Optional.ofNullable(content.getTravelDate())
                 .ifPresent(findContent::setTravelDate);
 
+        Optional.ofNullable(content.getTag())
+                .ifPresent(findContent::setTag);
+
 
         routeService.deleteRoutes(findContent);
         findContent.setRoutes(routeService.createRoutes(content.getRoutes()));

@@ -44,6 +44,9 @@ public class ContentAllResponseDto {
     @ApiModelProperty(notes = "조회 수", example = "1", required = true)
     private int viewCount;
 
+    @ApiModelProperty(notes = "태그들", example = "내돈내산", required = true)
+    private String tag;
+
     @ApiModelProperty(notes = "총 여행 비용", example = "120000", required = true)
     private int amount;
     @ApiModelProperty(notes = "여행 날짜", example = "2023.01.20", required = true)

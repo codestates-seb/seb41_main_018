@@ -37,6 +37,9 @@ public class Content extends Auditable {
     @Column(nullable = false)
     private  int amount = 0;
 
+    @Column
+    private String tag;
+
     @Column(nullable = false)
     private String travelDate;
 

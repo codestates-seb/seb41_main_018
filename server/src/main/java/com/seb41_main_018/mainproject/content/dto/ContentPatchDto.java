@@ -27,6 +27,8 @@ public class ContentPatchDto {
 
     @ApiModelProperty(notes = "컨텐트 카테고리", example = "DOMESTIC", required = true)
     private ThemeType themeType;
+    @ApiModelProperty(notes = "태그들", example = "내돈내산", required = true)
+    private String tag;
 
     @ApiModelProperty(notes = "상세 루트들", example = "창경궁", required = true)
     private List<RoutePostDto> routes;

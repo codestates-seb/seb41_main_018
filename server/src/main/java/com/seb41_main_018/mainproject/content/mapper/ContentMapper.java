@@ -32,6 +32,8 @@ public interface ContentMapper {
         //content.setRouteName(requestBody.getRouteName());
         content.setTravelDate(requestBody.getTravelDate());
         content.setThemeType(requestBody.getThemeType());
+        content.setTag(requestBody.getTag());
+
         return content;
     }
     default Content contentPatchDtoToContent(ContentPatchDto requestBody){
@@ -43,6 +45,7 @@ public interface ContentMapper {
         content.setTitle(requestBody.getTitle());
         content.setThemeType(requestBody.getThemeType());
         content.setTravelDate(requestBody.getTravelDate());
+        content.setTag(requestBody.getTag());
         //content.setRouteName(requestBody.getRouteName());
         content.setRoutes(routes);
         return content;
@@ -62,11 +65,11 @@ public interface ContentMapper {
                 //.routeName(content.getRouteName())
                 .createdAt(content.getCreatedAt())
                 .modifiedAt(content.getModifiedAt())
+                .tag(content.getTag())
                 .routes(routesToRouteResponseDtos(content.getRoutes()))
                 .build();
     }
     default List<Route> routesDtosToRoutes(List<RoutePostDto> routePostDtos, Content content){
-        //tag 또한 변환해줘야함(dto -> entity)
 
         return routePostDtos.stream().map(routePostDto -> {
             Route route = new Route();
@@ -146,6 +149,7 @@ public interface ContentMapper {
                 .amount(routes.stream().mapToInt(Route::getPrice).sum())
                 .travelDate(content.getTravelDate())
                 .image(user.getImage())
+                .tag(content.getTag())
                 //.routeName(content.getRouteName())
                 .routes(routesToRouteResponseDtos(routeRepository.findAllByContentId(content.getContentId())))
                 .viewCount(content.getViewCount())
