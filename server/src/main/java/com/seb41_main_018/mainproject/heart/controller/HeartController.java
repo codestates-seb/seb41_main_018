@@ -2,6 +2,8 @@ package com.seb41_main_018.mainproject.heart.controller;
 
 import com.seb41_main_018.mainproject.constant.HeartType;
 import com.seb41_main_018.mainproject.content.service.ContentService;
+import com.seb41_main_018.mainproject.exception.BusinessLogicException;
+import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.heart.dto.HeartDto;
 import com.seb41_main_018.mainproject.heart.entity.Heart;
 import com.seb41_main_018.mainproject.heart.mapper.HeartMapper;
@@ -18,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +47,9 @@ public class HeartController {
             @PathVariable("userId") @Positive Long userId,
             @PathVariable("contentId") @Positive Long contentId) {
         User user = userService.findUser(userId);
+
+        if(userService.getLoginMember().getUserId() != user.getUserId())
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
         Content content = contentService.findContent(contentId);
         Heart heart = heartService.createHeart(user,content);
         HeartDto.Response response = heartMapper.heartToHeartResponseDto(heart);
