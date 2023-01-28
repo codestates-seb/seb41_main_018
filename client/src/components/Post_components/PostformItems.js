@@ -67,7 +67,8 @@ const PostformItems = (props) => {
                             margin: 0 auto;
                         `}
                     >
-                        {String(props.postFormData && props.postFormData.routes[index].place)}
+                        {/* {String(props.postFormData && props.postFormData.routes[index].place)} */}
+                        sdfdfs
                     </div>
                     {isClick ? <IoMdArrowDropupCircle /> : <IoMdArrowDropdownCircle />}
                 </div>

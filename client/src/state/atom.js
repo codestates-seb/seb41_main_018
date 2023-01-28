@@ -115,7 +115,7 @@ export const yPositionFive = atom ({
 
 export const detailPosition = atom({
     key: "detailPosition",
-    default: 2,
+    default: 1,
 })
 
 export const detailPositionTwo = atom({
@@ -124,14 +124,14 @@ export const detailPositionTwo = atom({
 })
 export const detailPositionThree = atom({
     key: "detailPositionThree",
-    default: 2,
+    default: 3,
 })
 export const detailPositionFour = atom({
     key: "detailPositionFour",
-    default: 2,
+    default: 4,
 })
 export const detailPositionFive = atom({
     key: "detailPositionFive",
-    default: 2,
+    default: 5,
 })
 
