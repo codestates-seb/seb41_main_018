@@ -39,7 +39,7 @@ const Detail = () => {
     }, []);
     return (
         <div css={Wrap}>
-            <h1>{contentDetail.data.title}</h1>
+            <h1>{contentDetail.data && contentDetail.data.title}</h1>
             <div css={ContentInfo}></div>
             <Total />
             <div css={TotalContainer}>
