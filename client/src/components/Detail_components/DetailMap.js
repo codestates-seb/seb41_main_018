@@ -48,7 +48,7 @@ const DetailMap = () => {
 
     return (
         //하드 코딩 데이터 출력용
-        <Map center={b} css={MapStyle} level={3}>
+        <Map center={b} css={MapStyle} level={8}>
             {routes.map((position, index) => (
                 <div key={index}>
                     <MapMarker key={index} position={{ lat: position.x, lng: position.y }} />
