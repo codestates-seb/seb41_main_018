@@ -85,6 +85,8 @@ public interface UserMapper {
                         .contentId(heart.getContent().getContentId())
                         .title(heart.getContent().getTitle())
                         .heartType(heart.getHeartType())
+                        .createdAt(heart.getCreatedAt())
+                        .modifiedAt(heart.getModifiedAt())
                         .build())
                 .collect(Collectors.toList());
     }

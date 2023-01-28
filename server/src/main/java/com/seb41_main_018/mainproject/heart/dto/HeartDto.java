@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 public class HeartDto {
     @ApiModel("Heart Patch")
@@ -48,5 +49,10 @@ public class HeartDto {
         private Long contentId;
         @ApiModelProperty(notes = "좋아요 상태", example = "ADD", required = true)
         private HeartType heartType;
+        @ApiModelProperty(notes = "컨텐츠 작성 날짜와 시간", example = "2023.01.20", required = true)
+        private LocalDateTime createdAt;
+
+        @ApiModelProperty(notes = "컨텐츠 수정 날짜와 시간", example = "2023.01.20", required = true)
+        private LocalDateTime modifiedAt;
     }
 }

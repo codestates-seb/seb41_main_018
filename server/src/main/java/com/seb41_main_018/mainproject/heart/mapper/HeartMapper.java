@@ -20,6 +20,7 @@ public interface HeartMapper {
                 .heartId(heart.getHeartId())
                 .contentId(content.getContentId())
                 .heartType(heart.getHeartType().toString())
+
                 .build();
     }
     List<HeartDto.Response> heartsToHeartResponseDtos(List<Heart> heart);
