@@ -59,6 +59,5 @@
   },
   "devDependencies": {
     "eslint-config-prettier": "^8.6.0"
-  },
-  "proxy": "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080"
+  }
 }

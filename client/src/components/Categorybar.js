@@ -10,7 +10,7 @@ import 커플여행 from "../assets/categoryImg/커플여행.png";
 import 효도여행 from "../assets/categoryImg/효도여행.png";
 import 카페투어 from "../assets/categoryImg/카페투어.png";
 import { useNavigate } from "react-router-dom";
-import { getCategory } from "../util/axiosDetail";
+import { getCategory } from "../util/axiosContents";
 import { useRecoilState } from "recoil";
 import { CategorySearchResultState } from "../../src/state/atom";
 

@@ -9,11 +9,15 @@ import axios from "axios";
 // 로그인
 export const Login = async (jsonData) => {
     return await axios
-        .post("/users/login", jsonData, {
-            headers: {
-                "Content-Type": `application/json`,
-            },
-        })
+        .post(
+            "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/login",
+            jsonData,
+            {
+                headers: {
+                    "Content-Type": `application/json`,
+                },
+            }
+        )
 
         .then((res) => {
             if (res.status === 202) {
@@ -35,11 +39,14 @@ export const Login = async (jsonData) => {
 // user info 조회
 export const getUserInfo = async (userId) => {
     return await axios
-        .get(`/users/${userId}/Info`, {
-            headers: {
-                Authorization: sessionStorage.getItem("access_token"),
-            },
-        })
+        .get(
+            `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/${userId}/Info`,
+            {
+                headers: {
+                    Authorization: sessionStorage.getItem("access_token"),
+                },
+            }
+        )
         .then((res) => {
             return res.data;
         })
@@ -63,7 +70,7 @@ export const checkLogin = async () => {
 export const userEdit = async (userId, editName) => {
     return await axios
         .patch(
-            `/users/${userId}`,
+            `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/${userId}`,
             { nickname: editName },
             {
                 headers: {
@@ -84,7 +91,7 @@ export const userEdit = async (userId, editName) => {
 export const userLogout = async () => {
     return await axios
         .post(
-            "/users/logout",
+            "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/logout",
             {},
             {
                 headers: {
@@ -103,11 +110,14 @@ export const userLogout = async () => {
 // 회원탈퇴
 export const deleteUser = async (userId) => {
     return await axios
-        .delete(`/users/${userId}`, {
-            headers: {
-                Authorization: sessionStorage.getItem("access_token"),
-            },
-        })
+        .delete(
+            `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/${userId}`,
+            {
+                headers: {
+                    Authorization: sessionStorage.getItem("access_token"),
+                },
+            }
+        )
         .then(() => {
             alert("탈퇴가 완료되었습니다.");
         })

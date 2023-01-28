@@ -12,6 +12,7 @@ const Tag = () => {
         setTags(filter);
     };
 
+    console.log(tags);
     const addTags = (event) => {
         const inputVal = event.target.value;
         if (event.key === "Enter" && inputVal !== "" && !tags.includes(inputVal)) {
@@ -71,7 +72,6 @@ const TagsInput = css`
     flex-wrap: wrap;
     min-height: 48px;
     border-radius: 6px;
-    /* background-color: yellow; */
 
     ul {
         display: flex;

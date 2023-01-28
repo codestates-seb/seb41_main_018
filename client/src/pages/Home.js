@@ -14,7 +14,7 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import right from "../assets/right.png";
 import left from "../assets/left.png";
-import { getContent } from "../util/axiosDetail";
+import { getContent } from "../util/axiosContents";
 import { useRecoilState } from "recoil";
 import { ContentsList, loginState } from "../state/atom";
 
