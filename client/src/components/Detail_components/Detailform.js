@@ -99,7 +99,7 @@ const Detailform = () => {
                             margin-top: 20px;
                         `}
                     >
-                        {tagDummy.map((el, index) => (
+                        {data.tag.split(",").map((el, index) => (
                             <span key={index} css={tagStyle}>
                                 {`#${el}`}
                             </span>
