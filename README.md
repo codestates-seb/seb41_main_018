@@ -6,7 +6,7 @@
 |![강진원](https://avatars.githubusercontent.com/u/89727516?s=100&v=4)|![김리안](https://avatars.githubusercontent.com/u/87472526?s=100&v=4)|![신희주](https://avatars.githubusercontent.com/u/106229016?s=100&v=4)|![최유진](https://avatars.githubusercontent.com/u/57933510?s=100&v=4)|![강하렴](https://avatars.githubusercontent.com/u/108250233?v=4)|![안서희](https://avatars.githubusercontent.com/u/89247924?s=100&v=4)|
 |:---:|:---:|:---:|:---:|:---:|:---:|
 |[강진원](https://github.com/z1nun)|[김리안](https://github.com/rian0422)|[신희주](https://github.com/ksb71202)|[최유진](https://github.com/Choiyu330)|[강하렴](https://github.com/kangharyeom)|[안서희](https://github.com/eehres)|
-|👑팀장<br>FE|FE|FE|BE|BE|BE|
+|👑팀장<br>FE|FE|FE|🙀부팀장<br>BE|BE|BE|
 
 
 
