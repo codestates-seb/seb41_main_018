@@ -83,7 +83,7 @@ const Swiper_Wrap = css`
     border-radius: 10px;
     margin: 20px auto;
     @media (min-width: 768px) {
-        width: 60vw;
+        width: 55vw;
         height: 540px;
     }
 
@@ -115,7 +115,7 @@ const Swiper_Wrap = css`
         border-radius: 10px;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        /* object-fit: cover; */
     }
 
     // 버튼
