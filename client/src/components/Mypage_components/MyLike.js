@@ -3,8 +3,10 @@ import React from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import dayjs from "dayjs";
+import { userInfoState } from "../../state/atom";
+import { useRecoilState } from "recoil";
+import { Link } from "react-router-dom";
 
-// 제목 말줄임
 const reviewDummy = [
     {
         reviewId: 1,
@@ -41,16 +43,21 @@ const reviewDummy = [
     },
 ];
 const MyLike = () => {
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
     return (
         <div css={MyLike_Wrap}>
-            {reviewDummy.map((review) => (
-                <div css={MyLike_Item} key={review.reviewId}>
+            {userInfo.hearts.map((hearts) => (
+                <div css={MyLike_Item} key={hearts.contentId}>
                     <div css={PostImg}>사진</div>
                     <div css={MyLike_Content}>
-                        <h3 css={PostTitle}>{review.postTitle}</h3>
+                        <Link to={`/detail/${hearts.contentId}`}>
+                            <h3 css={PostTitle}>{hearts.title}</h3>
+                        </Link>
                         <div>경로</div>
-                        <div css={Right_Content}>{dayjs(review.createdAt).format("YY.MM.DD")}</div>
-                        <div css={Right_Content}>{review.displayName}</div>
+                        <div css={Right_Content}>
+                            {dayjs(/* hearts.createdAt */).format("YY.MM.DD")}
+                        </div>
                     </div>
                 </div>
             ))}
@@ -68,7 +75,7 @@ const MyLike_Wrap = css`
 const MyLike_Item = css`
     display: flex;
     align-items: center;
-    padding-left: 8px;
+    padding: 8px;
     margin: 10px;
     width: 90%;
 
@@ -84,7 +91,7 @@ const PostImg = css`
 `;
 
 const MyLike_Content = css`
-    padding: 5px 20px;
+    padding: 20px;
     width: 100%;
     text-align: left;
 `;
