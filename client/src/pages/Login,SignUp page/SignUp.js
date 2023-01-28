@@ -86,13 +86,17 @@ const SignUp = () => {
             console.log(emailjsonData);
 
             await axios
-                .get("api", emailjsonData, {
-                    headers: {
-                        "Content-Type": `application/json`,
-                    },
-                })
+                .get(
+                    `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/emailCheck/${email.current}`,
+                    emailjsonData,
+                    {
+                        headers: {
+                            "Content-Type": `application/json`,
+                        },
+                    }
+                )
                 .then((res) => {
-                    if (res === true) {
+                    if (res) {
                         alert("사용할수 있는 이메일입니다");
                     }
                 })
@@ -106,14 +110,18 @@ const SignUp = () => {
 
     const onSignUpSubmit = async (data) => {
         const jsonData = JSON.stringify(data);
-        console.log(jsonData);
+        console.log(email.current);
 
         await axios
-            .post("/users", jsonData, {
-                headers: {
-                    "Content-Type": `application/json`,
-                },
-            })
+            .post(
+                "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users",
+                jsonData,
+                {
+                    headers: {
+                        "Content-Type": `application/json`,
+                    },
+                }
+            )
             .then((res) => {
                 alert("회원가입 성공!!!!!");
                 navigate("/login");
@@ -210,7 +218,9 @@ const SignUp = () => {
                         })}
                         css={LoginInputBox}
                     />
-                    {errors.passwordConfirm && <small role="alert">"hi"</small>}
+                    {errors.passwordConfirm && (
+                        <small role="alert">"비밀번호가 일치하지 않습니다."</small>
+                    )}
                     <label htmlFor="password" css={LoginLabelBox}>
                         닉네임
                     </label>
