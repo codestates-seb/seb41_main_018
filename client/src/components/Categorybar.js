@@ -1,5 +1,5 @@
-/** @jsxImportSource @emotion/react */
 import React from "react";
+/** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import 국내여행 from "../assets/categoryImg/국내여행.png";
 import 맛집투어 from "../assets/categoryImg/맛집투어.png";
@@ -9,19 +9,32 @@ import 혼자여행 from "../assets/categoryImg/혼자여행.png";
 import 커플여행 from "../assets/categoryImg/커플여행.png";
 import 효도여행 from "../assets/categoryImg/효도여행.png";
 import 카페투어 from "../assets/categoryImg/카페투어.png";
+import { useNavigate } from "react-router-dom";
+import { getCategory } from "../util/axiosDetail";
+import { useRecoilState } from "recoil";
+import { CategorySearchResultState } from "../../src/state/atom";
 
 const Categorybar = () => {
+    const navigate = useNavigate();
+    const [categorySearch, setCategorySearch] = useRecoilState(CategorySearchResultState);
+
     const category = [
-        { src: 국내여행, title: "국내여행" },
-        { src: 해외여행, title: "해외여행" },
-        { src: 효도여행, title: "효도여행" },
-        { src: 커플여행, title: "커플여행" },
-        { src: 친구여행, title: "친구여행" },
-        { src: 혼자여행, title: "혼자여행" },
-        { src: 카페투어, title: "카페투어" },
-        { src: 맛집투어, title: "맛집투어" },
+        { src: 국내여행, title: "국내여행", themeType: "DOMESTIC" },
+        { src: 해외여행, title: "해외여행", themeType: "ABROAD" },
+        { src: 효도여행, title: "효도여행", themeType: "FAMILY" },
+        { src: 커플여행, title: "커플여행", themeType: "COUPLE" },
+        { src: 친구여행, title: "친구여행", themeType: "FRIENDS" },
+        { src: 혼자여행, title: "혼자여행", themeType: "ALONE" },
+        { src: 카페투어, title: "카페투어", themeType: "CAFE" },
+        { src: 맛집투어, title: "맛집투어", themeType: "FOOD" },
     ];
 
+    const searchHandler = (themeType) => {
+        getCategory(themeType).then((data) => {
+            setCategorySearch(data && data.data);
+            navigate("/result");
+        });
+    };
     return (
         <div css={wrap}>
             <div
@@ -30,7 +43,11 @@ const Categorybar = () => {
                 `}
             >
                 {category.slice(0, category.length / 2).map((el, index) => (
-                    <div key={index} css={categoryContainer}>
+                    <div
+                        key={index}
+                        css={categoryContainer}
+                        onClick={() => searchHandler(el.themeType)}
+                    >
                         <img src={el.src} css={categoryImg} />
                         <span css={categoryFont}>{el.title}</span>
                     </div>
@@ -42,7 +59,11 @@ const Categorybar = () => {
                 `}
             >
                 {category.slice(category.length / 2, category.length).map((el, index) => (
-                    <div key={index} css={categoryContainer}>
+                    <div
+                        key={index}
+                        css={categoryContainer}
+                        onClick={() => searchHandler(el.themeType)}
+                    >
                         <img src={el.src} css={categoryImg} />
                         <span css={categoryFont}>{el.title}</span>
                     </div>

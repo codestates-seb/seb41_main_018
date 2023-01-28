@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from "react";
 /** @jsxImportSource @emotion/react */
-import React from "react";
 import { css } from "@emotion/react";
 import HomeItems from "../components/Home_components/HomeItems";
 import Regionitems from "../components/Home_components/RegionItems";
@@ -14,9 +14,23 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import right from "../assets/right.png";
 import left from "../assets/left.png";
+import { getContent } from "../util/axiosDetail";
+import { useRecoilState } from "recoil";
+import { ContentsList, loginState } from "../state/atom";
+
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const Home = () => {
+    const [contentsList, setcontentsList] = useRecoilState(ContentsList);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        getContent().then((res) => {
+            setIsLoading(false);
+            setcontentsList(res.data.data);
+        });
+    }, []);
+
     const swiperOption = {
         spaceBetween: 10,
         slidesPerView: 5,
@@ -45,96 +59,84 @@ const Home = () => {
     };
     return (
         <div>
-            <Categorybar />
-            <Swiper {...swiperOption} css={postStyle}>
-                <div>
-                    <SwiperSlide>
-                        <Regionitems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Regionitems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Regionitems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Regionitems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Regionitems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Regionitems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Regionitems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <Regionitems />
-                    </SwiperSlide>
-                </div>
-            </Swiper>
-            <Banner />
-            <div css={itemsTitle}>✈️ 관심 급상승 여행지</div>
-            <Swiper {...swiperOption} css={postStyle}>
-                <div>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                </div>
-            </Swiper>
-            <div css={itemsTitle}>✈️ 관심 급상승 여행지</div>
-            <Swiper {...swiperOption} css={postStyle}>
-                <div>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <HomeItems />
-                    </SwiperSlide>
-                </div>
-            </Swiper>
-            <Banner />
-            <Footer />
+            {isLoading ? (
+                <div>Loading...</div>
+            ) : (
+                <>
+                    <Categorybar />
+                    <Swiper {...swiperOption} css={postStyle}>
+                        <div>
+                            <SwiperSlide>
+                                <Regionitems />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <Regionitems />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <Regionitems />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <Regionitems />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <Regionitems />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <Regionitems />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <Regionitems />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <Regionitems />
+                            </SwiperSlide>
+                        </div>
+                    </Swiper>
+                    <Banner />
+                    <div css={itemsTitle}>✈️ 관심 급상승 여행지</div>
+                    <Swiper {...swiperOption} css={postStyle}>
+                        <div>
+                            {contentsList &&
+                                contentsList.map((content) => (
+                                    <SwiperSlide key={content.contentId}>
+                                        <HomeItems content={content} />
+                                    </SwiperSlide>
+                                ))}
+                        </div>
+                    </Swiper>
+                    <div css={itemsTitle}>✈️ 관심 급상승 여행지</div>
+                    <Swiper {...swiperOption} css={postStyle}>
+                        <div>
+                            <SwiperSlide>
+                                <HomeItems />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <HomeItems />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <HomeItems />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <HomeItems />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <HomeItems />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <HomeItems />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <HomeItems />
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <HomeItems />
+                            </SwiperSlide>
+                        </div>
+                    </Swiper>
+                    <Banner />
+                    <Footer />
+                </>
+            )}
         </div>
     );
 };

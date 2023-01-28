@@ -32,8 +32,23 @@ const Post = () => {
         body: "강남역",
     };
 
-    const putdata = () => {
-        console.log(`최종적으로 올라가는 데이터`, JsonData);
+    /*  console.log(`postFormData`, data); */
+
+    const putdate = async () => {
+        const JsonData = JSON.stringify(postFormData);
+        await axios
+            .post("/post", JsonData, {
+                headers: {
+                    "Content-Type": `application/json`,
+                },
+            })
+            .then((res) => {
+                navigate("/");
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("error");
+            });
     };
     // const putdate = async () => {
     //     await axios

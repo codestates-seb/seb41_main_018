@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
-import { getAuthorization, getRefresh } from "../../state/atom";
+import { getAuthorization, getRefresh, userInfoState, loginState } from "../../state/atom";
 import SocialButton from "../../components/SocialButton";
 import Button from "../../components/Button";
 import logo9 from "../../assets/logo9.png";
-import axios from "axios";
+import { Login, getUserInfo } from "../../util/axiosUser";
 import {
     LoginpageBg,
     LoginpageContainer,
@@ -27,6 +27,8 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const [Authorization, setAuthorization] = useRecoilState(getAuthorization);
     const [Refresh, setRefresh] = useRecoilState(getRefresh);
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const [isLogin, setIsLogin] = useRecoilState(loginState);
 
     const {
         register,
@@ -37,27 +39,22 @@ const LoginPage = () => {
     const onSubmit = async (data) => {
         const jsonData = JSON.stringify(data);
 
-        console.log(jsonData);
-
-        await axios
-            .post("/users/login", jsonData, {
-                headers: {
-                    "Content-Type": `application/json`,
-                },
-            })
+        await Login(jsonData)
             .then((res) => {
-                navigate("/");
-                sessionStorage.setItem("Authorization", res.headers.get("Authorization"));
-                sessionStorage.setItem("Refresh", res.headers.get("Refresh"));
+                getUserInfo(res.data.userId).then((data) => {
+                    setUserInfo(data.data);
+                    setIsLogin(true);
+                    navigate("/");
+                });
             })
             .catch((err) => {
-                console.log(err);
-                alert("로그인에 실패했습니다.");
+                console.log(err.message);
             });
     };
 
     return (
         <div css={LoginpageBg}>
+            {console.log(userInfo)}
             <div css={LoginpageContainer}>
                 <div css={LoginLogoContainer}>
                     <Link to={"/"}>

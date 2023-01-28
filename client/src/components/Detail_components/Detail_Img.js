@@ -12,8 +12,6 @@ import "swiper/css/pagination";
 import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";
 import right from "../../assets/right.png";
 import left from "../../assets/left.png";
-import { useRecoilState } from "recoil";
-import { selectedRouteState } from "../../state/atom";
 
 // import sample img (추후 삭제 예정)
 import sam1_1 from "../../assets/sampleImg/sam1_1.png";
@@ -24,6 +22,10 @@ import sam3_1 from "../../assets/sampleImg/sam3_1.jpeg";
 import sam3_2 from "../../assets/sampleImg/sam3_2.jpeg";
 import { Palette } from "@mui/icons-material";
 import { PALETTE } from "../../Common";
+
+//recoil
+import { useRecoilState } from "recoil";
+import { selectedRouteState, ContentDetail } from "../../state/atom";
 
 // 경로 데이터 더미
 const routeDummy = [
@@ -49,9 +51,10 @@ const routeDummy = [
 
 const Detial_Img = () => {
     const [selectedRoute, setSelectedRoute] = useRecoilState(selectedRouteState);
-
     /* 선택 된 경로만 filter */
     let selected = routeDummy.filter((routeplace) => routeplace.routeId === selectedRoute);
+
+    const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
 
     return (
         <div css={Swiper_Wrap}>
@@ -75,12 +78,13 @@ const Detial_Img = () => {
 };
 
 const Swiper_Wrap = css`
-    width: 75vw;
+    width: 80vw;
     height: 100%;
-    border: ${PALETTE.border};
     border-radius: 10px;
-    @media (min-width: 769px) {
-        width: 30vw;
+    margin: 20px auto;
+    @media (min-width: 768px) {
+        width: 55vw;
+        height: 540px;
     }
 
     .swiper {
@@ -92,8 +96,6 @@ const Swiper_Wrap = css`
         text-align: center;
         font-size: 18px;
         background: #fff;
-
-        /* Center slide text vertically */
         display: -webkit-box;
         display: -ms-flexbox;
         display: -webkit-flex;
@@ -110,9 +112,10 @@ const Swiper_Wrap = css`
 
     .swiper-slide img {
         display: block;
+        border-radius: 10px;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        /* object-fit: cover; */
     }
 
     // 버튼

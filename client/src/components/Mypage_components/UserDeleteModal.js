@@ -1,13 +1,29 @@
 import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { PALETTE } from "../Common";
-import Button from "../components/Button";
+import { PALETTE } from "../../Common";
+import Button from "../Button";
+import { deleteUser } from "../../util/axiosUser";
+import { userInfoState, loginState } from "../../state/atom";
+import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
 
 const Modal = (props) => {
+    const navigate = useNavigate();
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const [isLogin, setIsLogin] = useRecoilState(loginState);
+
     // 모달 끄기
     const closeModal = () => {
         props.setModalOpen(false);
+    };
+    // 회원탈퇴 확인
+    const deleteConfirm = () => {
+        deleteUser(userInfo.userId).then(() => {
+            setIsLogin(false);
+            setUserInfo({});
+            navigate("/");
+        });
     };
 
     return (
@@ -15,7 +31,7 @@ const Modal = (props) => {
             <div css={ModalContainer}>
                 <h2>{props.text}</h2>
                 <div css={ButtonArea}>
-                    <Button text="확인" width="25%" margin="20px" onClick={closeModal}></Button>
+                    <Button text="확인" width="25%" margin="20px" onClick={deleteConfirm}></Button>
                     <Button text="취소" width="25%" margin="20px" onClick={closeModal}></Button>
                 </div>
             </div>

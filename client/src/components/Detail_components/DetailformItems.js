@@ -1,176 +1,92 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
-import { useState } from "react";
-import { PALETTE } from "../../Common";
-import Map from "../../pages/PostPage/Map";
 import { css } from "@emotion/react";
+import React, { useState } from "react";
+import { BsFillHeartFill } from "react-icons/bs";
+
+//component
 import Detial_Img from "./Detail_Img";
-import sam2 from "../../assets/sampleImg/sam2.jpg";
-import { IoMdArrowDropdownCircle } from "react-icons/io";
-import { IoMdArrowDropupCircle } from "react-icons/io";
 
-// 경로 선택 상태관리 필요 import
+//utill
+import { PALETTE } from "../../Common";
+
+//recoil
 import { useRecoilState } from "recoil";
-import { selectedRouteState } from "../../state/atom";
-const content = {
-    contentId: 1,
-    title: "커플 여행",
-    body: "해피",
-    themeType: "COUPLE",
-    date: "2023.01.21",
-    routeName: "서울에서 놀자",
-    routes: [
-        {
-            routeId: 1,
-            price: 20000,
-            vehicle: "자동차",
-            place: "아르떼 뮤지엄",
-            body: "넘 이쁨",
-            x: "1",
-            y: "1",
-        },
+import { ContentDetail } from "../../state/atom";
 
-        {
-            routeId: 2,
-            price: 10000,
-            vehicle: "자동차",
-            place: "금오름",
-            body: "조하용",
-            x: "1",
-            y: "1",
-        },
-        {
-            routeId: 3,
-            price: 10000,
-            vehicle: "자동차",
-            place: "경복궁",
-            body: "한복 체험 잼남",
-            x: "1",
-            y: "1",
-        },
-    ],
-    comment: [],
-};
 const DetailformItems = (props) => {
-    const [isClick, setClick] = useState(false);
-    // 경로 선택 상태
-    const [selectedRoute, setSelectedRoute] = useRecoilState(selectedRouteState);
-    const handleClick = (routeId) => {
-        setClick(!isClick);
-        // 선택 된 routeId 저장
-        setSelectedRoute(routeId);
-    };
-    console.log(props.content);
+    const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
+    const data = contentDetail.data;
+    const RouteData = contentDetail.data && contentDetail.data.routes[props.index];
 
     return (
-        <>
-            <div css={isClick ? clickedwrap : wrap}>
-                <div css={placeTitle} onClick={() => handleClick(props.routeId)}>
-                    {/* <div
-                        css={css`
-                            margin: 0 auto;
-                        `}
-                    > */}
-                    {props.text}
-                    {/* </div> */}
-                    {isClick ? <IoMdArrowDropupCircle /> : <IoMdArrowDropdownCircle />}
-                </div>
-                {isClick ? (
-                    <div css={clicked}>
-                        <div
-                            css={css`
-                                margin: 10px auto;
-                                display: flex;
-                                flex-direction: column;
-                                @media (min-width: 769px) {
-                                    flex-direction: row;
-                                }
-                            `}
-                        >
-                            {/* <div
-                                css={css`
-                                    @media (min-width: 769px) {
-                                        display: none;
-                                    }
-                                `}
-                            >
-                                <Detial_Img />
-                            </div> */}
-                            <ul>
-                                <li>
-                                    <span>경비</span>
-                                    <div>50000원</div>
-                                </li>
-                                <li>
-                                    <span>이동 수단</span>
-                                    <div>자동차</div>
-                                </li>
-                                <li
-                                    css={css`
-                                        flex-direction: column;
-                                    `}
-                                >
-                                    <span>상세 설명</span>
-                                    <div
-                                        css={css`
-                                            font-size: 0.9rem;
-                                            margin: 20px 15px 0;
-                                        `}
-                                    >
-                                        아이들도 입장 가능합니다!
-                                    </div>
-                                </li>
-                            </ul>
-                            <div>
-                                <Detial_Img />
-                            </div>
-                        </div>
-                        <div
-                            css={css`
-                                margin: 10px auto;
-                            `}
-                        >
-                            <Map />
-                        </div>
-                    </div>
-                ) : null}
+        <div css={wrap}>
+            <Detial_Img />
+            <div
+                css={css`
+                    margin-left: 10px;
+                `}
+            >
+                <BsFillHeartFill css={heartIcon} />
+                <span>{`${data && data.heartCount} likes`}</span>
             </div>
-        </>
+            <ul
+                css={css`
+                    @media (min-width: 768px) {
+                        display: flex;
+                    }
+                `}
+            >
+                <div css={PriceVehicleWrap}>
+                    <li>
+                        <span>경비</span>
+                        <div>{RouteData && RouteData.price}</div>
+                    </li>
+                    <li>
+                        <span>이동 수단</span>
+                        <div>{RouteData && RouteData.vehicle}</div>
+                    </li>
+                </div>
+                <li>
+                    <span>주소</span>
+                    <div>{RouteData && RouteData.address}</div>
+                </li>
+            </ul>
+            <div css={Contents}>{RouteData && RouteData.body}</div>
+        </div>
     );
 };
 
 const wrap = css`
-    font-size: 1.2rem;
-    font-weight: 600;
-    text-align: center;
-    border: ${PALETTE.border};
-    border-radius: ${PALETTE.border_radius};
-    width: 80vw;
+    font-size: 0.9rem;
     margin: 0 auto;
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    @media (min-width: 768px) {
+        font-size: 1.175rem;
+    }
+    ul {
+        margin: 20px 0;
+    }
 
-    &:hover {
-        cursor: pointer;
+    li {
+        display: flex;
+    }
+
+    span {
+        font-weight: 600;
+        margin: 0 10px;
     }
 `;
 
-const placeTitle = css`
+const Contents = css`
+    margin: 10px;
+`;
+
+const PriceVehicleWrap = css`
     display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
+    margin-bottom: 10px;
 `;
-
-const clickedwrap = css`
-    font-size: 1.2rem;
-    font-weight: 600;
-    text-align: center;
-    border: ${PALETTE.border};
-    border-radius: ${PALETTE.border_radius};
-    width: 80vw;
-    margin: 0 auto;
-    padding: 10px;
-`;
-
+// 미사용부분
 const clicked = css`
     margin: 5px auto;
     text-align: start;
@@ -217,14 +133,6 @@ const clicked = css`
     }
 
     span {
-        border-radius: ${PALETTE.border_round};
-        background-color: #eff5f5;
-        color: #497174;
-        padding: 7px;
-        text-align: center;
-        font-weight: 600;
-        font-size: 1rem;
-        margin: 0 10px;
     }
     ul,
     img {
@@ -246,4 +154,9 @@ const Img = css`
     }
 `;
 
+const heartIcon = css`
+    font-size: 1rem;
+    margin-top: 7px;
+    color: #ff6d75;
+`;
 export default DetailformItems;

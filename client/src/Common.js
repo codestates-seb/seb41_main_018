@@ -23,4 +23,8 @@ export const PALETTE = {
     gray: "#787878",
     ligth_gray: "#e4e4e4",
     white: "#ffffff",
+    sky: "#AAE3E2",
+    purple: "#D9ACF5",
+    pink: "#FFCEFE",
+    ivory: "#FDEBED",
 };

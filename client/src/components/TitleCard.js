@@ -9,12 +9,15 @@ import { PALETTE } from "../Common";
 import { Calendar } from "../util/Calendar";
 import { AiOutlineConsoleSql } from "react-icons/ai";
 import { useRecoilState } from "recoil";
-import { CategoryData, PostFormData, PostFormData2 } from "../state/atom";
+import { CategoryData, PostFormData, TitleData, DateData } from "../state/atom";
 
 const TitleCard = () => {
     const [category, setCategory] = useRecoilState(CategoryData);
     const [postFormData, setPostFormData] = useRecoilState(PostFormData);
-    console.log(category);
+
+    const [title, setTitle] = useRecoilState(TitleData);
+    const [Date, setDate] = useRecoilState(DateData);
+
 
     const options = [
         "국내여행",
@@ -48,18 +51,33 @@ const TitleCard = () => {
         }
     };
 
-    useEffect(() => {
-        // form onchange 실행할 수 있는 친구
-        let tmp = postFormData;
-        console.log(`tmp:`, tmp);
-        // tmp.themeType = category;
 
-        // console.log(postFormData);
-        // let themeType = postFormData.themeType;
-        // themeType = category;
-        // console.log(themeType);
-        // setPostFormData(themeType);
+    const getTitle = (e) => {
+        console.log(e);
+    };
+
+
+    useEffect(() => {
+        let tmp = { ...postFormData };
+        tmp.themeType = category;
+        setPostFormData(tmp);
     }, [category]);
+
+    /*  useEffect(() => {
+        let tmp = { ...postFormData };
+        console.log(`tmp:`, tmp);
+        tmp.title = title;
+        setPostFormData(tmp);
+        console.log(postFormData);
+    }, [title]); */
+    /* 
+    useEffect(() => {
+        let tmp = { ...postFormData };
+        console.log(`tmp:`, tmp);
+        tmp.themeType = category;
+        setPostFormData(tmp);
+        console.log(postFormData);
+    }, [category]); */
 
     return (
         <div css={wrap}>
@@ -69,7 +87,12 @@ const TitleCard = () => {
                 `}
             >
                 <div>
-                    <Post placeholder="제목을 입력해주세요." width="340px" />
+                    <Post
+                        name="title"
+                        placeholder="제목을 입력해주세요."
+                        width="340px"
+                        onChange={getTitle}
+                    />
                 </div>
                 <div css={ComContainer}>
                     <span>카테고리</span>
@@ -93,7 +116,7 @@ const TitleCard = () => {
                 </div>
                 <div css={ComContainer}>
                     <span>총 여행 경비</span>
-                    <Post placeholder="얼마를 사용하셨나요?" width="80px" />
+                    <Post name="totalprice" placeholder="얼마를 사용하셨나요?" width="80px" />
                 </div>
             </div>
         </div>

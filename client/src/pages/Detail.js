@@ -1,88 +1,48 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+//css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { PALETTE } from "../Common";
-import { useRecoilState } from "recoil";
+
+//Icon
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
+//components
 import Detailform from "../components/Detail_components/Detailform";
 import Reviewform from "../components/Detail_components/Reviewform";
-import Tag from "../components/Post_components/Tag";
 import { getContent } from "../util/axiosDetail";
-import { ContentDetail } from "../state/atom";
+import { PALETTE } from "../Common";
+import Total from "../components/Detail_components/Total";
+
+//recoil
+import { useRecoilState } from "recoil";
+import { ContentDetail, ReviewListState } from "../state/atom";
+
+//Etc
 import axios from "axios";
-
-import { IoMdArrowDropdownCircle } from "react-icons/io";
-import { IoMdArrowDropupCircle } from "react-icons/io";
-
-// const content = {
-//     contentId: 1,
-//     title: "커플 여행",
-//     body: "해피",
-//     themeType: "COUPLE",
-//     date: "2023.01.21",
-//     routeName: "서울에서 놀자",
-//     routes: [
-//         {
-//             routeId: 1,
-//             price: 20000,
-//             vehicle: "자동차",
-//             place: "아르떼 뮤지엄",
-//             body: "넘 이쁨",
-//             x: "1",
-//             y: "1",
-//         },
-
-//         {
-//             routeId: 2,
-//             price: 10000,
-//             vehicle: "자동차",
-//             place: "금오름",
-//             body: "조하용",
-//             x: "1",
-//             y: "1",
-//         },
-//         {
-//             routeId: 3,
-//             price: 10000,
-//             vehicle: "자동차",
-//             place: "경복궁",
-//             body: "한복 체험 잼남",
-//             x: "1",
-//             y: "1",
-//         },
-//     ],
-//     comment: [],
-// };
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
+dayjs.locale("ko");
 
 const Detail = () => {
+    const pathname = location.pathname;
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
-    const getContentDetail = (id) => {
-        getContent(id).then((res) => {
+    const [reviewList, setReviewList] = useRecoilState(ReviewListState);
+    const getContentDetail = (contentId) => {
+        getContent(contentId).then((res) => {
             setContentDetail(res.data);
-            //setReview(res.data.comment);
+            setReviewList(res.data.data && res.data.data.comments);
         });
     };
+    useEffect(() => {
+        getContentDetail(location.pathname.slice(8));
+    }, []);
     return (
-        <div className="Detail" css={Wrap}>
-            <h1>제주도 1일차 여행 추천 경로!</h1>
-            <div css={ContentInfo}>
-                <span>작성자 : 원할머니멱살</span>
-                <span>2023. 01. 22</span>
-            </div>
-            {/* 공통 정보 */}
-            <div css={ContentsBody}>
-                <div css={ComContent}>
-                    <span css={ContentName}>카테고리</span>
-                    <span>혼자 여행</span>
-                </div>
-                <div css={ComContent}>
-                    <span css={ContentName}>여행일</span>
-                    <span>2023.02.08</span>
-                </div>
-                <div css={ComContent}>
-                    <span css={ContentName}>총 여행 경비</span>
-                    <span>700,000원</span>
-                </div>
-            </div>
+        <div css={Wrap}>
+            {/* <h1>{data && data.title}</h1> */}
+            <h1>즐거운 제주도 여행</h1>
+            <div css={ContentInfo}></div>
+            <Total />
             <div css={TotalContainer}>
                 <Detailform />
             </div>
@@ -97,55 +57,30 @@ const Wrap = css`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     h1 {
-        padding: 30px;
+        align-self: start;
+        margin: 30px 35px 5px;
+        font-size: 1.675rem;
+        @media (min-width: 768px) {
+            width: 90vw;
+            font-size: 2em;
+            margin: 30px auto -20px;
+        }
     }
 `;
 const ContentInfo = css`
-    align-self: flex-end;
+    align-self: flex-start;
+    font-size: 0.9rem;
+    margin: 0 25px;
     span {
-        padding: 10px 30px;
+        margin: 5px;
     }
 `;
 
 const TotalContainer = css`
     display: flex;
     flex-direction: row;
-    padding-bottom: 30px;
-`;
-/* const Image = css`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 65%;
-    height: 500px;
-    padding: 20px;
-`; */
-
-const ContentsBody = css`
-    padding-top: 20px;
-    display: flex;
-    align-self: center;
+    margin: 30px 0;
 `;
 
-const ComContent = css`
-    display: flex;
-    font-size: 1.1rem;
-    align-items: center;
-    font-weight: 600;
-    padding: 8px 20px;
-`;
-
-const ContentName = css`
-    border-radius: ${PALETTE.border_round};
-    background-color: #eff5f5;
-    color: #497174;
-    padding: 7px;
-    text-align: center;
-    font-weight: 600;
-    font-size: 1rem;
-    margin: 10px;
-`;
 export default Detail;
