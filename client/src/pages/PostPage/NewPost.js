@@ -37,14 +37,10 @@ import {
     detailPositionFive,
 } from "../../state/atom";
 
-
-
-
 const defaultValues = {
-    name: "",
-    category: { value: "DOMESTIC", label: "국내여행" },
-    date: new Date(),
-    totalPrice: 0,
+    title: "",
+    themeType: "DOMESTIC",
+    travelDate: new Date(),
     routes: [{}],
 };
 
@@ -107,7 +103,7 @@ const AddInput = () => {
                                         {...field}
                                         placeholder="장소를 입력해주세요"
                                         css={PlaceInput}
-                                        autocomplete='off'
+                                        autocomplete="off"
                                     />
                                 );
                             }}
@@ -124,25 +120,37 @@ const AddInput = () => {
                                 <div className="listcontainer">
                                     <div className="listname">주소</div>
                                     <input
-                                        {...register(`routes.${index}.detail`)}
+                                        {...register(`routes.${index}.address`)}
                                         css={ListInput}
                                         placeholder="지도목록을 선택해주세요"
                                         readOnly
                                     />
+                                    <input
+                                        {...register(`routes.${index}.x`)}
+                                        css={css`
+                                            display: none;
+                                        `}
+                                    />
+                                    <input
+                                        {...register(`routes.${index}.y`)}
+                                        css={css`
+                                            display: none;
+                                        `}
+                                    />
                                 </div>
                                 <div className="listcontainer">
                                     <div className="listname">경비</div>
-                                    <input 
+                                    <input
                                         {...register(`routes.${index}.price`)}
-                                        autocomplete='off'
-                                        css={ListInput} 
+                                        autocomplete="off"
+                                        css={ListInput}
                                     />
                                 </div>
                                 <div className="listcontainer">
                                     <div className="listname">이동 수단</div>
                                     <input
                                         {...register(`routes.${index}.vehicle`)}
-                                        autocomplete='off'
+                                        autocomplete="off"
                                         css={ListInput}
                                     />
                                 </div>
@@ -150,7 +158,7 @@ const AddInput = () => {
                                     <div className="listname">상세 설명</div>
                                     <textarea
                                         {...register(`routes.${index}.body`)}
-                                        autocomplete='off'
+                                        autocomplete="off"
                                         css={BodyInput}
                                         placeholder="후기를 적어주세요!"
                                     />
@@ -188,7 +196,7 @@ const Title = () => {
     return (
         <Controller
             control={control}
-            name="name"
+            name="title"
             render={({ field }) => {
                 console.log(field);
                 return (
@@ -198,7 +206,7 @@ const Title = () => {
                         // onKeyUp={enterkey}
                         value={field.value}
                         placeholder="제목을 입력해주세요."
-                        autocomplete='off'
+                        autocomplete="off"
                     ></input>
                 );
             }}
@@ -207,7 +215,7 @@ const Title = () => {
 };
 
 const Category = () => {
-    const { control } = useFormContext();
+    const { control, watch } = useFormContext();
 
     const options = [
         { value: "DOMESTIC", label: "국내여행" },
@@ -220,12 +228,12 @@ const Category = () => {
         { value: "FOOD", label: "맛집투어" },
     ];
 
-    // console.log("watch", watch("category"));
+    console.log("watch", watch("themeType"));
 
     return (
         <Controller
             control={control}
-            name="category"
+            name="themeType"
             render={({ field: { onChange, value } }) => {
                 return (
                     <div css={TitleSmallContainer}>
@@ -238,11 +246,11 @@ const Category = () => {
                                 onChange={(option) => {
                                     // 1. 컴포넌트 동작 내에서 인풋의 값을 바꿔준다.
                                     // 2. 인자도 넘겨줌
-                                    onChange(option);
+                                    onChange(option.value);
                                 }}
                             />
                         </div>
-                        {/* {console.log(value.value)} */}
+                        {console.log(value.value)}
                     </div>
                 );
             }}
@@ -256,7 +264,7 @@ const TravelDate = () => {
     return (
         <Controller
             control={control}
-            name="date"
+            name="travelDate"
             render={({ field: { onChange, value } }) => {
                 return (
                     <div css={TitleSmallContainer}>
@@ -282,18 +290,21 @@ const NewPost = () => {
         console.log(jsonData);
 
         await axios
-            .post("url", jsonData, {
-                headers: {
-                    "Content-Type": `application/json`,
-                    Authorization: sessionStorage.getItem("accessToken"),
-                    Refresh: sessionStorage.getItem("refreshToken"),
-                },
-            })
+            .post(
+                "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents",
+                jsonData,
+                {
+                    headers: {
+                        "Content-Type": `application/json`,
+                        Authorization: sessionStorage.getItem("accessToken"),
+                    },
+                }
+            )
             .then((res) => {
-                navigate("/");
+                navigate(`/`);
             })
             .catch((err) => {
-                // console.log(err)
+                console.log(err);
                 // alert('회원가입에 실패했습니다.');
             });
     };
@@ -314,11 +325,13 @@ const NewPost = () => {
                     <TravelDate />
                 </div>
                 <AddInput />
-                <div css={css`
-                    align-self: flex-start;
-                    margin-left: 200px;
-                `}>
-                    <Tag/>
+                <div
+                    css={css`
+                        align-self: flex-start;
+                        margin-left: 200px;
+                    `}
+                >
+                    <Tag />
                 </div>
                 <button
                     type="button"
@@ -467,7 +480,7 @@ const FieldContainer = css`
     border: ${PALETTE.border};
     border-radius: ${PALETTE.border_radius};
     width: 1250px;
-    height: 400px;
+    height: 800px;
     margin: 0 20px 20px 20px;
 `;
 

@@ -10,7 +10,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 //components
 import Detailform from "../components/Detail_components/Detailform";
 import Reviewform from "../components/Detail_components/Reviewform";
-import { getContent } from "../util/axiosDetail";
+import { getContent } from "../util/axiosContents";
 import { PALETTE } from "../Common";
 import Total from "../components/Detail_components/Total";
 

@@ -12,7 +12,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Input } from "../../util/UseForm";
 import { useRecoilState } from "recoil";
 import { ContentDetail, ReviewListState } from "../../state/atom";
-import { createReview, getContent } from "../../util/axiosDetail";
+import { createReview, getContent } from "../../util/axiosContents";
 //Button
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
