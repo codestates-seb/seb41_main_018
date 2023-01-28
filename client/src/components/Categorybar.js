@@ -7,7 +7,7 @@ import 친구여행 from "../assets/categoryImg/친구여행.png";
 import 해외여행 from "../assets/categoryImg/해외여행.png";
 import 혼자여행 from "../assets/categoryImg/혼자여행.png";
 import 커플여행 from "../assets/categoryImg/커플여행.png";
-import 효도여행 from "../assets/categoryImg/효도여행.png";
+import 가족여행 from "../assets/categoryImg/가족여행.png";
 import 카페투어 from "../assets/categoryImg/카페투어.png";
 import { useNavigate } from "react-router-dom";
 import { getCategory } from "../util/axiosDetail";
@@ -21,7 +21,7 @@ const Categorybar = () => {
     const category = [
         { src: 국내여행, title: "국내여행", themeType: "DOMESTIC" },
         { src: 해외여행, title: "해외여행", themeType: "ABROAD" },
-        { src: 효도여행, title: "효도여행", themeType: "FAMILY" },
+        { src: 가족여행, title: "가족여행", themeType: "FAMILY" },
         { src: 커플여행, title: "커플여행", themeType: "COUPLE" },
         { src: 친구여행, title: "친구여행", themeType: "FRIENDS" },
         { src: 혼자여행, title: "혼자여행", themeType: "ALONE" },
