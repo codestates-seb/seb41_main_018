@@ -7,6 +7,7 @@ import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.heart.repository.HeartRepository;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
+import com.seb41_main_018.mainproject.route.repository.RouteRepository;
 import com.seb41_main_018.mainproject.user.dto.UserAllResponseDto;
 import com.seb41_main_018.mainproject.user.mapper.UserMapper;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
@@ -40,6 +41,7 @@ public class UserService {
     private final HeartRepository heartRepository;
     private final ContentRepository contentRepository;
     private final CommentRepository commentRepository;
+    private final RouteRepository routeRepository;
     //private final CustomBeanUtils<Member> beanUtils;
 
     public User createUser(User user) {
@@ -127,7 +129,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public ResponseEntity detail(User user) {
 
-        UserAllResponseDto userAllResponseDto = userMapper.InfoResponse(user, contentRepository, commentRepository, heartRepository);
+        UserAllResponseDto userAllResponseDto = userMapper.InfoResponse(user, contentRepository, commentRepository, heartRepository,routeRepository);
         return new ResponseEntity<>(
                 new SingleResponseDto<>(userAllResponseDto), HttpStatus.OK
         );

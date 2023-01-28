@@ -9,6 +9,9 @@ import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.heart.dto.HeartDto;
 import com.seb41_main_018.mainproject.heart.entity.Heart;
 import com.seb41_main_018.mainproject.heart.repository.HeartRepository;
+import com.seb41_main_018.mainproject.route.dto.RouteResponseDto;
+import com.seb41_main_018.mainproject.route.entity.Route;
+import com.seb41_main_018.mainproject.route.repository.RouteRepository;
 import com.seb41_main_018.mainproject.tag.repository.TagRepository;
 import com.seb41_main_018.mainproject.user.dto.UserAllResponseDto;
 import com.seb41_main_018.mainproject.user.dto.UserPatchDto;
@@ -26,7 +29,7 @@ public interface UserMapper {
     User userPatchDtoToUser(UserPatchDto userPatchDto);
     UserResponseDto userToUserResponseDto(User user);
 
-    default UserAllResponseDto InfoResponse(User user, ContentRepository contentRepository, CommentRepository commentRepository, HeartRepository heartRepository){
+    default UserAllResponseDto InfoResponse(User user, ContentRepository contentRepository, CommentRepository commentRepository, HeartRepository heartRepository,RouteRepository routeRepository){
         List<Content> contents = contentRepository.findAllByUserId(user.getUserId());
         List<Comment> comments = commentRepository.findAllByUserId(user.getUserId());
         List<Heart> hearts = heartRepository.findAllByUserId(user.getUserId());
@@ -41,7 +44,7 @@ public interface UserMapper {
                 .createdAt(user.getCreatedAt())
                 .modifiedAt(user.getModifiedAt())
                 .comments(commentsToCommentResponseDtos(commentRepository.findAllByUserId(user.getUserId())))
-                .contents(contentsToContentResponseDtos(contentRepository.findAllByUserId(user.getUserId())))
+                .contents(contentsToContentResponseDtos(contentRepository.findAllByUserId(user.getUserId()),routeRepository))
                 .hearts(heartsToHeartResponseDtos(heartRepository.findAllByUserId(user.getUserId())))
                 .build();
     }
@@ -58,13 +61,21 @@ public interface UserMapper {
                         .build())
                 .collect(Collectors.toList());
     }
-    default List<ContentDto.UserContentResponseDto> contentsToContentResponseDtos(List<Content> contents){
+    default List<ContentDto.UserContentResponseDto> contentsToContentResponseDtos(List<Content> contents, RouteRepository routeRepository){
         return contents.stream()
                 .map(content -> ContentDto.UserContentResponseDto.builder()
                         .contentId(content.getContentId())
                         .title(content.getTitle())
                         .createdAt(content.getCreatedAt())
                         .modifiedAt(content.getModifiedAt())
+                        .routes(routesToRouteResponseDtos(routeRepository.findAllByContentId(content.getContentId())))
+                        .build())
+                .collect(Collectors.toList());
+    }
+    default List<ContentDto.ContentRouteResponseDto> routesToRouteResponseDtos(List<Route> routes){
+        return routes.stream()
+                .map(route-> ContentDto.ContentRouteResponseDto.builder()
+                        .place(route.getPlace())
                         .build())
                 .collect(Collectors.toList());
     }
