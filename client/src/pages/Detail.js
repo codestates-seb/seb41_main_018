@@ -37,7 +37,6 @@ const Detail = () => {
     useEffect(() => {
         getContentDetail(location.pathname.slice(8));
     }, []);
-    // const data = contentDetail.data;
     return (
         <div css={Wrap}>
             {/* <h1>{data && data.title}</h1> */}
@@ -60,7 +59,7 @@ const Wrap = css`
     align-items: center;
     h1 {
         align-self: start;
-        margin: 30px 30px 5px;
+        margin: 30px 35px 5px;
         font-size: 1.675rem;
         @media (min-width: 768px) {
             width: 90vw;
