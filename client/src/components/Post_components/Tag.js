@@ -65,7 +65,7 @@ const Tag = () => {
     );
 };
 const TagsInput = css`
-    margin: 1rem auto;
+    margin: 40px 10px;
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;

@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-
-import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { useRecoilState } from "recoil";
 import { detailPosition, xPosition, yPosition } from "../../../state/atom";
 
 const PostMap = (props) => {
 
+    const {index, setValue} = props;
+
     const [ xpo, setXpo ] = useRecoilState(xPosition);
     const [ ypo, setYpo ] = useRecoilState(yPosition);
     const [ dpo, setDpo ] = useRecoilState(detailPosition);
-
-    const [ keyword, setKeyword ] = useState('');
     
     let xposition = '';
     let yposition = '';
@@ -27,7 +25,7 @@ const PostMap = (props) => {
         var markers = [];
 
         var mapContainer = document.getElementById('map');
-        var mapOptions = {
+            var mapOptions = {
             center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
             level: 4
         };
@@ -46,7 +44,8 @@ const PostMap = (props) => {
 
         var callback = function(result, status) {
             if (status === kakao.maps.services.Status.OK) {
-                setDpo(result[0].address.address_name);
+                // console.log(result[0])
+                setValue(`routes.${index}.detail`,result[0].address.address_name)
             }
         };
 
@@ -177,9 +176,7 @@ const PostMap = (props) => {
                     marker = addMarker(placePosition, i), 
                     itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
-
-                    console.log(places[i].y, places[i].x); ////////////////////
-                    console.log(places)
+        
 
                 // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
                 // LatLngBounds 객체에 좌표를 추가합니다
@@ -206,7 +203,8 @@ const PostMap = (props) => {
                     itemEl.onmousedown = function () {
                         setXpo(xposition);
                         setYpo(yposition);
-                        // console.log(xposition);
+                        setValue(`routes.${index}.place`, title)
+                        // console.log(title)
                         geocoder.coord2Address(xposition, yposition, callback)
                     };
                     /////
@@ -285,31 +283,21 @@ const PostMap = (props) => {
 
         // 키워드로 장소를 검색합니다
         searchPlaces();
-
-
-
 }
 
 
-    useEffect(()=>{
-        searchMap(props.placeword)
+    useEffect(()=>{    
+            searchMap(props.placeword)
+        
     }, [props.placeword])
 
     return (
         <div css={SearchMap}>
-            <div>
-                <div id="map"></div>
+            <div id='menu_wrap'>
+                <ul id='placesList'></ul>
+                <div id='pagination'></div>
             </div>
-            <div id="menu_wrap">
-                <div id="map_title">검색결과</div>
-                <div id="searchBar">
-                    <input id="keyword" type='text'placeholder="검색어를 입력해주세요"></input>
-                    {console.log(props.placeword)}
-                    <button id="submit_btn" type="submit">검색하기</button>
-                </div>
-                <ul id="placesList"></ul>
-                <div id="pagination"></div>
-            </div>
+            <div id='map'></div>
         </div>
     )
 }
@@ -318,16 +306,29 @@ const SearchMap = css`
     display: flex;
 
     #map {
-        width: 300px;
-        height: 300px;
+        width: 800px;
+        height: 370px;
         overflow: hidden;
     }
 
     #menu_wrap {
-        height:300px;
-        width:300px;
-        overflow-y: scroll;
-        padding: 10px;
+        position: absolute;
+        width: 250px;
+        height: 340px;
+        margin: 10px 0 30px 10px;
+        padding: 5px;
+        overflow-y: auto;
+        background: rgba(255, 255, 255, 0.9);
+        z-index: 2;
+        font-size: 15px;
+        border-radius: 10px;
+        
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+
+        ::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera*/
+        }
     }
 
     #map_title {
@@ -336,12 +337,6 @@ const SearchMap = css`
         align-items: center;
         width: 100%;
         padding: 10px;
-    }
-
-    #searchBar {
-        display: flex;
-        justify-content: space-between;
-        padding: 0px 15px 10px 15px;
     }
 
     #keyword {

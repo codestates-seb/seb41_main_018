@@ -6,6 +6,7 @@ import Button from "../Button";
 import { useRecoilState } from "recoil";
 import { imgState } from "../../state/atom";
 import { TiDelete } from "react-icons/ti";
+import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 
 const ImgUpload = () => {
     const [imgList, setImgList] = useRecoilState(imgState);
@@ -48,12 +49,15 @@ const ImgUpload = () => {
                 onChange={handleUploadImg}
                 multiple
             />
-            <Button
+            <button css={PhotoButton} onClick={uploadBtnClick}>
+                <MdOutlineAddPhotoAlternate size='20' color='#fff'/>
+            </button>
+            {/* <Button
                 text="사진 업로드"
                 width="130px"
                 margin="15px"
                 onClick={uploadBtnClick}
-            ></Button>
+            ></Button> */}
             <div css={PreviewContainer}>
                 {imgList.map((img, i) => (
                     <div css={PreviewImg} key={`${img}`}>
@@ -91,6 +95,14 @@ const PreviewImg = css`
     svg {
         cursor: pointer;
     }
+`;
+
+const PhotoButton = css`
+    width: 30px;
+    margin: 15px;
+    border: none;
+    border-radius: ${PALETTE.border_radius};
+    background-color: ${PALETTE.default_color};
 `;
 
 export default ImgUpload;
