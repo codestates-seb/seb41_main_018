@@ -45,7 +45,7 @@ const MyReview_Item = css`
 
     border: ${PALETTE.border};
     border-radius: ${PALETTE.border_radius};
-    box-shadow: ${PALETTE.box_shaodw};
+    box-shadow: ${PALETTE.box_shadow};
 `;
 const PostImg = css`
     padding: 20px;
