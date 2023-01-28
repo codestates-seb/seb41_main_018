@@ -26,7 +26,7 @@ const Result = () => {
                 setSearchTargetName("해외여행");
                 break;
             case "FAMILY":
-                setSearchTargetName("효도여행");
+                setSearchTargetName("가족여행");
                 break;
             case "COUPLE":
                 setSearchTargetName("커플여행");
@@ -34,15 +34,12 @@ const Result = () => {
             case "FRIENDS":
                 setSearchTargetName("친구여행");
                 break;
-
             case "ALONE":
                 setSearchTargetName("혼자여행");
                 break;
-
             case "CAFE":
                 setSearchTargetName("카페투어");
                 break;
-
             case "FOOD":
                 setSearchTargetName("맛집투어");
                 break;
