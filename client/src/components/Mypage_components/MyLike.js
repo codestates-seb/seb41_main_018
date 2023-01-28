@@ -68,7 +68,7 @@ const MyLike_Wrap = css`
 const MyLike_Item = css`
     display: flex;
     align-items: center;
-    padding: 8px;
+    padding-left: 8px;
     margin: 10px;
     width: 90%;
 

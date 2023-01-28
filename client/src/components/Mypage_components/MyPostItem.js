@@ -50,6 +50,7 @@ const MyPostItem_Header = css`
     display: flex;
     justify-content: space-between;
     width: 100%;
+    padding: 5px 0 0 5px;
 
     h3 {
         width: 75%;
