@@ -120,7 +120,7 @@ const Home = () => {
                         </div>
                     </Swiper>
                     <Banner />
-                    <div css={itemsTitle}>✨ 관심 급상승 여행지</div>
+                    <h2 css={itemsTitle}>✨ 관심 급상승 여행지</h2>
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
                             {contentsList &&
@@ -131,7 +131,7 @@ const Home = () => {
                                 ))}
                         </div>
                     </Swiper>
-                    <div css={itemsTitle}>🛫 여행에 진심인 사람들이 만든 여행</div>
+                    <h2 css={itemsTitle}>🛫 여행에 진심인 사람들이 만든 여행</h2>
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
                             <SwiperSlide>
