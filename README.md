@@ -8,6 +8,7 @@
 |강진원<br>👑(FE 팀장)</br>|김리안<br>(FE)</br>|신희주<br>(FE)</br>|최유진<br>(BE 부팀장)</br>|강하렴<br>(BE)</br>|안서희<br>(BE)</br>|  
 |:---:|:---:|:---:|:---:|:---:|:---:|
 |<img src="https://avatars.githubusercontent.com/u/89727516?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/87472526?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/106229016?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/57933510?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/108250233?v=4" width=130>|<img src="https://avatars.githubusercontent.com/u/89247924?s=100&v=4" width=150>|
+|[@z1nun](https://github.com/z1nun)|[@RiOAOn](https://github.com/RiOAOn)|[@shinpaka](https://github.com/shinpaka)|[@Choiyu330](https://github.com/Choiyu330)|[@kangharyeom](https://github.com/kangharyeom)|[@eehres](https://github.com/eehres)|
 |-|-|-| - Content CRUD <br> - REDIS Logout <br> - MYSQL DB관리 | - Comment CRUD <br> - Swagger API <br> - AWS(EC2,RDS)배포환경 구축|- User CRUD <br> - Route CRUD <br> - JWT <br> - S3 이미지 업로드|
 
 ## 🖥️ **프로젝트 소개**
