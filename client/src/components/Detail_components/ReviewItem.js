@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { PALETTE } from "../../Common";
 import logo from "../../assets/logo.png";
 import { AiFillStar } from "react-icons/ai";
 import { styled } from "@mui/material/styles";
@@ -8,7 +9,9 @@ import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import dayjs from "dayjs";
-import { deleteReview } from "../../util/axiosContents";
+import { deleteReview, patchReview } from "../../util/axiosContents";
+import { useRecoilState } from "recoil";
+import { userInfoState } from "../../state/atom";
 
 //Button
 import { AwesomeButton } from "react-awesome-button";
@@ -42,7 +45,11 @@ export const Buttons = (props) => {
 };
 
 const ReviewItem = ({ review, setUpdate }) => {
-    const { body, createdAt, nickName, ratingType, commentId } = review;
+    const { body, createdAt, nickName, ratingType, commentId, userId } = review;
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const [editReview, setEditReview] = useState(false);
+    const [reviewText, setReviewText] = useState("");
+    const [rateType, setRateType] = useState("FIVE");
 
     const deleteReviewHandler = async () => {
         await deleteReview(commentId).then(() => {
@@ -50,14 +57,112 @@ const ReviewItem = ({ review, setUpdate }) => {
         });
     };
 
-    return (
+    const editReviewHandler = () => {
+        if (userInfo.userId === userId) {
+            setEditReview(!editReview);
+            setReviewText(body);
+            setRateType(ratingType);
+        } else {
+            alert("권한이 없습니다.");
+        }
+    };
+
+    const editReviewConfirm = (commentId, body, ratingType) => {
+        console.log(commentId, body, ratingType);
+        patchReview(commentId, body, ratingType).then(() => {
+            setUpdate(true);
+            setEditReview(!editReview);
+        });
+    };
+
+    const rateTypeSwitch = (num) => {
+        switch (num) {
+            case "5":
+                setRateType("FIVE");
+                break;
+
+            case "4":
+                setRateType("FOUR");
+                break;
+
+            case "3":
+                setRateType("THREE");
+                break;
+
+            case "2":
+                setRateType("TWO");
+                break;
+
+            case "1":
+                setRateType("ONE");
+                break;
+        }
+    };
+
+    return editReview ? (
+        <div css={Container}>
+            <div css={ReviewContent}>
+                <div css={ProfileImg} src={logo}></div>
+                <div>
+                    <span
+                        css={css`
+                            margin: 10px 0;
+                            font-size: 1.1rem;
+                            font-weight: 700;
+                        `}
+                    >
+                        {nickName}
+                    </span>
+                    <span
+                        css={css`
+                            margin: 0 10px;
+                            font-size: 0.875rem;
+                            color: #333;
+                        `}
+                    >
+                        {dayjs(createdAt).format("YY.MM.DD")}
+                    </span>
+                    <div css={RatingBox}>
+                        <StyledRating
+                            defaultValue={
+                                ratingType === "FIVE"
+                                    ? 5
+                                    : ratingType === "FOUR"
+                                    ? 4
+                                    : ratingType === "THREE"
+                                    ? 3
+                                    : ratingType === "TWO"
+                                    ? 2
+                                    : 1
+                            }
+                            precision={1}
+                            icon={<FavoriteIcon fontSize="inherit" />}
+                            emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                            onChange={(e) => rateTypeSwitch(e.target.value || ratingType)}
+                        />
+                    </div>
+                    <div css={ReviewInput}>
+                        <textarea
+                            defaultValue={body}
+                            onChange={(e) => {
+                                setReviewText(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <button onClick={() => editReviewConfirm(commentId, reviewText, rateType)}>
+                        수정 완료
+                    </button>
+                </div>
+            </div>
+        </div>
+    ) : (
         <div css={Container}>
             <div css={ReviewContent}>
                 <div css={ProfileImg} src={logo}></div>
                 <div>
                     <div css={RatingBox}>
                         <StyledRating
-                            defaultValue={
+                            value={
                                 ratingType === "FIVE"
                                     ? 5
                                     : ratingType === "FOUR"
@@ -98,7 +203,7 @@ const ReviewItem = ({ review, setUpdate }) => {
                     >
                         {body}
                     </div>
-                    <button>수정</button>
+                    <button onClick={editReviewHandler}>수정</button>
                     <button onClick={() => deleteReviewHandler(commentId)}>삭제</button>
                 </div>
             </div>
@@ -136,7 +241,26 @@ const RatingBox = css`
         color: black;
     }
 `;
-// mui 시도 중
+
+const ReviewInput = css`
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    margin: 0 auto;
+
+    textarea {
+        border: none;
+        width: 70vw;
+        height: 80px;
+        border: 2px solid ${PALETTE.default_color};
+        border-radius: ${PALETTE.border_radius};
+        padding: 10px;
+        margin-right: 10px;
+        font-size: 1rem;
+        color: gray;
+    }
+`;
+
 const StyledRating = styled(Rating)({
     "& .MuiRating-iconFilled": {
         color: "#ff6d75",

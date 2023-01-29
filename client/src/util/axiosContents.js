@@ -61,6 +61,33 @@ export const createReview = async (body, id, rate) => {
         });
 };
 
+// 리뷰(커멘트) 수정
+export const patchReview = async (commentId, body, ratingType) => {
+    return await axios
+        .patch(
+            `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/comments/${commentId}`,
+            {
+                body: body,
+                ratingType: ratingType,
+            },
+            {
+                headers: {
+                    "Content-Type": `application/json`,
+                    Authorization: sessionStorage.getItem("access_token"),
+                },
+            }
+        )
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => {
+            if (err.response.status === 401) {
+                alert("권한이 없습니다.");
+            }
+            console.log(err);
+        });
+};
+
 // 리뷰(커멘트) 삭제
 export const deleteReview = async (commentId) => {
     return await axios
@@ -74,7 +101,6 @@ export const deleteReview = async (commentId) => {
         )
         .then((res) => {
             alert("삭제가 완료되었습니다.");
-            console.log(res);
             return res;
         })
         .catch((err) => {
@@ -99,32 +125,35 @@ export const getCategory = async (themeType) => {
         });
 };
 
-// // 컨텐츠 등록
-// export const postContent = async (data) => {
-//     return await axios
-//         .post(
-//             "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents",
-//             {
-//                 title: data.title,
-//                 themeType: data.themeType,
-//                 travelDate: data.travelDate,
-//                 tag: data.tag,
-//                 routes: data.routes,
-//             },
-//             {
-//                 headers: {
-//                     "Content-Type": `application/json`,
-//                     Authorization: sessionStorage.getItem("access_token"),
-//                 },
-//             }
-//         )
-//         .then((res) => {
-//             return res;
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// };
+// 컨텐츠 등록
+export const postContent = async (data) => {
+    return await axios
+        .post(
+            "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents",
+            {
+                title: data.title,
+                themeType: data.themeType,
+                travelDate: data.travelDate,
+                tag: data.tag,
+                routes: data.routes,
+            },
+            {
+                headers: {
+                    "Content-Type": `application/json`,
+                    Authorization: sessionStorage.getItem("access_token"),
+                },
+            }
+        )
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => {
+            if (err.response.status === 401) {
+                alert("권한이 없습니다.");
+            } else alert("모든 항목을 작성해주세요.");
+            console.log(err);
+        });
+};
 
 /* // 컨텐츠 수정
 export const patchContent = async (contentId, data) => {
