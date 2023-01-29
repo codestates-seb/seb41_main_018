@@ -45,7 +45,7 @@ export const Buttons = (props) => {
 };
 
 const ReviewItem = ({ review, setUpdate }) => {
-    const { body, createdAt, nickName, ratingType, commentId, userId } = review;
+    const { body, createdAt, nickName, ratingType, commentId, userId, image } = review;
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [editReview, setEditReview] = useState(false);
     const [reviewText, setReviewText] = useState("");
@@ -102,7 +102,7 @@ const ReviewItem = ({ review, setUpdate }) => {
     return editReview ? (
         <div css={Container}>
             <div css={ReviewContent}>
-                <div css={ProfileImg} src={logo}></div>
+                <img css={ProfileImg} src={image} alt={`${nickName}의 프로필 이미지`} />
                 <div>
                     <span
                         css={css`
@@ -158,7 +158,7 @@ const ReviewItem = ({ review, setUpdate }) => {
     ) : (
         <div css={Container}>
             <div css={ReviewContent}>
-                <div css={ProfileImg} src={logo}></div>
+                <img css={ProfileImg} src={image} alt={`${nickName}의 프로필 이미지`} />
                 <div>
                     <div css={RatingBox}>
                         <StyledRating
@@ -224,10 +224,9 @@ const ReviewContent = css`
 
 const ProfileImg = css`
     align-self: center;
-    background-color: #adade1;
     border-radius: 50%;
-    min-width: 60px;
-    min-height: 60px;
+    max-width: 60px;
+    max-height: 60px;
     margin: 0 10px 0 -10px;
 `;
 

@@ -50,7 +50,7 @@ const Mypage = () => {
         <div css={Mypage_Wrap}>
             {console.log(userInfo)}
             <div css={ProfileContainer}>
-                <img src={logo9} alt="프로필 사진"></img>
+                <img src={userInfo.image} alt="프로필 사진"></img>
                 <div css={NameArea}>
                     <div css={NameBox}>
                         {editClick ? (

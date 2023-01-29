@@ -1,37 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import Button from "../Button";
-import { deleteUser } from "../../util/axiosUser";
-import { userInfoState, loginState } from "../../state/atom";
-import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
+import { deleteContent } from "../../util/axiosContents";
 
-const UserDeleteModal = (props) => {
+const DetailDeleteModal = (props) => {
     const navigate = useNavigate();
-    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const [isLogin, setIsLogin] = useRecoilState(loginState);
+    const [update, setUpdate] = useState(false);
 
     // 모달 끄기
     const closeModal = () => {
         props.setModalOpen(false);
     };
-    // 회원탈퇴 확인
-    const deleteConfirm = () => {
-        deleteUser(userInfo.userId).then(() => {
-            setIsLogin(false);
-            setUserInfo({});
-            navigate("/");
+    // 삭제 확인
+    const deleteContentDetail = (contentId) => {
+        deleteContent(contentId).then((res) => {
+            if (res) {
+                closeModal();
+                setUpdate(true);
+                navigate("/");
+            } else closeModal();
         });
     };
+
+    useEffect(() => {
+        if (update) {
+            getUserInfo(userInfo.userId).then((data) => {
+                setUserInfo(data.data);
+            });
+            setUpdate(false);
+        }
+    }, [update]);
 
     return (
         <div css={ModalBackground}>
             <div css={ModalContainer}>
                 <h2>{props.text}</h2>
                 <div css={ButtonArea}>
-                    <Button text="확인" width="25%" margin="20px" onClick={deleteConfirm}></Button>
+                    <Button
+                        text="확인"
+                        width="25%"
+                        margin="20px"
+                        onClick={() => deleteContentDetail(location.pathname.slice(8))}
+                    ></Button>
                     <Button text="취소" width="25%" margin="20px" onClick={closeModal}></Button>
                 </div>
             </div>
@@ -55,6 +68,10 @@ const ModalContainer = css`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    h2 {
+        text-align: center;
+    }
 
     /* 모달창 디자인 */
     background-color: white;
@@ -83,5 +100,6 @@ const ModalBackground = css`
     bottom: 0;
     right: 0;
     background: rgba(255, 255, 255, 0.7);
+    z-index: 100;
 `;
-export default UserDeleteModal;
+export default DetailDeleteModal;

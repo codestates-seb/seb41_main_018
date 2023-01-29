@@ -13,6 +13,7 @@ import Detailform from "../components/Detail_components/Detailform";
 import Reviewform from "../components/Detail_components/Reviewform";
 import { PALETTE } from "../Common";
 import Total from "../components/Detail_components/Total";
+import DetailDeleteModal from "../components/Detail_components/DetailDeleteModal";
 
 //recoil
 import { useRecoilState } from "recoil";
@@ -32,8 +33,8 @@ const Detail = () => {
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [reviewList, setReviewList] = useRecoilState(ReviewListState);
-    const [update, setUpdate] = useState(false);
     const [isMyPost, setMyPost] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const contentsUserId = contentDetail.data && contentDetail.data.userId;
     const logInUserId = userInfo.userId;
@@ -45,14 +46,6 @@ const Detail = () => {
         });
     };
 
-    const deleteContentDetail = (contentId) => {
-        deleteContent(contentId).then((res) => {
-            if (res) {
-                setUpdate(true);
-                navigate("/");
-            }
-        });
-    };
     const handleMyPost = () => {
         if (contentsUserId === logInUserId) {
             setMyPost(true);
@@ -60,18 +53,13 @@ const Detail = () => {
         }
     };
 
+    const showModal = () => {
+        setModalOpen(true);
+    };
+
     useEffect(() => {
         getContentDetail(location.pathname.slice(8));
     }, []);
-
-    useEffect(() => {
-        if (update) {
-            getUserInfo(userInfo.userId).then((data) => {
-                setUserInfo(data.data);
-            });
-            setUpdate(false);
-        }
-    }, [update]);
 
     console.log(`contentsUserId`, contentsUserId);
     console.log(`logInUserId`, logInUserId);
@@ -91,10 +79,7 @@ const Detail = () => {
                     `}
                 >
                     <button css={btnStyle}>Update</button>
-                    <button
-                        css={btnStyle}
-                        onClick={() => deleteContentDetail(location.pathname.slice(8))}
-                    >
+                    <button css={btnStyle} onClick={showModal}>
                         Delete
                     </button>
                 </div>
@@ -104,6 +89,9 @@ const Detail = () => {
                 <Detailform />
             </div>
             <Reviewform />
+            {modalOpen && (
+                <DetailDeleteModal text="정말 삭제하시겠습니까?" setModalOpen={setModalOpen} />
+            )}
         </div>
     );
 };
