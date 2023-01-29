@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -29,16 +29,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { useRecoilState } from "recoil";
-import {
-    detailPosition,
-    detailPositionTwo,
-    detailPositionThree,
-    detailPositionFour,
-    detailPositionFive,
-    TagsStringState,
-} from "../../state/atom";
-
-import { postContent } from "../../util/axiosContents";
+import { TagsStringState } from "../../state/atom";
 
 const defaultValues = {
     title: "",
@@ -48,17 +39,13 @@ const defaultValues = {
 };
 
 const AddInput = () => {
+    const [fieldIndex, setFieldIndex] = useState(0);
+
     const { control, register, watch, setValue } = useFormContext();
     const { fields, append, remove } = useFieldArray({
         control,
         name: "routes",
     });
-
-    const [dpo, setDpo] = useRecoilState(detailPosition);
-    const [dpo1, setDpo1] = useRecoilState(detailPositionTwo);
-    const [dpo2, setDpo2] = useRecoilState(detailPositionThree);
-    const [dpo3, setDpo3] = useRecoilState(detailPositionFour);
-    const [dpo4, setDpo4] = useRecoilState(detailPositionFive);
 
     const MapList = (index) => {
         if (index === 0) {
@@ -89,112 +76,131 @@ const AddInput = () => {
     const place5 = useRef();
     place5.current = watch(`routes.${4}.place`);
 
-    // console.log(watch(`routes.[${0}].place`))
-
     return (
         <ul css={FormContainer}>
-            {fields.map((item, index) => (
-                <form>
-                    <li
-                        key={item.id}
-                        css={css`
-                            display: flex;
-                        `}
-                    >
-                        <div css={FieldContainer}>
-                            <div css={RouteForm}>
-                                <div
-                                    css={css`
-                                        display: flex;
-                                    `}
-                                >
-                                    <div className="listname">주소</div>
-                                    <div css={PlaceInputContainer}>
-                                        <Controller
-                                            control={control}
-                                            name={`routes.${index}.place`}
-                                            render={({ field }) => {
-                                                return (
-                                                    <input
-                                                        {...field}
-                                                        placeholder="장소를 입력해주세요"
-                                                        css={PlaceInput}
-                                                        autocomplete="off"
-                                                    />
-                                                );
-                                            }}
+            {fields.map((item, index) =>
+                index < 5 ? (
+                    <form>
+                        <li
+                            key={item.id}
+                            css={css`
+                                display: flex;
+                            `}
+                        >
+                            <div css={FieldContainer}>
+                                <div css={RouteForm}>
+                                    <div
+                                        css={css`
+                                            display: flex;
+                                        `}
+                                    >
+                                        <div className="listname">주소</div>
+                                        <div css={PlaceInputContainer}>
+                                            <Controller
+                                                control={control}
+                                                name={`routes.${index}.place`}
+                                                render={({ field }) => {
+                                                    return (
+                                                        <input
+                                                            {...field}
+                                                            placeholder="장소를 입력해주세요"
+                                                            css={PlaceInput}
+                                                            autocomplete="off"
+                                                        />
+                                                    );
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="listcontainer">
+                                        <div className="listname"></div>
+                                        <input
+                                            {...register(`routes.${index}.address`)}
+                                            css={ListInput}
+                                            placeholder="지도에서 장소를 선택해주세요!"
+                                            readOnly
+                                        />
+                                        <input
+                                            {...register(`routes.${index}.x`)}
+                                            css={css`
+                                                display: none;
+                                            `}
+                                        />
+                                        <input
+                                            {...register(`routes.${index}.y`)}
+                                            css={css`
+                                                display: none;
+                                            `}
                                         />
                                     </div>
-                                </div>
-                                <div className="listcontainer">
-                                    <div className="listname"></div>
+                                    <div className="listcontainer">
+                                        <div className="listname">경비</div>
+                                        <input
+                                            {...register(`routes.${index}.price`)}
+                                            type="number"
+                                            autocomplete="off"
+                                            placeholder="사용한 금액을 입력해주세요!"
+                                            css={ListInput}
+                                        />
+                                    </div>
+                                    <div className="listcontainer">
+                                        <div className="listname">이동 수단</div>
+                                        <input
+                                            {...register(`routes.${index}.vehicle`)}
+                                            autocomplete="off"
+                                            placeholder="이동수단을 입력해주세요!"
+                                            css={ListInput}
+                                        />
+                                    </div>
+                                    <div className="bodycontainer">
+                                        <div className="listname">상세 설명</div>
+                                        <textarea
+                                            {...register(`routes.${index}.body`)}
+                                            autocomplete="off"
+                                            css={BodyInput}
+                                            placeholder="후기를 적어주세요!"
+                                        />
+                                    </div>
                                     <input
-                                        {...register(`routes.${index}.address`)}
-                                        css={ListInput}
-                                        placeholder="지도에서 장소를 선택해주세요!"
-                                        readOnly
-                                    />
-                                    <input
-                                        {...register(`routes.${index}.x`)}
+                                        {...register(`routes.${index}.image`)}
+                                        name="image"
                                         css={css`
                                             display: none;
                                         `}
                                     />
-                                    <input
-                                        {...register(`routes.${index}.y`)}
-                                        css={css`
-                                            display: none;
-                                        `}
-                                    />
                                 </div>
-                                <div className="listcontainer">
-                                    <div className="listname">경비</div>
-                                    <input
-                                        {...register(`routes.${index}.price`)}
-                                        autocomplete="off"
-                                        placeholder="사용한 금액을 입력해주세요!"
-                                        css={ListInput}
-                                    />
+                                <div css={MapStyle}>
+                                    {MapList(index, watch(`routes.${index}.place`))}
                                 </div>
-                                <div className="listcontainer">
-                                    <div className="listname">이동 수단</div>
-                                    <input
-                                        {...register(`routes.${index}.vehicle`)}
-                                        autocomplete="off"
-                                        placeholder="이동수단을 입력해주세요!"
-                                        css={ListInput}
-                                    />
-                                </div>
-                                <div className="bodycontainer">
-                                    <div className="listname">상세 설명</div>
-                                    <textarea
-                                        {...register(`routes.${index}.body`)}
-                                        autocomplete="off"
-                                        css={BodyInput}
-                                        placeholder="후기를 적어주세요!"
-                                    />
-                                </div>
+                                <ImgUpload
+                                    index={index}
+                                    setValue={setValue}
+                                    value={watch(`routes.${index}.image`)}
+                                />
                             </div>
-                            <div css={MapStyle}>
-                                {MapList(index, watch(`routes.${index}.place`))}
-                            </div>
-                            <ImgUpload id={index} />
-                        </div>
-                        <button type="button" onClick={() => remove(index)} css={DeleteButton}>
-                            <IoMdRemove size="30" />
-                        </button>
-                    </li>
-                </form>
-            ))}
-            <button
-                type="button"
-                onClick={() => {
-                    append();
-                }}
-                css={AppendButton}
-            >
-                <BsPlusCircleFill size="35" color="#497174" />
-            </button>
+                            <button type="button" onClick={() => remove(index)} css={DeleteButton}>
+                                <IoMdRemove size="30" />
+                            </button>
+                        </li>
+                    </form>
+                ) : (
+                    <></>
+                )
+            )}
+            {fieldIndex < 4 ? (
+                <button
+                    type="button"
+                    onClick={() => {
+                        append();
+                        setFieldIndex(fieldIndex + 1);
+                    }}
+                    css={AppendButton}
+                >
+                    <BsPlusCircleFill size="35" color="#497174" />
+                </button>
+            ) : (
+                <></>
+            )}
         </ul>
     );
 };
@@ -222,7 +228,7 @@ const Title = () => {
 };
 
 const Category = () => {
-    const { control, watch } = useFormContext();
+    const { control } = useFormContext();
 
     const options = [
         { value: "DOMESTIC", label: "국내여행" },
@@ -287,14 +293,31 @@ const NewPost = () => {
     const navigate = useNavigate();
     const [tagsStr, setTagsStr] = useRecoilState(TagsStringState);
     const methods = useForm({ defaultValues });
-    const { control, handleSubmit, watch } = methods;
+    const { handleSubmit } = methods;
 
     const submit = async (data) => {
         // 태그 추가
         data.tag = tagsStr;
-        postContent(data).then(() => {
-            navigate("/");
-        });
+
+        console.log(data);
+
+        const jsonData = JSON.stringify(data);
+
+        await axios
+            .post("url", jsonData, {
+                headers: {
+                    "Content-Type": `application/json`,
+                    Authorization: sessionStorage.getItem("accessToken"),
+                    Refresh: sessionStorage.getItem("refreshToken"),
+                },
+            })
+            .then((res) => {
+                navigate("/");
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("회원가입에 실패했습니다.");
+            });
     };
 
     return (
