@@ -49,8 +49,8 @@ const Banner = () => {
 
 const wrap = css`
     display: flex;
-    height: 300px;
-    margin: 20px auto;
+    height: 280px;
+    margin: 40px auto;
     width: 80vw;
 `;
 const swiperStyle = css`
