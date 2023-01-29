@@ -141,7 +141,10 @@ const AddInput = () => {
                                             type="number"
                                             autocomplete="off"
                                             placeholder="사용한 금액을 입력해주세요!"
+
+
                                             step="1000"
+
                                             css={ListInput}
                                         />
                                     </div>
@@ -310,7 +313,6 @@ const Post = () => {
             }
         });
     };
-
     return (
         <FormProvider {...methods}>
             <div css={providerWrap}>
@@ -444,17 +446,18 @@ const CategoryInput = css`
     }
 
     /* .Dropdown-menu {
-		min-height: 100px;
-		overflow-x: hidden;
-  }
+        min-height: 100px;
+        overflow-x: hidden;
+    }
 
-  .Dropdown-control {
-		padding: 14px 52px 10px 15px;
-  }
+    .Dropdown-control {
+        padding: 14px 52px 10px 15px;
+    }
 
-  .Dropdown-arrow {
-		margin-top: 8px;
-  } */
+    .Dropdown-arrow {
+        margin-top: 8px;
+    } */
+
 `;
 
 const TravelDateTitle = css`
@@ -655,3 +658,4 @@ const SubmitButton = css`
     }
 `;
 export default Post;
+

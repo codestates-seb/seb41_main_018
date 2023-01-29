@@ -33,6 +33,7 @@ const DetailformItems = (props) => {
                 css={css`
                     @media (min-width: 768px) {
                         display: flex;
+                        flex-wrap: wrap;
                     }
                 `}
             >
