@@ -13,7 +13,7 @@ import { MapMarker, Map, CustomOverlayMap, Polyline, Polygon } from "react-kakao
 
 //recoil
 import { useRecoilState } from "recoil";
-import { ContentDetail, GetPosition } from "../../state/atom";
+import { ContentDetail } from "../../state/atom";
 
 const routes = [
     {
@@ -30,7 +30,6 @@ const routes = [
 
 const DetailMap = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
-    const [position, setPosition] = useRecoilState(GetPosition);
     const data = contentDetail.data;
     const RouteData = data && data.routes;
     const [path, setPath] = useState([]);

@@ -31,9 +31,12 @@ const Detail = () => {
     const pathname = location.pathname;
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
-    const [position, setPosition] = useRecoilState(GetPosition);
     const [reviewList, setReviewList] = useRecoilState(ReviewListState);
     const [update, setUpdate] = useState(false);
+    const [isMyPost, setMyPost] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const contentsUserId = contentDetail.data && contentDetail.data.userId;
+    const logInUserId = userInfo.userId;
 
     const getContentDetail = (contentId) => {
         getContent(contentId).then((res) => {
@@ -50,15 +53,15 @@ const Detail = () => {
             }
         });
     };
+    const handleMyPost = () => {
+        if (contentsUserId === logInUserId) {
+            setMyPost(true);
+            // console.log(isMyPost);
+        }
+    };
 
     useEffect(() => {
         getContentDetail(location.pathname.slice(8));
-        setPosition({
-            // lat: contentDetail && contentDetail.data && contentDetail.data.routes[0].x,
-            // lng: contentDetail && contentDetail.data && contentDetail.data.routes[0].y,
-            lat: contentDetail.data && contentDetail.data.routes[0].x,
-            lng: contentDetail.data && contentDetail.data.routes[0].y,
-        });
     }, []);
 
     useEffect(() => {
@@ -70,13 +73,33 @@ const Detail = () => {
         }
     }, [update]);
 
+    console.log(`contentsUserId`, contentsUserId);
+    console.log(`logInUserId`, logInUserId);
+    console.log(`contentsUserId === logInUserId`, contentsUserId === logInUserId);
+    console.log(`isMyPost`, isMyPost);
+
     return (
         <div css={Wrap}>
             <h1>{contentDetail.data && contentDetail.data.title}</h1>
-            <div>수정 </div>
-            <button onClick={() => deleteContentDetail(location.pathname.slice(8))}>삭제 </button>
-            <div css={ContentInfo}></div>
-            <Total />
+
+            <div css={ContentInfo}>
+                <Total />
+
+                <div
+                    css={css`
+                        display: flex;
+                    `}
+                >
+                    <button css={btnStyle}>Update</button>
+                    <button
+                        css={btnStyle}
+                        onClick={() => deleteContentDetail(location.pathname.slice(8))}
+                    >
+                        Delete
+                    </button>
+                </div>
+            </div>
+
             <div css={TotalContainer}>
                 <Detailform />
             </div>
@@ -103,9 +126,9 @@ const Wrap = css`
     }
 `;
 const ContentInfo = css`
-    align-self: flex-start;
+    display: flex;
     font-size: 0.9rem;
-    margin: 0 25px;
+    width: 90vw;
     span {
         margin: 5px;
     }
@@ -113,8 +136,22 @@ const ContentInfo = css`
 
 const TotalContainer = css`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin: 30px 0;
+`;
+
+const btnStyle = css`
+    cursor: pointer;
+    margin: 40px 0 -17px 10px;
+    padding: 10px 20px;
+    background-color: ${PALETTE.default_color};
+    border-radius: ${PALETTE.border_round};
+    border: 1px solid ${PALETTE.default_color};
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    color: white;
+    &:hover {
+        background-color: ${PALETTE.default_hover};
+    }
 `;
 
 export default Detail;
