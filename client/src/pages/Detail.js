@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 //css
 /** @jsxImportSource @emotion/react */
@@ -10,36 +11,52 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 //components
 import Detailform from "../components/Detail_components/Detailform";
 import Reviewform from "../components/Detail_components/Reviewform";
-import { getContent } from "../util/axiosContents";
 import { PALETTE } from "../Common";
 import Total from "../components/Detail_components/Total";
 
 //recoil
 import { useRecoilState } from "recoil";
-import { ContentDetail, ReviewListState } from "../state/atom";
+import { userInfoState, ContentDetail, ReviewListState } from "../state/atom";
 
 //Etc
-import axios from "axios";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 dayjs.locale("ko");
 
+import { getContent, deleteContent } from "../util/axiosContents";
+import { getUserInfo } from "../util/axiosUser";
+
 const Detail = () => {
+    const navigate = useNavigate();
     const pathname = location.pathname;
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [reviewList, setReviewList] = useRecoilState(ReviewListState);
+
     const getContentDetail = (contentId) => {
         getContent(contentId).then((res) => {
             setContentDetail(res.data);
             setReviewList(res.data.data && res.data.data.comments);
         });
     };
+
+    const deleteContentDetail = (contentId) => {
+        deleteContent(contentId).then(() => {
+            getUserInfo(userInfo.userId).then((data) => {
+                setUserInfo(data.data);
+            });
+        });
+    };
+
     useEffect(() => {
         getContentDetail(location.pathname.slice(8));
     }, []);
+
     return (
         <div css={Wrap}>
             <h1>{contentDetail.data && contentDetail.data.title}</h1>
+            <div>수정 </div>
+            <button onClick={() => deleteContentDetail(location.pathname.slice(8))}>삭제 </button>
             <div css={ContentInfo}></div>
             <Total />
             <div css={TotalContainer}>

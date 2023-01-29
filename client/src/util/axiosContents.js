@@ -102,12 +102,63 @@ export const postContent = async (data) => {
         });
 };
 
+/* // 컨텐츠 수정
+export const patchContent = async (contentId, data) => {
+	return await axios
+		 .patch(
+			  `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents/${contentId}`,
+			  {
+					title: data.title,
+					themeType: data.themeType,
+					travelDate: data.travelDate,
+					tag: data.tag,
+					routes: data.routes,
+			  },
+			  {
+					headers: {
+						 "Content-Type": `application/json`,
+						 Authorization: sessionStorage.getItem("access_token"),
+					},
+			  }
+		 )
+		 .then((res) => {
+			  return res;
+		 })
+		 .catch((err) => {
+			  console.log(err);
+		 });
+}; */
+
+// 컨텐츠 삭제
+export const deleteContent = async (contentId) => {
+    return await axios
+        .delete(
+            `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents/${contentId}`,
+            {
+                headers: {
+                    Authorization: sessionStorage.getItem("access_token"),
+                },
+            }
+        )
+        .then((res) => {
+            alert("삭제가 완료되었습니다.");
+            location.href = "/";
+            console.log(res);
+            return res;
+        })
+        .catch((err) => {
+            if (err.response.status === 401) {
+                alert("권한이 없습니다.");
+            }
+            console.log(err);
+        });
+};
+
 // 좋아요 등록
 export const postHeart = async (userId, contentId) => {
     return await axios
         .post(
             `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/${userId}/${contentId}/hearts`,
-            {},
             {
                 headers: {
                     Authorization: sessionStorage.getItem("access_token"),
