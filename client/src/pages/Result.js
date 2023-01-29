@@ -80,30 +80,29 @@ const Result = () => {
 };
 const resultText = css`
     font-size: 1.3rem;
-    width: 1440px;
+    width: 90vw;
     margin: 20px auto -20px;
-    @media (max-width: 1440px) {
-        grid-template-columns: repeat(4, 1fr);
-        width: 1200px;
-    }
-    @media (max-width: 1000px) {
-        grid-template-columns: repeat(3, 1fr);
-        width: 876px;
-    }
-    @media (max-width: 768px) {
-        grid-template-columns: repeat(2, 1fr);
-        width: 630px;
-    }
-    @media (max-width: 576px) {
-        grid-template-columns: repeat(1, 1fr);
-        width: 460px;
-    }
 `;
 const postStyle = css`
     display: grid;
     margin: 20px auto;
-    width: 1440px;
-    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    width: 90vw;
+    grid-template-columns: repeat(1, 1fr);
+    @media (min-width: 576px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media (min-width: 1000px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    @media (min-width: 1440px) {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    /* grid-template-columns: repeat(5, 1fr);
     @media (max-width: 1440px) {
         grid-template-columns: repeat(4, 1fr);
         width: 1200px;
@@ -117,9 +116,9 @@ const postStyle = css`
         width: 630px;
     }
     @media (max-width: 576px) {
-        grid-template-columns: repeat(1, 1fr);
+        
         width: 460px;
-    }
+    } */
 `;
 
 const noResultMessage = css`
