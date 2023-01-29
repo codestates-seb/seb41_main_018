@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { Link } from "react-router-dom";
 import HomeItems from "../components/Home_components/HomeItems";
 import Regionitems from "../components/Home_components/RegionItems";
 import Categorybar from "../components/Categorybar";
@@ -146,12 +147,62 @@ const Home = () => {
                         </div>
                     </Swiper>
                     <Banner />
+                    <Link to="/post">
+                        <button css={postBtn}>
+                            <span>내 여행지 공유하기</span>
+                        </button>
+                    </Link>
                     <Footer />
                 </>
             )}
         </div>
     );
 };
+const postBtn = css`
+    position: sticky;
+    left: 85%;
+    right: 0;
+    bottom: 5%;
+    top: 0;
+    z-index: 3;
+    border: none;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    width: 200px;
+    text-transform: uppercase;
+    outline: none;
+    overflow: hidden;
+
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    background-color: #222;
+    padding: 17px 20px;
+    margin: 0 auto;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    &:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 490%;
+        width: 140%;
+        background: #78c7d2;
+        -webkit-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
+        -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+        transform: translateX(-98%) translateY(-25%) rotate(45deg);
+    }
+    &:hover:after {
+        -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+        transform: translateX(-9%) translateY(-25%) rotate(45deg);
+    }
+    span {
+        position: relative;
+        z-index: 1;
+    }
+`;
 
 const itemsTitle = css`
     width: 80vw;
