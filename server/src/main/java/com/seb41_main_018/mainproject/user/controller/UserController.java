@@ -52,8 +52,11 @@ public class UserController {
     @PostMapping
     public ResponseEntity postUser(@Valid @RequestBody UserPostDto userPostDto){
         User user = userService.createUser(userMapper.userPostDtoToUser(userPostDto));
-
+        int i = (int)(Math.random() * (8) - 1) + 1;
+        user.setImage("https://gachigalle-route-image.s3.ap-northeast-2.amazonaws.com/profile"+i+".png");
+        userRepository.save(user);
         UserResponseDto userResponseDto = userMapper.userToUserResponseDto(user);
+
 
         return new ResponseEntity(userResponseDto, HttpStatus.CREATED);
     }
