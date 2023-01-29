@@ -30,29 +30,29 @@ const HomeItems = (content) => {
                     />
                 )}
             </div>
-            <img src={sample} css={imgStyle} />
-
-            <div css={textContainer}>
-                <Link to={`/detail/${content.content && content.content.contentId}`}>
+            <Link to={`/detail/${content.content && content.content.contentId}`}>
+                <img src={sample} css={imgStyle} />
+                <div css={textContainer}>
                     <div css={titleStyle}>{content.content && content.content.title}</div>
-                </Link>
-                <div css={sideTextStyle}>
-                    <FaHeart
-                        css={css`
-                            margin: 0 7px;
-                            color: #ff5675;
-                        `}
-                    />
-                    {content.content && content.content.heartCount}
+
+                    <div css={sideTextStyle}>
+                        <FaHeart
+                            css={css`
+                                margin: 0 7px;
+                                color: #ff5675;
+                            `}
+                        />
+                        {content.content && content.content.heartCount}
+                    </div>
                 </div>
-            </div>
-            <div>
-                <ul css={ulStyle}>
-                    {content.content &&
-                        content.content.routes.map((el) => <li css={liStyle}># {el.place}</li>)}
-                </ul>
-            </div>
-            <div css={priceStyle}>{content.content && `₩ ${content.content.amount}`}</div>
+                <div>
+                    <ul css={ulStyle}>
+                        {content.content &&
+                            content.content.routes.map((el) => <li css={liStyle}># {el.place}</li>)}
+                    </ul>
+                </div>
+                <div css={priceStyle}>{content.content && `₩ ${content.content.amount}`}</div>
+            </Link>
         </div>
     );
 };
