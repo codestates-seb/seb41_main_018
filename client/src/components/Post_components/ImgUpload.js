@@ -1,15 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
-import Button from "../Button";
-import { useRecoilState } from "recoil";
-import { imgState } from "../../state/atom";
+
 import { TiDelete } from "react-icons/ti";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 
-const ImgUpload = () => {
-    const [imgList, setImgList] = useRecoilState(imgState);
+const ImgUpload = (props) => {
+    const {index, setValue, value} = props;
+    
     const [previewList, setPreviewList] = useState([]);
     const inputRef = useRef(null);
     const uploadBtnClick = () => {
@@ -18,7 +17,7 @@ const ImgUpload = () => {
     };
 
     useEffect(() => {
-        setImgList(previewList);
+        setValue(`routes.${index}.image`, previewList)
     }, [previewList]);
 
     // img upload function
@@ -27,7 +26,7 @@ const ImgUpload = () => {
         const maxImg = selectedImg.length > 3 ? 3 : selectedImg.length;
 
         // 사진 입력 제한 : 최대 3장
-        if (imgList.length + maxImg > 3 || selectedImg.length > 3) {
+        if (value && value.length + maxImg > 3 || selectedImg.length > 3) {
             alert("최대 3장까지만 등록 가능합니다.");
             return;
         }
@@ -41,8 +40,8 @@ const ImgUpload = () => {
 
     // img delete function
     const handleDeleteImg = (i) => {
-        setImgList(imgList.filter((_, index) => index !== i));
-        setPreviewList(imgList.filter((_, index) => index !== i));
+        setValue(value.filter((_, index) => index !== i));
+        setPreviewList(value.filter((_, index) => index !== i));
     };
 
     return (
@@ -54,12 +53,12 @@ const ImgUpload = () => {
                 onChange={handleUploadImg}
                 multiple
             />
-
             <button onClick={uploadBtnClick} css={uploadButton}>
                 <MdOutlineAddPhotoAlternate size="20" /> <span>사진 업로드</span>
+
             </button>
             <div css={PreviewContainer}>
-                {imgList.map((img, i) => (
+                {value && value.map((img, i) => (
                     <div css={PreviewImg} key={`${img}`}>
                         <img src={img} alt={`${img}.${i}`} />
                         <TiDelete onClick={() => handleDeleteImg(i)} />
