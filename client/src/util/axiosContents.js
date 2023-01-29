@@ -61,6 +61,30 @@ export const createReview = async (body, id, rate) => {
         });
 };
 
+// 리뷰(커멘트) 삭제
+export const deleteReview = async (commentId) => {
+    return await axios
+        .delete(
+            `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/comments/${commentId}`,
+            {
+                headers: {
+                    Authorization: sessionStorage.getItem("access_token"),
+                },
+            }
+        )
+        .then((res) => {
+            alert("삭제가 완료되었습니다.");
+            console.log(res);
+            return res;
+        })
+        .catch((err) => {
+            if (err.response.status === 401) {
+                alert("권한이 없습니다.");
+            }
+            console.log(err);
+        });
+};
+
 // 카테고리별 컨텐츠 조회
 export const getCategory = async (themeType) => {
     return await axios
@@ -142,7 +166,6 @@ export const deleteContent = async (contentId) => {
         )
         .then((res) => {
             alert("삭제가 완료되었습니다.");
-            location.href = "/";
             console.log(res);
             return res;
         })

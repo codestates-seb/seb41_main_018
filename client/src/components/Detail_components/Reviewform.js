@@ -94,18 +94,21 @@ const Reviewform = () => {
 
     useEffect(() => {
         if (update) {
+            console.log("업데이트");
             getContent(location.pathname.slice(8)).then((res) => {
                 setContentDetail(res.data);
                 setReviewList(res.data.data && res.data.data.comments);
             });
             setReviewText("");
             setRateType("FIVE");
+            setUpdate(false);
         }
     }, [update]);
 
     return (
         <div css={ReviewContainer}>
             <div css={ReviewCount}>
+                {console.log(reviewList)}
                 {reviewList.length !== 0
                     ? `Review : ${reviewList.length} 개`
                     : "첫 번째 후기의 주인공이 되어주세요!"}
@@ -145,7 +148,7 @@ const Reviewform = () => {
                 {/* reviewitem >> map */}
 
                 {reviewList.map((review) => (
-                    <ReviewItem key={review.commentId} review={review} />
+                    <ReviewItem key={review.commentId} review={review} setUpdate={setUpdate} />
                 ))}
             </div>
             {/* mui */}
