@@ -5,7 +5,7 @@
 ##  ![image](https://user-images.githubusercontent.com/108250233/215278635-93dfb954-5f85-4f53-8bd8-b05063aec9dc.png) 가치 갈래? ( Gachi Galle? )
 
 ## 👨‍👩‍👧‍👦 **팀원 소개**
-|강진원<br>(FE 팀장)</br>|김리안<br>(FE)</br>|신희주<br>(FE)</br>|최유진<br>(BE 부팀장)</br>|강하렴<br>(BE)</br>|안서희<br>(BE)</br>|  
+|강진원<br>👑(FE 팀장)</br>|김리안<br>(FE)</br>|신희주<br>(FE)</br>|최유진<br>(BE 부팀장)</br>|강하렴<br>(BE)</br>|안서희<br>(BE)</br>|  
 |:---:|:---:|:---:|:---:|:---:|:---:|
 |<img src="https://avatars.githubusercontent.com/u/89727516?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/87472526?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/106229016?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/57933510?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/108250233?v=4" width=130>|<img src="https://avatars.githubusercontent.com/u/89247924?s=100&v=4" width=150>|
 |-|-|-| - Content CRUD <br> - REDIS Logout <br> - MYSQL DB관리 | - Comment CRUD <br> - Swagger API <br> - AWS(EC2,RDS)배포환경 구축|- User CRUD <br> - Route CRUD <br> - JWT <br> - S3 이미지 업로드|
