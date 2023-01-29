@@ -38,7 +38,7 @@ const Regionitems = (props) => {
 const imgStyle = css`
     width: 100%;
     min-height: 340px;
-    height: 42vh;
+    height: 40vh;
     border-radius: ${PALETTE.border_radius};
     object-fit: cover;
 `;
@@ -53,8 +53,10 @@ const textStyle = css`
     position: relative;
     font-size: 2.7rem;
     font-weight: 600;
-    color: rgb(255, 255, 255, 0.8);
-    text-shadow: ${PALETTE.text_shadow};
+    color: rgb(255, 255, 255, 0.9);
+    text-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px,
+        rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
+        rgba(0, 0, 0, 0.09) 0px -3px 5px;
     bottom: 11rem;
     left: 0;
 `;

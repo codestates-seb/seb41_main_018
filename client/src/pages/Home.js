@@ -20,12 +20,12 @@ import { ContentsList, loginState } from "../state/atom";
 import 서울 from "../assets/sampleImg/region/서울.png";
 import 부산 from "../assets/sampleImg/region/부산.png";
 import 제주 from "../assets/sampleImg/region/제주.png";
-import 담양 from "../assets/sampleImg/region/제주.png";
-import 파주 from "../assets/sampleImg/region/제주.png";
-import 포천 from "../assets/sampleImg/region/제주.png";
-import 강릉 from "../assets/sampleImg/region/제주.png";
-import 여수 from "../assets/sampleImg/region/제주.png";
-import 전주 from "../assets/sampleImg/region/제주.png";
+import 담양 from "../assets/sampleImg/region/담양.png";
+import 파주 from "../assets/sampleImg/region/파주.png";
+import 포천 from "../assets/sampleImg/region/포천.png";
+import 강릉 from "../assets/sampleImg/region/강릉.png";
+import 여수 from "../assets/sampleImg/region/여수.png";
+import 전주 from "../assets/sampleImg/region/전주.png";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -41,7 +41,7 @@ const Home = () => {
     }, []);
 
     const swiperOption = {
-        spaceBetween: 10,
+        spaceBetween: 20,
         slidesPerView: 5,
         navigation: true,
         breakpoints: {
@@ -50,12 +50,8 @@ const Home = () => {
             },
             1200: {
                 slidesPerView: 4,
-                spaceBetween: 30,
             },
-            1000: {
-                slidesPerView: 4,
-            },
-            768: {
+            876: {
                 slidesPerView: 3,
             },
             576: {
@@ -104,10 +100,10 @@ const Home = () => {
                                 <Regionitems img={`${제주}`} text="제주" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems img={`${담양}`} text="담양" />
+                                <Regionitems img={`${강릉}`} text="강릉" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems img={`${강릉}`} text="강릉" />
+                                <Regionitems img={`${담양}`} text="담양" />
                             </SwiperSlide>
                             <SwiperSlide>
                                 <Regionitems img={`${전주}`} text="전주" />
@@ -124,7 +120,7 @@ const Home = () => {
                         </div>
                     </Swiper>
                     <Banner />
-                    <div css={itemsTitle}>✈️ 관심 급상승 여행지</div>
+                    <h2 css={itemsTitle}>✨ 관심 급상승 여행지</h2>
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
                             {contentsList &&
@@ -135,7 +131,7 @@ const Home = () => {
                                 ))}
                         </div>
                     </Swiper>
-                    <div css={itemsTitle}>✈️ 관심 급상승 여행지</div>
+                    <h2 css={itemsTitle}>🛫 여행에 진심인 사람들이 만든 여행</h2>
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
                             <SwiperSlide>
@@ -173,44 +169,16 @@ const Home = () => {
 };
 
 const itemsTitle = css`
-    width: 1440px;
-    @media (max-width: 1440px) {
-        width: 1200px;
-    }
-    @media (max-width: 1200px) {
-        width: 1080px;
-    }
-    @media (max-width: 1000px) {
-        width: 788px;
-    }
-    @media (max-width: 768px) {
-        width: 630px;
-    }
-    @media (max-width: 576px) {
-        width: 460px;
-    }
+    width: 80vw;
     margin: 30px auto 0;
+    color: rgb(0, 0, 0, 0.85);
     font-size: 1.5rem;
     font-weight: 600;
 `;
 
 const postStyle = css`
-    width: 1440px;
-    @media (max-width: 1440px) {
-        width: 1200px;
-    }
-    @media (max-width: 1200px) {
-        width: 1080px;
-    }
-    @media (max-width: 1000px) {
-        width: 788px;
-    }
-    @media (max-width: 768px) {
-        width: 630px;
-    }
-    @media (max-width: 576px) {
-        width: 460px;
-    }
+    width: 80vw;
+
     .swiper-button-next {
         background: url(${right}) no-repeat;
         right: 0;
