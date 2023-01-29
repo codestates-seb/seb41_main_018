@@ -148,6 +148,9 @@ export const postContent = async (data) => {
             return res;
         })
         .catch((err) => {
+            if (err.response.status === 401) {
+                alert("권한이 없습니다.");
+            } else alert("모든 항목을 작성해주세요.");
             console.log(err);
         });
 };
