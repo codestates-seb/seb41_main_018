@@ -44,6 +44,9 @@ public class ContentResponseDto {
     @ApiModelProperty(notes = "태그들", example = "내돈내산", required = true)
     private String tag;
 
+    @ApiModelProperty(notes = "작성자 프로필 사진", example = "셀카.png", required = true)
+    private String image;
+
     @ApiModelProperty(notes = "컨텐츠 작성 날짜와 시간", example = "2023.01.20", required = true)
     private LocalDateTime createdAt;
 

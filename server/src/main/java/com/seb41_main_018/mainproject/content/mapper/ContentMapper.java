@@ -63,6 +63,7 @@ public interface ContentMapper {
                 .amount(content.getRoutes().stream().mapToInt(Route::getPrice).sum())
                 .travelDate(content.getTravelDate())
                 //.routeName(content.getRouteName())
+                .image(user.getImage())
                 .createdAt(content.getCreatedAt())
                 .modifiedAt(content.getModifiedAt())
                 .tag(content.getTag())
