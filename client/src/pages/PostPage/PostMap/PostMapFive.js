@@ -283,9 +283,10 @@ const SearchMap = css`
     display: flex;
 
     #map5 {
-        width: 800px;
+        width: 85vw;
         height: 370px;
         overflow: hidden;
+        border-radius: 10px;
     }
 
     #menu_wrap5 {

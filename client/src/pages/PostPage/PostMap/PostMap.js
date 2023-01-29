@@ -287,6 +287,11 @@ const SearchMap = css`
         height: 370px;
         overflow: hidden;
         border-radius: 10px;
+        @media (min-width: 768px) {
+            width: 40vw;
+            margin-top: 30px;
+            margin-left: -100px;
+        }
     }
 
     #menu_wrap {
@@ -306,6 +311,10 @@ const SearchMap = css`
 
         ::-webkit-scrollbar {
             display: none; /* Chrome, Safari, Opera*/
+        }
+        @media (min-width: 768px) {
+            margin-left: -90px;
+            margin-top: 45px;
         }
     }
 

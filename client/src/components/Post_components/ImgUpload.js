@@ -54,15 +54,10 @@ const ImgUpload = () => {
                 onChange={handleUploadImg}
                 multiple
             />
-            <button css={PhotoButton} onClick={uploadBtnClick}>
-                <MdOutlineAddPhotoAlternate size="20" color="#fff" />
+
+            <button onClick={uploadBtnClick} css={uploadButton}>
+                <MdOutlineAddPhotoAlternate size="20" /> <span>사진 업로드</span>
             </button>
-            {/* <Button
-                text="사진 업로드"
-                width="130px"
-                margin="15px"
-                onClick={uploadBtnClick}
-            ></Button> */}
             <div css={PreviewContainer}>
                 {imgList.map((img, i) => (
                     <div css={PreviewImg} key={`${img}`}>
@@ -76,9 +71,16 @@ const ImgUpload = () => {
 };
 const ImgUpload_Wrap = css`
     height: 15vh;
-    background-color: red;
+    width: 82vw;
+    margin: 0 auto;
+    margin-left: 30px;
+
     input {
         display: none;
+    }
+    @media (min-width: 768px) {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border-radius: ${PALETTE.border_radius};
     }
 `;
 
@@ -104,12 +106,20 @@ const PreviewImg = css`
     }
 `;
 
-const PhotoButton = css`
-    width: 30px;
-    margin: 15px;
+const uploadButton = css`
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    width: fit-content;
+    font-size: 0.875rem;
+    padding: 7px;
+    margin: auto;
     border: none;
     border-radius: ${PALETTE.border_radius};
-    background-color: ${PALETTE.default_color};
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+    span {
+        margin-left: 5px;
+    }
 `;
 
 export default ImgUpload;
