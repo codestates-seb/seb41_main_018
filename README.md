@@ -7,8 +7,8 @@
 ## 👨‍👩‍👧‍👦 **팀원 소개**
 |강진원<br>(FE 팀장)</br>|김리안<br>(FE)</br>|신희주<br>(FE)</br>|최유진<br>(BE 부팀장)</br>|강하렴<br>(BE)</br>|안서희<br>(BE)</br>|  
 |:---:|:---:|:---:|:---:|:---:|:---:|
-|<img src="https://avatars.githubusercontent.com/u/89727516?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/87472526?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/106229016?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/57933510?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/108250233?v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/89247924?s=100&v=4" width=150>|
-|-|-|-| -Content CRUD <br> - (Redis) Logout <br> - SQL | - Comment CRUD <br> - Swagger API <br> - AWS(EC2,RDS)배포환경 구축|- User CRUD <br> - Route CRUD <br> - JWT <br> - S3 이미지 업로드|
+|<img src="https://avatars.githubusercontent.com/u/89727516?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/87472526?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/106229016?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/57933510?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/108250233?v=4" width=130>|<img src="https://avatars.githubusercontent.com/u/89247924?s=100&v=4" width=150>|
+|-|-|-| - Content CRUD <br> - REDIS Logout <br> - MYSQL DB관리 | - Comment CRUD <br> - Swagger API <br> - AWS(EC2,RDS)배포환경 구축|- User CRUD <br> - Route CRUD <br> - JWT <br> - S3 이미지 업로드|
 
 ## 🖥️ **프로젝트 소개**
 🚲여행 상품 기획부터 여행지 선택, 여행지의 ‘맛집’ 탐색까지! 내 맛대로 골라 먹는 여행관련 공유 플랫폼!🙀
