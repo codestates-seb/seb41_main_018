@@ -100,7 +100,8 @@ const Detailform = () => {
                 >
                     <div css={UserProfile}>
                         <img
-                            src="https://images-ext-2.discordapp.net/external/AyGGds_QNPK1IcGsGfyEQzYE3ez132reqOCTQtvOJUE/https/gachigalle-route-image.s3.ap-northeast-2.amazonaws.com/ato4.jpeg?width=1344&height=1008"
+                            src={data && data.image}
+                            alt={`${data && data.nickName}의 프로필 이미지`}
                             css={imgStyle}
                         />
                         <h3>{`${data && data.nickName}님의 추천 경로`}</h3>
