@@ -46,7 +46,11 @@ public class CommentService {
             Comment comment,
             Long commentId) {
 
+
         Comment findComment = findVerifiedComment(commentId); //ID로 멤버 존재 확인하고 comment 정보 반환
+        User writer = userService.findVerifiedUser(findComment.getUser().getUserId()); // 작성자 찾기
+        if(userService.getLoginMember().getUserId() != writer.getUserId()) // 작성자와 로그인한 사람이 다를 경우
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
 
         Optional.ofNullable(comment.getBody())
                 .ifPresent(findComment::setBody);
@@ -69,6 +73,10 @@ public class CommentService {
     //코멘트 삭제
     public void deleteComment(long commentId) {
         Comment findComment = findVerifiedComment(commentId);
+
+        User writer = userService.findVerifiedUser(findComment.getUser().getUserId()); // 작성자 찾기
+        if(userService.getLoginMember().getUserId() != writer.getUserId()) // 작성자와 로그인한 사람이 다를 경우
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
 
         commentRepository.delete(findComment);
     }
