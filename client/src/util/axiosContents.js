@@ -75,32 +75,32 @@ export const getCategory = async (themeType) => {
         });
 };
 
-// 컨텐츠 등록
-export const postContent = async (data) => {
-    return await axios
-        .post(
-            "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents",
-            {
-                title: data.title,
-                themeType: data.themeType,
-                travelDate: data.travelDate,
-                tag: data.tag,
-                routes: data.routes,
-            },
-            {
-                headers: {
-                    "Content-Type": `application/json`,
-                    Authorization: sessionStorage.getItem("access_token"),
-                },
-            }
-        )
-        .then((res) => {
-            return res;
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-};
+// // 컨텐츠 등록
+// export const postContent = async (data) => {
+//     return await axios
+//         .post(
+//             "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents",
+//             {
+//                 title: data.title,
+//                 themeType: data.themeType,
+//                 travelDate: data.travelDate,
+//                 tag: data.tag,
+//                 routes: data.routes,
+//             },
+//             {
+//                 headers: {
+//                     "Content-Type": `application/json`,
+//                     Authorization: sessionStorage.getItem("access_token"),
+//                 },
+//             }
+//         )
+//         .then((res) => {
+//             return res;
+//         })
+//         .catch((err) => {
+//             console.log(err);
+//         });
+// };
 
 // 좋아요 등록
 export const postHeart = async (userId, contentId) => {
