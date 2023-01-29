@@ -51,22 +51,7 @@ const wrap = css`
     display: flex;
     height: 300px;
     margin: 20px auto;
-    width: 1440px;
-    @media (max-width: 1440px) {
-        width: 1200px;
-    }
-    @media (max-width: 1200px) {
-        width: 1080px;
-    }
-    @media (max-width: 1000px) {
-        width: 788px;
-    }
-    @media (max-width: 768px) {
-        width: 630px;
-    }
-    @media (max-width: 576px) {
-        width: 460px;
-    }
+    width: 80vw;
 `;
 const swiperStyle = css`
     border-radius: ${PALETTE.border_radius};
