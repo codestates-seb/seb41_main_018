@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 //css
@@ -32,6 +32,7 @@ const Detail = () => {
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [reviewList, setReviewList] = useRecoilState(ReviewListState);
+    const [update, setUpdate] = useState(false);
 
     const getContentDetail = (contentId) => {
         getContent(contentId).then((res) => {
@@ -41,16 +42,26 @@ const Detail = () => {
     };
 
     const deleteContentDetail = (contentId) => {
-        deleteContent(contentId).then(() => {
-            getUserInfo(userInfo.userId).then((data) => {
-                setUserInfo(data.data);
-            });
+        deleteContent(contentId).then((res) => {
+            if (res) {
+                setUpdate(true);
+                navigate("/");
+            }
         });
     };
 
     useEffect(() => {
         getContentDetail(location.pathname.slice(8));
     }, []);
+
+    useEffect(() => {
+        if (update) {
+            getUserInfo(userInfo.userId).then((data) => {
+                setUserInfo(data.data);
+            });
+            setUpdate(false);
+        }
+    }, [update]);
 
     return (
         <div css={Wrap}>
