@@ -3,24 +3,25 @@ import React from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import dayjs from "dayjs";
-import { userInfoState } from "../../state/atom";
+import { AddedLikeState } from "../../state/atom";
 import { useRecoilState } from "recoil";
 import { Link } from "react-router-dom";
 
 const MyLike = () => {
-    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const [adddedLike, setAddedLike] = useRecoilState(AddedLikeState);
 
     return (
         <div css={MyLike_Wrap}>
-            {userInfo.hearts.map((hearts) => (
-                <div css={MyLike_Item} key={hearts.contentId}>
+            {console.log(adddedLike)}
+            {adddedLike.map((el) => (
+                <div css={MyLike_Item} key={el.contentId}>
                     <div css={PostImg}>사진</div>
                     <div css={MyLike_Content}>
-                        <Link to={`/detail/${hearts.contentId}`}>
-                            <h3 css={PostTitle}>{hearts.title}</h3>
+                        <Link to={`/detail/${el.contentId}`}>
+                            <h3 css={PostTitle}>{el.title}</h3>
                         </Link>
                         <div>경로</div>
-                        <div css={Right_Content}>{dayjs(hearts.createdAt).format("YY.MM.DD")}</div>
+                        <div css={Right_Content}>{dayjs(el.createdAt).format("YY.MM.DD")}</div>
                     </div>
                 </div>
             ))}

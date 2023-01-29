@@ -8,6 +8,7 @@ import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import dayjs from "dayjs";
+import { deleteReview } from "../../util/axiosContents";
 
 //Button
 import { AwesomeButton } from "react-awesome-button";
@@ -40,8 +41,14 @@ export const Buttons = (props) => {
     );
 };
 
-const ReviewItem = ({ review }) => {
-    const { body, createdAt, nickName, ratingType } = review;
+const ReviewItem = ({ review, setUpdate }) => {
+    const { body, createdAt, nickName, ratingType, commentId } = review;
+
+    const deleteReviewHandler = async () => {
+        await deleteReview(commentId).then(() => {
+            setUpdate(true);
+        });
+    };
 
     return (
         <div css={Container}>
@@ -91,6 +98,8 @@ const ReviewItem = ({ review }) => {
                     >
                         {body}
                     </div>
+                    <button>수정</button>
+                    <button onClick={() => deleteReviewHandler(commentId)}>삭제</button>
                 </div>
             </div>
         </div>

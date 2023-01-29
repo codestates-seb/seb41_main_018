@@ -7,10 +7,11 @@ import DetailformItems from "./DetailformItems";
 import DetailMap from "./DetailMap";
 import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 //recoil
 import { useRecoilState } from "recoil";
-import { ContentDetail, userInfoState } from "../../state/atom";
+import { ContentDetail, userInfoState, AddedLikeState } from "../../state/atom";
 
 //Button
 import { AwesomeButton } from "react-awesome-button";
@@ -20,6 +21,8 @@ import dayjs from "dayjs";
 import "dayjs/locale/ko";
 dayjs.locale("ko");
 import { postHeart } from "../../util/axiosContents";
+import { getUserInfo } from "../../util/axiosUser";
+import { useEffect } from "react";
 
 export const Buttons = (props) => {
     return (
@@ -52,16 +55,39 @@ const Detailform = () => {
     const [currentTab, setcurrentTab] = useState(0);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const [adddedLike, setAddedLike] = useRecoilState(AddedLikeState);
+    const [clickedLike, setClickedLike] = useState([]);
     const data = contentDetail.data;
 
     const selectMenuHandler = (index) => {
         setcurrentTab(index);
     };
 
+    // "ADD" 인 좋아요만 filter
+    const likeFilter = () => {
+        const likeArr = userInfo && userInfo.hearts.filter((el) => el.heartType === "ADD");
+        setAddedLike(likeArr);
+    };
+    const likeMap = () => {
+        const likeClickState = adddedLike.map((el) => el.contentId === data.contentId);
+        setClickedLike(likeClickState);
+    };
+
     // 좋아요 post요청 함수
     const HeartHandler = () => {
-        postHeart(userInfo.userId, data.contentId);
+        postHeart(userInfo.userId, data.contentId).then(() => {
+            getUserInfo(userInfo.userId).then((data) => {
+                setUserInfo(data.data);
+                likeFilter();
+
+                console.log(adddedLike);
+            });
+        });
     };
+
+    useEffect(() => {
+        likeMap();
+    }, [adddedLike]);
 
     return (
         <div css={wrap}>
@@ -118,7 +144,11 @@ const Detailform = () => {
             <h2>✈️ 지도로 경로 확인하기</h2>
             <DetailMap />
             <div css={ButtonBox}>
-                <Buttons icon={<BsFillHeartFill />} text="가치갈래" onPress={HeartHandler} />
+                <Buttons
+                    icon={clickedLike.includes(true) ? <FaHeart /> : <FaRegHeart />}
+                    text="가치갈래"
+                    onPress={HeartHandler}
+                />
                 <Buttons text={<FiShare />} />
             </div>
         </div>
