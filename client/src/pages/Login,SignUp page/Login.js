@@ -110,7 +110,9 @@ const LoginPage = () => {
                         boxShadow="1px 2px 2px 1px rgb(0,0,0,0.3)"
                     />
                     <div css={UserInfoButton}>아이디 / 비밀번호 찾기</div>
-                    <div css={UserInfoButton}>회원가입</div>
+                    <Link to={"/signup"}>
+                        <div css={UserInfoButton}>회원가입</div>
+                    </Link>
                 </form>
             </div>
         </div>
