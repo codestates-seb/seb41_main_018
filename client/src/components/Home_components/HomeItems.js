@@ -59,7 +59,7 @@ const HomeItems = (content) => {
 
 const wrap = css`
     width: 100%;
-    height: 30%;
+    height: 100%;
 `;
 
 const imgStyle = css`
