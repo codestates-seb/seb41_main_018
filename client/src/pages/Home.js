@@ -39,6 +39,10 @@ const Home = () => {
             setcontentsList(res.data.data);
         });
     }, []);
+    console.log(contentsList);
+
+    const viewCountSortArr = [...contentsList].sort((a, b) => a.viewCount - b.viewCount);
+    console.log(viewCountSortArr);
 
     const swiperOption = {
         spaceBetween: 20,
@@ -120,7 +124,7 @@ const Home = () => {
                         </div>
                     </Swiper>
                     <Banner />
-                    <h2 css={itemsTitle}>✨ 관심 급상승 여행지</h2>
+                    <h2 css={itemsTitle}>🛫 방금 올라온 🔥HOT🔥 여행지</h2>
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
                             {contentsList &&
@@ -131,33 +135,15 @@ const Home = () => {
                                 ))}
                         </div>
                     </Swiper>
-                    <h2 css={itemsTitle}>🛫 여행에 진심인 사람들이 만든 여행</h2>
+
+                    <h2 css={itemsTitle}>✨ 관심 급상승 여행지</h2>
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
+                            {viewCountSortArr.map((content) => (
+                                <SwiperSlide key={content.contentId}>
+                                    <HomeItems content={content} />
+                                </SwiperSlide>
+                            ))}
                         </div>
                     </Swiper>
                     <Banner />
