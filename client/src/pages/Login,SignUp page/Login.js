@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
-import { getAuthorization, getRefresh, userInfoState, loginState } from "../../state/atom";
+import {
+    getAuthorization,
+    getRefresh,
+    userInfoState,
+    loginState,
+    AddedLikeState,
+} from "../../state/atom";
 import SocialButton from "../../components/SocialButton";
 import Button from "../../components/Button";
 import logo9 from "../../assets/logo9.png";
@@ -29,12 +35,19 @@ const LoginPage = () => {
     const [Refresh, setRefresh] = useRecoilState(getRefresh);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [isLogin, setIsLogin] = useRecoilState(loginState);
+    const [adddedLike, setAddedLike] = useRecoilState(AddedLikeState);
 
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm({ mode: "onchange", defaultValues });
+
+    // "ADD" 인 좋아요만 filter
+    const likeFilter = () => {
+        let likeArr = userInfo && userInfo.hearts.filter((el) => el.heartType === "ADD");
+        setAddedLike(likeArr);
+    };
 
     const onSubmit = async (data) => {
         const jsonData = JSON.stringify(data);
@@ -52,9 +65,14 @@ const LoginPage = () => {
             });
     };
 
+    useEffect(() => {
+        if (!userInfo) {
+            likeFilter();
+        }
+    }, [userInfo]);
+
     return (
         <div css={LoginpageBg}>
-            {console.log(userInfo)}
             <div css={LoginpageContainer}>
                 <div css={LoginLogoContainer}>
                     <Link to={"/"}>

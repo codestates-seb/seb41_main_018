@@ -112,6 +112,7 @@ const SignUp = () => {
         const jsonData = JSON.stringify(data);
         console.log(email.current);
 
+        // 추후 axiosUser로 이동
         await axios
             .post(
                 "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users",

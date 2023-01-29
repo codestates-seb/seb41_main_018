@@ -116,10 +116,11 @@ export const postHeart = async (userId, contentId) => {
         )
         .then((res) => {
             alert("좋아요 등록되었습니다.");
+            console.log(res);
             return res;
         })
         .catch((err) => {
-            if (err.response.status === 401) {
+            if (err.response.status === 401 || userId === undefined) {
                 alert("로그인이 필요합니다");
                 location.href = "/login";
             }
