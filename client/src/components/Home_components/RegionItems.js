@@ -38,7 +38,7 @@ const Regionitems = (props) => {
 const imgStyle = css`
     width: 100%;
     min-height: 340px;
-    height: 42vh;
+    height: 40vh;
     border-radius: ${PALETTE.border_radius};
     object-fit: cover;
 `;
