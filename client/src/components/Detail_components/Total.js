@@ -70,12 +70,12 @@ const ContentsBody = css`
     width: 100%;
     align-items: center;
     justify-content: start;
-    margin: 5px 0 -10px 10px;
+    margin: 5px 0 -10px -27px;
     padding: 0 27px;
     @media (min-width: 768px) {
         width: 90vw;
         font-size: 2em;
-        margin: 0 0 10px -55px;
+        margin: 0 0 20px -34px;
     }
 `;
 
