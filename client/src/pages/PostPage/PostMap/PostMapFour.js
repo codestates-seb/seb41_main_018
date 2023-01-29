@@ -3,15 +3,8 @@ import React, { useEffect } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-import { useRecoilState } from "recoil";
-import { detailPositionFour, xPositionFour, yPositionFour } from "../../../state/atom";
-
 const PostMapFour = (props) => {
     const { index, setValue } = props;
-
-    const [xpo, setXpo] = useRecoilState(xPositionFour);
-    const [ypo, setYpo] = useRecoilState(yPositionFour);
-    const [dpo, setDpo] = useRecoilState(detailPositionFour);
 
     let xposition = "";
     let yposition = "";
@@ -43,6 +36,8 @@ const PostMapFour = (props) => {
             if (status === kakao.maps.services.Status.OK) {
                 // console.log(result[0])
                 setValue(`routes.${index}.address`, result[0].address.address_name);
+                setValue(`routes.${index}.x`, yposition);
+                setValue(`routes.${index}.y`, xposition);
             }
         };
 
@@ -201,8 +196,6 @@ const PostMapFour = (props) => {
 
                     /////
                     itemEl.onmousedown = function () {
-                        setXpo(xposition);
-                        setYpo(yposition);
                         setValue(`routes.${index}.place`, title);
                         // console.log(title)
                         geocoder.coord2Address(xposition, yposition, callback);

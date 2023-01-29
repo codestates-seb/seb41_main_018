@@ -16,7 +16,7 @@ import Total from "../components/Detail_components/Total";
 
 //recoil
 import { useRecoilState } from "recoil";
-import { ContentDetail, ReviewListState } from "../state/atom";
+import { ContentDetail, ReviewListState, GetPosition } from "../state/atom";
 
 //Etc
 import axios from "axios";
@@ -27,6 +27,7 @@ dayjs.locale("ko");
 const Detail = () => {
     const pathname = location.pathname;
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
+    const [position, setPosition] = useRecoilState(GetPosition);
     const [reviewList, setReviewList] = useRecoilState(ReviewListState);
     const getContentDetail = (contentId) => {
         getContent(contentId).then((res) => {
@@ -36,7 +37,14 @@ const Detail = () => {
     };
     useEffect(() => {
         getContentDetail(location.pathname.slice(8));
+        setPosition({
+            // lat: contentDetail && contentDetail.data && contentDetail.data.routes[0].x,
+            // lng: contentDetail && contentDetail.data && contentDetail.data.routes[0].y,
+            lat: contentDetail.data && contentDetail.data.routes[0].x,
+            lng: contentDetail.data && contentDetail.data.routes[0].y,
+        });
     }, []);
+    console.log(position);
     return (
         <div css={Wrap}>
             <h1>{contentDetail.data && contentDetail.data.title}</h1>

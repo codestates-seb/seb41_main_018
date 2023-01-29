@@ -193,3 +193,8 @@ export const TagsStringState = atom({
     key: "TagsStringState",
     default: "",
 });
+
+export const GetPosition = atom({
+    key: "GetPosition",
+    default: {},
+});
