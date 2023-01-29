@@ -57,7 +57,6 @@ export const Buttons = (props) => {
 } */
 
 const Reviewform = () => {
-    const [state, setState] = useState(0);
     const [rateType, setRateType] = useState("FIVE");
     const [reviewText, setReviewText] = useState("");
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
@@ -69,15 +68,19 @@ const Reviewform = () => {
             case "5":
                 setRateType("FIVE");
                 break;
+
             case "4":
                 setRateType("FOUR");
                 break;
+
             case "3":
                 setRateType("THREE");
                 break;
+
             case "2":
                 setRateType("TWO");
                 break;
+
             case "1":
                 setRateType("ONE");
                 break;
@@ -146,9 +149,14 @@ const Reviewform = () => {
             </div>
             <div css={ReviewList}>
                 {/* reviewitem >> map */}
-
                 {reviewList.map((review) => (
-                    <ReviewItem key={review.commentId} review={review} setUpdate={setUpdate} />
+                    <ReviewItem
+                        key={review.commentId}
+                        review={review}
+                        setUpdate={setUpdate}
+                        rateTypeSwitch={rateTypeSwitch}
+                        rateType={rateType}
+                    />
                 ))}
             </div>
             {/* mui */}

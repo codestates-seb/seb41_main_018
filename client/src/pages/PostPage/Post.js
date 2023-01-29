@@ -30,6 +30,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { useRecoilState } from "recoil";
 import { TagsStringState } from "../../state/atom";
+import { postContent } from "../../util/axiosContents";
 
 const defaultValues = {
     title: "",
@@ -140,6 +141,10 @@ const AddInput = () => {
                                             type="number"
                                             autocomplete="off"
                                             placeholder="사용한 금액을 입력해주세요!"
+
+
+                                            step="1000"
+
                                             css={ListInput}
                                         />
                                     </div>
@@ -289,7 +294,7 @@ const TravelDate = () => {
     );
 };
 
-const NewPost = () => {
+const Post = () => {
     const navigate = useNavigate();
     const [tagsStr, setTagsStr] = useRecoilState(TagsStringState);
     const methods = useForm({ defaultValues });
@@ -298,28 +303,16 @@ const NewPost = () => {
     const submit = async (data) => {
         // 태그 추가
         data.tag = tagsStr;
-
+        for (let obj of data && data.routes) {
+            delete obj.image;
+        }
         console.log(data);
-
-        const jsonData = JSON.stringify(data);
-
-        await axios
-            .post("url", jsonData, {
-                headers: {
-                    "Content-Type": `application/json`,
-                    Authorization: sessionStorage.getItem("accessToken"),
-                    Refresh: sessionStorage.getItem("refreshToken"),
-                },
-            })
-            .then((res) => {
+        postContent(data).then((res) => {
+            if (res) {
                 navigate("/");
-            })
-            .catch((err) => {
-                console.log(err);
-                alert("회원가입에 실패했습니다.");
-            });
+            }
+        });
     };
-
     return (
         <FormProvider {...methods}>
             <div css={providerWrap}>
@@ -464,6 +457,7 @@ const CategoryInput = css`
     .Dropdown-arrow {
         margin-top: 8px;
     } */
+
 `;
 
 const TravelDateTitle = css`
@@ -663,4 +657,5 @@ const SubmitButton = css`
         color: ${PALETTE.white};
     }
 `;
-export default NewPost;
+export default Post;
+

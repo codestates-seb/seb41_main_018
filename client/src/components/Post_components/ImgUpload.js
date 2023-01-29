@@ -7,8 +7,8 @@ import { TiDelete } from "react-icons/ti";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 
 const ImgUpload = (props) => {
-    const {index, setValue, value} = props;
-    
+    const { index, setValue, value } = props;
+
     const [previewList, setPreviewList] = useState([]);
     const inputRef = useRef(null);
     const uploadBtnClick = () => {
@@ -17,7 +17,7 @@ const ImgUpload = (props) => {
     };
 
     useEffect(() => {
-        setValue(`routes.${index}.image`, previewList)
+        setValue(`routes.${index}.image`, previewList);
     }, [previewList]);
 
     // img upload function
@@ -26,7 +26,7 @@ const ImgUpload = (props) => {
         const maxImg = selectedImg.length > 3 ? 3 : selectedImg.length;
 
         // 사진 입력 제한 : 최대 3장
-        if (value && value.length + maxImg > 3 || selectedImg.length > 3) {
+        if ((value && value.length + maxImg > 3) || selectedImg.length > 3) {
             alert("최대 3장까지만 등록 가능합니다.");
             return;
         }
@@ -40,7 +40,6 @@ const ImgUpload = (props) => {
 
     // img delete function
     const handleDeleteImg = (i) => {
-        setValue(value.filter((_, index) => index !== i));
         setPreviewList(value.filter((_, index) => index !== i));
     };
 
@@ -58,12 +57,13 @@ const ImgUpload = (props) => {
 
             </button>
             <div css={PreviewContainer}>
-                {value && value.map((img, i) => (
-                    <div css={PreviewImg} key={`${img}`}>
-                        <img src={img} alt={`${img}.${i}`} />
-                        <TiDelete onClick={() => handleDeleteImg(i)} />
-                    </div>
-                ))}
+                {value &&
+                    value.map((img, i) => (
+                        <div css={PreviewImg} key={`${img}`}>
+                            <img src={img} alt={`${img}.${i}`} />
+                            <TiDelete onClick={() => handleDeleteImg(i)} />
+                        </div>
+                    ))}
             </div>
         </div>
     );
