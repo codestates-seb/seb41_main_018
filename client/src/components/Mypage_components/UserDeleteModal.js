@@ -8,7 +8,7 @@ import { userInfoState, loginState } from "../../state/atom";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 
-const Modal = (props) => {
+const UserDeleteModal = (props) => {
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [isLogin, setIsLogin] = useRecoilState(loginState);
@@ -84,4 +84,4 @@ const ModalBackground = css`
     right: 0;
     background: rgba(255, 255, 255, 0.7);
 `;
-export default Modal;
+export default UserDeleteModal;
