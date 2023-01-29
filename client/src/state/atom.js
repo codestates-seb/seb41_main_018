@@ -143,8 +143,3 @@ export const AddedLikeState = atom({
     key: "AddedLikeState",
     default: [],
 });
-
-export const GetPosition = atom({
-    key: "GetPosition",
-    default: {},
-});
