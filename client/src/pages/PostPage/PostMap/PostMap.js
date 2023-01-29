@@ -99,7 +99,6 @@ const PostMap = (props) => {
             return marker;
         }
 
-        geocoder.addressSearch("해남군 송지면", callback);
         // 지도 위에 표시되고 있는 마커를 모두 제거합니다
         function removeMarker() {
             for (var i = 0; i < markers.length; i++) {
@@ -284,9 +283,10 @@ const SearchMap = css`
     display: flex;
 
     #map {
-        width: 800px;
+        width: 85vw;
         height: 370px;
         overflow: hidden;
+        border-radius: 10px;
     }
 
     #menu_wrap {

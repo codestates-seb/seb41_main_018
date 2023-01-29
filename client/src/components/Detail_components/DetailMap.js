@@ -13,7 +13,7 @@ import { MapMarker, Map, CustomOverlayMap, Polyline, Polygon } from "react-kakao
 
 //recoil
 import { useRecoilState } from "recoil";
-import { ContentDetail } from "../../state/atom";
+import { ContentDetail, GetPosition } from "../../state/atom";
 
 const routes = [
     {
@@ -30,43 +30,58 @@ const routes = [
 
 const DetailMap = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
+    const [position, setPosition] = useRecoilState(GetPosition);
     const data = contentDetail.data;
     const RouteData = data && data.routes;
     const [path, setPath] = useState([]);
 
-    //polyLine 좌표 따는 함수 (보류)
-    useEffect(() => {
-        routes.map((el, index) => {
-            let position = { lat: el.x, lng: el.y };
-            setPath([...path, position]);
-        });
-    }, []);
-    console.log([path]);
+    console.log(RouteData);
 
-    const a = { lat: 33.450701, lng: 126.570667 };
-    const b = { lat: routes[0].x, lng: routes[0].y };
+    //polyLine 좌표 따는 함수 (보류)
+    // useEffect(() => {
+    //     routes.map((el, index) => {
+    //         let position = { lat: el.x, lng: el.y };
+    //         setPath([...path, position]);
+    //     });
+    // }, []);
+    //
+
+    const b = {
+        lat: contentDetail && contentDetail.data && contentDetail.data.routes[0].x,
+        lng: contentDetail && contentDetail.data && contentDetail.data.routes[0].y,
+    };
+    const a = {
+        lat: 36,
+        lng: 127.152557091072,
+    };
+
+    console.log(b);
 
     return (
         //하드 코딩 데이터 출력용
-        <Map center={b} css={MapStyle} level={8}>
-            {routes.map((position, index) => (
-                <div key={index}>
-                    <MapMarker key={index} position={{ lat: position.x, lng: position.y }} />
-                    <CustomOverlayMap position={{ lat: position.x, lng: position.y }} yAnchor={1}>
-                        <div css={customoverlay}>
-                            <span css={title}>{position.place}</span>
-                        </div>
-                    </CustomOverlayMap>
+        <Map center={a} css={MapStyle} level={13}>
+            {data &&
+                data.routes.map((position, index) => (
+                    <div key={index}>
+                        <MapMarker key={position} position={{ lat: position.x, lng: position.y }} />
+                        <CustomOverlayMap
+                            position={{ lat: position.x, lng: position.y }}
+                            yAnchor={1}
+                        >
+                            <div css={customoverlay}>
+                                <span css={title}>{position.place}</span>
+                            </div>
+                        </CustomOverlayMap>
 
-                    <Polyline
-                        path={[path]}
-                        strokeWeight={5} // 선의 두께 입니다
-                        strokeColor={"#FFAE00"} // 선의 색깔입니다
-                        strokeOpacity={0.7} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                        strokeStyle={"solid"} // 선의 스타일입니다
-                    />
-                </div>
-            ))}
+                        {/* <Polyline
+                            path={[path]}
+                            strokeWeight={5} // 선의 두께 입니다
+                            strokeColor={"#FFAE00"} // 선의 색깔입니다
+                            strokeOpacity={0.7} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                            strokeStyle={"solid"} // 선의 스타일입니다
+                        /> */}
+                    </div>
+                ))}
         </Map>
         // 사용할 것
         // <Map center={a} css={MapStyle} level={3}>

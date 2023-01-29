@@ -16,7 +16,7 @@ import Total from "../components/Detail_components/Total";
 
 //recoil
 import { useRecoilState } from "recoil";
-import { userInfoState, ContentDetail, ReviewListState } from "../state/atom";
+import { userInfoState, ContentDetail, ReviewListState, GetPosition } from "../state/atom";
 
 //Etc
 import dayjs from "dayjs";
@@ -31,6 +31,7 @@ const Detail = () => {
     const pathname = location.pathname;
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
+    const [position, setPosition] = useRecoilState(GetPosition);
     const [reviewList, setReviewList] = useRecoilState(ReviewListState);
     const [update, setUpdate] = useState(false);
 
@@ -52,6 +53,12 @@ const Detail = () => {
 
     useEffect(() => {
         getContentDetail(location.pathname.slice(8));
+        setPosition({
+            // lat: contentDetail && contentDetail.data && contentDetail.data.routes[0].x,
+            // lng: contentDetail && contentDetail.data && contentDetail.data.routes[0].y,
+            lat: contentDetail.data && contentDetail.data.routes[0].x,
+            lng: contentDetail.data && contentDetail.data.routes[0].y,
+        });
     }, []);
 
     useEffect(() => {

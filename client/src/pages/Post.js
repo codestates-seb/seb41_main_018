@@ -22,7 +22,6 @@ import axios from "axios";
 
 import NewPost from "./PostPage/NewPost";
 
-
 import ImgUpload from "../components/Post_components/ImgUpload";
 
 const Post = () => {
@@ -67,7 +66,7 @@ const Post = () => {
     // };
 
     return (
-        <div css={container}>
+        <div>
             <NewPost />
         </div>
     );
