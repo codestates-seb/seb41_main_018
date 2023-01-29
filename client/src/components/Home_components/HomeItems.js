@@ -96,11 +96,16 @@ const sideTextStyle = css`
 
 const ulStyle = css`
     display: flex;
+    flex-wrap: wrap;
     list-style: none;
     font-size: 0.875rem;
     font-weight: 700;
     margin-top: 3px;
     color: ${PALETTE.default_color};
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 6vh;
 `;
 
 const liStyle = css`

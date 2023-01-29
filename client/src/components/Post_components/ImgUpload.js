@@ -75,6 +75,8 @@ const ImgUpload = () => {
     );
 };
 const ImgUpload_Wrap = css`
+    height: 15vh;
+    background-color: red;
     input {
         display: none;
     }
