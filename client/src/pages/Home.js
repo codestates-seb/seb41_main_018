@@ -39,7 +39,7 @@ const Home = () => {
             setcontentsList(res.data.data);
         });
     }, []);
-
+    console.log(contentsList.slice(-8));
     const swiperOption = {
         spaceBetween: 20,
         slidesPerView: 5,
@@ -134,30 +134,15 @@ const Home = () => {
                     <h2 css={itemsTitle}>🛫 여행에 진심인 사람들이 만든 여행</h2>
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <HomeItems />
-                            </SwiperSlide>
+                            {contentsList &&
+                                contentsList
+                                    .slice(-8)
+                                    .reverse()
+                                    .map((content) => (
+                                        <SwiperSlide key={content.contentId}>
+                                            <HomeItems content={content} />
+                                        </SwiperSlide>
+                                    ))}
                         </div>
                     </Swiper>
                     <Banner />
