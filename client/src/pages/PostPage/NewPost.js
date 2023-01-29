@@ -322,7 +322,7 @@ const NewPost = () => {
 
     return (
         <FormProvider {...methods}>
-            <form css={FormWrap}>
+            <div css={providerWrap}>
                 <div css={TitleContainer}>
                     <Title />
                 </div>
@@ -330,11 +330,21 @@ const NewPost = () => {
                     <Category />
                     <TravelDate />
                 </div>
+            </div>
+
+            <form css={FormWrap}>
                 <AddInput />
+
                 <div
                     css={css`
-                        align-self: flex-start;
-                        margin-left: 200px;
+                        display: flex;
+                        width: 100%;
+                        margin-top: 10px;
+                        @media (min-width: 768px) {
+                            align-items: center;
+                            justify-content: start;
+                            margin-left: 40px;
+                        }
                     `}
                 >
                     <Tag />
@@ -350,7 +360,17 @@ const NewPost = () => {
         </FormProvider>
     );
 };
-
+const providerWrap = css`
+    display: flex;
+    flex-direction: column;
+    margin: 30px auto 0;
+    width: 90vw;
+    @media (min-width: 768px) {
+        flex-direction: row;
+        margin: 30px auto 0;
+        width: 90vw;
+    }
+`;
 const FormWrap = css`
     display: flex;
     flex-direction: column;
@@ -358,16 +378,19 @@ const FormWrap = css`
     border: ${PALETTE.border};
     border-radius: ${PALETTE.border_radius};
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    margin: 200px auto;
+    margin: 10px auto;
     width: 90vw;
-    height: 100%;
-    /* margin-bottom: 80; */
 `;
 
 const TitleContainer = css`
     display: flex;
     width: 100%;
-    margin: 20px 0 0 30px;
+    margin-top: 10px;
+    @media (min-width: 768px) {
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0 0 0;
+    }
 `;
 const FormContainer = css`
     width: 100%;
@@ -375,7 +398,17 @@ const FormContainer = css`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0 auto;
     padding-left: 30px;
+`;
+
+const FieldContainer = css`
+    display: flex;
+    width: 90vw;
+    flex-direction: column;
+    @media (min-width: 768px) {
+        flex-direction: row;
+    }
 `;
 
 const TitleSmallContainer = css`
@@ -386,14 +419,16 @@ const TitleSmallContainer = css`
 `;
 
 const TitleInput = css`
-    width: 60vw;
+    width: 55.5vw;
     height: 40px;
-    margin: auto 10px;
-    padding: 0 10px;
+    padding: 10px;
     font-size: 0.975rem;
     border: ${PALETTE.border};
     border-radius: ${PALETTE.border_radius};
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    @media (min-width: 768px) {
+        width: 45vw;
+    }
 `;
 
 const CategoryTitle = css`
@@ -408,11 +443,14 @@ const CategoryInput = css`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 0 10px;
-    width: 26vw;
+    width: 27vw;
     font-size: 0.975rem;
+    text-align: center;
     border-radius: ${PALETTE.border_radius};
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    @media (min-width: 768px) {
+        width: 20vw;
+    }
 
     /* .Dropdown-menu {
         min-height: 100px;
@@ -440,11 +478,15 @@ const TravelDateInput = css`
     input {
         padding: 10px;
         height: 40px;
-        width: 26vw;
+        width: 27vw;
         font-size: 0.975rem;
+        text-align: center;
         border: ${PALETTE.border};
         border-radius: ${PALETTE.border_radius};
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        @media (min-width: 768px) {
+            width: 20vw;
+        }
     }
 
     .react-datepicker-popper {
@@ -461,7 +503,15 @@ const TravelDateInput = css`
 `;
 
 const PlaceInputContainer = css`
+    width: 35vw;
     margin-bottom: 10px;
+
+    @media (min-width: 768px) {
+        width: 20vw;
+    }
+    ::placeholder {
+        font-size: 0.475rem;
+    }
 `;
 
 const PlaceInput = css`
@@ -476,21 +526,21 @@ const PlaceInput = css`
     z-index: 2;
 `;
 
-const FieldContainer = css`
-    display: flex;
-    width: 90vw;
-    flex-direction: column;
-`;
-
 const RouteForm = css`
     display: flex;
     flex-direction: column;
-    margin: 20px auto;
+    margin: 50px auto;
+    @media (min-width: 768px) {
+        width: 40vw;
+    }
 
     .listcontainer {
         display: flex;
         align-items: center;
         margin-bottom: 10px;
+        @media (min-width: 768px) {
+            width: 100%;
+        }
     }
 
     .bodycontainer {
@@ -499,9 +549,7 @@ const RouteForm = css`
     }
 
     .listname {
-        color: #ff6e30;
         width: 80px;
-        font-weight: bold;
         font-size: 1rem;
         margin: 10px;
     }
@@ -515,6 +563,9 @@ const ListInput = css`
     border: ${PALETTE.border};
     border-radius: ${PALETTE.border_radius};
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    @media (min-width: 768px) {
+        width: 25vw;
+    }
 `;
 
 const BodyInput = css`
@@ -527,27 +578,59 @@ const BodyInput = css`
     border: ${PALETTE.border};
     border-radius: ${PALETTE.border_radius};
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    @media (min-width: 768px) {
+        width: 25vw;
+    }
 `;
 
 const MapStyle = css`
     margin: 20px auto;
 `;
 
-const AppendButton = css`
-    border: none;
-    margin-left: -30px;
-    cursor: pointer;
-    background-color: #fff;
+// const AppendButton = css`
+//     font-size: 0.975rem;
+//     color: white;
+//     border-radius: 50px;
+//     border: 0.1rem solid white;
+//     /* background-color: #2adba2; */
+//     background-color: #0f7586;
+//     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+//     width: 150px;
+//     height: 50px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     cursor: pointer;
+//     span {
+//         margin-left: 10px;
+//     }
 
-    svg {
-        background-color: #fff;
+// `;
+const AppendButton = css`
+    margin: 20px auto;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    position: relative;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    /* background: #00f0b5; */
+    background: ${PALETTE.default_color};
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    &:hover {
+        transform: scale(1.1, 1.1);
+        text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        transform: translateY(-3px);
+        color: ${PALETTE.white};
+        transition-duration: 250ms;
     }
 `;
 
 const DeleteButton = css`
     position: relative;
     right: 40px;
-    bottom: 117px;
+    bottom: 0px;
     height: 50px;
     border: none;
     cursor: pointer;
@@ -559,34 +642,25 @@ const DeleteButton = css`
 `;
 
 const SubmitButton = css`
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    width: 1200px;
+    width: 90vw;
     height: 50px;
 
-    background-color: ${PALETTE.default_color};
+    background: ${PALETTE.default_color};
     border-radius: 5px;
-    border: ${PALETTE.border_default};
-    color: ${PALETTE.text_default};
+    border: ${PALETTE.default_color};
+    color: white;
 
     transition: all 0.2s;
 
     cursor: pointer;
 
-    /* &:hover {
-        transform: scale(1.1, 1.1);
-        -ms-transform: scale(1.1, 1.1);
-        -webkit-transform: scale(1.1, 1.1);
-        background-color: ${PALETTE.default_hover};
+    &:hover {
+        text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
         color: ${PALETTE.white};
-        transition-duration: 250ms;
     }
-
-    &:active {
-        background-color: rgba(251, 181, 181, 1);
-    } */
 `;
 export default NewPost;
