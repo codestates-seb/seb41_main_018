@@ -225,6 +225,9 @@ const Container = css`
     display: flex;
     align-items: center;
     margin: 40px auto;
+    padding: 20px;
+    box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
 `;
 
 const ReviewContent = css`
@@ -259,7 +262,7 @@ const ReviewInput = css`
 
     textarea {
         border: none;
-        width: 70vw;
+        width: 60vw;
         height: 80px;
         border: 2px solid ${PALETTE.default_color};
         border-radius: ${PALETTE.border_radius};
