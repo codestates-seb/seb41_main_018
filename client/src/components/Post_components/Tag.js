@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { PALETTE } from "../../Common";
@@ -7,7 +7,9 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useRecoilState } from "recoil";
 import { TagsStringState } from "../../state/atom";
 
-const Tag = () => {
+const Tag = (props) => {
+    const { detailTags } = props;
+
     const [tagsArr, setTagsArr] = useState([]);
     const [tagsStr, setTagsStr] = useRecoilState(TagsStringState);
 
@@ -26,6 +28,18 @@ const Tag = () => {
             setTagsStr(tagsArr.join());
         }
     };
+
+
+
+    const defaultTag = () => {
+        if(detailTags) {
+            setTagsArr(detailTags.split(","))
+        }
+    }
+
+    useEffect(() => {
+        defaultTag()
+    }, [detailTags])
 
     return (
         <>
@@ -48,29 +62,53 @@ const Tag = () => {
                     ))}
                 </ul>
                 <input
-                    css={css`
-                        flex: 1;
-                        border: none;
-                        height: 46px;
-                        font-size: 1rem;
-                        padding: 10px;
-                        :focus {
-                            outline: transparent;
-                        }
-                    `}
-                    type="text"
-                    onKeyUp={(e) => {
-                        return addTags(e);
-                        {
-                            /* 키보드의 Enter 키에 의해 addTags 메소드가 실행되어야 합니다. */
-                        }
-                    }}
-                    placeholder="태그를 입력해보세요!"
-                />
+                        css={css`
+                            flex: 1;
+                            border: none;
+                            height: 46px;
+                            font-size: 1rem;
+                            padding: 10px;
+                            :focus {
+                                outline: transparent;
+                            }
+                        `}
+                        type="text"
+                        onKeyUp={(e) => {
+                            return addTags(e);
+                            {
+                                /* 키보드의 Enter 키에 의해 addTags 메소드가 실행되어야 합니다. */
+                            }
+                        }}
+                        placeholder="태그를 입력해보세요!"
+                    />
+
             </div>
         </>
     );
 };
+
+// {/* <input
+// css={css`
+//     flex: 1;
+//     border: none;
+//     height: 46px;
+//     font-size: 1rem;
+//     padding: 10px;
+//     :focus {
+//         outline: transparent;
+//     }
+// `}
+// // defaultValue={detailTags ? '' : ''}
+// type="text"
+// onKeyUp={(e) => {
+//     return addTags(e);
+//     {
+//         /* 키보드의 Enter 키에 의해 addTags 메소드가 실행되어야 합니다. */
+//     }
+// }}
+// placeholder="태그를 입력해보세요!"
+// /> */}
+
 const TagsInput = css`
     margin: 40px 10px;
     display: flex;

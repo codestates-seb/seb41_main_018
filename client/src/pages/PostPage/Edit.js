@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -29,24 +29,36 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { useRecoilState } from "recoil";
-import { TagsStringState } from "../../state/atom";
-import { postContent } from "../../util/axiosContents";
+import { TagsStringState, DetailContentIdState, DetailuserIdState, DetailTitleState, DetailThemeTypeState, 
+    DetailTagState, DetailTravelDateState, DetailRouteState } from "../../state/atom";
+import { patchContent } from "../../util/axiosContents";
 
-const defaultValues = {
+import dayjs from "dayjs";
+
+let defaultValues = {
     title: "",
     themeType: "DOMESTIC",
-    travelDate: new Date(),
+    travelDate: '',
     routes: [{}],
 };
 
 const AddInput = () => {
     const [fieldIndex, setFieldIndex] = useState(0);
 
+    const [DetailRoute, setDetailRoute] = useRecoilState(DetailRouteState);
+
     const { control, register, watch, setValue } = useFormContext();
     const { fields, append, remove } = useFieldArray({
         control,
         name: "routes",
     });
+
+    defaultValues = {
+        title: "",
+        themeType: "DOMESTIC",
+        travelDate: new Date(),
+        routes: [{}],
+    };
 
     const MapList = (index) => {
         if (index === 0) {
@@ -77,6 +89,9 @@ const AddInput = () => {
     const place5 = useRef();
     place5.current = watch(`routes.${4}.place`);
 
+    const indexNum = useRef();
+    indexNum.current = watch(`routes.${1}.place`) 
+
     return (
         <ul css={FormContainer}>
             {fields.map((item, index) =>
@@ -89,7 +104,7 @@ const AddInput = () => {
                             `}
                         >
                             <div css={FieldContainer}>
-                                <div css={MapStyle}>
+                            <div css={MapStyle}>
                                     {MapList(index, watch(`routes.${index}.place`))}
                                 </div>
                                 <div css={RouteForm}>
@@ -107,10 +122,12 @@ const AddInput = () => {
                                                     return (
                                                         <input
                                                             {...field}
+                                                            defaultValue={Object.values(DetailRoute[index])[4]}
                                                             placeholder="장소를 입력해주세요"
                                                             css={PlaceInput}
                                                             autocomplete="off"
-                                                        />
+                                                            />
+                                                            
                                                     );
                                                 }}
                                             />
@@ -120,57 +137,89 @@ const AddInput = () => {
                                         <div className="listname"></div>
                                         <input
                                             {...register(`routes.${index}.address`)}
-                                            css={ListInput}
+                                            value={Object.values(DetailRoute[index])[8]}
                                             placeholder="지도에서 장소를 선택해주세요!"
+                                            css={ListInput}
                                             readOnly
                                         />
                                         <input
                                             {...register(`routes.${index}.x`)}
+                                            value={Object.values(DetailRoute[index])[6]}
                                             css={css`
                                                 display: none;
                                             `}
                                         />
                                         <input
                                             {...register(`routes.${index}.y`)}
+                                            value={Object.values(DetailRoute[index])[7]}
                                             css={css`
                                                 display: none;
                                             `}
                                         />
                                     </div>
-
-                                    <div className="listcontainer ">
+                                    <div className="listcontainer">
                                         <div className="listname">경비</div>
-                                        <input
-                                            {...register(`routes.${index}.price`)}
-                                            type="number"
-                                            autocomplete="off"
-                                            placeholder="사용한 금액을 입력해주세요!"
-                                            step="1000"
-                                            css={ListInput}
-                                        />
+                                        <Controller
+                                                control={control}
+                                                name={`routes.${index}.price`}
+                                                render={({ field }) => {
+                                                    return (
+                                                        <input
+                                                            {...field}
+                                                            defaultValue={Object.values(DetailRoute[index])[2]}
+                                                            type="number"
+                                                            placeholder="사용한 금액을 입력해주세요!"
+                                                            autocomplete="off"
+
+                                                            step="1000"
+                                                            
+                                                            css={ListInput}
+                                                        />
+                                                    );
+                                                }}
+                                            />
                                     </div>
-                                    <div className="listcontainer ">
+                                    <div className="listcontainer">
                                         <div className="listname">이동 수단</div>
-                                        <input
-                                            {...register(`routes.${index}.vehicle`)}
-                                            autocomplete="off"
-                                            placeholder="이동수단을 입력해주세요!"
-                                            css={ListInput}
-                                        />
+                                        <Controller
+                                                control={control}
+                                                name={`routes.${index}.vehicle`}
+                                                render={({ field }) => {
+                                                    return (
+                                                        <input
+                                                            {...field}
+                                                            value={field.value ? field.value : Object.values(DetailRoute[index])[3]}
+                                                            defaultValue={Object.values(DetailRoute[index])[3]}
+                                                            placeholder="이동수단을 입력해주세요!"
+                                                            autocomplete="off"
+                                                            css={ListInput}
+                                                        />
+                                                    );
+                                                }}
+                                            />
                                     </div>
-                                    <div className="bodycontainer ">
+                                    <div className="bodycontainer">
                                         <div className="listname">상세 설명</div>
-                                        <textarea
-                                            {...register(`routes.${index}.body`)}
-                                            autocomplete="off"
-                                            css={BodyInput}
-                                            placeholder="후기를 적어주세요!"
-                                        />
+                                        <Controller
+                                                control={control}
+                                                name={`routes.${index}.body`}
+                                                render={({ field }) => {
+                                                    return (
+                                                        <textarea
+                                                            {...field}
+                                                            defaultValue={Object.values(DetailRoute[index])[3]}
+                                                            placeholder="후기를 적어주세요!"
+                                                            autocomplete="off"
+                                                            css={BodyInput}
+                                                        />
+                                                    );
+                                                }}
+                                            />
                                     </div>
                                     <ImgUpload
-                                        index={index}
-                                        setValue={setValue}
-                                        value={watch(`routes.${index}.image`)}
+                                    index={index}
+                                    setValue={setValue}
+                                    value={watch(`routes.${index}.image`)}
                                     />
                                     <input
                                         {...register(`routes.${index}.image`)}
@@ -234,6 +283,8 @@ const Title = () => {
 const Category = () => {
     const { control } = useFormContext();
 
+    const [DetailThemeType, setDetailThemeType] = useRecoilState(DetailThemeTypeState);
+
     const options = [
         { value: "DOMESTIC", label: "국내여행" },
         { value: "ABROAD", label: "해외여행" },
@@ -256,7 +307,7 @@ const Category = () => {
                         <div css={CategoryInput}>
                             <Dropdown
                                 options={options}
-                                value={options[0]}
+                                value={DetailThemeType}
                                 placeholder="국내여행"
                                 onChange={(option) => {
                                     // 1. 컴포넌트 동작 내에서 인풋의 값을 바꿔준다.
@@ -275,6 +326,8 @@ const Category = () => {
 const TravelDate = () => {
     const { control } = useFormContext();
 
+        const [DetailTravelDate, setDetailTravelDate] = useRecoilState(DetailTravelDateState);
+
     return (
         <Controller
             control={control}
@@ -284,7 +337,7 @@ const TravelDate = () => {
                     <div css={TitleSmallContainer}>
                         <div css={TravelDateTitle}>여행일</div>
                         <div css={TravelDateInput}>
-                            <DatePicker selected={value} onChange={(date) => onChange(date)} />
+                            <DatePicker value={value === undefined ? dayjs(DetailTravelDate).format("MM/DD/YYYY") : value} selected={value} onChange={(date) => onChange(date)} />
                         </div>
                     </div>
                 );
@@ -293,10 +346,27 @@ const TravelDate = () => {
     );
 };
 
-const Post = () => {
+const Edit = () => {
     const navigate = useNavigate();
+
     const [tagsStr, setTagsStr] = useRecoilState(TagsStringState);
-    const methods = useForm({ defaultValues });
+    const [DetailContentId, setDetailContentId] = useRecoilState(DetailContentIdState);
+    const [DetailuserId, setDetailuserId] = useRecoilState(DetailuserIdState);
+    const [DetailTitle, setDetailTitle] = useRecoilState(DetailTitleState);
+    const [DetailThemeType, setDetailThemeType] = useRecoilState(DetailThemeTypeState);
+    const [DetailTag, setDetailTag] = useRecoilState(DetailTagState);
+    const [DetailTravelDate, setDetailTravelDate] = useRecoilState(DetailTravelDateState);
+    const [DetailRoute, setDetailRoute] = useRecoilState(DetailRouteState);
+
+    const methods = useForm({ defaultValues : {
+        contentId: DetailContentId,
+        routes: DetailRoute,
+        title: DetailTitle,
+        themeType: DetailThemeType,
+        userId: DetailuserId,
+        travelDate: new Date(DetailTravelDate),
+    }});
+
     const { handleSubmit } = methods;
 
     const submit = async (data) => {
@@ -306,12 +376,13 @@ const Post = () => {
             delete obj.image;
         }
         console.log(data);
-        postContent(data).then((res) => {
+        patchContent(data).then((res) => {
             if (res) {
                 navigate("/");
             }
         });
     };
+    
     return (
         <FormProvider {...methods}>
             <div css={providerWrap}>
@@ -339,7 +410,7 @@ const Post = () => {
                         }
                     `}
                 >
-                    <Tag />
+                    <Tag detailTags={DetailTag}/>
                 </div>
                 <button
                     type="button"
@@ -352,6 +423,7 @@ const Post = () => {
         </FormProvider>
     );
 };
+
 const providerWrap = css`
     display: flex;
     flex-direction: column;
@@ -642,4 +714,5 @@ const SubmitButton = css`
         color: ${PALETTE.white};
     }
 `;
-export default Post;
+export default Edit;
+

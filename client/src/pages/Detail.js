@@ -18,7 +18,9 @@ import Loading from "../components/Loding";
 
 //recoil
 import { useRecoilState } from "recoil";
-import { userInfoState, ContentDetail, ReviewListState, GetPosition } from "../state/atom";
+import { userInfoState, ContentDetail, ReviewListState, GetPosition,
+        DetailContentIdState, DetailuserIdState, DetailTitleState, DetailThemeTypeState,
+        DetailTagState, DetailTravelDateState, DetailRouteState } from "../state/atom";
 
 //Etc
 import dayjs from "dayjs";
@@ -32,9 +34,18 @@ import Button from "../components/Button";
 const Detail = () => {
     const navigate = useNavigate();
     const pathname = location.pathname;
+
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [reviewList, setReviewList] = useRecoilState(ReviewListState);
+    const [DetailcontentId, setDetailcontentId] = useRecoilState(DetailContentIdState);
+    const [DetailuserId, setDetailuserId] = useRecoilState(DetailuserIdState);
+    const [DetailTitle, setDetailTitle] = useRecoilState(DetailTitleState);
+    const [DetailThemeType, setDetailThemeType] = useRecoilState(DetailThemeTypeState);
+    const [DetailTag, setDetailTag] = useRecoilState(DetailTagState);
+    const [DetailTravelDate, setDetailTravelDate] = useRecoilState(DetailTravelDateState);
+    const [DetailRoute, setDetailRoute] = useRecoilState(DetailRouteState);
+
     const [isMyPost, setMyPost] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -58,6 +69,17 @@ const Detail = () => {
         setIsLoading(false);
     };
 
+    const updateMyPost = () => {
+        setDetailcontentId(Object.values(contentDetail.data)[2])
+        setDetailuserId(Object.values(contentDetail.data)[3])
+        setDetailTitle(Object.values(contentDetail.data)[4])
+        setDetailThemeType(Object.values(contentDetail.data)[5])
+        setDetailTag(Object.values(contentDetail.data)[8])
+        setDetailTravelDate(Object.values(contentDetail.data)[10])
+        setDetailRoute(Object.values(contentDetail.data)[15])
+        navigate("/edit");
+    }
+
     const showModal = () => {
         if (userInfo.userId === contentsUserId) {
             setModalOpen(true);
@@ -70,11 +92,6 @@ const Detail = () => {
         getContentDetail(location.pathname.slice(8));
         handleMyPost();
     }, []);
-
-    console.log(`contentsUserId`, contentsUserId);
-    console.log(`logInUserId`, logInUserId);
-    console.log(`contentsUserId === logInUserId`, contentsUserId === logInUserId);
-    console.log(`isMyPost`, isMyPost);
 
     return (
         <div>
@@ -94,7 +111,9 @@ const Detail = () => {
                             <Detailform />
                         </div>
                         <div css={ButtonBox} className={isMyPost ? "" : "hidden"}>
-                            <button css={btnStyle}>Update</button>
+                            <button css={btnStyle} onClick={updateMyPost}>
+                                Update
+                            </button>
                             <button css={btnStyle} onClick={showModal}>
                                 Delete
                             </button>
