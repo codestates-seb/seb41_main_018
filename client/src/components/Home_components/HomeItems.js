@@ -85,6 +85,9 @@ const textContainer = css`
 const titleStyle = css`
     font-size: 1rem;
     font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;
 
 const sideTextStyle = css`
@@ -105,7 +108,7 @@ const ulStyle = css`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    height: 6vh;
+    height: 50px;
 `;
 
 const liStyle = css`
