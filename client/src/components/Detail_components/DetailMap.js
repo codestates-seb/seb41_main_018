@@ -14,6 +14,7 @@ import { MapMarker, Map, CustomOverlayMap, Polyline, Polygon } from "react-kakao
 //recoil
 import { useRecoilState } from "recoil";
 import { ContentDetail } from "../../state/atom";
+import { PALETTE } from "../../Common";
 
 const routes = [
     {
@@ -32,6 +33,7 @@ const DetailMap = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const data = contentDetail.data;
     const RouteData = data && data.routes;
+    const [zoomable, setZoomable] = useState(false);
     const [path, setPath] = useState([]);
 
     console.log(RouteData);
@@ -58,7 +60,7 @@ const DetailMap = () => {
 
     return (
         //하드 코딩 데이터 출력용
-        <Map center={a} css={MapStyle} level={13}>
+        <Map center={a} css={MapStyle} level={13} zoomable={zoomable}>
             {data &&
                 data.routes.map((position, index) => (
                     <div key={index}>
@@ -68,7 +70,7 @@ const DetailMap = () => {
                             yAnchor={1}
                         >
                             <div css={customoverlay}>
-                                <span css={title}>{position.place}</span>
+                                <span>{position.place}</span>
                             </div>
                         </CustomOverlayMap>
 
@@ -81,6 +83,19 @@ const DetailMap = () => {
                         /> */}
                     </div>
                 ))}
+            <div
+                css={css`
+                    display: flex;
+                    margin: -30px 0 0 40px;
+                `}
+            >
+                <button css={BtnStyle} onClick={() => setZoomable(false)}>
+                    지도 확대/축소 끄기
+                </button>
+                <button css={BtnStyle} onClick={() => setZoomable(true)}>
+                    지도 확대/축소 켜기
+                </button>
+            </div>
         </Map>
         // 사용할 것
         // <Map center={a} css={MapStyle} level={3}>
@@ -146,5 +161,11 @@ const customoverlay = css`
     }
 `;
 
-const title = css``;
+const BtnStyle = css`
+    padding: 5px 10px;
+    margin: 5px;
+    background-color: white;
+    border: 1.5px solid ${PALETTE.default_color};
+    border-radius: ${PALETTE.border_radius};
+`;
 export default DetailMap;

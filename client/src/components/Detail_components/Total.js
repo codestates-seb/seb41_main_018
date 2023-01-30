@@ -59,7 +59,7 @@ export const Total = () => {
                 <span>{setCategroy(data)}</span>/
             </div>
             <div css={ComContent}>
-                <span>{`${Amount}₩`}</span>
+                <span>{`${Amount} 원`}</span>
             </div>
         </div>
     );
@@ -88,7 +88,7 @@ const ComContent = css`
     }
     @media (min-width: 768px) {
         font-size: 1.225rem;
-        color: #353535;
+        color: #0e0e0e;
         margin: 30px 0 -30px;
     } ;
 `;

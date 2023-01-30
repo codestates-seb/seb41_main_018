@@ -170,8 +170,9 @@ const Reviewform = () => {
 };
 //리뷰
 const ReviewContainer = css`
-    width: 85%;
+    width: 70vw;
     margin: 0 auto;
+    /* background-color: red; */
 `;
 
 const ReviewCount = css`
