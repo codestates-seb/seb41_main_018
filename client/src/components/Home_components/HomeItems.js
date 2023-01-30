@@ -4,7 +4,7 @@ import { useState } from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { BsStarFill } from "react-icons/bs";
+import { TbHandClick } from "react-icons/tb";
 import sample from "../../assets/sampleImg/sample.jpg";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -74,7 +74,11 @@ const HomeItems = (content) => {
                         {data && data.routes.map((el) => <li css={liStyle}># {el.place}</li>)}
                     </ul>
                 </div>
-                <div css={priceStyle}>{data && `총 경비 : ${data.amount}`}</div>
+                <div css={InfoStyle}>
+                    <TbHandClick size="25" />
+                    <span>{data.viewCount}</span>
+                    <div css={priceStyle}>{data && `총 경비 : ${data.amount}`}</div>
+                </div>
             </Link>
         </div>
     );
@@ -144,6 +148,13 @@ const priceStyle = css`
     text-align: end;
     font-weight: 600;
     font-size: 1rem;
+`;
+
+const InfoStyle = css`
+    display: flex;
+    span {
+        margin-left: 0.2rem;
+    }
 `;
 
 export default HomeItems;
