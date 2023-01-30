@@ -283,22 +283,29 @@ const SearchMap = css`
     display: flex;
 
     #map3 {
+        display: none;
         width: 85vw;
-        height: 370px;
+        height: 70vh;
         overflow: hidden;
         border-radius: 10px;
+        @media (min-width: 768px) {
+            width: 40vw;
+            margin-top: 30px;
+            margin-left: -100px;
+        }
     }
 
     #menu_wrap3 {
-        position: absolute;
-        width: 250px;
-        height: 340px;
-        margin: 10px 0 30px 10px;
+        position: relative;
+        width: 85vw;
+        height: 100%;
+        max-height: 300px;
+        margin: -20px auto 0;
         padding: 5px;
         overflow-y: auto;
         background: rgba(255, 255, 255, 0.9);
         z-index: 2;
-        font-size: 15px;
+        font-size: 1rem;
         border-radius: 10px;
 
         -ms-overflow-style: none; /* IE and Edge */
@@ -306,6 +313,10 @@ const SearchMap = css`
 
         ::-webkit-scrollbar {
             display: none; /* Chrome, Safari, Opera*/
+        }
+        @media (min-width: 768px) {
+            margin-left: -90px;
+            margin-top: 45px;
         }
     }
 

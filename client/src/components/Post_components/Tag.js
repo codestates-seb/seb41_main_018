@@ -18,6 +18,7 @@ const Tag = () => {
     };
 
     const addTags = (event) => {
+        event.preventDefault();
         const inputVal = event.target.value;
         if (event.key === "Enter" && inputVal !== "" && !tagsArr.includes(inputVal)) {
             setTagsArr([...tagsArr, inputVal]);
