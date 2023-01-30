@@ -173,9 +173,10 @@ const Reviewform = () => {
 const ReviewContainer = css`
     width: 90vw;
     margin: 0 auto;
-    padding: 30px 200px;
-    /* box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2); */
     border-radius: 5px;
+    @media (min-width: 768px) {
+        width: 70vw;
+    }
 `;
 
 const ReviewCount = css`
