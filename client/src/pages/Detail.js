@@ -38,6 +38,9 @@ const Detail = () => {
     const [isLoading, setIsLoading] = useState(true);
     const contentsUserId = contentDetail.data && contentDetail.data.userId;
     const logInUserId = userInfo.userId;
+    const postingData = dayjs(contentDetail.data && contentDetail.data.createdAt).format(
+        "YYYY.MM.DD"
+    );
 
     const getContentDetail = (contentId) => {
         getContent(contentId).then((res) => {
@@ -72,21 +75,21 @@ const Detail = () => {
 
             <div css={ContentInfo}>
                 <Total />
-
-                <div
-                    css={css`
-                        display: flex;
-                    `}
-                >
-                    <button css={btnStyle}>Update</button>
-                    <button css={btnStyle} onClick={showModal}>
-                        Delete
-                    </button>
-                </div>
+                <div css={postDate}>{`${postingData} 작성`}</div>
             </div>
 
             <div css={TotalContainer}>
                 <Detailform />
+            </div>
+            <div
+                css={css`
+                    display: flex;
+                `}
+            >
+                <button css={btnStyle}>Update</button>
+                <button css={btnStyle} onClick={showModal}>
+                    Delete
+                </button>
             </div>
             <Reviewform />
             {modalOpen && (
@@ -148,4 +151,10 @@ const btnStyle = css`
     }
 `;
 
+const postDate = css`
+    color: rgba(0, 0, 0, 0.5);
+    width: 130px;
+    margin-top: 13px;
+    margin-bottom: -46px;
+`;
 export default Detail;
