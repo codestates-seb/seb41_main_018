@@ -31,11 +31,11 @@ export const Buttons = (props) => {
             before={props.icon}
             onPress={props.onPress}
             css={css`
-                margin: 10px;
-                --button-default-height: 50px;
-                --button-default-font-size: 1.5rem;
+                margin-left: 10px;
+                --button-default-height: 40px;
+                --button-default-font-size: 1.2rem;
                 --button-default-border-radius: 10px;
-                --button-horizontal-padding: 20px;
+                --button-horizontal-padding: 10px;
                 --button-raise-level: 3px;
                 --button-hover-pressure: 1.75;
                 --transform-speed: 0.185s;
@@ -45,6 +45,12 @@ export const Buttons = (props) => {
                 --button-primary-color-hover: #187bd1;
                 --button-primary-color-active: #166dba;
                 --button-primary-border: none;
+                @media (min-width: 768px) {
+                    --button-default-height: 50px;
+                    --button-default-font-size: 1.5rem;
+                    --button-default-border-radius: 10px;
+                    --button-horizontal-padding: 40px;
+                }
             `}
         >
             {props.text}
@@ -228,11 +234,13 @@ const imgStyle = css`
 const ButtonBox = css`
     display: flex;
     align-self: flex-end;
+    margin-top: -32px;
     padding-right: 40px;
 `;
 
 const tabWrap = css`
     display: flex;
+    flex-wrap: wrap;
     margin: 30px 0 -15px 10px;
 
     @media (min-width: 768px) {
@@ -245,7 +253,7 @@ const tabWrap = css`
 const SelectTab = css`
     cursor: pointer;
     text-align: center;
-    border-bottom: 0.285rem solid ${PALETTE.default_color};
+
     @media (max-width: 768px) {
         padding: 10px;
         font-size: 0.975rem;
@@ -262,6 +270,7 @@ const SelectTab = css`
         cursor: pointer;
         position: relative;
         color: ${PALETTE.default_color};
+        border-bottom: 0.285rem solid ${PALETTE.default_color};
     }
 `;
 

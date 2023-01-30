@@ -205,26 +205,36 @@ const ReviewItem = ({ review, setUpdate }) => {
                     >
                         {body}
                     </div>
-                    <button onClick={editReviewHandler}>수정</button>
-                    <button onClick={showModal}>삭제</button>
                 </div>
-                {modalOpen && (
-                    <ReviewDeleteModal
-                        text="정말 삭제하시겠습니까?"
-                        setModalOpen={setModalOpen}
-                        setUpdate={setUpdate}
-                        commentId={commentId}
-                    />
-                )}
             </div>
+            <div css={BtnWrap}>
+                <button css={BtnStyle} onClick={editReviewHandler}>
+                    수정
+                </button>
+                <button css={BtnStyle} onClick={showModal}>
+                    삭제
+                </button>
+            </div>
+            {modalOpen && (
+                <ReviewDeleteModal
+                    text="정말 삭제하시겠습니까?"
+                    setModalOpen={setModalOpen}
+                    setUpdate={setUpdate}
+                    commentId={commentId}
+                />
+            )}
         </div>
     );
 };
 
 const Container = css`
     display: flex;
-    align-items: center;
-    margin: 40px auto;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 40px 0;
+    padding: 20px;
+    box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
 `;
 
 const ReviewContent = css`
@@ -259,7 +269,7 @@ const ReviewInput = css`
 
     textarea {
         border: none;
-        width: 70vw;
+        width: 65vw;
         height: 80px;
         border: 2px solid ${PALETTE.default_color};
         border-radius: ${PALETTE.border_radius};
@@ -267,9 +277,22 @@ const ReviewInput = css`
         margin-right: 10px;
         font-size: 1rem;
         color: gray;
+        @media (min-width: 768px) {
+            width: 55vw;
+        }
     }
 `;
 
+const BtnWrap = css`
+    margin-left: 75px;
+`;
+const BtnStyle = css`
+    font-size: 0.775rem;
+    color: #7d7d7d;
+    padding: 2.5px;
+    border: none;
+    background-color: white;
+`;
 const StyledRating = styled(Rating)({
     "& .MuiRating-iconFilled": {
         color: "#ff6d75",

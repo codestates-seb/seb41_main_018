@@ -53,12 +53,15 @@ export const Total = () => {
     return (
         <div css={ContentsBody}>
             <div css={ComContent}>
+                <span css={ComTitle}>여행일</span>
                 <span>{dayjs(TravelDate).format("YYYY년 MM월 DD일 dddd")}</span>/
             </div>
             <div css={ComContent}>
+                <span css={ComTitle}>카테고리</span>
                 <span>{setCategroy(data)}</span>/
             </div>
             <div css={ComContent}>
+                <sapn css={ComTitle}>총경비</sapn>
                 <span>{`${Amount} 원`}</span>
             </div>
         </div>
@@ -91,6 +94,16 @@ const ComContent = css`
         color: #0e0e0e;
         margin: 30px 0 -30px;
     } ;
+`;
+
+const ComTitle = css`
+    display: none;
+    @media (min-width: 768px) {
+        display: inline-block;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: ${PALETTE.default_color};
+    }
 `;
 
 export default Total;
