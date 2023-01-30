@@ -52,9 +52,8 @@ const ImgUpload = (props) => {
                 onChange={handleUploadImg}
                 multiple
             />
-            <button onClick={uploadBtnClick} css={uploadButton}>
+            <button type="button" onClick={uploadBtnClick} css={uploadButton}>
                 <MdOutlineAddPhotoAlternate size="20" /> <span>사진 업로드</span>
-
             </button>
             <div css={PreviewContainer}>
                 {value &&
@@ -69,24 +68,16 @@ const ImgUpload = (props) => {
     );
 };
 const ImgUpload_Wrap = css`
-    height: 15vh;
+    height: 80px;
     width: 82vw;
-    margin: 0 auto;
-    margin-left: 30px;
+    display: flex;
 
     input {
         display: none;
     }
     @media (min-width: 768px) {
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-        border-radius: ${PALETTE.border_radius};
+        width: 20vw;
     }
-`;
-
-const PreviewContainer = css`
-    display: flex;
-    align-items: center;
-    margin: 10px;
 `;
 
 const PreviewImg = css`
@@ -108,17 +99,25 @@ const PreviewImg = css`
 const uploadButton = css`
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background-color: white;
     width: fit-content;
+    height: 40px;
     font-size: 0.875rem;
-    padding: 7px;
-    margin: auto;
+    padding: 3px;
     border: none;
     border-radius: ${PALETTE.border_radius};
-    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    cursor: pointer;
     span {
         margin-left: 5px;
     }
+`;
+const PreviewContainer = css`
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 10px;
 `;
 
 export default ImgUpload;

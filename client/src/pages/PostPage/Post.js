@@ -89,6 +89,9 @@ const AddInput = () => {
                             `}
                         >
                             <div css={FieldContainer}>
+                                <div css={MapStyle}>
+                                    {MapList(index, watch(`routes.${index}.place`))}
+                                </div>
                                 <div css={RouteForm}>
                                     <div
                                         css={css`
@@ -134,21 +137,19 @@ const AddInput = () => {
                                             `}
                                         />
                                     </div>
-                                    <div className="listcontainer">
+
+                                    <div className="listcontainer ">
                                         <div className="listname">경비</div>
                                         <input
                                             {...register(`routes.${index}.price`)}
                                             type="number"
                                             autocomplete="off"
                                             placeholder="사용한 금액을 입력해주세요!"
-
-
                                             step="1000"
-
                                             css={ListInput}
                                         />
                                     </div>
-                                    <div className="listcontainer">
+                                    <div className="listcontainer ">
                                         <div className="listname">이동 수단</div>
                                         <input
                                             {...register(`routes.${index}.vehicle`)}
@@ -157,7 +158,7 @@ const AddInput = () => {
                                             css={ListInput}
                                         />
                                     </div>
-                                    <div className="bodycontainer">
+                                    <div className="bodycontainer ">
                                         <div className="listname">상세 설명</div>
                                         <textarea
                                             {...register(`routes.${index}.body`)}
@@ -166,6 +167,11 @@ const AddInput = () => {
                                             placeholder="후기를 적어주세요!"
                                         />
                                     </div>
+                                    <ImgUpload
+                                        index={index}
+                                        setValue={setValue}
+                                        value={watch(`routes.${index}.image`)}
+                                    />
                                     <input
                                         {...register(`routes.${index}.image`)}
                                         name="image"
@@ -174,14 +180,6 @@ const AddInput = () => {
                                         `}
                                     />
                                 </div>
-                                <div css={MapStyle}>
-                                    {MapList(index, watch(`routes.${index}.place`))}
-                                </div>
-                                <ImgUpload
-                                    index={index}
-                                    setValue={setValue}
-                                    value={watch(`routes.${index}.image`)}
-                                />
                             </div>
                             <button type="button" onClick={() => remove(index)} css={DeleteButton}>
                                 <IoMdRemove size="30" />
@@ -201,7 +199,8 @@ const AddInput = () => {
                     }}
                     css={AppendButton}
                 >
-                    <BsPlusCircleFill size="35" color="#497174" />
+                    <BsPlusCircleFill size="20" />
+                    Add Route
                 </button>
             ) : (
                 <></>
@@ -368,9 +367,6 @@ const FormWrap = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: ${PALETTE.border};
-    border-radius: ${PALETTE.border_radius};
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin: 10px auto;
     width: 90vw;
 `;
@@ -397,10 +393,16 @@ const FormContainer = css`
 
 const FieldContainer = css`
     display: flex;
+    margin: 10px 0;
     width: 90vw;
+    height: 100%;
     flex-direction: column;
+    border: ${PALETTE.border};
+    border-radius: ${PALETTE.border_radius};
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     @media (min-width: 768px) {
         flex-direction: row;
+        height: 550px;
     }
 `;
 
@@ -457,7 +459,6 @@ const CategoryInput = css`
     .Dropdown-arrow {
         margin-top: 8px;
     } */
-
 `;
 
 const TravelDateTitle = css`
@@ -515,17 +516,29 @@ const PlaceInput = css`
     border-radius: ${PALETTE.border_radius};
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     padding: 15px;
-    width: 100%;
+    width: 60vw;
     height: 40px;
     z-index: 2;
+    @media (min-width: 768px) {
+        width: 25vw;
+    }
 `;
 
 const RouteForm = css`
     display: flex;
     flex-direction: column;
+    height: 510px;
     margin: 50px auto;
+
     @media (min-width: 768px) {
+        position: absolute;
+        right: 7vw;
         width: 40vw;
+    }
+    @media (min-width: 1200px) {
+        position: absolute;
+        right: 7vw;
+        width: 35vw;
     }
 
     .listcontainer {
@@ -567,7 +580,7 @@ const BodyInput = css`
     border: none;
     font-size: 1rem;
     width: 60vw;
-    height: 15vh;
+    height: 170px;
     resize: none;
     border: ${PALETTE.border};
     border-radius: ${PALETTE.border_radius};
@@ -581,26 +594,29 @@ const MapStyle = css`
     margin: 20px auto;
 `;
 
-// const AppendButton = css`
-//     font-size: 0.975rem;
-//     color: white;
-//     border-radius: 50px;
-//     border: 0.1rem solid white;
-//     /* background-color: #2adba2; */
-//     background-color: #0f7586;
-//     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-//     width: 150px;
-//     height: 50px;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     cursor: pointer;
-//     span {
-//         margin-left: 10px;
-//     }
-
-// `;
+const AppendBqutton = css`
+    font-size: 0.975rem;
+    color: white;
+    border-radius: 50px;
+    border: 0.1rem solid white;
+    /* background-color: #2adba2; */
+    background-color: #0f7586;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    width: 150px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    span {
+        margin-left: 10px;
+    }
+`;
 const AppendButton = css`
+    display: flex;
+    align-items: cetner;
+    justify-content: space-between;
+    width: 145px;
     margin: 20px auto;
     border: none;
     padding: 10px 20px;
@@ -624,8 +640,8 @@ const AppendButton = css`
 const DeleteButton = css`
     position: relative;
     right: 40px;
-    bottom: 0px;
-    height: 50px;
+    top: 20px;
+    height: 30px;
     border: none;
     cursor: pointer;
     background-color: #ffffff;
@@ -658,4 +674,3 @@ const SubmitButton = css`
     }
 `;
 export default Post;
-
