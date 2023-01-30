@@ -285,13 +285,24 @@ const SearchMap = css`
     #map3 {
         display: none;
         width: 85vw;
-        height: 70vh;
+        height: 510px;
         overflow: hidden;
         border-radius: 10px;
         @media (min-width: 768px) {
+            flex-direction: row;
+            position: absolute;
+            left: 5vw;
+            display: inline-block;
             width: 40vw;
-            margin-top: 30px;
-            margin-left: -100px;
+            margin: auto 20px;
+        }
+        @media (min-width: 1200px) {
+            flex-direction: row;
+            position: absolute;
+            left: 5vw;
+            display: inline-block;
+            width: 50vw;
+            margin: auto 20px;
         }
     }
 
@@ -315,8 +326,25 @@ const SearchMap = css`
             display: none; /* Chrome, Safari, Opera*/
         }
         @media (min-width: 768px) {
-            margin-left: -90px;
-            margin-top: 45px;
+            position: relative;
+            width: 38vw;
+            height: 100%;
+            max-height: 220px;
+            margin: 0 auto;
+            font-size: 0.875rem;
+            right: 23vw;
+            top: 260px;
+        }
+        @media (min-width: 1200px) {
+            position: relative;
+            width: 15vw;
+            height: 100%;
+            min-width: 240px;
+            max-height: 480px;
+            right: 4vw;
+            top: 10px;
+
+            font-size: 0.875rem;
         }
     }
 
