@@ -52,12 +52,6 @@ const LoginPage = () => {
             });
     };
 
-    useEffect(() => {
-        if (userInfo.userId) {
-            likeFilter();
-        }
-    }, [userInfo]);
-
     return (
         <div css={LoginpageBg}>
             <div css={LoginpageContainer}>
