@@ -34,8 +34,9 @@ const Background = css`
 `;
 
 const LoadingText = css`
-    font: 1rem "Noto Sans KR";
+    font: 1.2rem "Noto Sans KR";
     text-align: center;
+    margin-bottom: 15px;
 `;
 
 export default Loading;
