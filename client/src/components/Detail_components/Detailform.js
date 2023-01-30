@@ -31,9 +31,9 @@ export const Buttons = (props) => {
             before={props.icon}
             onPress={props.onPress}
             css={css`
-                margin: 10px;
-                --button-default-height: 50px;
-                --button-default-font-size: 1.5rem;
+                margin-left: 10px;
+                --button-default-height: 40px;
+                --button-default-font-size: 1.2rem;
                 --button-default-border-radius: 10px;
                 --button-horizontal-padding: 10px;
                 --button-raise-level: 3px;
@@ -234,7 +234,7 @@ const imgStyle = css`
 const ButtonBox = css`
     display: flex;
     align-self: flex-end;
-    margin-top: -45px;
+    margin-top: -32px;
     padding-right: 40px;
 `;
 
