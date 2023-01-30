@@ -3,17 +3,15 @@ import React from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import dayjs from "dayjs";
-import { AddedLikeState } from "../../state/atom";
+import { userInfoState } from "../../state/atom";
 import { useRecoilState } from "recoil";
 import { Link } from "react-router-dom";
 
 const MyLike = () => {
-    const [adddedLike, setAddedLike] = useRecoilState(AddedLikeState);
-
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     return (
         <div css={MyLike_Wrap}>
-            {console.log(adddedLike)}
-            {adddedLike.map((el) => (
+            {userInfo.hearts.map((el) => (
                 <div css={MyLike_Item} key={el.contentId}>
                     <div css={PostImg}>사진</div>
                     <div css={MyLike_Content}>

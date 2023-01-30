@@ -11,7 +11,7 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 //recoil
 import { useRecoilState } from "recoil";
-import { ContentDetail, userInfoState, AddedLikeState } from "../../state/atom";
+import { ContentDetail, userInfoState } from "../../state/atom";
 
 //Button
 import { AwesomeButton } from "react-awesome-button";
@@ -56,7 +56,6 @@ const Detailform = () => {
     const [currentTab, setcurrentTab] = useState(0);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const [adddedLike, setAddedLike] = useRecoilState(AddedLikeState);
     const [clickedLike, setClickedLike] = useState([]);
     const data = contentDetail.data;
 
@@ -64,17 +63,11 @@ const Detailform = () => {
         setcurrentTab(index);
     };
 
-    // "ADD" 인 좋아요만 filter
-    const likeFilter = () => {
-        setAddedLike(userInfo && userInfo.hearts.filter((el) => el.heartType === "ADD"));
-        console.log(adddedLike);
-    };
-
-    // 좋아요한 상태 표시
+    /*   // 좋아요한 상태 표시
     const likedContent = () => {
         setClickedLike(adddedLike.map((el) => el.contentId === data.contentId));
         console.log(clickedLike);
-    };
+    }; */
 
     // 좋아요 post요청 함수
     const HeartHandler = () => {
@@ -102,7 +95,7 @@ const Detailform = () => {
             likeFilter();
         }
     }, [userInfo]);
-
+    /* 
     useEffect(() => {
         if (mounted.current) {
             likedContent();
@@ -110,7 +103,7 @@ const Detailform = () => {
             mounted.current = true;
         }
     }, [adddedLike]);
-
+ */
     return (
         <div css={wrap}>
             <div css={container}>

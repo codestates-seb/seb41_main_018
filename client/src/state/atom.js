@@ -21,12 +21,6 @@ export const ContentsList = atom({
     effects_UNSTABLE: [persistAtom],
 });
 
-export const AddedLikeState = atom({
-    key: "AddedLikeState",
-    default: [],
-    effects_UNSTABLE: [persistAtom],
-});
-
 export const selectedRouteState = atom({
     key: "selectedRouteState",
     default: 1,
