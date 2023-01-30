@@ -1,6 +1,5 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
-import Categorybar from "../components/Categorybar";
 
 const { persistAtom } = recoilPersist();
 
@@ -18,6 +17,12 @@ export const loginState = atom({
 
 export const ContentsList = atom({
     key: "ContentsList",
+    default: [],
+    effects_UNSTABLE: [persistAtom],
+});
+
+export const AddedLikeState = atom({
+    key: "AddedLikeState",
     default: [],
     effects_UNSTABLE: [persistAtom],
 });
@@ -138,9 +143,4 @@ export const SearchKeywordState = atom({
 export const TagsStringState = atom({
     key: "TagsStringState",
     default: "",
-});
-
-export const AddedLikeState = atom({
-    key: "AddedLikeState",
-    default: [],
 });

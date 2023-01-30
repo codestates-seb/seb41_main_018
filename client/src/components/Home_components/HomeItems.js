@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 const HomeItems = (content) => {
     const [isFavoriteClcik, setFavoriteClick] = useState(false);
+
     const handleFavoriteClick = () => {
         setFavoriteClick(!isFavoriteClcik);
     };
