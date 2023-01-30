@@ -83,16 +83,15 @@ const Home = () => {
     };
 
     const data = [
-        { text: "서울", img: "서울" },
-        { text: "부산", img: "부산" },
-        { text: "제주", img: "제주" },
-        { text: "여수", img: "여수" },
-        { text: "전주", img: "전주" },
-        { text: "강릉", img: "강릉" },
-        { text: "대구", img: "대구" },
-        { text: "포천", img: "포천" },
-        { text: "파주", img: "파주" },
-        { text: "담양", img: "담양" },
+        { text: "서울", img: 서울 },
+        { text: "부산", img: 부산 },
+        { text: "제주", img: 제주 },
+        { text: "여수", img: 여수 },
+        { text: "전주", img: 전주 },
+        { text: "강릉", img: 강릉 },
+        { text: "포천", img: 포천 },
+        { text: "파주", img: 파주 },
+        { text: "담양", img: 담양 },
     ];
 
     return (
@@ -102,13 +101,19 @@ const Home = () => {
             ) : (
                 <>
                     <Categorybar />
+                    {/*  <Swiper {...swiperOption} css={postStyle}>
+                        <div>
+                            {data.map((el) => {
+                                console.log(el.img);
+                                console.log(el.text);
+                                <SwiperSlide>
+                                    <Regionitems key={el.text} img={`${el.img}`} text={el.text} />
+                                </SwiperSlide>;
+                            })}
+                        </div>
+                    </Swiper> */}
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
-                            {/* {data.map((el, index) => {
-                                <SwiperSlide>
-                                    <Regionitems img={`${el.img}`} text={`${el.text}`} />
-                                </SwiperSlide>;
-                            })} */}
                             <SwiperSlide>
                                 <Regionitems img={`${서울}`} text="서울" />
                             </SwiperSlide>

@@ -179,8 +179,8 @@ const Header = () => {
                         type="text"
                         css={SearchInput}
                         placeholder="검색어를 입력해주세요."
-                        onChange={(e) => setKeyword(e.target.value)}
                         value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
                         onKeyUp={(e) => {
                             if (e.key == "Enter") {
                                 keywordSearch();
@@ -210,8 +210,8 @@ const Header = () => {
                                     type="text"
                                     css={responsiveSearchInput}
                                     placeholder="검색어를 입력해주세요."
-                                    onChange={(e) => setKeyword(e.target.value)}
                                     value={keyword}
+                                    onChange={(e) => setKeyword(e.target.value)}
                                     onKeyUp={(e) => {
                                         if (e.key == "Enter") {
                                             keywordSearch();
