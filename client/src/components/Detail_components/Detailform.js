@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 
@@ -52,28 +52,22 @@ export const Buttons = (props) => {
     );
 };
 const Detailform = () => {
-    const mounted = useRef(false);
     const [currentTab, setcurrentTab] = useState(0);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const [clickedLike, setClickedLike] = useState([]);
+    const [addedLike, setAddedLike] = useState(false);
     const data = contentDetail.data;
 
     const selectMenuHandler = (index) => {
         setcurrentTab(index);
     };
 
-    /*   // 좋아요한 상태 표시
-    const likedContent = () => {
-        setClickedLike(adddedLike.map((el) => el.contentId === data.contentId));
-        console.log(clickedLike);
-    }; */
-
     // 좋아요 post요청 함수
     const HeartHandler = () => {
         postHeart(userInfo.userId, data.contentId).then(() => {
             getUserInfo(userInfo.userId).then((data) => {
                 setUserInfo(data.data);
+                setAddedLike(!addedLike);
             });
         });
     };
@@ -91,19 +85,16 @@ const Detailform = () => {
     };
 
     useEffect(() => {
-        if (mounted.current) {
-            likeFilter();
+        if (
+            userInfo.userId &&
+            userInfo.hearts.find((el) => el.contentId === (data && data.contentId))
+        ) {
+            setAddedLike(true);
+        } else {
+            setAddedLike(false);
         }
     }, [userInfo]);
-    /* 
-    useEffect(() => {
-        if (mounted.current) {
-            likedContent();
-        } else {
-            mounted.current = true;
-        }
-    }, [adddedLike]);
- */
+
     return (
         <div css={wrap}>
             <div css={container}>
@@ -161,7 +152,7 @@ const Detailform = () => {
             <DetailMap />
             <div css={ButtonBox}>
                 <Buttons
-                    icon={clickedLike.includes(true) ? <FaHeart /> : <FaRegHeart />}
+                    icon={addedLike ? <FaHeart /> : <FaRegHeart />}
                     text="가치갈래"
                     onPress={HeartHandler}
                 />
