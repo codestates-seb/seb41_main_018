@@ -54,7 +54,11 @@ const Detail = () => {
     };
 
     const showModal = () => {
-        setModalOpen(true);
+        if (userInfo.userId === contentsUserId) {
+            setModalOpen(true);
+        } else {
+            alert("권한이 없습니다.");
+        }
     };
 
     useEffect(() => {
