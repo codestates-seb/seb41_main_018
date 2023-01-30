@@ -57,9 +57,9 @@ const HomeItems = (content) => {
                 )}
             </div>
             <Link to={`/detail/${data && data.contentId}`}>
-                {/* <div css={imgWrap}> */}
-                <img src={DummyImg[randomImg]} css={imgWrap} />
-                {/* </div> */}
+                <div css={imgWrap}>
+                    <img src={DummyImg[randomImg]} css={imgStyle} />
+                </div>
                 <div css={textContainer}>
                     <div css={titleStyle}>{data && data.title}</div>
 
