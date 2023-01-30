@@ -170,6 +170,7 @@ const wrap = css`
     height: 100%;
     display: flex;
     flex-direction: column;
+    /* margin-top: -20px; */
 
     h2 {
         margin: 30px 0 10px 47px;
@@ -244,6 +245,7 @@ const tabWrap = css`
 const SelectTab = css`
     cursor: pointer;
     text-align: center;
+    border-bottom: 0.285rem solid ${PALETTE.default_color};
     @media (max-width: 768px) {
         padding: 10px;
         font-size: 0.975rem;
@@ -266,6 +268,7 @@ const SelectTab = css`
 const NoSelect = css`
     cursor: pointer;
     text-align: center;
+    border-bottom: 0.285rem solid white;
     @media (max-width: 768px) {
         padding: 10px;
         font-size: 0.975rem;
