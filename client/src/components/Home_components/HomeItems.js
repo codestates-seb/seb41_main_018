@@ -1,21 +1,44 @@
+import React, { useEffect } from "react";
 /** @jsxImportSource @emotion/react */
-import React from "react";
 import { useState } from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { BsStarFill } from "react-icons/bs";
+import { TbHandClick } from "react-icons/tb";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { userInfoState } from "../../state/atom";
+import { postHeart } from "../../util/axiosContents";
+import { getUserInfo } from "../../util/axiosUser";
 import { DummyImg } from "../../assets/image";
 
 const HomeItems = (content) => {
     const [isFavoriteClcik, setFavoriteClick] = useState(false);
 
     const randomImg = Math.floor(Math.random() * DummyImg.length);
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const data = content.content;
 
     const handleFavoriteClick = () => {
-        setFavoriteClick(!isFavoriteClcik);
+        postHeart(userInfo.userId, data.contentId).then(() => {
+            getUserInfo(userInfo.userId).then((data) => {
+                setUserInfo(data.data);
+                setFavoriteClick(!isFavoriteClcik);
+            });
+        });
     };
+
+    useEffect(() => {
+        if (
+            userInfo.userId &&
+            userInfo.hearts.find((el) => el.contentId === (data && data.contentId))
+        ) {
+            setFavoriteClick(true);
+        } else {
+            setFavoriteClick(false);
+        }
+    }, [userInfo]);
+
     return (
         <div css={wrap}>
             <div onClick={handleFavoriteClick} css={favoriteStyle}>
@@ -33,12 +56,12 @@ const HomeItems = (content) => {
                     />
                 )}
             </div>
-            <Link to={`/detail/${content.content && content.content.contentId}`}>
+            <Link to={`/detail/${data && data.contentId}`}>
                 {/* <div css={imgWrap}> */}
                 <img src={DummyImg[randomImg]} css={imgWrap} />
                 {/* </div> */}
                 <div css={textContainer}>
-                    <div css={titleStyle}>{content.content && content.content.title}</div>
+                    <div css={titleStyle}>{data && data.title}</div>
 
                     <div css={sideTextStyle}>
                         <FaHeart
@@ -47,17 +70,18 @@ const HomeItems = (content) => {
                                 color: #ff5675;
                             `}
                         />
-                        {content.content && content.content.heartCount}
+                        {data && data.heartCount}
                     </div>
                 </div>
                 <div>
                     <ul css={ulStyle}>
-                        {content.content &&
-                            content.content.routes.map((el) => <li css={liStyle}># {el.place}</li>)}
+                        {data && data.routes.map((el) => <li css={liStyle}># {el.place}</li>)}
                     </ul>
                 </div>
-                <div css={priceStyle}>
-                    {content.content && `총 경비 : ${content.content.amount}`}
+                <div css={InfoStyle}>
+                    <TbHandClick size="25" />
+                    <span>{data.viewCount}</span>
+                    <div css={priceStyle}>{data && `총 경비 : ${data.amount}`}</div>
                 </div>
             </Link>
         </div>
@@ -136,6 +160,13 @@ const priceStyle = css`
     text-align: end;
     font-weight: 600;
     font-size: 1rem;
+`;
+
+const InfoStyle = css`
+    display: flex;
+    span {
+        margin-left: 0.2rem;
+    }
 `;
 
 export default HomeItems;

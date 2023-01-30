@@ -18,8 +18,7 @@ const Tag = (props) => {
         setTagsArr(filter);
         setTagsStr(tagsArr.join());
     };
-    console.log(`tag들어간다~~`, tagsArr);
-    console.log(`tag들어간다~~문자로 들어간다`, tagsStr);
+
     const addTags = (event) => {
         event.preventDefault();
         const inputVal = event.target.value;

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 
@@ -11,7 +11,7 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 //recoil
 import { useRecoilState } from "recoil";
-import { ContentDetail, userInfoState, AddedLikeState } from "../../state/atom";
+import { ContentDetail, userInfoState } from "../../state/atom";
 
 //Button
 import { AwesomeButton } from "react-awesome-button";
@@ -58,28 +58,14 @@ export const Buttons = (props) => {
     );
 };
 const Detailform = () => {
-    const mounted = useRef(false);
     const [currentTab, setcurrentTab] = useState(0);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const [adddedLike, setAddedLike] = useRecoilState(AddedLikeState);
-    const [clickedLike, setClickedLike] = useState([]);
+    const [addedLike, setAddedLike] = useState(false);
     const data = contentDetail.data;
 
     const selectMenuHandler = (index) => {
         setcurrentTab(index);
-    };
-
-    // "ADD" 인 좋아요만 filter
-    const likeFilter = () => {
-        setAddedLike(userInfo && userInfo.hearts.filter((el) => el.heartType === "ADD"));
-        console.log(adddedLike);
-    };
-
-    // 좋아요한 상태 표시
-    const likedContent = () => {
-        setClickedLike(adddedLike.map((el) => el.contentId === data.contentId));
-        console.log(clickedLike);
     };
 
     // 좋아요 post요청 함수
@@ -87,23 +73,33 @@ const Detailform = () => {
         postHeart(userInfo.userId, data.contentId).then(() => {
             getUserInfo(userInfo.userId).then((data) => {
                 setUserInfo(data.data);
+                setAddedLike(!addedLike);
             });
         });
     };
 
-    useEffect(() => {
-        if (mounted.current) {
-            likeFilter();
-        }
-    }, [userInfo]);
+    // 링크 복사
+    const clip = () => {
+        navigator.clipboard.writeText(window.location.href).then(
+            () => {
+                alert("링크가 복사되었습니다.");
+            },
+            (err) => {
+                alert("링크 복사를 실패하였습니다.");
+            }
+        );
+    };
 
     useEffect(() => {
-        if (mounted.current) {
-            likedContent();
+        if (
+            userInfo.userId &&
+            userInfo.hearts.find((el) => el.contentId === (data && data.contentId))
+        ) {
+            setAddedLike(true);
         } else {
-            mounted.current = true;
+            setAddedLike(false);
         }
-    }, [adddedLike]);
+    }, [userInfo]);
 
     return (
         <div css={wrap}>
@@ -162,11 +158,11 @@ const Detailform = () => {
             <DetailMap />
             <div css={ButtonBox}>
                 <Buttons
-                    icon={clickedLike.includes(true) ? <FaHeart /> : <FaRegHeart />}
+                    icon={addedLike ? <FaHeart /> : <FaRegHeart />}
                     text="가치갈래"
                     onPress={HeartHandler}
                 />
-                <Buttons text={<FiShare />} />
+                <Buttons text={<FiShare />} onPress={clip} />
             </div>
         </div>
     );
