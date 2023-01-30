@@ -24,22 +24,20 @@ const Tag = (props) => {
         const inputVal = event.target.value;
         if (event.key === "Enter" && inputVal !== "" && !tagsArr.includes(inputVal)) {
             setTagsArr([...tagsArr, inputVal]);
+            setTagsStr([...tagsArr, inputVal].join());
             event.target.value = "";
-            setTagsStr(tagsArr.join());
         }
     };
 
-
-
     const defaultTag = () => {
-        if(detailTags) {
-            setTagsArr(detailTags.split(","))
+        if (detailTags) {
+            setTagsArr(detailTags.split(","));
         }
-    }
+    };
 
     useEffect(() => {
-        defaultTag()
-    }, [detailTags])
+        defaultTag();
+    }, [detailTags]);
 
     return (
         <>
@@ -62,26 +60,25 @@ const Tag = (props) => {
                     ))}
                 </ul>
                 <input
-                        css={css`
-                            flex: 1;
-                            border: none;
-                            height: 46px;
-                            font-size: 1rem;
-                            padding: 10px;
-                            :focus {
-                                outline: transparent;
-                            }
-                        `}
-                        type="text"
-                        onKeyUp={(e) => {
-                            return addTags(e);
-                            {
-                                /* 키보드의 Enter 키에 의해 addTags 메소드가 실행되어야 합니다. */
-                            }
-                        }}
-                        placeholder="태그를 입력해보세요!"
-                    />
-
+                    css={css`
+                        flex: 1;
+                        border: none;
+                        height: 46px;
+                        font-size: 1rem;
+                        padding: 10px;
+                        :focus {
+                            outline: transparent;
+                        }
+                    `}
+                    type="text"
+                    onKeyUp={(e) => {
+                        return addTags(e);
+                        {
+                            /* 키보드의 Enter 키에 의해 addTags 메소드가 실행되어야 합니다. */
+                        }
+                    }}
+                    placeholder="태그를 입력해보세요!"
+                />
             </div>
         </>
     );
