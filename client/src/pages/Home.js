@@ -17,7 +17,8 @@ import right from "../assets/right.png";
 import left from "../assets/left.png";
 import { getContent } from "../util/axiosContents";
 import { useRecoilState } from "recoil";
-import { ContentsList, loginState } from "../state/atom";
+import { ContentsList, loginState, userInfoState } from "../state/atom";
+import { useNavigate } from "react-router-dom";
 import 서울 from "../assets/sampleImg/region/서울.png";
 import 부산 from "../assets/sampleImg/region/부산.png";
 import 제주 from "../assets/sampleImg/region/제주.png";
@@ -31,8 +32,25 @@ import 전주 from "../assets/sampleImg/region/전주.png";
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const Home = () => {
+    const navigate = useNavigate();
     const [contentsList, setcontentsList] = useRecoilState(ContentsList);
     const [isLoading, setIsLoading] = useState(true);
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    // 조회수 기준 정렬
+    const viewCountSortArr = [...contentsList].sort((a, b) => b.viewCount - a.viewCount);
+    // 좋아요 기준 정렬
+    const heartCountSortArr = [...contentsList].sort((a, b) => b.heartCount - a.heartCount);
+
+    // 비로그인 시에는 post 불가
+    const postButtonClick = () => {
+        console.log(userInfo.userId);
+        if (userInfo.userId !== undefined) {
+            navigate("/post");
+        } else {
+            alert("로그인이 필요합니다.");
+            navigate("/login");
+        }
+    };
 
     useEffect(() => {
         getContent().then((res) => {
@@ -40,10 +58,6 @@ const Home = () => {
             setcontentsList(res.data.data);
         });
     }, []);
-    console.log(contentsList);
-
-    const viewCountSortArr = [...contentsList].sort((a, b) => a.viewCount - b.viewCount);
-    console.log(viewCountSortArr);
 
     const swiperOption = {
         spaceBetween: 20,
@@ -124,7 +138,7 @@ const Home = () => {
                             </SwiperSlide>
                         </div>
                     </Swiper>
-                    <Banner />
+
                     <h2 css={itemsTitle}>🛫 방금 올라온 🔥HOT🔥 여행지</h2>
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
@@ -136,6 +150,7 @@ const Home = () => {
                                 ))}
                         </div>
                     </Swiper>
+                    <Banner />
 
                     <h2 css={itemsTitle}>✨ 관심 급상승 여행지</h2>
                     <Swiper {...swiperOption} css={postStyle}>
@@ -147,13 +162,20 @@ const Home = () => {
                             ))}
                         </div>
                     </Swiper>
-                    <Banner />
-                    <Link to="/post">
-                        <button css={postBtn}>
-                            <span>내 여행지 공유하기</span>
-                        </button>
-                    </Link>
-                    <Footer />
+
+                    <h2 css={itemsTitle}>❤️ 다른 사람들이 좋아하는 여행지</h2>
+                    <Swiper {...swiperOption} css={postStyle}>
+                        <div>
+                            {heartCountSortArr.map((content) => (
+                                <SwiperSlide key={content.contentId}>
+                                    <HomeItems content={content} />
+                                </SwiperSlide>
+                            ))}
+                        </div>
+                    </Swiper>
+                    <button css={postBtn} onClick={postButtonClick}>
+                        <span>내 여행지 공유하기</span>
+                    </button>
                 </>
             )}
         </div>
