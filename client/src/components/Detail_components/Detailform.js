@@ -240,6 +240,7 @@ const ButtonBox = css`
 
 const tabWrap = css`
     display: flex;
+    flex-wrap: wrap;
     margin: 30px 0 -15px 10px;
 
     @media (min-width: 768px) {
@@ -252,7 +253,7 @@ const tabWrap = css`
 const SelectTab = css`
     cursor: pointer;
     text-align: center;
-    border-bottom: 0.285rem solid ${PALETTE.default_color};
+
     @media (max-width: 768px) {
         padding: 10px;
         font-size: 0.975rem;
@@ -269,6 +270,7 @@ const SelectTab = css`
         cursor: pointer;
         position: relative;
         color: ${PALETTE.default_color};
+        border-bottom: 0.285rem solid ${PALETTE.default_color};
     }
 `;
 
