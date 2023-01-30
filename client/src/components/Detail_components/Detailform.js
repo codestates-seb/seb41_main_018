@@ -85,6 +85,18 @@ const Detailform = () => {
         });
     };
 
+    // 링크 복사
+    const clip = () => {
+        navigator.clipboard.writeText(window.location.href).then(
+            () => {
+                alert("링크가 복사되었습니다.");
+            },
+            (err) => {
+                alert("링크 복사를 실패하였습니다.");
+            }
+        );
+    };
+
     useEffect(() => {
         if (mounted.current) {
             likeFilter();
@@ -160,7 +172,7 @@ const Detailform = () => {
                     text="가치갈래"
                     onPress={HeartHandler}
                 />
-                <Buttons text={<FiShare />} />
+                <Buttons text={<FiShare />} onPress={clip} />
             </div>
         </div>
     );
