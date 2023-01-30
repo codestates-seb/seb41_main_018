@@ -160,7 +160,7 @@ const wrap = css`
     height: 100%;
     display: flex;
     flex-direction: column;
-    margin-top: -20px;
+    /* margin-top: -20px; */
 
     h2 {
         margin: 30px 0 10px 47px;
