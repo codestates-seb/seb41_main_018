@@ -91,6 +91,7 @@ const Header = () => {
             setIsLogin(false);
             setUserInfo({});
             navigate("/");
+            setMenuClick(false);
         });
     };
 
@@ -110,13 +111,23 @@ const Header = () => {
                                     <div>
                                         <Link to="/mypage">
                                             <Button
+                                                bgColor="white"
                                                 width="250px"
                                                 height="60px"
                                                 text="마이페이지"
-                                                boxShadow="1px 1px 5px rgb(0,0,0,0.2)"
+                                                boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px;"
                                                 margin="10px"
                                             />
                                         </Link>
+                                        <Button
+                                            bgColor="white"
+                                            width="250px"
+                                            height="60px"
+                                            text="로그아웃"
+                                            boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px;"
+                                            margin="10px"
+                                            onClick={logout}
+                                        />
                                     </div>
                                 ) : (
                                     <div>
