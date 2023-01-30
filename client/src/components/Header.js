@@ -19,6 +19,7 @@ import {
     ContentsList,
     KeywordFilterResultState,
     SearchKeywordState,
+    AddedLikeState,
 } from "../state/atom";
 import { userLogout } from "../util/axiosUser";
 
@@ -31,6 +32,7 @@ const Header = () => {
     const [isMenuClick, setMenuClick] = useState(false);
     const [isAccountClick, setAccontClick] = useState(false);
     const [keyword, setKeyword] = useRecoilState(SearchKeywordState);
+    const [adddedLike, setAddedLike] = useRecoilState(AddedLikeState);
     const menuRef = useRef();
     const AccountRef = useRef();
     const location = useLocation();
@@ -90,6 +92,7 @@ const Header = () => {
         userLogout().then(() => {
             setIsLogin(false);
             setUserInfo({});
+            setAddedLike({});
             navigate("/");
             setMenuClick(false);
         });
@@ -190,8 +193,8 @@ const Header = () => {
                         type="text"
                         css={SearchInput}
                         placeholder="검색어를 입력해주세요."
-                        onChange={(e) => setKeyword(e.target.value)}
                         value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
                         onKeyUp={(e) => {
                             if (e.key == "Enter") {
                                 keywordSearch();
@@ -221,8 +224,8 @@ const Header = () => {
                                     type="text"
                                     css={responsiveSearchInput}
                                     placeholder="검색어를 입력해주세요."
-                                    onChange={(e) => setKeyword(e.target.value)}
                                     value={keyword}
+                                    onChange={(e) => setKeyword(e.target.value)}
                                     onKeyUp={(e) => {
                                         if (e.key == "Enter") {
                                             keywordSearch();

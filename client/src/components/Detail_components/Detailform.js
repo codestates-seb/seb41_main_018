@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 
@@ -52,6 +52,7 @@ export const Buttons = (props) => {
     );
 };
 const Detailform = () => {
+    const mounted = useRef(false);
     const [currentTab, setcurrentTab] = useState(0);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
@@ -65,12 +66,14 @@ const Detailform = () => {
 
     // "ADD" 인 좋아요만 filter
     const likeFilter = () => {
-        const likeArr = userInfo && userInfo.hearts.filter((el) => el.heartType === "ADD");
-        setAddedLike(likeArr);
+        setAddedLike(userInfo && userInfo.hearts.filter((el) => el.heartType === "ADD"));
+        console.log(adddedLike);
     };
-    const likeMap = () => {
-        const likeClickState = adddedLike.map((el) => el.contentId === data.contentId);
-        setClickedLike(likeClickState);
+
+    // 좋아요한 상태 표시
+    const likedContent = () => {
+        setClickedLike(adddedLike.map((el) => el.contentId === data.contentId));
+        console.log(clickedLike);
     };
 
     // 좋아요 post요청 함수
@@ -78,15 +81,22 @@ const Detailform = () => {
         postHeart(userInfo.userId, data.contentId).then(() => {
             getUserInfo(userInfo.userId).then((data) => {
                 setUserInfo(data.data);
-                likeFilter();
-
-                console.log(adddedLike);
             });
         });
     };
 
     useEffect(() => {
-        likeMap();
+        if (mounted.current) {
+            likeFilter();
+        }
+    }, [userInfo]);
+
+    useEffect(() => {
+        if (mounted.current) {
+            likedContent();
+        } else {
+            mounted.current = true;
+        }
     }, [adddedLike]);
 
     return (

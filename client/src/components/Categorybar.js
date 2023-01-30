@@ -29,10 +29,13 @@ const Categorybar = () => {
         { src: 맛집투어, title: "맛집투어", themeType: "FOOD" },
     ];
 
+    // 카테고리 버튼 클릭 시 검색 요청
     const searchHandler = (themeType) => {
         getCategory(themeType).then((data) => {
-            setCategorySearch(data && data.data);
-            navigate("/result");
+            if (data) {
+                setCategorySearch(data && data.data);
+                navigate("/result");
+            }
         });
     };
     return (

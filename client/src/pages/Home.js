@@ -17,7 +17,8 @@ import right from "../assets/right.png";
 import left from "../assets/left.png";
 import { getContent } from "../util/axiosContents";
 import { useRecoilState } from "recoil";
-import { ContentsList, loginState } from "../state/atom";
+import { ContentsList, loginState, userInfoState } from "../state/atom";
+import { useNavigate } from "react-router-dom";
 import 서울 from "../assets/sampleImg/region/서울.png";
 import 부산 from "../assets/sampleImg/region/부산.png";
 import 제주 from "../assets/sampleImg/region/제주.png";
@@ -27,12 +28,30 @@ import 포천 from "../assets/sampleImg/region/포천.png";
 import 강릉 from "../assets/sampleImg/region/강릉.png";
 import 여수 from "../assets/sampleImg/region/여수.png";
 import 전주 from "../assets/sampleImg/region/전주.png";
+import Loading from "../components/Loding";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const Home = () => {
+    const navigate = useNavigate();
     const [contentsList, setcontentsList] = useRecoilState(ContentsList);
     const [isLoading, setIsLoading] = useState(true);
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    // 조회수 기준 정렬
+    const viewCountSortArr = [...contentsList].sort((a, b) => b.viewCount - a.viewCount);
+    // 좋아요 기준 정렬
+    const heartCountSortArr = [...contentsList].sort((a, b) => b.heartCount - a.heartCount);
+
+    // 비로그인 시에는 post 불가
+    const postButtonClick = () => {
+        console.log(userInfo.userId);
+        if (userInfo.userId !== undefined) {
+            navigate("/post");
+        } else {
+            alert("로그인이 필요합니다.");
+            navigate("/login");
+        }
+    };
 
     useEffect(() => {
         getContent().then((res) => {
@@ -40,10 +59,6 @@ const Home = () => {
             setcontentsList(res.data.data);
         });
     }, []);
-    console.log(contentsList);
-
-    const viewCountSortArr = [...contentsList].sort((a, b) => a.viewCount - b.viewCount);
-    console.log(viewCountSortArr);
 
     const swiperOption = {
         spaceBetween: 20,
@@ -69,32 +84,37 @@ const Home = () => {
     };
 
     const data = [
-        { text: "서울", img: "서울" },
-        { text: "부산", img: "부산" },
-        { text: "제주", img: "제주" },
-        { text: "여수", img: "여수" },
-        { text: "전주", img: "전주" },
-        { text: "강릉", img: "강릉" },
-        { text: "대구", img: "대구" },
-        { text: "포천", img: "포천" },
-        { text: "파주", img: "파주" },
-        { text: "담양", img: "담양" },
+        { text: "서울", img: 서울 },
+        { text: "부산", img: 부산 },
+        { text: "제주", img: 제주 },
+        { text: "여수", img: 여수 },
+        { text: "전주", img: 전주 },
+        { text: "강릉", img: 강릉 },
+        { text: "포천", img: 포천 },
+        { text: "파주", img: 파주 },
+        { text: "담양", img: 담양 },
     ];
 
     return (
         <div>
             {isLoading ? (
-                <div>Loading...</div>
+                <Loading />
             ) : (
                 <>
                     <Categorybar />
+                    {/*  <Swiper {...swiperOption} css={postStyle}>
+                        <div>
+                            {data.map((el) => {
+                                console.log(el.img);
+                                console.log(el.text);
+                                <SwiperSlide>
+                                    <Regionitems key={el.text} img={`${el.img}`} text={el.text} />
+                                </SwiperSlide>;
+                            })}
+                        </div>
+                    </Swiper> */}
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
-                            {/* {data.map((el, index) => {
-                                <SwiperSlide>
-                                    <Regionitems img={`${el.img}`} text={`${el.text}`} />
-                                </SwiperSlide>;
-                            })} */}
                             <SwiperSlide>
                                 <Regionitems img={`${서울}`} text="서울" />
                             </SwiperSlide>
@@ -124,7 +144,7 @@ const Home = () => {
                             </SwiperSlide>
                         </div>
                     </Swiper>
-                    <Banner />
+
                     <h2 css={itemsTitle}>🛫 방금 올라온 🔥HOT🔥 여행지</h2>
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
@@ -136,6 +156,7 @@ const Home = () => {
                                 ))}
                         </div>
                     </Swiper>
+                    <Banner />
 
                     <h2 css={itemsTitle}>✨ 관심 급상승 여행지</h2>
                     <Swiper {...swiperOption} css={postStyle}>
@@ -147,13 +168,20 @@ const Home = () => {
                             ))}
                         </div>
                     </Swiper>
-                    <Banner />
-                    <Link to="/post">
-                        <button css={postBtn}>
-                            <span>내 여행지 공유하기</span>
-                        </button>
-                    </Link>
-                    <Footer />
+
+                    <h2 css={itemsTitle}>❤️ 다른 사람들이 좋아하는 여행지</h2>
+                    <Swiper {...swiperOption} css={postStyle}>
+                        <div>
+                            {heartCountSortArr.map((content) => (
+                                <SwiperSlide key={content.contentId}>
+                                    <HomeItems content={content} />
+                                </SwiperSlide>
+                            ))}
+                        </div>
+                    </Swiper>
+                    <button css={postBtn} onClick={postButtonClick}>
+                        <span>내 여행지 공유하기</span>
+                    </button>
                 </>
             )}
         </div>

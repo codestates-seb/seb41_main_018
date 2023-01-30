@@ -1,8 +1,31 @@
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
-import Categorybar from "../components/Categorybar";
 
 const { persistAtom } = recoilPersist();
+
+export const userInfoState = atom({
+    key: "userInfoState",
+    default: {},
+    effects_UNSTABLE: [persistAtom],
+});
+
+export const loginState = atom({
+    key: "loginState",
+    default: false,
+    effects_UNSTABLE: [persistAtom],
+});
+
+export const ContentsList = atom({
+    key: "ContentsList",
+    default: [],
+    effects_UNSTABLE: [persistAtom],
+});
+
+export const AddedLikeState = atom({
+    key: "AddedLikeState",
+    default: [],
+    effects_UNSTABLE: [persistAtom],
+});
 
 export const selectedRouteState = atom({
     key: "selectedRouteState",
@@ -74,11 +97,6 @@ export const DateData = atom({
     default: "",
 });
 
-export const ContentsList = atom({
-    key: "ContentsList",
-    default: [],
-});
-
 export const detailPosition = atom({
     key: "detailPosition",
     default: 1,
@@ -100,18 +118,6 @@ export const detailPositionFour = atom({
 export const detailPositionFive = atom({
     key: "detailPositionFive",
     default: 5,
-});
-
-export const userInfoState = atom({
-    key: "userInfoState",
-    default: {},
-    effects_UNSTABLE: [persistAtom],
-});
-
-export const loginState = atom({
-    key: "loginState",
-    default: false,
-    effects_UNSTABLE: [persistAtom],
 });
 
 export const ReviewListState = atom({
@@ -137,9 +143,4 @@ export const SearchKeywordState = atom({
 export const TagsStringState = atom({
     key: "TagsStringState",
     default: "",
-});
-
-export const AddedLikeState = atom({
-    key: "AddedLikeState",
-    default: [],
 });

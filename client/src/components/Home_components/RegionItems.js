@@ -3,13 +3,25 @@ import React, { useEffect } from "react";
 import Button from "../Button";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
-
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { ContentsList } from "../../state/atom";
+import { ContentsList, KeywordFilterResultState, SearchKeywordState } from "../../state/atom";
+import { Route } from "react-router-dom";
 
 const Regionitems = (props) => {
+    const navigate = useNavigate();
     const [contentsList, setcontentsList] = useRecoilState(ContentsList);
-    const handleClick = () => {};
+    const [filterResult, setFilterResult] = useRecoilState(KeywordFilterResultState);
+    const [keyword, setKeyword] = useRecoilState(SearchKeywordState);
+
+    // 더보기 버튼 클릭 시 지역 별 검색
+    const handleClick = () => {
+        setFilterResult(
+            contentsList.filter((content) => content.routes[0].address.slice(0, 2) === props.text)
+        );
+        setKeyword(`${props.text} 지역`);
+        navigate("/result");
+    };
 
     return (
         <div

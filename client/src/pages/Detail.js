@@ -14,6 +14,7 @@ import Reviewform from "../components/Detail_components/Reviewform";
 import { PALETTE } from "../Common";
 import Total from "../components/Detail_components/Total";
 import DetailDeleteModal from "../components/Detail_components/DetailDeleteModal";
+import Loading from "../components/Loding";
 
 //recoil
 import { useRecoilState } from "recoil";
@@ -26,6 +27,7 @@ dayjs.locale("ko");
 
 import { getContent, deleteContent } from "../util/axiosContents";
 import { getUserInfo } from "../util/axiosUser";
+import Button from "../components/Button";
 
 const Detail = () => {
     const navigate = useNavigate();
@@ -52,16 +54,21 @@ const Detail = () => {
     const handleMyPost = () => {
         if (contentsUserId === logInUserId) {
             setMyPost(true);
-            // console.log(isMyPost);
         }
+        setIsLoading(false);
     };
 
     const showModal = () => {
-        setModalOpen(true);
+        if (userInfo.userId === contentsUserId) {
+            setModalOpen(true);
+        } else {
+            alert("권한이 없습니다.");
+        }
     };
 
     useEffect(() => {
         getContentDetail(location.pathname.slice(8));
+        handleMyPost();
     }, []);
 
     console.log(`contentsUserId`, contentsUserId);
@@ -70,30 +77,38 @@ const Detail = () => {
     console.log(`isMyPost`, isMyPost);
 
     return (
-        <div css={Wrap}>
-            <h1>{contentDetail.data && contentDetail.data.title}</h1>
+        <div>
+            {isLoading ? (
+                <Loading />
+            ) : (
+                <>
+                    <div css={Wrap}>
+                        <h1>{contentDetail.data && contentDetail.data.title}</h1>
 
-            <div css={ContentInfo}>
-                <Total />
-                <div css={postDate}>{`${postingData} 작성`}</div>
-            </div>
+                        <div css={ContentInfo}>
+                            <Total />
+                            <div css={postDate}>{`${postingData} 작성`}</div>
+                        </div>
 
-            <div css={TotalContainer}>
-                <Detailform />
-            </div>
-            <div
-                css={css`
-                    display: flex;
-                `}
-            >
-                <button css={btnStyle}>Update</button>
-                <button css={btnStyle} onClick={showModal}>
-                    Delete
-                </button>
-            </div>
-            <Reviewform />
-            {modalOpen && (
-                <DetailDeleteModal text="정말 삭제하시겠습니까?" setModalOpen={setModalOpen} />
+                        <div css={TotalContainer}>
+                            <Detailform />
+                        </div>
+                        <div css={ButtonBox} className={isMyPost ? "" : "hidden"}>
+                            <button css={btnStyle}>Update</button>
+                            <button css={btnStyle} onClick={showModal}>
+                                Delete
+                            </button>
+                        </div>
+
+                        <Reviewform />
+                        {modalOpen && (
+                            <DetailDeleteModal
+                                text="정말 삭제하시겠습니까?"
+                                setModalOpen={setModalOpen}
+                            />
+                        )}
+                    </div>
+                </>
             )}
         </div>
     );
@@ -124,6 +139,14 @@ const ContentInfo = css`
     width: 90vw;
     span {
         margin: 5px;
+    }
+`;
+
+const ButtonBox = css`
+    display: flex;
+
+    &.hidden {
+        visibility: hidden;
     }
 `;
 
