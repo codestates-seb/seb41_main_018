@@ -498,6 +498,7 @@ const dropMenu = css`
     border-radius: 10px;
     box-shadow: ${PALETTE.box_shaodw};
     border-radius: ${PALETTE.border_radius};
+    z-index: 4;
     li {
         width: 150px;
         height: 40px;
