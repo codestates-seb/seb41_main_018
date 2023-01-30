@@ -155,32 +155,36 @@ export const postContent = async (data) => {
         });
 };
 
-/* // 컨텐츠 수정
-export const patchContent = async (contentId, data) => {
-	return await axios
-		 .patch(
-			  `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents/${contentId}`,
-			  {
-					title: data.title,
-					themeType: data.themeType,
-					travelDate: data.travelDate,
-					tag: data.tag,
-					routes: data.routes,
-			  },
-			  {
-					headers: {
-						 "Content-Type": `application/json`,
-						 Authorization: sessionStorage.getItem("access_token"),
-					},
-			  }
-		 )
-		 .then((res) => {
-			  return res;
-		 })
-		 .catch((err) => {
-			  console.log(err);
-		 });
-}; */
+// 컨텐츠 수정
+export const patchContent = async (data) => {
+    return await axios
+        .patch(
+            `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents/${data.contentId}`,
+            {
+                title: data.title,
+                themeType: data.themeType,
+                travelDate: data.travelDate,
+                tag: data.tag,
+                routes: data.routes,
+                contentId: data.contentId,
+                userId: data.userId,
+
+            },
+            {
+                headers: {
+                    "Content-Type": `application/json`,
+                    Authorization: sessionStorage.getItem("access_token"),
+                },
+            }
+        )
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => {
+            console.log(err);
+            alert('수정에 실패했습니다')
+        });
+};
 
 // 컨텐츠 삭제
 export const deleteContent = async (contentId) => {
