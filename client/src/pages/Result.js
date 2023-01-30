@@ -9,6 +9,7 @@ import {
     KeywordFilterResultState,
     SearchKeywordState,
 } from "../../src/state/atom";
+import Loading from "../components/Loding";
 
 const Result = () => {
     const [categorySearch, setCategorySearch] = useRecoilState(CategorySearchResultState);
@@ -16,6 +17,7 @@ const Result = () => {
     const [searchTargetArr, setSearchTargetArr] = useState([]);
     const [searchTargetName, setSearchTargetName] = useState("");
     const [keyword, setKeyword] = useRecoilState(SearchKeywordState);
+    const [isLoading, setIsLoading] = useState(true);
 
     const themeTypeSwitch = (themeType) => {
         switch (themeType) {
@@ -50,6 +52,7 @@ const Result = () => {
         if (categorySearch.length !== 0) {
             setSearchTargetArr(categorySearch.contents);
             themeTypeSwitch(categorySearch.themeType);
+            setIsLoading(false);
         }
     }, [categorySearch]);
 
@@ -61,23 +64,29 @@ const Result = () => {
 
     return (
         <div>
-            <Categorybar />
-            <div>
-                <div css={resultText}>
-                    {`" ${searchTargetName} "에 대한 검색결과 : ${searchTargetArr.length}건`}
-                </div>
-                <div css={postStyle}>
-                    {searchTargetArr.length === 0 ? (
-                        <div css={noResultMessage}>검색 결과가 없습니다 ㅠ.ㅠ</div>
-                    ) : (
-                        <>
-                            {searchTargetArr.map((content) => (
-                                <HomeItems content={content} />
-                            ))}
-                        </>
-                    )}
-                </div>
-            </div>
+            {isLoading ? (
+                <Loading />
+            ) : (
+                <>
+                    <Categorybar />
+                    <div>
+                        <div css={resultText}>
+                            {`" ${searchTargetName} "에 대한 검색결과 : ${searchTargetArr.length}건`}
+                        </div>
+                        <div css={postStyle}>
+                            {searchTargetArr.length === 0 ? (
+                                <div css={noResultMessage}>검색 결과가 없습니다 ㅠ.ㅠ</div>
+                            ) : (
+                                <>
+                                    {searchTargetArr.map((content) => (
+                                        <HomeItems content={content} />
+                                    ))}
+                                </>
+                            )}
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 };
