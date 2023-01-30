@@ -20,6 +20,7 @@ import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
 import com.seb41_main_018.mainproject.user.entity.User;
 import org.mapstruct.Mapper;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,8 +32,11 @@ public interface UserMapper {
 
     default UserAllResponseDto InfoResponse(User user, ContentRepository contentRepository, CommentRepository commentRepository, HeartRepository heartRepository,RouteRepository routeRepository){
         List<Content> contents = contentRepository.findAllByUserId(user.getUserId());
+        Collections.reverse(contents);
         List<Comment> comments = commentRepository.findAllByUserId(user.getUserId());
+        Collections.reverse(comments);
         List<Heart> hearts = heartRepository.findAllByUserId(user.getUserId());
+        Collections.reverse(hearts);
 
         return UserAllResponseDto.builder()
                 .userId(user.getUserId())
@@ -43,9 +47,9 @@ public interface UserMapper {
                 .image(user.getImage())
                 .createdAt(user.getCreatedAt())
                 .modifiedAt(user.getModifiedAt())
-                .comments(commentsToCommentResponseDtos(commentRepository.findAllByUserId(user.getUserId())))
-                .contents(contentsToContentResponseDtos(contentRepository.findAllByUserId(user.getUserId()),routeRepository))
-                .hearts(heartsToHeartResponseDtos(heartRepository.findAllByUserId(user.getUserId())))
+                .comments(commentsToCommentResponseDtos(comments))
+                .contents(contentsToContentResponseDtos(contents,routeRepository))
+                .hearts(heartsToHeartResponseDtos(hearts))
                 .build();
     }
     default List<CommentDto.UserCommentResponse> commentsToCommentResponseDtos(List<Comment> comments){
