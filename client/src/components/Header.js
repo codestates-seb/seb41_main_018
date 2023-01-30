@@ -115,6 +115,9 @@ const Header = () => {
                                                 text="마이페이지"
                                                 boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px;"
                                                 margin="10px"
+                                                onClick={() => {
+                                                    setMenuClick(false);
+                                                }}
                                             />
                                         </Link>
                                         <Button

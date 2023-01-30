@@ -29,6 +29,7 @@ import 강릉 from "../assets/sampleImg/region/강릉.png";
 import 여수 from "../assets/sampleImg/region/여수.png";
 import 전주 from "../assets/sampleImg/region/전주.png";
 import Loading from "../components/Loding";
+import { PALETTE } from "../Common";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -217,7 +218,7 @@ const postBtn = css`
         top: 0;
         height: 490%;
         width: 140%;
-        background: #78c7d2;
+        background: ${PALETTE.default_color};
         -webkit-transition: all 0.5s ease-in-out;
         transition: all 0.5s ease-in-out;
         -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);

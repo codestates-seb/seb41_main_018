@@ -18,9 +18,19 @@ import Loading from "../components/Loding";
 
 //recoil
 import { useRecoilState } from "recoil";
-import { userInfoState, ContentDetail, ReviewListState, GetPosition,
-        DetailContentIdState, DetailuserIdState, DetailTitleState, DetailThemeTypeState,
-        DetailTagState, DetailTravelDateState, DetailRouteState } from "../state/atom";
+import {
+    userInfoState,
+    ContentDetail,
+    ReviewListState,
+    GetPosition,
+    DetailContentIdState,
+    DetailuserIdState,
+    DetailTitleState,
+    DetailThemeTypeState,
+    DetailTagState,
+    DetailTravelDateState,
+    DetailRouteState,
+} from "../state/atom";
 
 //Etc
 import dayjs from "dayjs";
@@ -70,15 +80,15 @@ const Detail = () => {
     };
 
     const updateMyPost = () => {
-        setDetailcontentId(Object.values(contentDetail.data)[2])
-        setDetailuserId(Object.values(contentDetail.data)[3])
-        setDetailTitle(Object.values(contentDetail.data)[4])
-        setDetailThemeType(Object.values(contentDetail.data)[5])
-        setDetailTag(Object.values(contentDetail.data)[8])
-        setDetailTravelDate(Object.values(contentDetail.data)[10])
-        setDetailRoute(Object.values(contentDetail.data)[15])
+        setDetailcontentId(Object.values(contentDetail.data)[2]);
+        setDetailuserId(Object.values(contentDetail.data)[3]);
+        setDetailTitle(Object.values(contentDetail.data)[4]);
+        setDetailThemeType(Object.values(contentDetail.data)[5]);
+        setDetailTag(Object.values(contentDetail.data)[8]);
+        setDetailTravelDate(Object.values(contentDetail.data)[10]);
+        setDetailRoute(Object.values(contentDetail.data)[15]);
         navigate("/edit");
-    }
+    };
 
     const showModal = () => {
         if (userInfo.userId === contentsUserId) {
@@ -108,7 +118,9 @@ const Detail = () => {
 
                         <div css={ButtonBox}>
                             {/* className={isMyPost ? "" : "hidden"} */}
-                            <button css={btnStyle}>Update</button>
+                            <button css={btnStyle} onClick={updateMyPost}>
+                                Update
+                            </button>
                             <button css={btnStyle} onClick={showModal}>
                                 Delete
                             </button>
