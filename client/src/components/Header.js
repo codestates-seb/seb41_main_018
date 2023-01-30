@@ -60,7 +60,6 @@ const Header = () => {
 
     // 외부클릭시 닫히게하기
     const handleClickOutSide = (e) => {
-        console.log(menuRef.current.contains(e.target));
         if (isMenuClick && !menuRef.current.contains(e.target)) {
             setMenuClick(false);
         }
@@ -73,7 +72,6 @@ const Header = () => {
     });
 
     const handleClickOutSide2 = (e) => {
-        console.log(AccountRef.current.contains(e.target));
         if (isAccountClick && !AccountRef.current.contains(e.target)) {
             setAccontClick(false);
         }
