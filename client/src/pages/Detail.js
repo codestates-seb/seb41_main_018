@@ -115,6 +115,8 @@ const Wrap = css`
 `;
 const ContentInfo = css`
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 0.9rem;
     width: 90vw;
     span {
@@ -130,15 +132,19 @@ const TotalContainer = css`
 
 const btnStyle = css`
     cursor: pointer;
-    margin: 40px 0 -17px 10px;
-    padding: 10px 20px;
     background-color: ${PALETTE.default_color};
     border-radius: ${PALETTE.border_round};
     border: 1px solid ${PALETTE.default_color};
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     color: white;
+    margin: 20px 0 -30px 10px;
+    padding: 5px 10px;
     &:hover {
         background-color: ${PALETTE.default_hover};
+    }
+    @media (min-witdh: 768px) {
+        margin: 40px 0 -17px 10px;
+        padding: 10px 20px;
     }
 `;
 
