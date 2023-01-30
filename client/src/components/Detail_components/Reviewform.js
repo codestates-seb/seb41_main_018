@@ -145,7 +145,7 @@ const Reviewform = () => {
                         setReviewText(e.target.value);
                     }}
                 />
-                <Buttons text="등록하기" onPress={createReviewHandler} />
+                <Buttons text="등록" onPress={createReviewHandler} />
             </div>
             <div css={ReviewList}>
                 {/* reviewitem >> map */}

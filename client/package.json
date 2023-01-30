@@ -28,6 +28,7 @@
     "react-kakao-maps-sdk": "^1.1.5",
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
+    "react-spinners": "^0.13.8",
     "recoil": "^0.7.6",
     "recoil-persist": "^4.2.0",
     "swiper": "^8.4.5",

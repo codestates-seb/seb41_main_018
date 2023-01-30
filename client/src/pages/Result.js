@@ -47,13 +47,16 @@ const Result = () => {
     };
 
     useEffect(() => {
-        setSearchTargetArr(categorySearch.contents);
-        themeTypeSwitch(categorySearch.themeType);
+        if (categorySearch.length !== 0) {
+            setSearchTargetArr(categorySearch.contents);
+            themeTypeSwitch(categorySearch.themeType);
+        }
     }, [categorySearch]);
 
     useEffect(() => {
         setSearchTargetArr(filterResult);
         setSearchTargetName(keyword);
+        setKeyword("");
     }, [filterResult]);
 
     return (

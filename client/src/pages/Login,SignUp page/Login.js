@@ -66,7 +66,7 @@ const LoginPage = () => {
     };
 
     useEffect(() => {
-        if (!userInfo) {
+        if (userInfo.userId) {
             likeFilter();
         }
     }, [userInfo]);
