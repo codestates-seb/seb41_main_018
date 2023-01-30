@@ -7,6 +7,7 @@ import com.seb41_main_018.mainproject.exception.ExceptionCode;
 import com.seb41_main_018.mainproject.heart.dto.HeartDto;
 import com.seb41_main_018.mainproject.heart.entity.Heart;
 import com.seb41_main_018.mainproject.heart.mapper.HeartMapper;
+import com.seb41_main_018.mainproject.heart.repository.HeartRepository;
 import com.seb41_main_018.mainproject.heart.service.HeartService;
 import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.content.entity.Content;
@@ -36,6 +37,7 @@ public class HeartController {
     private final HeartService heartService;
     private final UserService userService;
     private final ContentService contentService;
+    private final HeartRepository heartRepository;
 
     // 좋아요 등록 //
     @ApiOperation(value = "좋아요 등록", notes = "좋아요를 등록합니다.")
@@ -53,6 +55,11 @@ public class HeartController {
         Content content = contentService.findContent(contentId);
         Heart heart = heartService.createHeart(user,content);
         HeartDto.Response response = heartMapper.heartToHeartResponseDto(heart);
+
+        if(heart.getHeartType()==HeartType.REMOVE){
+            heartRepository.delete(heart);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
 
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
