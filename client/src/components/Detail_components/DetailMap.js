@@ -83,12 +83,7 @@ const DetailMap = () => {
                         /> */}
                     </div>
                 ))}
-            <div
-                css={css`
-                    display: flex;
-                    margin: -30px 0 0 40px;
-                `}
-            >
+            <div css={BtnWrap}>
                 <button css={BtnStyle} onClick={() => setZoomable(false)}>
                     지도 확대/축소 끄기
                 </button>
@@ -160,12 +155,23 @@ const customoverlay = css`
         bottom: -12px;
     }
 `;
-
+const BtnWrap = css`
+    display: flex;
+    margin: 10px 0 0 40px;
+    @media (min-width: 768px) {
+        margin: -30px 0 0 40px;
+    }
+`;
 const BtnStyle = css`
     padding: 5px 10px;
-    margin: 5px;
+    font-size: 0.725px;
+    margin: 0 5px;
     background-color: white;
     border: 1.5px solid ${PALETTE.default_color};
     border-radius: ${PALETTE.border_radius};
+    @media (min-width: 768px) {
+        margin: 5px;
+        font-size: 1rem;
+    }
 `;
 export default DetailMap;

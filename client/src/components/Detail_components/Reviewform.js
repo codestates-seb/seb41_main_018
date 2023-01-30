@@ -24,6 +24,7 @@ export const Buttons = (props) => {
             before={props.icon}
             onPress={props.onPress}
             css={css`
+                /* --button-default-margin-left: -80px; */
                 --button-default-height: 80px;
                 --button-default-font-size: 1.1rem;
                 --button-default-border-radius: 10px;
@@ -170,9 +171,12 @@ const Reviewform = () => {
 };
 //리뷰
 const ReviewContainer = css`
-    width: 70vw;
+    width: 90vw;
     margin: 0 auto;
-    /* background-color: red; */
+    border-radius: 5px;
+    @media (min-width: 768px) {
+        width: 70vw;
+    }
 `;
 
 const ReviewCount = css`
@@ -184,7 +188,7 @@ const ReviewCount = css`
 
 const ReviewInput = css`
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     height: 80px;
     margin: 0 auto;
 
@@ -202,6 +206,7 @@ const ReviewInput = css`
 `;
 const ReviewList = css`
     padding-top: 20px;
+    /* box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2); */
 `;
 
 const RatingBox = css`

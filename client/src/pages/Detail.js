@@ -18,7 +18,9 @@ import Loading from "../components/Loding";
 
 //recoil
 import { useRecoilState } from "recoil";
-import { userInfoState, ContentDetail, ReviewListState, GetPosition } from "../state/atom";
+import { userInfoState, ContentDetail, ReviewListState, GetPosition,
+        DetailContentIdState, DetailuserIdState, DetailTitleState, DetailThemeTypeState,
+        DetailTagState, DetailTravelDateState, DetailRouteState } from "../state/atom";
 
 //Etc
 import dayjs from "dayjs";
@@ -32,9 +34,18 @@ import Button from "../components/Button";
 const Detail = () => {
     const navigate = useNavigate();
     const pathname = location.pathname;
+
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [reviewList, setReviewList] = useRecoilState(ReviewListState);
+    const [DetailcontentId, setDetailcontentId] = useRecoilState(DetailContentIdState);
+    const [DetailuserId, setDetailuserId] = useRecoilState(DetailuserIdState);
+    const [DetailTitle, setDetailTitle] = useRecoilState(DetailTitleState);
+    const [DetailThemeType, setDetailThemeType] = useRecoilState(DetailThemeTypeState);
+    const [DetailTag, setDetailTag] = useRecoilState(DetailTagState);
+    const [DetailTravelDate, setDetailTravelDate] = useRecoilState(DetailTravelDateState);
+    const [DetailRoute, setDetailRoute] = useRecoilState(DetailRouteState);
+
     const [isMyPost, setMyPost] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -58,6 +69,17 @@ const Detail = () => {
         setIsLoading(false);
     };
 
+    const updateMyPost = () => {
+        setDetailcontentId(Object.values(contentDetail.data)[2])
+        setDetailuserId(Object.values(contentDetail.data)[3])
+        setDetailTitle(Object.values(contentDetail.data)[4])
+        setDetailThemeType(Object.values(contentDetail.data)[5])
+        setDetailTag(Object.values(contentDetail.data)[8])
+        setDetailTravelDate(Object.values(contentDetail.data)[10])
+        setDetailRoute(Object.values(contentDetail.data)[15])
+        navigate("/edit");
+    }
+
     const showModal = () => {
         if (userInfo.userId === contentsUserId) {
             setModalOpen(true);
@@ -71,11 +93,6 @@ const Detail = () => {
         handleMyPost();
     }, []);
 
-    console.log(`contentsUserId`, contentsUserId);
-    console.log(`logInUserId`, logInUserId);
-    console.log(`contentsUserId === logInUserId`, contentsUserId === logInUserId);
-    console.log(`isMyPost`, isMyPost);
-
     return (
         <div>
             {isLoading ? (
@@ -84,20 +101,20 @@ const Detail = () => {
                 <>
                     <div css={Wrap}>
                         <h1>{contentDetail.data && contentDetail.data.title}</h1>
-
                         <div css={ContentInfo}>
                             <Total />
                             <div css={postDate}>{`${postingData} 작성`}</div>
                         </div>
 
-                        <div css={TotalContainer}>
-                            <Detailform />
-                        </div>
-                        <div css={ButtonBox} className={isMyPost ? "" : "hidden"}>
+                        <div css={ButtonBox}>
+                            {/* className={isMyPost ? "" : "hidden"} */}
                             <button css={btnStyle}>Update</button>
                             <button css={btnStyle} onClick={showModal}>
                                 Delete
                             </button>
+                        </div>
+                        <div css={TotalContainer}>
+                            <Detailform />
                         </div>
 
                         <Reviewform />
@@ -144,6 +161,18 @@ const ContentInfo = css`
 
 const ButtonBox = css`
     display: flex;
+    position: relative;
+    width: 90%;
+    top: 80px;
+    justify-content: end;
+    margin-top: -40px;
+    @media (min-width: 768px) {
+        top: 74px;
+    }
+
+    @media (min-width: 768px) {
+        z-index: 3;
+    }
 
     &.hidden {
         visibility: hidden;
@@ -158,19 +187,12 @@ const TotalContainer = css`
 
 const btnStyle = css`
     cursor: pointer;
-    background-color: ${PALETTE.default_color};
-    border-radius: ${PALETTE.border_round};
-    border: 1px solid ${PALETTE.default_color};
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    color: white;
-    margin: 20px 0 -30px 10px;
+    background-color: white;
+    border: none;
+    border-radius: ${PALETTE.border_radius};
     padding: 5px 10px;
     &:hover {
-        background-color: ${PALETTE.default_hover};
-    }
-    @media (min-witdh: 768px) {
-        margin: 40px 0 -17px 10px;
-        padding: 10px 20px;
+        background-color: #c5c5c5;
     }
 `;
 

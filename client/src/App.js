@@ -9,6 +9,7 @@ import SignUp from "../src/pages/Login,SignUp page/SignUp";
 import Mypage from "../src/pages/Mypage";
 import Detail from "../src/pages/Detail";
 import Post from "../src/pages/PostPage/Post";
+import Edit from "./pages/PostPage/Edit";
 import Result from "../src/pages/Result";
 import Footer from "./components/Footer";
 import "./App.css";
@@ -26,6 +27,7 @@ const App = () => {
                 <Route path="/mypage" element={<Mypage />}></Route>
                 <Route path="/detail/:contentId" element={<Detail />}></Route>
                 <Route path="/post" element={<Post />}></Route>
+                <Route path="/edit" element={<Edit />}></Route>
                 <Route path="/result" element={<Result />}></Route>
             </Routes>
         </BrowserRouter>

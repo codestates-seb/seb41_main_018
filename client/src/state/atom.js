@@ -138,3 +138,45 @@ export const TagsStringState = atom({
     key: "TagsStringState",
     default: "",
 });
+
+export const DetailContentIdState = atom({
+    key: "DetailContentId",
+    default: '',
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const DetailuserIdState = atom({
+    key: "DetailuserIdState",
+    default: '',
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const DetailTitleState = atom({
+    key: "DetailTitleState",
+    default: '',
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const DetailThemeTypeState = atom({
+    key: "DetailThemeTypeState",
+    default: '',
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const DetailTagState = atom({
+    key: "DetailTagState",
+    default: '',
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const DetailTravelDateState = atom({
+    key: "TravelDateState",
+    default: '',
+    effects_UNSTABLE: [persistAtom],
+})
+
+export const DetailRouteState = atom({
+    key: "DetailRouteState",
+    default: '',
+    effects_UNSTABLE: [persistAtom],
+})
