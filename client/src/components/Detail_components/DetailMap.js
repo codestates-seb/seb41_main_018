@@ -163,9 +163,12 @@ const customoverlay = css`
 
 const BtnStyle = css`
     padding: 5px 10px;
-    margin: 5px;
+    margin: 40px 0 0 0;
     background-color: white;
     border: 1.5px solid ${PALETTE.default_color};
     border-radius: ${PALETTE.border_radius};
+    @media (min-width: 768px) {
+        margin: 5px;
+    }
 `;
 export default DetailMap;
