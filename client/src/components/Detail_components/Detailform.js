@@ -125,6 +125,17 @@ const Detailform = () => {
                         margin: 0 auto;
                     `}
                 >
+                    <div
+                        css={css`
+                            text-align: end;
+                            margin-bottom: -15px;
+                            color: rgba(0, 0, 0, 0.5);
+                        `}
+                    >
+                        {`${dayjs(contentDetail.data && contentDetail.data.createdAt).format(
+                            "YYYY년 MM월 DD일 dddd"
+                        )} 작성`}
+                    </div>
                     <DetailformItems index={currentTab} />
                     <div
                         css={css`
