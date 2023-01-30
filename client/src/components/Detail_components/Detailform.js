@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 
@@ -31,11 +31,11 @@ export const Buttons = (props) => {
             before={props.icon}
             onPress={props.onPress}
             css={css`
-                margin: 10px;
-                --button-default-height: 50px;
-                --button-default-font-size: 1.5rem;
+                margin-left: 10px;
+                --button-default-height: 40px;
+                --button-default-font-size: 1.2rem;
                 --button-default-border-radius: 10px;
-                --button-horizontal-padding: 20px;
+                --button-horizontal-padding: 10px;
                 --button-raise-level: 3px;
                 --button-hover-pressure: 1.75;
                 --transform-speed: 0.185s;
@@ -45,6 +45,12 @@ export const Buttons = (props) => {
                 --button-primary-color-hover: #187bd1;
                 --button-primary-color-active: #166dba;
                 --button-primary-border: none;
+                @media (min-width: 768px) {
+                    --button-default-height: 50px;
+                    --button-default-font-size: 1.5rem;
+                    --button-default-border-radius: 10px;
+                    --button-horizontal-padding: 40px;
+                }
             `}
         >
             {props.text}
@@ -52,6 +58,7 @@ export const Buttons = (props) => {
     );
 };
 const Detailform = () => {
+    const mounted = useRef(false);
     const [currentTab, setcurrentTab] = useState(0);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
@@ -65,12 +72,14 @@ const Detailform = () => {
 
     // "ADD" 인 좋아요만 filter
     const likeFilter = () => {
-        const likeArr = userInfo && userInfo.hearts.filter((el) => el.heartType === "ADD");
-        setAddedLike(likeArr);
+        setAddedLike(userInfo && userInfo.hearts.filter((el) => el.heartType === "ADD"));
+        console.log(adddedLike);
     };
-    const likeMap = () => {
-        const likeClickState = adddedLike.map((el) => el.contentId === data.contentId);
-        setClickedLike(likeClickState);
+
+    // 좋아요한 상태 표시
+    const likedContent = () => {
+        setClickedLike(adddedLike.map((el) => el.contentId === data.contentId));
+        console.log(clickedLike);
     };
 
     // 좋아요 post요청 함수
@@ -78,15 +87,22 @@ const Detailform = () => {
         postHeart(userInfo.userId, data.contentId).then(() => {
             getUserInfo(userInfo.userId).then((data) => {
                 setUserInfo(data.data);
-                likeFilter();
-
-                console.log(adddedLike);
             });
         });
     };
 
     useEffect(() => {
-        likeMap();
+        if (mounted.current) {
+            likeFilter();
+        }
+    }, [userInfo]);
+
+    useEffect(() => {
+        if (mounted.current) {
+            likedContent();
+        } else {
+            mounted.current = true;
+        }
     }, [adddedLike]);
 
     return (
@@ -160,6 +176,7 @@ const wrap = css`
     height: 100%;
     display: flex;
     flex-direction: column;
+    /* margin-top: -20px; */
 
     h2 {
         margin: 30px 0 10px 47px;
@@ -217,11 +234,13 @@ const imgStyle = css`
 const ButtonBox = css`
     display: flex;
     align-self: flex-end;
+    margin-top: -32px;
     padding-right: 40px;
 `;
 
 const tabWrap = css`
     display: flex;
+    flex-wrap: wrap;
     margin: 30px 0 -15px 10px;
 
     @media (min-width: 768px) {
@@ -234,6 +253,7 @@ const tabWrap = css`
 const SelectTab = css`
     cursor: pointer;
     text-align: center;
+
     @media (max-width: 768px) {
         padding: 10px;
         font-size: 0.975rem;
@@ -250,12 +270,14 @@ const SelectTab = css`
         cursor: pointer;
         position: relative;
         color: ${PALETTE.default_color};
+        border-bottom: 0.285rem solid ${PALETTE.default_color};
     }
 `;
 
 const NoSelect = css`
     cursor: pointer;
     text-align: center;
+    border-bottom: 0.285rem solid white;
     @media (max-width: 768px) {
         padding: 10px;
         font-size: 0.975rem;

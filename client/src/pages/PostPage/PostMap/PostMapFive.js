@@ -283,22 +283,40 @@ const SearchMap = css`
     display: flex;
 
     #map5 {
+        display: none;
         width: 85vw;
-        height: 370px;
+        height: 510px;
         overflow: hidden;
         border-radius: 10px;
+        @media (min-width: 768px) {
+            flex-direction: row;
+            position: absolute;
+            left: 5vw;
+            display: inline-block;
+            width: 40vw;
+            margin: auto 20px;
+        }
+        @media (min-width: 1200px) {
+            flex-direction: row;
+            position: absolute;
+            left: 5vw;
+            display: inline-block;
+            width: 50vw;
+            margin: auto 20px;
+        }
     }
 
     #menu_wrap5 {
-        position: absolute;
-        width: 250px;
-        height: 340px;
-        margin: 10px 0 30px 10px;
+        position: relative;
+        width: 85vw;
+        height: 100%;
+        max-height: 300px;
+        margin: -20px auto 0;
         padding: 5px;
         overflow-y: auto;
         background: rgba(255, 255, 255, 0.9);
         z-index: 2;
-        font-size: 15px;
+        font-size: 1rem;
         border-radius: 10px;
 
         -ms-overflow-style: none; /* IE and Edge */
@@ -306,6 +324,27 @@ const SearchMap = css`
 
         ::-webkit-scrollbar {
             display: none; /* Chrome, Safari, Opera*/
+        }
+        @media (min-width: 768px) {
+            position: relative;
+            width: 38vw;
+            height: 100%;
+            max-height: 220px;
+            margin: 0 auto;
+            font-size: 0.875rem;
+            right: 23vw;
+            top: 260px;
+        }
+        @media (min-width: 1200px) {
+            position: relative;
+            width: 15vw;
+            height: 100%;
+            min-width: 240px;
+            max-height: 480px;
+            right: 4vw;
+            top: 10px;
+
+            font-size: 0.875rem;
         }
     }
 

@@ -14,6 +14,7 @@ import Reviewform from "../components/Detail_components/Reviewform";
 import { PALETTE } from "../Common";
 import Total from "../components/Detail_components/Total";
 import DetailDeleteModal from "../components/Detail_components/DetailDeleteModal";
+import Loading from "../components/Loding";
 
 //recoil
 import { useRecoilState } from "recoil";
@@ -28,6 +29,7 @@ dayjs.locale("ko");
 
 import { getContent, deleteContent } from "../util/axiosContents";
 import { getUserInfo } from "../util/axiosUser";
+import Button from "../components/Button";
 
 const Detail = () => {
     const navigate = useNavigate();
@@ -49,6 +51,9 @@ const Detail = () => {
     const [isLoading, setIsLoading] = useState(true);
     const contentsUserId = contentDetail.data && contentDetail.data.userId;
     const logInUserId = userInfo.userId;
+    const postingData = dayjs(contentDetail.data && contentDetail.data.createdAt).format(
+        "YYYY.MM.DD"
+    );
 
     const getContentDetail = (contentId) => {
         getContent(contentId).then((res) => {
@@ -60,8 +65,8 @@ const Detail = () => {
     const handleMyPost = () => {
         if (contentsUserId === logInUserId) {
             setMyPost(true);
-            // console.log(isMyPost);
         }
+        setIsLoading(false);
     };
 
     const updateMyPost = () => {
@@ -76,40 +81,53 @@ const Detail = () => {
     }
 
     const showModal = () => {
-        setModalOpen(true);
+        if (userInfo.userId === contentsUserId) {
+            setModalOpen(true);
+        } else {
+            alert("권한이 없습니다.");
+        }
     };
 
     useEffect(() => {
         getContentDetail(location.pathname.slice(8));
+        handleMyPost();
     }, []);
 
     return (
-        <div css={Wrap}>
-            <h1>{contentDetail.data && contentDetail.data.title}</h1>
+        <div>
+            {isLoading ? (
+                <Loading />
+            ) : (
+                <>
+                    <div css={Wrap}>
+                        <h1>{contentDetail.data && contentDetail.data.title}</h1>
 
-            <div css={ContentInfo}>
-                <Total />
+                        <div css={ContentInfo}>
+                            <Total />
+                            <div css={postDate}>{`${postingData} 작성`}</div>
+                        </div>
 
-                <div
-                    css={css`
-                        display: flex;
-                    `}
-                >
-                    <button css={btnStyle} onClick={updateMyPost}>
-                        Update
-                    </button>
-                    <button css={btnStyle} onClick={showModal}>
-                        Delete
-                    </button>
-                </div>
-            </div>
+                        <div css={TotalContainer}>
+                            <Detailform />
+                        </div>
+                        <div css={ButtonBox} className={isMyPost ? "" : "hidden"}>
+                            <button css={btnStyle} onClick={updateMyPost}>
+                                Update
+                            </button>
+                            <button css={btnStyle} onClick={showModal}>
+                                Delete
+                            </button>
+                        </div>
 
-            <div css={TotalContainer}>
-                <Detailform />
-            </div>
-            <Reviewform />
-            {modalOpen && (
-                <DetailDeleteModal text="정말 삭제하시겠습니까?" setModalOpen={setModalOpen} />
+                        <Reviewform />
+                        {modalOpen && (
+                            <DetailDeleteModal
+                                text="정말 삭제하시겠습니까?"
+                                setModalOpen={setModalOpen}
+                            />
+                        )}
+                    </div>
+                </>
             )}
         </div>
     );
@@ -134,10 +152,20 @@ const Wrap = css`
 `;
 const ContentInfo = css`
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 0.9rem;
     width: 90vw;
     span {
         margin: 5px;
+    }
+`;
+
+const ButtonBox = css`
+    display: flex;
+
+    &.hidden {
+        visibility: hidden;
     }
 `;
 
@@ -149,16 +177,26 @@ const TotalContainer = css`
 
 const btnStyle = css`
     cursor: pointer;
-    margin: 40px 0 -17px 10px;
-    padding: 10px 20px;
     background-color: ${PALETTE.default_color};
     border-radius: ${PALETTE.border_round};
     border: 1px solid ${PALETTE.default_color};
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     color: white;
+    margin: 20px 0 -30px 10px;
+    padding: 5px 10px;
     &:hover {
         background-color: ${PALETTE.default_hover};
     }
+    @media (min-witdh: 768px) {
+        margin: 40px 0 -17px 10px;
+        padding: 10px 20px;
+    }
 `;
 
+const postDate = css`
+    color: rgba(0, 0, 0, 0.5);
+    width: 130px;
+    margin-top: 13px;
+    margin-bottom: -46px;
+`;
 export default Detail;

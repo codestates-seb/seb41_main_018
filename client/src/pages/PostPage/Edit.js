@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -47,8 +47,6 @@ const AddInput = () => {
 
     const [DetailRoute, setDetailRoute] = useRecoilState(DetailRouteState);
 
-    const [ editRoute, setEditRoute ] = useState('');
-
     const { control, register, watch, setValue } = useFormContext();
     const { fields, append, remove } = useFieldArray({
         control,
@@ -56,7 +54,7 @@ const AddInput = () => {
     });
 
     defaultValues = {
-        title: "22",
+        title: "",
         themeType: "DOMESTIC",
         travelDate: new Date(),
         routes: [{}],
@@ -91,30 +89,14 @@ const AddInput = () => {
     const place5 = useRef();
     place5.current = watch(`routes.${4}.place`);
 
-    const FindIndex = (index) => {
-        if (index === 0) {
-            setEditRoute(DetailRoute[0])
-            console.log(1)
-        } else if (index === 1) {
-            setEditRoute(DetailRoute[1])
-        } else if (index === 2) {
-            setEditRoute(DetailRoute[2])
-        } else if (index === 3) {
-            setEditRoute(DetailRoute[3])
-        } else if (index === 4) {
-            setEditRoute(DetailRoute[4])
-        }
-    }
+    const indexNum = useRef();
+    indexNum.current = watch(`routes.${1}.place`) 
 
     return (
         <ul css={FormContainer}>
             {fields.map((item, index) =>
                 index < 5 ? (
                     <form>
-                        {(index) => FindIndex(index)}
-                        {/* {console.log(DetailRoute[0])}
-                        {console.log(Object.values(DetailRoute[0])[4])} */}
-
                         <li
                             key={item.id}
                             css={css`
@@ -122,6 +104,9 @@ const AddInput = () => {
                             `}
                         >
                             <div css={FieldContainer}>
+                            <div css={MapStyle}>
+                                    {MapList(index, watch(`routes.${index}.place`))}
+                                </div>
                                 <div css={RouteForm}>
                                     <div
                                         css={css`
@@ -137,12 +122,12 @@ const AddInput = () => {
                                                     return (
                                                         <input
                                                             {...field}
-                                                            // value={field.value ? field.value : Object.values(DetailRoute[0])[4]}
-                                                            defaultValue={Object.values(DetailRoute[0])[4]}
+                                                            defaultValue={Object.values(DetailRoute[index])[4]}
                                                             placeholder="장소를 입력해주세요"
                                                             css={PlaceInput}
                                                             autocomplete="off"
                                                             />
+                                                            
                                                     );
                                                 }}
                                             />
@@ -152,21 +137,21 @@ const AddInput = () => {
                                         <div className="listname"></div>
                                         <input
                                             {...register(`routes.${index}.address`)}
-                                            value={Object.values(DetailRoute[0])[8]}
+                                            value={Object.values(DetailRoute[index])[8]}
                                             placeholder="지도에서 장소를 선택해주세요!"
                                             css={ListInput}
                                             readOnly
                                         />
                                         <input
                                             {...register(`routes.${index}.x`)}
-                                            value={Object.values(DetailRoute[0])[6]}
+                                            value={Object.values(DetailRoute[index])[6]}
                                             css={css`
                                                 display: none;
                                             `}
                                         />
                                         <input
                                             {...register(`routes.${index}.y`)}
-                                            value={Object.values(DetailRoute[0])[7]}
+                                            value={Object.values(DetailRoute[index])[7]}
                                             css={css`
                                                 display: none;
                                             `}
@@ -181,8 +166,7 @@ const AddInput = () => {
                                                     return (
                                                         <input
                                                             {...field}
-                                                            // value={field.value ? field.value : Object.values(DetailRoute[0])[2]}
-                                                            defaultValue={Object.values(DetailRoute[0])[2]}
+                                                            defaultValue={Object.values(DetailRoute[index])[2]}
                                                             type="number"
                                                             placeholder="사용한 금액을 입력해주세요!"
                                                             autocomplete="off"
@@ -204,8 +188,8 @@ const AddInput = () => {
                                                     return (
                                                         <input
                                                             {...field}
-                                                            value={field.value ? field.value : Object.values(DetailRoute[0])[3]}
-                                                            defaultValue={Object.values(DetailRoute[0])[3]}
+                                                            value={field.value ? field.value : Object.values(DetailRoute[index])[3]}
+                                                            defaultValue={Object.values(DetailRoute[index])[3]}
                                                             placeholder="이동수단을 입력해주세요!"
                                                             autocomplete="off"
                                                             css={ListInput}
@@ -223,8 +207,7 @@ const AddInput = () => {
                                                     return (
                                                         <textarea
                                                             {...field}
-                                                            // value={field.value ? field.value : Object.values(DetailRoute[0])[3]}
-                                                            defaultValue={Object.values(DetailRoute[0])[3]}
+                                                            defaultValue={Object.values(DetailRoute[index])[3]}
                                                             placeholder="후기를 적어주세요!"
                                                             autocomplete="off"
                                                             css={BodyInput}
@@ -233,6 +216,11 @@ const AddInput = () => {
                                                 }}
                                             />
                                     </div>
+                                    <ImgUpload
+                                    index={index}
+                                    setValue={setValue}
+                                    value={watch(`routes.${index}.image`)}
+                                    />
                                     <input
                                         {...register(`routes.${index}.image`)}
                                         name="image"
@@ -241,14 +229,6 @@ const AddInput = () => {
                                         `}
                                     />
                                 </div>
-                                <div css={MapStyle}>
-                                    {MapList(index, watch(`routes.${index}.place`))}
-                                </div>
-                                <ImgUpload
-                                    index={index}
-                                    setValue={setValue}
-                                    value={watch(`routes.${index}.image`)}
-                                />
                             </div>
                             <button type="button" onClick={() => remove(index)} css={DeleteButton}>
                                 <IoMdRemove size="30" />
@@ -268,7 +248,8 @@ const AddInput = () => {
                     }}
                     css={AppendButton}
                 >
-                    <BsPlusCircleFill size="35" color="#497174" />
+                    <BsPlusCircleFill size="20" />
+                    Add Route
                 </button>
             ) : (
                 <></>
@@ -458,9 +439,6 @@ const FormWrap = css`
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: ${PALETTE.border};
-    border-radius: ${PALETTE.border_radius};
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin: 10px auto;
     width: 90vw;
 `;
@@ -487,10 +465,16 @@ const FormContainer = css`
 
 const FieldContainer = css`
     display: flex;
+    margin: 10px 0;
     width: 90vw;
+    height: 100%;
     flex-direction: column;
+    border: ${PALETTE.border};
+    border-radius: ${PALETTE.border_radius};
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     @media (min-width: 768px) {
         flex-direction: row;
+        height: 550px;
     }
 `;
 
@@ -534,20 +518,6 @@ const CategoryInput = css`
     @media (min-width: 768px) {
         width: 20vw;
     }
-
-    /* .Dropdown-menu {
-        min-height: 100px;
-        overflow-x: hidden;
-    }
-
-    .Dropdown-control {
-        padding: 14px 52px 10px 15px;
-    }
-
-    .Dropdown-arrow {
-        margin-top: 8px;
-    } */
-
 `;
 
 const TravelDateTitle = css`
@@ -605,17 +575,29 @@ const PlaceInput = css`
     border-radius: ${PALETTE.border_radius};
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     padding: 15px;
-    width: 100%;
+    width: 60vw;
     height: 40px;
     z-index: 2;
+    @media (min-width: 768px) {
+        width: 25vw;
+    }
 `;
 
 const RouteForm = css`
     display: flex;
     flex-direction: column;
+    height: 510px;
     margin: 50px auto;
+
     @media (min-width: 768px) {
+        position: absolute;
+        right: 7vw;
         width: 40vw;
+    }
+    @media (min-width: 1200px) {
+        position: absolute;
+        right: 7vw;
+        width: 35vw;
     }
 
     .listcontainer {
@@ -657,7 +639,7 @@ const BodyInput = css`
     border: none;
     font-size: 1rem;
     width: 60vw;
-    height: 15vh;
+    height: 170px;
     resize: none;
     border: ${PALETTE.border};
     border-radius: ${PALETTE.border_radius};
@@ -671,26 +653,11 @@ const MapStyle = css`
     margin: 20px auto;
 `;
 
-// const AppendButton = css`
-//     font-size: 0.975rem;
-//     color: white;
-//     border-radius: 50px;
-//     border: 0.1rem solid white;
-//     /* background-color: #2adba2; */
-//     background-color: #0f7586;
-//     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-//     width: 150px;
-//     height: 50px;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     cursor: pointer;
-//     span {
-//         margin-left: 10px;
-//     }
-
-// `;
 const AppendButton = css`
+    display: flex;
+    align-items: cetner;
+    justify-content: space-between;
+    width: 145px;
     margin: 20px auto;
     border: none;
     padding: 10px 20px;
@@ -714,8 +681,8 @@ const AppendButton = css`
 const DeleteButton = css`
     position: relative;
     right: 40px;
-    bottom: 0px;
-    height: 50px;
+    top: 20px;
+    height: 30px;
     border: none;
     cursor: pointer;
     background-color: #ffffff;

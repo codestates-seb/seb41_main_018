@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 const HomeItems = (content) => {
     const [isFavoriteClcik, setFavoriteClick] = useState(false);
+
     const handleFavoriteClick = () => {
         setFavoriteClick(!isFavoriteClcik);
     };
@@ -51,7 +52,9 @@ const HomeItems = (content) => {
                             content.content.routes.map((el) => <li css={liStyle}># {el.place}</li>)}
                     </ul>
                 </div>
-                <div css={priceStyle}>{content.content && `₩ ${content.content.amount}`}</div>
+                <div css={priceStyle}>
+                    {content.content && `총 경비 : ${content.content.amount}`}
+                </div>
             </Link>
         </div>
     );
@@ -85,6 +88,9 @@ const textContainer = css`
 const titleStyle = css`
     font-size: 1rem;
     font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `;
 
 const sideTextStyle = css`
@@ -105,7 +111,7 @@ const ulStyle = css`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    height: 6vh;
+    height: 50px;
 `;
 
 const liStyle = css`

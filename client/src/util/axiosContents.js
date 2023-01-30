@@ -7,7 +7,7 @@ export const getContent = async (contentId = 0) => {
     return await axios
         .get(
             `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents${
-                contentId !== 0 ? `/${contentId}` : "/?page=1&size=10"
+                contentId !== 0 ? `/${contentId}` : "/?page=1&size=100"
             }`
         )
         .then((res) => {
@@ -22,7 +22,7 @@ export const getComment = async (commentId = 0) => {
     return await axios
         .get(
             `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/comments${
-                commentId !== 0 ? `/${commentId}` : "/?page=1&size=10"
+                commentId !== 0 ? `/${commentId}` : "/?page=1&size=100"
             }`
         )
         .then((res) => {
@@ -215,6 +215,7 @@ export const postHeart = async (userId, contentId) => {
     return await axios
         .post(
             `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/${userId}/${contentId}/hearts`,
+            {},
             {
                 headers: {
                     Authorization: sessionStorage.getItem("access_token"),

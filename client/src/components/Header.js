@@ -19,6 +19,7 @@ import {
     ContentsList,
     KeywordFilterResultState,
     SearchKeywordState,
+    AddedLikeState,
 } from "../state/atom";
 import { userLogout } from "../util/axiosUser";
 
@@ -31,6 +32,7 @@ const Header = () => {
     const [isMenuClick, setMenuClick] = useState(false);
     const [isAccountClick, setAccontClick] = useState(false);
     const [keyword, setKeyword] = useRecoilState(SearchKeywordState);
+    const [adddedLike, setAddedLike] = useRecoilState(AddedLikeState);
     const menuRef = useRef();
     const AccountRef = useRef();
     const location = useLocation();
@@ -90,7 +92,9 @@ const Header = () => {
         userLogout().then(() => {
             setIsLogin(false);
             setUserInfo({});
+            setAddedLike({});
             navigate("/");
+            setMenuClick(false);
         });
     };
 
@@ -110,13 +114,23 @@ const Header = () => {
                                     <div>
                                         <Link to="/mypage">
                                             <Button
+                                                bgColor="white"
                                                 width="250px"
                                                 height="60px"
                                                 text="마이페이지"
-                                                boxShadow="1px 1px 5px rgb(0,0,0,0.2)"
+                                                boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px;"
                                                 margin="10px"
                                             />
                                         </Link>
+                                        <Button
+                                            bgColor="white"
+                                            width="250px"
+                                            height="60px"
+                                            text="로그아웃"
+                                            boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px;"
+                                            margin="10px"
+                                            onClick={logout}
+                                        />
                                     </div>
                                 ) : (
                                     <div>
@@ -179,8 +193,8 @@ const Header = () => {
                         type="text"
                         css={SearchInput}
                         placeholder="검색어를 입력해주세요."
-                        onChange={(e) => setKeyword(e.target.value)}
                         value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
                         onKeyUp={(e) => {
                             if (e.key == "Enter") {
                                 keywordSearch();
@@ -210,8 +224,8 @@ const Header = () => {
                                     type="text"
                                     css={responsiveSearchInput}
                                     placeholder="검색어를 입력해주세요."
-                                    onChange={(e) => setKeyword(e.target.value)}
                                     value={keyword}
+                                    onChange={(e) => setKeyword(e.target.value)}
                                     onKeyUp={(e) => {
                                         if (e.key == "Enter") {
                                             keywordSearch();
@@ -487,6 +501,7 @@ const dropMenu = css`
     border-radius: 10px;
     box-shadow: ${PALETTE.box_shaodw};
     border-radius: ${PALETTE.border_radius};
+    z-index: 4;
     li {
         width: 150px;
         height: 40px;

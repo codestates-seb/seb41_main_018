@@ -2,16 +2,15 @@ import React, { useState } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
-import logo from "../../assets/logo.png";
-import { AiFillStar } from "react-icons/ai";
 import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import dayjs from "dayjs";
-import { deleteReview, patchReview } from "../../util/axiosContents";
+import { patchReview } from "../../util/axiosContents";
 import { useRecoilState } from "recoil";
 import { userInfoState } from "../../state/atom";
+import ReviewDeleteModal from "./ReviewDeleteModal";
 
 //Button
 import { AwesomeButton } from "react-awesome-button";
@@ -50,12 +49,7 @@ const ReviewItem = ({ review, setUpdate }) => {
     const [editReview, setEditReview] = useState(false);
     const [reviewText, setReviewText] = useState("");
     const [rateType, setRateType] = useState("FIVE");
-
-    const deleteReviewHandler = async () => {
-        await deleteReview(commentId).then(() => {
-            setUpdate(true);
-        });
-    };
+    const [modalOpen, setModalOpen] = useState(false);
 
     const editReviewHandler = () => {
         if (userInfo.userId === userId) {
@@ -73,6 +67,14 @@ const ReviewItem = ({ review, setUpdate }) => {
             setUpdate(true);
             setEditReview(!editReview);
         });
+    };
+
+    const showModal = () => {
+        if (userInfo.userId === userId) {
+            setModalOpen(true);
+        } else {
+            alert("권한이 없습니다.");
+        }
     };
 
     const rateTypeSwitch = (num) => {
@@ -203,18 +205,36 @@ const ReviewItem = ({ review, setUpdate }) => {
                     >
                         {body}
                     </div>
-                    <button onClick={editReviewHandler}>수정</button>
-                    <button onClick={() => deleteReviewHandler(commentId)}>삭제</button>
                 </div>
             </div>
+            <div css={BtnWrap}>
+                <button css={BtnStyle} onClick={editReviewHandler}>
+                    수정
+                </button>
+                <button css={BtnStyle} onClick={showModal}>
+                    삭제
+                </button>
+            </div>
+            {modalOpen && (
+                <ReviewDeleteModal
+                    text="정말 삭제하시겠습니까?"
+                    setModalOpen={setModalOpen}
+                    setUpdate={setUpdate}
+                    commentId={commentId}
+                />
+            )}
         </div>
     );
 };
 
 const Container = css`
     display: flex;
-    align-items: center;
-    margin: 40px auto;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 40px 0;
+    padding: 20px;
+    box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2);
+    border-radius: 10px;
 `;
 
 const ReviewContent = css`
@@ -249,7 +269,7 @@ const ReviewInput = css`
 
     textarea {
         border: none;
-        width: 70vw;
+        width: 65vw;
         height: 80px;
         border: 2px solid ${PALETTE.default_color};
         border-radius: ${PALETTE.border_radius};
@@ -257,9 +277,22 @@ const ReviewInput = css`
         margin-right: 10px;
         font-size: 1rem;
         color: gray;
+        @media (min-width: 768px) {
+            width: 55vw;
+        }
     }
 `;
 
+const BtnWrap = css`
+    margin-left: 75px;
+`;
+const BtnStyle = css`
+    font-size: 0.775rem;
+    color: #7d7d7d;
+    padding: 2.5px;
+    border: none;
+    background-color: white;
+`;
 const StyledRating = styled(Rating)({
     "& .MuiRating-iconFilled": {
         color: "#ff6d75",
