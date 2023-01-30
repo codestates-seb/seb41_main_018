@@ -14,12 +14,7 @@ import right from "../../assets/right.png";
 import left from "../../assets/left.png";
 
 // import sample img (추후 삭제 예정)
-import sam1_1 from "../../assets/sampleImg/sam1_1.png";
-import sam1_2 from "../../assets/sampleImg/sam1_2.jpeg";
-import sam1_3 from "../../assets/sampleImg/sam1_3.jpg";
-import sam2 from "../../assets/sampleImg/sam2.jpg";
-import sam3_1 from "../../assets/sampleImg/sam3_1.jpeg";
-import sam3_2 from "../../assets/sampleImg/sam3_2.jpeg";
+import { DummyImg } from "../../assets/image";
 import { Palette } from "@mui/icons-material";
 import { PALETTE } from "../../Common";
 
@@ -27,34 +22,14 @@ import { PALETTE } from "../../Common";
 import { useRecoilState } from "recoil";
 import { selectedRouteState, ContentDetail } from "../../state/atom";
 
-// 경로 데이터 더미
-const routeDummy = [
-    {
-        contentId: 1,
-        name: "아르떼 뮤지엄",
-        routeId: 1,
-        img: [sam1_1, sam1_2, sam1_3],
-    },
-    {
-        contentId: 1,
-        name: "금오름",
-        routeId: 2,
-        img: [sam2],
-    },
-    {
-        contentId: 1,
-        name: "명월국민학교",
-        routeId: 3,
-        img: [sam3_1, sam3_2],
-    },
-];
-
 const Detial_Img = () => {
     const [selectedRoute, setSelectedRoute] = useRecoilState(selectedRouteState);
     /* 선택 된 경로만 filter */
-    let selected = routeDummy.filter((routeplace) => routeplace.routeId === selectedRoute);
+    // let selected = routeDummy.filter((routeplace) => routeplace.routeId === selectedRoute);
 
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
+    const randomImg = Math.floor(Math.random() * DummyImg.length);
+    console.log(DummyImg[randomImg]);
 
     return (
         <div css={Swiper_Wrap}>
@@ -67,9 +42,9 @@ const Detial_Img = () => {
                 modules={[Navigation, Pagination, Mousewheel, Keyboard]}
                 className="mySwiper"
             >
-                {selected[0].img.map((img) => (
-                    <SwiperSlide key={img}>
-                        <img src={img} alt={img.name} />
+                {DummyImg.map((el, index) => (
+                    <SwiperSlide key={index}>
+                        <img src={el[randomImg]} alt={el.name} />
                     </SwiperSlide>
                 ))}
             </Swiper>

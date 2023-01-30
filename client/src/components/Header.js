@@ -19,7 +19,6 @@ import {
     ContentsList,
     KeywordFilterResultState,
     SearchKeywordState,
-    AddedLikeState,
 } from "../state/atom";
 import { userLogout } from "../util/axiosUser";
 
@@ -32,7 +31,6 @@ const Header = () => {
     const [isMenuClick, setMenuClick] = useState(false);
     const [isAccountClick, setAccontClick] = useState(false);
     const [keyword, setKeyword] = useRecoilState(SearchKeywordState);
-    const [adddedLike, setAddedLike] = useRecoilState(AddedLikeState);
     const menuRef = useRef();
     const AccountRef = useRef();
     const location = useLocation();
@@ -62,7 +60,6 @@ const Header = () => {
 
     // 외부클릭시 닫히게하기
     const handleClickOutSide = (e) => {
-        console.log(menuRef.current.contains(e.target));
         if (isMenuClick && !menuRef.current.contains(e.target)) {
             setMenuClick(false);
         }
@@ -75,7 +72,6 @@ const Header = () => {
     });
 
     const handleClickOutSide2 = (e) => {
-        console.log(AccountRef.current.contains(e.target));
         if (isAccountClick && !AccountRef.current.contains(e.target)) {
             setAccontClick(false);
         }
@@ -92,7 +88,6 @@ const Header = () => {
         userLogout().then(() => {
             setIsLogin(false);
             setUserInfo({});
-            setAddedLike({});
             navigate("/");
             setMenuClick(false);
         });
@@ -120,6 +115,9 @@ const Header = () => {
                                                 text="마이페이지"
                                                 boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px;"
                                                 margin="10px"
+                                                onClick={() => {
+                                                    setMenuClick(false);
+                                                }}
                                             />
                                         </Link>
                                         <Button

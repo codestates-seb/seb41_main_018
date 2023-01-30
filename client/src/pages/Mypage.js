@@ -11,7 +11,7 @@ import MyPost from "../components/Mypage_components/MyPost";
 import MyLike from "../components/Mypage_components/MyLike";
 import MyReview from "../components/Mypage_components/MyReview";
 import logo9 from "../assets/logo9.png";
-import { userInfoState, AddedLikeState } from "../state/atom";
+import { userInfoState } from "../state/atom";
 import { useRecoilState } from "recoil";
 import { getUserInfo, userEdit } from "../util/axiosUser";
 
@@ -21,7 +21,6 @@ const Mypage = () => {
     const [inputName, setInputName] = useState("");
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [isLoading, setIsLoading] = useState(true);
-    const [adddedLike, setAddedLike] = useRecoilState(AddedLikeState);
 
     const selectTabHandler = (index) => {
         setIsTab(index);

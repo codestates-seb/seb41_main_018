@@ -54,15 +54,15 @@ export const Total = () => {
         <div css={ContentsBody}>
             <div css={ComContent}>
                 <span css={ComTitle}>여행일</span>
-                <span>{dayjs(TravelDate).format("YYYY년 MM월 DD일 dddd")}</span>/
+                <span css={content}> {dayjs(TravelDate).format("YYYY년 MM월 DD일 dddd")}</span>
             </div>
             <div css={ComContent}>
                 <span css={ComTitle}>카테고리</span>
-                <span>{setCategroy(data)}</span>/
+                <span css={content}>{setCategroy(data)}</span>
             </div>
             <div css={ComContent}>
                 <sapn css={ComTitle}>총경비</sapn>
-                <span>{`${Amount} 원`}</span>
+                <span css={content}>{`${Amount} 원`}</span>
             </div>
         </div>
     );
@@ -70,6 +70,7 @@ export const Total = () => {
 
 const ContentsBody = css`
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
     align-items: center;
     justify-content: start;
@@ -85,10 +86,6 @@ const ContentsBody = css`
 const ComContent = css`
     display: flex;
     font-size: 0.9rem;
-    span {
-        margin: auto 5px;
-        color: #555c61;
-    }
     @media (min-width: 768px) {
         font-size: 1.225rem;
         color: #0e0e0e;
@@ -99,11 +96,17 @@ const ComContent = css`
 const ComTitle = css`
     display: none;
     @media (min-width: 768px) {
-        display: inline-block;
+        display: flex;
+        align-items: center;
         font-size: 1.25rem;
         font-weight: 700;
         color: ${PALETTE.default_color};
     }
+`;
+
+const content = css`
+    margin: auto 10px;
+    color: black;
 `;
 
 export default Total;

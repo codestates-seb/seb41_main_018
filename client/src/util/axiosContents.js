@@ -210,7 +210,7 @@ export const deleteContent = async (contentId) => {
         });
 };
 
-// 좋아요 등록
+// 좋아요 등록 / 삭제
 export const postHeart = async (userId, contentId) => {
     return await axios
         .post(
@@ -223,8 +223,11 @@ export const postHeart = async (userId, contentId) => {
             }
         )
         .then((res) => {
-            alert("좋아요 등록되었습니다.");
-            console.log(res);
+            if (res.data) {
+                alert(`"좋아요" 가 등록되었습니다.`);
+            } else {
+                alert(`"좋아요" 가  취소되었습니다.`);
+            }
             return res;
         })
         .catch((err) => {
