@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -39,98 +39,119 @@ const Mypage = () => {
             if (data) {
                 getUserInfo(userInfo.userId).then((data) => {
                     setUserInfo(data.data);
-                    /*   setIsLoading(false); */
                 });
             }
             editButtonHandler();
         });
     };
 
+    useEffect(() => {
+        getUserInfo(userInfo.userId).then((data) => {
+            setUserInfo(data.data);
+            setIsLoading(false);
+        });
+    }, []);
+
     return (
-        <div css={Mypage_Wrap}>
-            {console.log(userInfo)}
-            <div css={ProfileContainer}>
-                <img src={userInfo.image} alt="프로필 사진"></img>
-                <div css={NameArea}>
-                    <div css={NameBox}>
-                        {editClick ? (
-                            <input
-                                defaultValue={userInfo.nickname}
-                                onChange={inputNameHandler}
-                            ></input>
+        <>
+            {isLoading ? (
+                <div>Loding...</div>
+            ) : (
+                <div css={Mypage_Wrap}>
+                    {console.log(userInfo)}
+                    <div css={ProfileContainer}>
+                        <img src={userInfo.image} alt="프로필 사진"></img>
+                        <div css={NameArea}>
+                            <div css={NameBox}>
+                                {editClick ? (
+                                    <input
+                                        defaultValue={userInfo.nickname}
+                                        onChange={inputNameHandler}
+                                    ></input>
+                                ) : (
+                                    userInfo.nickname
+                                )}
+                            </div>
+                            {/* 수정 아이콘 클릭 시 수정/취소 버튼 */}
+                            <div>
+                                <span
+                                    className={editClick ? "none" : ""}
+                                    onClick={editButtonHandler}
+                                >
+                                    수정
+                                </span>
+                                {/* 수정 기능 버튼 */}
+                                <span
+                                    className={editClick ? "" : "hidden"}
+                                    onClick={editNameHandler}
+                                >
+                                    수정
+                                </span>
+                                <span
+                                    className={editClick ? "" : "none"}
+                                    onClick={editButtonHandler}
+                                >
+                                    취소
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div css={IconBox}>
+                        <div
+                            css={IconItem}
+                            onClick={() => {
+                                selectTabHandler(0);
+                            }}
+                        >
+                            <CgProfile size="25" />
+                            <div css={IconText}>개인정보</div>
+                        </div>
+
+                        <div
+                            css={IconItem}
+                            onClick={() => {
+                                selectTabHandler(1);
+                            }}
+                        >
+                            <ImAirplane size="25" />
+                            <div css={IconText}>내 여행지</div>
+                        </div>
+                        <div
+                            css={IconItem}
+                            onClick={() => {
+                                selectTabHandler(3);
+                            }}
+                        >
+                            <MdOutlineRateReview size="25" />
+                            <div css={IconText}>후기</div>
+                        </div>
+                        <div
+                            css={IconItem}
+                            onClick={() => {
+                                selectTabHandler(2);
+                            }}
+                        >
+                            <ImHeart size="25" />
+                            <div css={IconText}>좋아요</div>
+                        </div>
+                    </div>
+                    {/* 후기, 좋아요 컴포넌트 하나 사용 고려*/}
+                    <div css={ContentBox}>
+                        {isTab === 0 ? (
+                            <MyInfo />
+                        ) : isTab === 1 ? (
+                            <MyPost />
+                        ) : isTab === 2 ? (
+                            <MyLike />
+                        ) : isTab === 3 ? (
+                            <MyReview />
                         ) : (
-                            userInfo.nickname
+                            ""
                         )}
                     </div>
-                    {/* 수정 아이콘 클릭 시 수정/취소 버튼 */}
-                    <div>
-                        <span className={editClick ? "none" : ""} onClick={editButtonHandler}>
-                            수정
-                        </span>
-                        {/* 수정 기능 버튼 */}
-                        <span className={editClick ? "" : "hidden"} onClick={editNameHandler}>
-                            수정
-                        </span>
-                        <span className={editClick ? "" : "none"} onClick={editButtonHandler}>
-                            취소
-                        </span>
-                    </div>
                 </div>
-            </div>
-            <div css={IconBox}>
-                <div
-                    css={IconItem}
-                    onClick={() => {
-                        selectTabHandler(0);
-                    }}
-                >
-                    <CgProfile size="25" />
-                    <div css={IconText}>개인정보</div>
-                </div>
-
-                <div
-                    css={IconItem}
-                    onClick={() => {
-                        selectTabHandler(1);
-                    }}
-                >
-                    <ImAirplane size="25" />
-                    <div css={IconText}>내 여행지</div>
-                </div>
-                <div
-                    css={IconItem}
-                    onClick={() => {
-                        selectTabHandler(3);
-                    }}
-                >
-                    <MdOutlineRateReview size="25" />
-                    <div css={IconText}>후기</div>
-                </div>
-                <div
-                    css={IconItem}
-                    onClick={() => {
-                        selectTabHandler(2);
-                    }}
-                >
-                    <ImHeart size="25" />
-                    <div css={IconText}>좋아요</div>
-                </div>
-            </div>
-            {/* 후기, 좋아요 컴포넌트 하나 사용 고려*/}
-            <div css={ContentBox}>
-                {isTab === 0 ? (
-                    <MyInfo />
-                ) : isTab === 1 ? (
-                    <MyPost />
-                ) : isTab === 2 ? (
-                    <MyLike />
-                ) : isTab === 3 ? (
-                    <MyReview />
-                ) : (
-                    ""
-                )}
-            </div>
-        </div>
+            )}
+        </>
     );
 };
 
