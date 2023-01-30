@@ -2,16 +2,15 @@ import React, { useState } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
-import logo from "../../assets/logo.png";
-import { AiFillStar } from "react-icons/ai";
 import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import dayjs from "dayjs";
-import { deleteReview, patchReview } from "../../util/axiosContents";
+import { patchReview } from "../../util/axiosContents";
 import { useRecoilState } from "recoil";
 import { userInfoState } from "../../state/atom";
+import ReviewDeleteModal from "./ReviewDeleteModal";
 
 //Button
 import { AwesomeButton } from "react-awesome-button";
@@ -50,12 +49,7 @@ const ReviewItem = ({ review, setUpdate }) => {
     const [editReview, setEditReview] = useState(false);
     const [reviewText, setReviewText] = useState("");
     const [rateType, setRateType] = useState("FIVE");
-
-    const deleteReviewHandler = async () => {
-        await deleteReview(commentId).then(() => {
-            setUpdate(true);
-        });
-    };
+    const [modalOpen, setModalOpen] = useState(false);
 
     const editReviewHandler = () => {
         if (userInfo.userId === userId) {
@@ -73,6 +67,14 @@ const ReviewItem = ({ review, setUpdate }) => {
             setUpdate(true);
             setEditReview(!editReview);
         });
+    };
+
+    const showModal = () => {
+        if (userInfo.userId === userId) {
+            setModalOpen(true);
+        } else {
+            alert("권한이 없습니다.");
+        }
     };
 
     const rateTypeSwitch = (num) => {
@@ -204,8 +206,16 @@ const ReviewItem = ({ review, setUpdate }) => {
                         {body}
                     </div>
                     <button onClick={editReviewHandler}>수정</button>
-                    <button onClick={() => deleteReviewHandler(commentId)}>삭제</button>
+                    <button onClick={showModal}>삭제</button>
                 </div>
+                {modalOpen && (
+                    <ReviewDeleteModal
+                        text="정말 삭제하시겠습니까?"
+                        setModalOpen={setModalOpen}
+                        setUpdate={setUpdate}
+                        commentId={commentId}
+                    />
+                )}
             </div>
         </div>
     );
