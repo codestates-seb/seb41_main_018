@@ -35,7 +35,7 @@ export const Buttons = (props) => {
                 --button-default-height: 50px;
                 --button-default-font-size: 1.5rem;
                 --button-default-border-radius: 10px;
-                --button-horizontal-padding: 20px;
+                --button-horizontal-padding: 10px;
                 --button-raise-level: 3px;
                 --button-hover-pressure: 1.75;
                 --transform-speed: 0.185s;
@@ -45,6 +45,12 @@ export const Buttons = (props) => {
                 --button-primary-color-hover: #187bd1;
                 --button-primary-color-active: #166dba;
                 --button-primary-border: none;
+                @media (min-width: 768px) {
+                    --button-default-height: 50px;
+                    --button-default-font-size: 1.5rem;
+                    --button-default-border-radius: 10px;
+                    --button-horizontal-padding: 40px;
+                }
             `}
         >
             {props.text}
@@ -228,6 +234,7 @@ const imgStyle = css`
 const ButtonBox = css`
     display: flex;
     align-self: flex-end;
+    margin-top: -45px;
     padding-right: 40px;
 `;
 
