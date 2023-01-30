@@ -101,22 +101,20 @@ const Detail = () => {
                 <>
                     <div css={Wrap}>
                         <h1>{contentDetail.data && contentDetail.data.title}</h1>
-
                         <div css={ContentInfo}>
                             <Total />
                             <div css={postDate}>{`${postingData} 작성`}</div>
                         </div>
 
-                        <div css={TotalContainer}>
-                            <Detailform />
-                        </div>
-                        <div css={ButtonBox} className={isMyPost ? "" : "hidden"}>
-                            <button css={btnStyle} onClick={updateMyPost}>
-                                Update
-                            </button>
+                        <div css={ButtonBox}>
+                            {/* className={isMyPost ? "" : "hidden"} */}
+                            <button css={btnStyle}>Update</button>
                             <button css={btnStyle} onClick={showModal}>
                                 Delete
                             </button>
+                        </div>
+                        <div css={TotalContainer}>
+                            <Detailform />
                         </div>
 
                         <Reviewform />
@@ -163,6 +161,18 @@ const ContentInfo = css`
 
 const ButtonBox = css`
     display: flex;
+    position: relative;
+    width: 90%;
+    top: 80px;
+    justify-content: end;
+    margin-top: -40px;
+    @media (min-width: 768px) {
+        top: 74px;
+    }
+
+    @media (min-width: 768px) {
+        z-index: 3;
+    }
 
     &.hidden {
         visibility: hidden;
@@ -177,19 +187,12 @@ const TotalContainer = css`
 
 const btnStyle = css`
     cursor: pointer;
-    background-color: ${PALETTE.default_color};
-    border-radius: ${PALETTE.border_round};
-    border: 1px solid ${PALETTE.default_color};
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    color: white;
-    margin: 20px 0 -30px 10px;
+    background-color: white;
+    border: none;
+    border-radius: ${PALETTE.border_radius};
     padding: 5px 10px;
     &:hover {
-        background-color: ${PALETTE.default_hover};
-    }
-    @media (min-witdh: 768px) {
-        margin: 40px 0 -17px 10px;
-        padding: 10px 20px;
+        background-color: #c5c5c5;
     }
 `;
 

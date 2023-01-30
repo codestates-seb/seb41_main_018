@@ -5,11 +5,13 @@ import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { BsStarFill } from "react-icons/bs";
-import sample from "../../assets/sampleImg/sample.jpg";
 import { Link } from "react-router-dom";
+import { DummyImg } from "../../assets/image";
 
 const HomeItems = (content) => {
     const [isFavoriteClcik, setFavoriteClick] = useState(false);
+
+    const randomImg = Math.floor(Math.random() * DummyImg.length);
 
     const handleFavoriteClick = () => {
         setFavoriteClick(!isFavoriteClcik);
@@ -32,7 +34,9 @@ const HomeItems = (content) => {
                 )}
             </div>
             <Link to={`/detail/${content.content && content.content.contentId}`}>
-                <img src={sample} css={imgStyle} />
+                {/* <div css={imgWrap}> */}
+                <img src={DummyImg[randomImg]} css={imgWrap} />
+                {/* </div> */}
                 <div css={textContainer}>
                     <div css={titleStyle}>{content.content && content.content.title}</div>
 
@@ -65,10 +69,18 @@ const wrap = css`
     height: 100%;
 `;
 
-const imgStyle = css`
+const imgWrap = css`
     width: 100%;
     height: 70%;
     border-radius: ${PALETTE.border_radius};
+    overflow: hidden;
+`;
+
+const imgStyle = css`
+    max-width: 300px;
+    max-height: 400px;
+    min-width: 140px;
+    min-height: 250px;
 `;
 
 const favoriteStyle = css`
