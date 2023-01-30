@@ -4,6 +4,24 @@ import Categorybar from "../components/Categorybar";
 
 const { persistAtom } = recoilPersist();
 
+export const userInfoState = atom({
+    key: "userInfoState",
+    default: {},
+    effects_UNSTABLE: [persistAtom],
+});
+
+export const loginState = atom({
+    key: "loginState",
+    default: false,
+    effects_UNSTABLE: [persistAtom],
+});
+
+export const ContentsList = atom({
+    key: "ContentsList",
+    default: [],
+    effects_UNSTABLE: [persistAtom],
+});
+
 export const selectedRouteState = atom({
     key: "selectedRouteState",
     default: 1,
@@ -74,11 +92,6 @@ export const DateData = atom({
     default: "",
 });
 
-export const ContentsList = atom({
-    key: "ContentsList",
-    default: [],
-});
-
 export const detailPosition = atom({
     key: "detailPosition",
     default: 1,
@@ -100,18 +113,6 @@ export const detailPositionFour = atom({
 export const detailPositionFive = atom({
     key: "detailPositionFive",
     default: 5,
-});
-
-export const userInfoState = atom({
-    key: "userInfoState",
-    default: {},
-    effects_UNSTABLE: [persistAtom],
-});
-
-export const loginState = atom({
-    key: "loginState",
-    default: false,
-    effects_UNSTABLE: [persistAtom],
 });
 
 export const ReviewListState = atom({
