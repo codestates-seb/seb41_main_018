@@ -211,6 +211,7 @@ export const postHeart = async (userId, contentId) => {
     return await axios
         .post(
             `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/${userId}/${contentId}/hearts`,
+            {},
             {
                 headers: {
                     Authorization: sessionStorage.getItem("access_token"),
