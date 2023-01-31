@@ -13,15 +13,18 @@ import MyReview from "../components/Mypage_components/MyReview";
 import { userInfoState } from "../state/atom";
 import { useRecoilState } from "recoil";
 import { getUserInfo, userEdit } from "../util/axiosUser";
-import { DummyImg } from "../assets/image.js";
+
+import { SampleImgSrc } from "../sampleImage.js";
 
 const Mypage = () => {
+    const GachiArr = Object.values(SampleImgSrc);
+
     const [isTab, setIsTab] = useState(0);
     const [editClick, setEditClick] = useState(false);
     const [inputName, setInputName] = useState("");
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [isLoading, setIsLoading] = useState(true);
-    const randomImg = Math.floor(Math.random() * DummyImg.length);
+    const randomImg = Math.floor(Math.random() * GachiArr.length);
 
     const selectTabHandler = (index) => {
         setIsTab(index);

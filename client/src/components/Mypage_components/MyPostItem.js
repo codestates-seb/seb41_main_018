@@ -4,15 +4,18 @@ import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import { DummyImg } from "../../assets/image.js";
+
+import { SampleImgSrc } from "../../sampleImage";
 
 const MyPostItem = ({ post }) => {
+    const GachiArr = Object.values(SampleImgSrc);
+
     const { title, createdAt, contentId } = post;
-    const randomImg = Math.floor(Math.random() * DummyImg.length);
+    const randomImg = Math.floor(Math.random() * GachiArr.length);
     return (
         <div css={MyPostItem_Wrap}>
             <div css={PostImg}>
-                <img src={DummyImg[randomImg]} />
+                <img src={GachiArr[randomImg]} />
             </div>
             <div css={MyPostItem_Content}>
                 <Link to={`/detail/${contentId}`}>

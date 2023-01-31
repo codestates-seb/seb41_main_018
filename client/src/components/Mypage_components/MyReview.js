@@ -6,18 +6,21 @@ import dayjs from "dayjs";
 import { userInfoState } from "../../state/atom";
 import { useRecoilState } from "recoil";
 import { Link } from "react-router-dom";
-import { DummyImg } from "../../assets/image.js";
+
+import { SampleImgSrc } from "../../sampleImage";
 
 const MyReview = () => {
+    const GachiArr = Object.values(SampleImgSrc);
+    
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const randomImg = Math.floor(Math.random() * DummyImg.length);
+    const randomImg = Math.floor(Math.random() * GachiArr.length);
 
     return (
         <div css={MyReview_Wrap}>
             {userInfo.comments.map((review) => (
                 <div css={MyReview_Item} key={review.reviewId}>
                     <div css={PostImg}>
-                        <img src={DummyImg[randomImg]} />
+                        <img src={GachiArr[randomImg]} />
                     </div>
                     <div css={MyReview_Content}>
                         <Link to={`/detail/${review.contentId}`}>
