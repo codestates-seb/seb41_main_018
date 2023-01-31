@@ -26,8 +26,8 @@ Comment CRUD <br> - UserInfo CRUD <br> - API 통신|-Login, Signup Page <br> - �
   <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
  <img src = "https://img.shields.io/badge/Emotion-C570BE?style=for-the-badge&logo=&logoColor=white">
   <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=black"> <br>
-  <img src="https://img.shields.io/badge/Recoil-000000?style=for-the-badge&logo=&logoColor=white">
-  <img src="https://img.shields.io/badge/ReactHookForm-EC5990?style=for-the-badge&logo=React Hook Form&logoColor=white">
+  <img src="https://img.shields.io/badge/Recoil-000000?style=for-the-badge&logo=Recoil&logoColor=white">
+  <img src="https://img.shields.io/badge/React Hook Form-EC5990?style=for-the-badge&logo=ReactHookForm&logoColor=white">
   <img src = "https://img.shields.io/badge/Axios-181717?style=for-the-badge&logo=Axios&logoColor=white">
   <img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=white">
   <img src="https://img.shields.io/badge/Amazon S3-9999FF?style=for-the-badge&logo=Amazon S3&logoColor=white">
