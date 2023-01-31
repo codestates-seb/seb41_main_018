@@ -12,7 +12,6 @@ import "swiper/css/pagination";
 import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";
 
 // import sample img (추후 삭제 예정)
-import { DummyImg } from "../../assets/image";
 import { Palette } from "@mui/icons-material";
 import { PALETTE } from "../../Common";
 
@@ -20,15 +19,20 @@ import { PALETTE } from "../../Common";
 import { useRecoilState } from "recoil";
 import { selectedRouteState, ContentDetail } from "../../state/atom";
 
-import { GachiGalleImgSrc } from "../../sampleImage";
+import { SampleImgSrc, GachiGalleImgSrc } from "../../sampleImage";
 
 const Detial_Img = () => {
+    const GachiArr = Object.values(SampleImgSrc);
+
     const [selectedRoute, setSelectedRoute] = useRecoilState(selectedRouteState);
     /* 선택 된 경로만 filter */
     // let selected = routeDummy.filter((routeplace) => routeplace.routeId === selectedRoute);
 
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
-    const randomImg = Math.floor(Math.random() * DummyImg.length - 1);
+    const randomIndex1 = Math.floor(Math.random() * GachiArr.length);
+    const randomIndex2 = Math.floor(Math.random() * GachiArr.length);
+    const randomIndex3 = Math.floor(Math.random() * GachiArr.length);
+
 
     return (
         <div css={Swiper_Wrap}>
@@ -41,11 +45,15 @@ const Detial_Img = () => {
                 modules={[Navigation, Pagination, Mousewheel, Keyboard]}
                 className="mySwiper"
             >
-                {DummyImg.map((el, index) => (
-                    <SwiperSlide key={index}>
-                        <img src={el[randomImg]} alt={el.name} />
-                    </SwiperSlide>
-                ))}
+                <SwiperSlide>
+                    <img src={GachiArr[randomIndex1]} />
+                </SwiperSlide>
+                <SwiperSlide>
+                    <img src={GachiArr[randomIndex2]} />
+                </SwiperSlide>
+                <SwiperSlide>
+                    <img src={GachiArr[randomIndex3]} />
+                </SwiperSlide>
             </Swiper>
         </div>
     );

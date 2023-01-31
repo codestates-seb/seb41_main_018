@@ -10,14 +10,18 @@ import { useRecoilState } from "recoil";
 import { userInfoState } from "../../state/atom";
 import { postHeart } from "../../util/axiosContents";
 import { getUserInfo } from "../../util/axiosUser";
-import { DummyImg } from "../../assets/image";
+
+import { GachiGalleImgSrc } from "../../sampleImage";
 
 import { SampleImgSrc } from "../../sampleImage";
 
 const HomeItems = (content) => {
+    const GachiArr = Object.values(SampleImgSrc);
     const [isFavoriteClcik, setFavoriteClick] = useState(false);
 
-    const randomImg = Math.floor(Math.random() * DummyImg.length);
+    const randomIndex = Math.floor(Math.random() * GachiArr.length);
+    const GachiImg = GachiArr[randomIndex];
+
     console.log(1)
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const data = content.content;
@@ -61,7 +65,7 @@ const HomeItems = (content) => {
             </div>
             <Link to={`/detail/${data && data.contentId}`}>
                 <div css={imgWrap}>
-                    <img src={DummyImg[randomImg]} css={imgStyle} />
+                    <img src={GachiArr[randomIndex]} css={imgStyle} />
                 </div>
                 <div css={textContainer}>
                     <div css={titleStyle}>{data && data.title}</div>
