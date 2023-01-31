@@ -10,7 +10,6 @@ import MyInfo from "../components/Mypage_components/MyInfo";
 import MyPost from "../components/Mypage_components/MyPost";
 import MyLike from "../components/Mypage_components/MyLike";
 import MyReview from "../components/Mypage_components/MyReview";
-import logo9 from "../assets/logo9.png";
 import { userInfoState } from "../state/atom";
 import { useRecoilState } from "recoil";
 import { getUserInfo, userEdit } from "../util/axiosUser";

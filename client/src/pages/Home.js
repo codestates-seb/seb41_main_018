@@ -13,23 +13,14 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-import right from "../assets/right.png";
-import left from "../assets/left.png";
 import { getContent } from "../util/axiosContents";
 import { useRecoilState } from "recoil";
 import { ContentsList, loginState, userInfoState } from "../state/atom";
 import { useNavigate } from "react-router-dom";
-import 서울 from "../assets/sampleImg/region/서울.png";
-import 부산 from "../assets/sampleImg/region/부산.png";
-import 제주 from "../assets/sampleImg/region/제주.png";
-import 담양 from "../assets/sampleImg/region/담양.png";
-import 파주 from "../assets/sampleImg/region/파주.png";
-import 포천 from "../assets/sampleImg/region/포천.png";
-import 강릉 from "../assets/sampleImg/region/강릉.png";
-import 여수 from "../assets/sampleImg/region/여수.png";
-import 전주 from "../assets/sampleImg/region/전주.png";
 import Loading from "../components/Loding";
 import { PALETTE } from "../Common";
+
+import { GachiGalleImgSrc } from "../sampleImage";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -85,15 +76,15 @@ const Home = () => {
     };
 
     const data = [
-        { text: "서울", img: 서울 },
-        { text: "부산", img: 부산 },
-        { text: "제주", img: 제주 },
-        { text: "여수", img: 여수 },
-        { text: "전주", img: 전주 },
-        { text: "강릉", img: 강릉 },
-        { text: "포천", img: 포천 },
-        { text: "파주", img: 파주 },
-        { text: "담양", img: 담양 },
+        { text: "서울", img: GachiGalleImgSrc.seoul_img },
+        { text: "부산", img: GachiGalleImgSrc.busan_img },
+        { text: "제주", img: GachiGalleImgSrc.jeju_img },
+        { text: "여수", img: GachiGalleImgSrc.yeosu_img },
+        { text: "전주", img: GachiGalleImgSrc.jeonju_img },
+        { text: "강릉", img: GachiGalleImgSrc.gangneung_img },
+        { text: "포천", img: GachiGalleImgSrc.pocheon_img },
+        { text: "파주", img: GachiGalleImgSrc.paju_img },
+        { text: "담양", img: GachiGalleImgSrc.damyang_img },
     ];
 
     return (
@@ -117,31 +108,31 @@ const Home = () => {
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
                             <SwiperSlide>
-                                <Regionitems img={`${서울}`} text="서울" />
+                                <Regionitems img={`${GachiGalleImgSrc.seoul_img}`} text="서울" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems img={`${부산}`} text="부산" />
+                                <Regionitems img={`${GachiGalleImgSrc.busan_img}`} text="부산" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems img={`${제주}`} text="제주" />
+                                <Regionitems img={`${GachiGalleImgSrc.jeju_img}`} text="제주" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems img={`${강릉}`} text="강릉" />
+                                <Regionitems img={`${GachiGalleImgSrc.gangneung_img}`} text="강릉" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems img={`${담양}`} text="담양" />
+                                <Regionitems img={`${GachiGalleImgSrc.damyang_img}`} text="담양" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems img={`${전주}`} text="전주" />
+                                <Regionitems img={`${GachiGalleImgSrc.jeonju_img}`} text="전주" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems img={`${여수}`} text="여수" />
+                                <Regionitems img={`${GachiGalleImgSrc.yeosu_img}`} text="여수" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems img={`${파주}`} text="파주" />
+                                <Regionitems img={`${GachiGalleImgSrc.paju_img}`} text="파주" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems img={`${포천}`} text="포천" />
+                                <Regionitems img={`${GachiGalleImgSrc.pocheon_img}`} text="포천" />
                             </SwiperSlide>
                         </div>
                     </Swiper>
@@ -246,14 +237,14 @@ const postStyle = css`
     width: 80vw;
 
     .swiper-button-next {
-        background: url(${right}) no-repeat;
+        background: url(${GachiGalleImgSrc.right_button_img}) no-repeat;
         right: 0;
         background-size: 140% auto;
         background-position: center;
         position: absolute;
     }
     .swiper-button-prev {
-        background: url(${left}) no-repeat;
+        background: url(${GachiGalleImgSrc.left_button_img}) no-repeat;
         left: 0;
         background-size: 140% auto;
         background-position: center;

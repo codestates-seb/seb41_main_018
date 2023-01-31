@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
 import { PALETTE } from "../Common.js";
-import logo9 from "../assets/logo9.png";
+import { GachiGalleImgSrc } from "../sampleImage.js";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -103,7 +103,7 @@ const Header = () => {
                 {isMenuClick ? (
                     <div css={menuClickContainer}>
                         <div css={menuContainer} ref={menuRef}>
-                            <img src={logo9} alt="같이갈래 logo" />
+                            <img src={GachiGalleImgSrc.logo_img} alt="같이갈래 logo" />
                             <div css={buttonContainer}>
                                 {isLogin ? (
                                     <div>
@@ -178,7 +178,7 @@ const Header = () => {
                     `}
                 >
                     <Link to="/">
-                        <img src={logo9} alt="같이갈래 logo" css={logoStyle}></img>
+                        <img src={GachiGalleImgSrc.logo_img} alt="같이갈래 logo" css={logoStyle}></img>
                     </Link>
                 </div>
                 {/* 데스크탑 기준 검색창 */}

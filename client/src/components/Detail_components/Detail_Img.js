@@ -10,8 +10,6 @@ import "swiper/css/pagination";
 
 // import required modules
 import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";
-import right from "../../assets/right.png";
-import left from "../../assets/left.png";
 
 // import sample img (추후 삭제 예정)
 import { DummyImg } from "../../assets/image";
@@ -22,14 +20,15 @@ import { PALETTE } from "../../Common";
 import { useRecoilState } from "recoil";
 import { selectedRouteState, ContentDetail } from "../../state/atom";
 
+import { GachiGalleImgSrc } from "../../sampleImage";
+
 const Detial_Img = () => {
     const [selectedRoute, setSelectedRoute] = useRecoilState(selectedRouteState);
     /* 선택 된 경로만 filter */
     // let selected = routeDummy.filter((routeplace) => routeplace.routeId === selectedRoute);
 
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
-    const randomImg = Math.floor(Math.random() * DummyImg.length);
-    console.log(DummyImg[randomImg]);
+    const randomImg = Math.floor(Math.random() * DummyImg.length - 1);
 
     return (
         <div css={Swiper_Wrap}>
@@ -95,14 +94,14 @@ const Swiper_Wrap = css`
 
     // 버튼
     .swiper-button-next {
-        background: url(${right}) no-repeat;
+        background: url(${GachiGalleImgSrc.right_button_img}) no-repeat;
         right: 0;
         background-size: 140% auto;
         background-position: center;
         position: absolute;
     }
     .swiper-button-prev {
-        background: url(${left}) no-repeat;
+        background: url(${GachiGalleImgSrc.left_button_img}) no-repeat;
         left: 0;
         background-size: 140% auto;
         background-position: center;
