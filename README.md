@@ -9,7 +9,8 @@
 |:---:|:---:|:---:|:---:|:---:|:---:|
 |<img src="https://avatars.githubusercontent.com/u/89727516?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/111356791?v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/110887369?v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/57933510?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/108250233?v=4" width=90>|<img src="https://avatars.githubusercontent.com/u/89247924?s=100&v=4" width=150>|
 |[@z1nun](https://github.com/z1nun)|[@RiOAOn](https://github.com/RiOAOn)|[@shinpaka](https://github.com/shinpaka)|[@Choiyu330](https://github.com/Choiyu330)|[@kangharyeom](https://github.com/kangharyeom)|[@eehres](https://github.com/eehres)|
-|-|-|-| - Content CRUD <br> - REDIS Logout <br> - MYSQL DB관리 | - Comment CRUD <br> - Swagger API <br> - AWS(EC2,RDS)배포환경 구축|- User CRUD <br> - Route CRUD <br> - JWT <br> - S3 이미지 업로드|
+| - 반응형 웹 <br> - HomePage CRUD <br> - DetailPage CRUD <br> - S3배포 | - Content CRUD
+Comment CRUD <br> - UserInfo CRUD <br> - API 통신 | - Login, Signup Page <br> - 지도기능 구현 <br> - 게시글 작성 및 수정기능 구현| - Content CRUD <br> - REDIS Logout <br> - MYSQL DB관리 | - Comment CRUD <br> - Swagger API <br> - AWS(EC2,RDS)배포환경 구축|- User CRUD <br> - Route CRUD <br> - JWT <br> - S3 이미지 업로드 |
 
 ## 🖥️ **프로젝트 소개**
 🚲여행 상품 기획부터 여행지 선택, 여행지의 ‘맛집’ 탐색까지! 내 맛대로 골라 먹는 여행관련 공유 플랫폼!🙀
@@ -22,10 +23,12 @@
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">  <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
   <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> 
+ <img src = "https://img.shields.io/badge/Emotion-C570BE?style=for-the-badge&logo=&logoColor=white">
+  <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=black"> <br>
+  <img src="https://img.shields.io/badge/Recoil-000000?style=for-the-badge&logo=&logoColor=white">
+  <img src="https://img.shields.io/badge/ReactHookForm-EC5990?style=for-the-badge&logo=ReactHookForm&logoColor=white">
   <img src = "https://img.shields.io/badge/Axios-181717?style=for-the-badge&logo=Axios&logoColor=white">
   <img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=white">
-  <img src="https://img.shields.io/badge/Prettier-DB7093?style=for-the-badge&logo=Emotion&logoColor=black">
-  <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=black">
   <img src="https://img.shields.io/badge/Amazon S3-9999FF?style=for-the-badge&logo=Amazon S3&logoColor=white">
 </div>
   
