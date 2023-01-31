@@ -33,7 +33,6 @@ const Detial_Img = () => {
     const randomIndex2 = Math.floor(Math.random() * GachiArr.length);
     const randomIndex3 = Math.floor(Math.random() * GachiArr.length);
 
-
     return (
         <div css={Swiper_Wrap}>
             <Swiper

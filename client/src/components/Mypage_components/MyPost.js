@@ -10,7 +10,6 @@ const MyPost = () => {
 
     return (
         <div css={MyPost_Wrap}>
-            {console.log(userInfo.contents)}
             {userInfo.contents.map((post) => (
                 <MyPostItem key={post.contentId} post={post}></MyPostItem>
             ))}

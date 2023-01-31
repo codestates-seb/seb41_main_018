@@ -4,19 +4,22 @@ import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
+import { DummyImg } from "../../assets/image.js";
 
 const MyPostItem = ({ post }) => {
     const { title, createdAt, contentId } = post;
+    const randomImg = Math.floor(Math.random() * DummyImg.length);
     return (
         <div css={MyPostItem_Wrap}>
-            <div css={PostImg}>사진</div>
+            <div css={PostImg}>
+                <img src={DummyImg[randomImg]} />
+            </div>
             <div css={MyPostItem_Content}>
                 <Link to={`/detail/${contentId}`}>
                     <h3 css={PostTitle}>{title}</h3>
                 </Link>
 
                 <div css={MyPostItem_Body}>
-                    <div>경로</div>
                     <div css={Right_Content}>{dayjs(createdAt).format("YY.MM.DD")}</div>
                 </div>
             </div>
@@ -27,7 +30,7 @@ const MyPostItem = ({ post }) => {
 const MyPostItem_Wrap = css`
     display: flex;
     align-items: center;
-    padding: 8px;
+    padding: 21px 8px;
     margin: 10px;
     width: 90%;
 
@@ -40,6 +43,11 @@ const PostImg = css`
     border: ${PALETTE.border};
     width: 90px;
     height: 90px;
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
 `;
 const MyPostItem_Content = css`
     padding: 5px 20px;

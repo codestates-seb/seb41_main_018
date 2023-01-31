@@ -9,7 +9,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 
-import { GachiGalleImgSrc } from "../../sampleImage"
+import { GachiGalleImgSrc } from "../../sampleImage";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 const Banner = () => {

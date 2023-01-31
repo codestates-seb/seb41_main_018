@@ -6,17 +6,20 @@ import dayjs from "dayjs";
 import { userInfoState } from "../../state/atom";
 import { useRecoilState } from "recoil";
 import { Link } from "react-router-dom";
+import { DummyImg } from "../../assets/image.js";
 
 const MyReview = () => {
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const randomImg = Math.floor(Math.random() * DummyImg.length);
 
     return (
         <div css={MyReview_Wrap}>
             {userInfo.comments.map((review) => (
                 <div css={MyReview_Item} key={review.reviewId}>
-                    <div css={PostImg}>사진</div>
+                    <div css={PostImg}>
+                        <img src={DummyImg[randomImg]} />
+                    </div>
                     <div css={MyReview_Content}>
-                        {console.log(review.contentId)}
                         <Link to={`/detail/${review.contentId}`}>
                             <h3 css={PostTitle}>{review.title}</h3>
                         </Link>
@@ -48,10 +51,13 @@ const MyReview_Item = css`
     box-shadow: ${PALETTE.box_shadow};
 `;
 const PostImg = css`
-    padding: 20px;
     border: ${PALETTE.border};
     width: 90px;
-    height: 90px;
+    height: 84px;
+    img {
+        width: 100%;
+        height: 100%;
+    }
 `;
 
 const MyReview_Content = css`
