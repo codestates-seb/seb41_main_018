@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 import { getAuthorization, getRefresh, userInfoState, loginState } from "../../state/atom";
 import SocialButton from "../../components/SocialButton";
 import Button from "../../components/Button";
-import logo9 from "../../assets/logo9.png";
+import { GachiGalleImgSrc } from "../../sampleImage";
 import { Login, getUserInfo } from "../../util/axiosUser";
 import {
     LoginpageBg,
@@ -57,7 +57,7 @@ const LoginPage = () => {
             <div css={LoginpageContainer}>
                 <div css={LoginLogoContainer}>
                     <Link to={"/"}>
-                        <img src={logo9} alt="logo" />
+                        <img src={GachiGalleImgSrc.logo_img} alt="logo" />
                     </Link>
                 </div>
                 <form css={LoginContainer} onSubmit={handleSubmit(onSubmit)}>

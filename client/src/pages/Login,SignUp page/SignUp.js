@@ -19,9 +19,7 @@ import {
 } from "./loginstyle";
 import Button from "../../components/Button";
 import SocialButton from "../../components/SocialButton";
-import logo9 from "../../assets/logo9.png";
-// import { useRecoilState } from "recoil";
-// import { userEmail } from "../state/atom";
+import { GachiGalleImgSrc } from "../../sampleImage";
 
 const defaultValues = {
     email: "",
@@ -152,7 +150,7 @@ const SignUp = () => {
             <div css={LoginpageContainer}>
                 <div css={LoginLogoContainer}>
                     <Link to={"/"}>
-                        <img src={logo9} alt="logo" />
+                        <img src={GachiGalleImgSrc.logo_img} alt="logo" />
                     </Link>
                 </div>
                 <form css={LoginContainer}>

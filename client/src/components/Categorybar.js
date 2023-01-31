@@ -1,32 +1,26 @@
 import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import 국내여행 from "../assets/categoryImg/국내여행.png";
-import 맛집투어 from "../assets/categoryImg/맛집투어.png";
-import 친구여행 from "../assets/categoryImg/친구여행.png";
-import 해외여행 from "../assets/categoryImg/해외여행.png";
-import 혼자여행 from "../assets/categoryImg/혼자여행.png";
-import 커플여행 from "../assets/categoryImg/커플여행.png";
-import 가족여행 from "../assets/categoryImg/가족여행.png";
-import 카페투어 from "../assets/categoryImg/카페투어.png";
 import { useNavigate } from "react-router-dom";
 import { getCategory } from "../util/axiosContents";
 import { useRecoilState } from "recoil";
 import { CategorySearchResultState } from "../../src/state/atom";
+
+import { GachiGalleImgSrc } from "../sampleImage";
 
 const Categorybar = () => {
     const navigate = useNavigate();
     const [categorySearch, setCategorySearch] = useRecoilState(CategorySearchResultState);
 
     const category = [
-        { src: 국내여행, title: "국내여행", themeType: "DOMESTIC" },
-        { src: 해외여행, title: "해외여행", themeType: "ABROAD" },
-        { src: 가족여행, title: "가족여행", themeType: "FAMILY" },
-        { src: 커플여행, title: "커플여행", themeType: "COUPLE" },
-        { src: 친구여행, title: "친구여행", themeType: "FRIENDS" },
-        { src: 혼자여행, title: "혼자여행", themeType: "ALONE" },
-        { src: 카페투어, title: "카페투어", themeType: "CAFE" },
-        { src: 맛집투어, title: "맛집투어", themeType: "FOOD" },
+        { src: GachiGalleImgSrc.domestic_travel, title: "국내여행", themeType: "DOMESTIC" },
+        { src: GachiGalleImgSrc.overseas_travel, title: "해외여행", themeType: "ABROAD" },
+        { src: GachiGalleImgSrc.family_travel, title: "가족여행", themeType: "FAMILY" },
+        { src: GachiGalleImgSrc.couple_travel, title: "커플여행", themeType: "COUPLE" },
+        { src: GachiGalleImgSrc.friend_travel, title: "친구여행", themeType: "FRIENDS" },
+        { src: GachiGalleImgSrc.solo_travel, title: "혼자여행", themeType: "ALONE" },
+        { src: GachiGalleImgSrc.cafe_travel, title: "카페투어", themeType: "CAFE" },
+        { src: GachiGalleImgSrc.food_travel, title: "맛집투어", themeType: "FOOD" },
     ];
 
     // 카테고리 버튼 클릭 시 검색 요청

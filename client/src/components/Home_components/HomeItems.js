@@ -12,10 +12,13 @@ import { postHeart } from "../../util/axiosContents";
 import { getUserInfo } from "../../util/axiosUser";
 import { DummyImg } from "../../assets/image";
 
+import { SampleImgSrc } from "../../sampleImage";
+
 const HomeItems = (content) => {
     const [isFavoriteClcik, setFavoriteClick] = useState(false);
 
     const randomImg = Math.floor(Math.random() * DummyImg.length);
+    console.log(1)
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const data = content.content;
 
