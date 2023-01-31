@@ -6,14 +6,18 @@ import dayjs from "dayjs";
 import { userInfoState } from "../../state/atom";
 import { useRecoilState } from "recoil";
 import { Link } from "react-router-dom";
+import { DummyImg } from "../../assets/image.js";
 
 const MyLike = () => {
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const randomImg = Math.floor(Math.random() * DummyImg.length);
     return (
         <div css={MyLike_Wrap}>
             {userInfo.hearts.map((el) => (
                 <div css={MyLike_Item} key={el.contentId}>
-                    <div css={PostImg}>사진</div>
+                    <div css={PostImg}>
+                        <img src={DummyImg[randomImg]} />
+                    </div>
                     <div css={MyLike_Content}>
                         <Link to={`/detail/${el.contentId}`}>
                             <h3 css={PostTitle}>{el.title}</h3>
@@ -50,6 +54,10 @@ const PostImg = css`
     border: ${PALETTE.border};
     width: 90px;
     height: 90px;
+    img {
+        width: 100%;
+        height: 100%;
+    }
 `;
 
 const MyLike_Content = css`

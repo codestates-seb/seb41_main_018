@@ -28,7 +28,7 @@ const Detial_Img = () => {
     // let selected = routeDummy.filter((routeplace) => routeplace.routeId === selectedRoute);
 
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
-    const randomImg = Math.floor(Math.random() * DummyImg.length - 1);
+    const randomImg = Math.floor(Math.random() * DummyImg.length);
 
     return (
         <div css={Swiper_Wrap}>
@@ -41,7 +41,7 @@ const Detial_Img = () => {
                 modules={[Navigation, Pagination, Mousewheel, Keyboard]}
                 className="mySwiper"
             >
-                {DummyImg.map((el, index) => (
+                {DummyImg.slice(0, 3).map((el, index) => (
                     <SwiperSlide key={index}>
                         <img src={el[randomImg]} alt={el.name} />
                     </SwiperSlide>
