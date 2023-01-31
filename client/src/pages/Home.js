@@ -117,7 +117,10 @@ const Home = () => {
                                 <Regionitems img={`${GachiGalleImgSrc.jeju_img}`} text="제주" />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <Regionitems img={`${GachiGalleImgSrc.gangneung_img}`} text="강릉" />
+                                <Regionitems
+                                    img={`${GachiGalleImgSrc.gangneung_img}`}
+                                    text="강릉"
+                                />
                             </SwiperSlide>
                             <SwiperSlide>
                                 <Regionitems img={`${GachiGalleImgSrc.damyang_img}`} text="담양" />
