@@ -122,12 +122,11 @@ const AddInput = () => {
                                                     return (
                                                         <input
                                                             {...field}
-                                                            defaultValue={Object.values(DetailRoute[index])[4]}
+                                                            defaultValue={DetailRoute[index] === {} ? Object.values(DetailRoute[index])[4] : ''}
                                                             placeholder="장소를 입력해주세요"
                                                             css={PlaceInput}
                                                             autocomplete="off"
                                                             />
-                                                            
                                                     );
                                                 }}
                                             />
@@ -137,21 +136,21 @@ const AddInput = () => {
                                         <div className="listname"></div>
                                         <input
                                             {...register(`routes.${index}.address`)}
-                                            value={Object.values(DetailRoute[index])[8]}
+                                            defaultValue={DetailRoute[index] === {} ? Object.values(DetailRoute[index])[8] : ''}
                                             placeholder="지도에서 장소를 선택해주세요!"
                                             css={ListInput}
                                             readOnly
                                         />
                                         <input
                                             {...register(`routes.${index}.x`)}
-                                            value={Object.values(DetailRoute[index])[6]}
+                                            defaultValue={DetailRoute[index] === {} ? Object.values(DetailRoute[index])[6] : ''}
                                             css={css`
                                                 display: none;
                                             `}
                                         />
                                         <input
                                             {...register(`routes.${index}.y`)}
-                                            value={Object.values(DetailRoute[index])[7]}
+                                            defaultValue={DetailRoute[index] === {} ? Object.values(DetailRoute[index])[7] : ''}
                                             css={css`
                                                 display: none;
                                             `}
@@ -166,7 +165,7 @@ const AddInput = () => {
                                                     return (
                                                         <input
                                                             {...field}
-                                                            defaultValue={Object.values(DetailRoute[index])[2]}
+                                                            defaultValue={DetailRoute[index] === {} ? Object.values(DetailRoute[index])[2] : ''}
                                                             type="number"
                                                             placeholder="사용한 금액을 입력해주세요!"
                                                             autocomplete="off"
@@ -188,8 +187,7 @@ const AddInput = () => {
                                                     return (
                                                         <input
                                                             {...field}
-                                                            value={field.value ? field.value : Object.values(DetailRoute[index])[3]}
-                                                            defaultValue={Object.values(DetailRoute[index])[3]}
+                                                            defaultValue={DetailRoute[index] === {} ? Object.values(DetailRoute[index])[3] : ''}
                                                             placeholder="이동수단을 입력해주세요!"
                                                             autocomplete="off"
                                                             css={ListInput}
@@ -207,7 +205,7 @@ const AddInput = () => {
                                                     return (
                                                         <textarea
                                                             {...field}
-                                                            defaultValue={Object.values(DetailRoute[index])[3]}
+                                                            defaultValue={DetailRoute[index] === {} ? Object.values(DetailRoute[index])[3] : ''}
                                                             placeholder="후기를 적어주세요!"
                                                             autocomplete="off"
                                                             css={BodyInput}
