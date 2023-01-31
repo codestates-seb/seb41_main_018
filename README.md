@@ -9,9 +9,7 @@
 |:---:|:---:|:---:|:---:|:---:|:---:|
 |<img src="https://avatars.githubusercontent.com/u/89727516?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/111356791?v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/110887369?v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/57933510?s=100&v=4" width=150>|<img src="https://avatars.githubusercontent.com/u/108250233?v=4" width=90>|<img src="https://avatars.githubusercontent.com/u/89247924?s=100&v=4" width=150>|
 |[@z1nun](https://github.com/z1nun)|[@RiOAOn](https://github.com/RiOAOn)|[@shinpaka](https://github.com/shinpaka)|[@Choiyu330](https://github.com/Choiyu330)|[@kangharyeom](https://github.com/kangharyeom)|[@eehres](https://github.com/eehres)|
-
-|- 반응형 웹 <br> - HomePage CRUD <br> - DetailPage CRUD <br> - S3배포 |-Content CRUD
-Comment CRUD <br> - UserInfo CRUD <br> - API 통신|-Login, Signup Page <br> - 지도기능 구현 <br> - 게시글 작성 및 수정기능 구현| - Content CRUD <br> - REDIS Logout <br> - MYSQL DB관리 | - Comment CRUD <br> - Swagger API <br> - AWS(EC2,RDS)배포환경 구축|- User CRUD <br> - Route CRUD <br> - JWT <br> - S3 이미지 업로드|
+|- 반응형 웹 <br> - HomePage CRUD <br> - DetailPage CRUD <br> - S3배포 |-Content CRUD - Comment CRUD <br> - UserInfo CRUD <br> - API 통신|-Login, Signup Page <br> - 지도기능 구현 <br> - 게시글 작성 및 수정기능 구현| - Content CRUD <br> - REDIS Logout <br> - MYSQL DB관리 | - Comment CRUD <br> - Swagger API <br> - AWS(EC2,RDS)배포환경 구축|- User CRUD <br> - Route CRUD <br> - JWT <br> - S3 이미지 업로드|
 
 ## 🖥️ **프로젝트 소개**
 🚲여행 상품 기획부터 여행지 선택, 여행지의 ‘맛집’ 탐색까지! 내 맛대로 골라 먹는 여행관련 공유 플랫폼!🙀
