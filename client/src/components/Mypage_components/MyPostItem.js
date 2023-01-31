@@ -20,7 +20,6 @@ const MyPostItem = ({ post }) => {
                 </Link>
 
                 <div css={MyPostItem_Body}>
-                    <div>경로</div>
                     <div css={Right_Content}>{dayjs(createdAt).format("YY.MM.DD")}</div>
                 </div>
             </div>
@@ -31,7 +30,7 @@ const MyPostItem = ({ post }) => {
 const MyPostItem_Wrap = css`
     display: flex;
     align-items: center;
-    padding: 8px;
+    padding: 21px 8px;
     margin: 10px;
     width: 90%;
 
@@ -44,6 +43,7 @@ const PostImg = css`
     border: ${PALETTE.border};
     width: 90px;
     height: 90px;
+
     img {
         width: 100%;
         height: 100%;

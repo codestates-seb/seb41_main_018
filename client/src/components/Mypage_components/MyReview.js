@@ -20,7 +20,6 @@ const MyReview = () => {
                         <img src={DummyImg[randomImg]} />
                     </div>
                     <div css={MyReview_Content}>
-                        {console.log(review.contentId)}
                         <Link to={`/detail/${review.contentId}`}>
                             <h3 css={PostTitle}>{review.title}</h3>
                         </Link>

@@ -22,7 +22,6 @@ const MyLike = () => {
                         <Link to={`/detail/${el.contentId}`}>
                             <h3 css={PostTitle}>{el.title}</h3>
                         </Link>
-                        <div>경로</div>
                         <div css={Right_Content}>{dayjs(el.createdAt).format("YY.MM.DD")}</div>
                     </div>
                 </div>
@@ -41,19 +40,18 @@ const MyLike_Wrap = css`
 const MyLike_Item = css`
     display: flex;
     align-items: center;
-    padding: 8px;
+    padding: 21px 8px;
     margin: 10px;
     width: 90%;
 
     border: ${PALETTE.border};
     border-radius: ${PALETTE.border_radius};
-    box-shadow: ${PALETTE.box_shaodw};
+    box-shadow: ${PALETTE.box_shadow};
 `;
 const PostImg = css`
-    padding: 20px;
     border: ${PALETTE.border};
     width: 90px;
-    height: 90px;
+    height: 84px;
     img {
         width: 100%;
         height: 100%;
@@ -61,7 +59,7 @@ const PostImg = css`
 `;
 
 const MyLike_Content = css`
-    padding: 20px;
+    padding: 5px 20px;
     width: 100%;
     text-align: left;
 `;
