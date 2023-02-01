@@ -105,17 +105,6 @@ export const getUserInfo = async (userId) => {
         });
 };
 
-// 로그인 상태 확인
-export const checkLogin = async () => {
-    return await getUserInfo().then((res) => {
-        if (!res) {
-            console.log("Please login");
-        } else {
-            return res.data;
-        }
-    });
-};
-
 // 닉네임 수정
 export const userEdit = async (userId, editName) => {
     return await axios

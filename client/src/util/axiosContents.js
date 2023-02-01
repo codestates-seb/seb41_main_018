@@ -239,7 +239,6 @@ export const deleteContent = async (contentId) => {
                 title: "삭제가 완료되었습니다.",
             });
 
-            console.log(res);
             return res;
         })
         .catch((err) => {
