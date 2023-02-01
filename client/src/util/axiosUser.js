@@ -1,11 +1,66 @@
 import axios from "axios";
-
+import Swal from "sweetalert2";
 // http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080
 /* {
 	"email": "ppp@gmail.com",
 	"password": "12345678"
  
  } */
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top",
+    width: "380px",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+});
+// 회원가입
+export const Signup = async (data) => {
+    await axios
+        .post("http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users", data, {})
+        .then((res) => {
+            Toast.fire({
+                icon: "success",
+                title: "회원가입이 완료되었습니다.",
+            });
+        })
+        .catch((err) => {
+            Toast.fire({
+                icon: "error",
+                title: "회원가입에 실패했습니다.",
+            });
+        });
+};
+
+// 회원가입 - 이메일 중복검사
+export const EmailCheck = async (email) => {
+    await axios
+        .get(
+            `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/emailCheck/${email}`,
+            email
+        )
+        .then((res) => {
+            if (res.data) {
+                Toast.fire({
+                    icon: "success",
+                    title: "사용할 수 있는 이메일입니다.",
+                });
+            } else {
+                Toast.fire({
+                    icon: "warning",
+                    title: "존재하는 이메일입니다.",
+                });
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
 // 로그인
 export const Login = async (jsonData) => {
     return await axios
@@ -32,7 +87,10 @@ export const Login = async (jsonData) => {
         })
         .catch((err) => {
             console.log(err);
-            alert("로그인에 실패했습니다.");
+            Toast.fire({
+                icon: "error",
+                title: "이메일과 비밀번호를 확인해주세요.",
+            });
         });
 };
 
@@ -79,7 +137,10 @@ export const userEdit = async (userId, editName) => {
             }
         )
         .then((res) => {
-            console.log("수정 완료");
+            Toast.fire({
+                icon: "success",
+                title: "수정이 완료되었습니다.",
+            });
             return res.data;
         })
         .catch((err) => {
@@ -100,7 +161,10 @@ export const userLogout = async () => {
             }
         )
         .then(() => {
-            alert("로그아웃 되었습니다.");
+            Toast.fire({
+                icon: "success",
+                title: "로그아웃이 완료되었습니다.",
+            });
         })
         .catch((err) => {
             console.error(err.message);
@@ -119,7 +183,10 @@ export const deleteUser = async (userId) => {
             }
         )
         .then(() => {
-            alert("탈퇴가 완료되었습니다.");
+            Toast.fire({
+                icon: "success",
+                title: "회원탈퇴가 완료되었습니다.",
+            });
         })
         .catch((err) => {
             console.error(err.message);
