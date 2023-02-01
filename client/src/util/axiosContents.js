@@ -1,7 +1,21 @@
 import axios from "axios";
-
+import Swal from "sweetalert2";
 // http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080
 // "proxy": ""
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top",
+    width: "380px",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+});
+
 // 컨텐츠 전체 조회 & 단건 조회
 export const getContent = async (contentId = 0) => {
     return await axios
@@ -54,8 +68,11 @@ export const createReview = async (body, id, rate) => {
         })
         .catch((err) => {
             if (err.response.status === 401) {
-                alert("로그인이 필요합니다");
-                location.href = "/login";
+                Toast.fire({
+                    icon: "error",
+                    title: "로그인이 필요합니다.",
+                });
+                /* location.href = "/login"; */
             }
             console.error(err.message);
         });
@@ -82,7 +99,10 @@ export const patchReview = async (commentId, body, ratingType) => {
         })
         .catch((err) => {
             if (err.response.status === 401) {
-                alert("권한이 없습니다.");
+                Toast.fire({
+                    icon: "error",
+                    title: "권한이 없습니다.",
+                });
             }
             console.log(err);
         });
@@ -100,12 +120,18 @@ export const deleteReview = async (commentId) => {
             }
         )
         .then((res) => {
-            alert("삭제가 완료되었습니다.");
+            Toast.fire({
+                icon: "success",
+                title: "삭제가 완료되었습니다.",
+            });
             return res;
         })
         .catch((err) => {
             if (err.response.status === 401) {
-                alert("권한이 없습니다.");
+                Toast.fire({
+                    icon: "error",
+                    title: "권한이 없습니다.",
+                });
             }
             console.log(err);
         });
@@ -149,8 +175,16 @@ export const postContent = async (data) => {
         })
         .catch((err) => {
             if (err.response.status === 401) {
-                alert("권한이 없습니다.");
-            } else alert("모든 항목을 작성해주세요.");
+                Toast.fire({
+                    icon: "error",
+                    title: "권한이 없습니다.",
+                });
+            } else
+                Toast.fire({
+                    icon: "error",
+                    title: "모든 항목을 작성해주세요.",
+                });
+
             console.log(err);
         });
 };
@@ -168,7 +202,6 @@ export const patchContent = async (data) => {
                 routes: data.routes,
                 contentId: data.contentId,
                 userId: data.userId,
-
             },
             {
                 headers: {
@@ -182,7 +215,10 @@ export const patchContent = async (data) => {
         })
         .catch((err) => {
             console.log(err);
-            alert('수정에 실패했습니다')
+            Toast.fire({
+                icon: "error",
+                title: "수정에 실패했습니다.",
+            });
         });
 };
 
@@ -198,13 +234,20 @@ export const deleteContent = async (contentId) => {
             }
         )
         .then((res) => {
-            alert("삭제가 완료되었습니다.");
+            Toast.fire({
+                icon: "Success",
+                title: "삭제가 완료되었습니다.",
+            });
+
             console.log(res);
             return res;
         })
         .catch((err) => {
             if (err.response.status === 401) {
-                alert("권한이 없습니다.");
+                Toast.fire({
+                    icon: "error",
+                    title: "권한이 없습니다.",
+                });
             }
             console.log(err);
         });
@@ -224,16 +267,25 @@ export const postHeart = async (userId, contentId) => {
         )
         .then((res) => {
             if (res.data) {
-                alert(`"좋아요" 가 등록되었습니다.`);
+                Toast.fire({
+                    icon: "Success",
+                    title: `"좋아요" 가  등록되었습니다.`,
+                });
             } else {
-                alert(`"좋아요" 가  취소되었습니다.`);
+                Toast.fire({
+                    icon: "Success",
+                    title: `"좋아요" 가  취소되었습니다.`,
+                });
             }
             return res;
         })
         .catch((err) => {
             if (err.response.status === 401 || userId === undefined) {
-                alert("로그인이 필요합니다");
-                location.href = "/login";
+                Toast.fire({
+                    icon: "error",
+                    title: "로그인이 필요합니다.",
+                });
+                /* location.href = "/login"; */
             }
             console.log(err);
         });

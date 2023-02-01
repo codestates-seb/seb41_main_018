@@ -37,9 +37,7 @@ const LoginPage = () => {
     } = useForm({ mode: "onchange", defaultValues });
 
     const onSubmit = async (data) => {
-        const jsonData = JSON.stringify(data);
-
-        await Login(jsonData)
+        await Login(data)
             .then((res) => {
                 getUserInfo(res.data.userId).then((data) => {
                     setUserInfo(data.data);

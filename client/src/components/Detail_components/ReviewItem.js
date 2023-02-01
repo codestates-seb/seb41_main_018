@@ -11,10 +11,24 @@ import { patchReview } from "../../util/axiosContents";
 import { useRecoilState } from "recoil";
 import { userInfoState } from "../../state/atom";
 import ReviewDeleteModal from "./ReviewDeleteModal";
+import Swal from "sweetalert2";
 
 //Button
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top",
+    width: "380px",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+});
 
 export const Buttons = (props) => {
     return (
@@ -57,7 +71,10 @@ const ReviewItem = ({ review, setUpdate }) => {
             setReviewText(body);
             setRateType(ratingType);
         } else {
-            alert("권한이 없습니다.");
+            Toast.fire({
+                icon: "error",
+                title: "권한이 없습니다.",
+            });
         }
     };
 
@@ -73,7 +90,10 @@ const ReviewItem = ({ review, setUpdate }) => {
         if (userInfo.userId === userId) {
             setModalOpen(true);
         } else {
-            alert("권한이 없습니다.");
+            Toast.fire({
+                icon: "error",
+                title: "권한이 없습니다.",
+            });
         }
     };
 

@@ -8,6 +8,7 @@ import DetailMap from "./DetailMap";
 import { FiShare } from "react-icons/fi";
 import { BsFillHeartFill } from "react-icons/bs";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 //recoil
 import { useRecoilState } from "recoil";
@@ -23,6 +24,19 @@ dayjs.locale("ko");
 import { postHeart } from "../../util/axiosContents";
 import { getUserInfo } from "../../util/axiosUser";
 import { useEffect } from "react";
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top",
+    width: "380px",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+});
 
 export const Buttons = (props) => {
     return (
@@ -82,10 +96,16 @@ const Detailform = () => {
     const clip = () => {
         navigator.clipboard.writeText(window.location.href).then(
             () => {
-                alert("링크가 복사되었습니다.");
+                Toast.fire({
+                    icon: "success",
+                    title: "링크가 복사 되었습니다.",
+                });
             },
             (err) => {
-                alert("링크 복사를 실패하였습니다.");
+                Toast.fire({
+                    icon: "error",
+                    title: "링크 복사를 실패하였습니다.",
+                });
             }
         );
     };
