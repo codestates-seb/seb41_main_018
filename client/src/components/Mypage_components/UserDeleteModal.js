@@ -31,8 +31,20 @@ const UserDeleteModal = (props) => {
             <div css={ModalContainer}>
                 <h2>{props.text}</h2>
                 <div css={ButtonArea}>
-                    <Button text="확인" width="25%" margin="20px" onClick={deleteConfirm}></Button>
-                    <Button text="취소" width="25%" margin="20px" onClick={closeModal}></Button>
+                    <Button
+                        text="확인"
+                        width="25%"
+                        margin="20px"
+                        color="white"
+                        onClick={deleteConfirm}
+                    ></Button>
+                    <Button
+                        text="취소"
+                        width="25%"
+                        margin="20px"
+                        color="white"
+                        onClick={closeModal}
+                    ></Button>
                 </div>
             </div>
         </div>
