@@ -82,7 +82,7 @@ const Detail = () => {
     const getContentDetail = (contentId) => {
         getContent(contentId).then((res) => {
             setContentDetail(res && res.data);
-            setReviewList(res.data.data && res.data.data.comments);
+            setReviewList(res.data && res.data.data && res.data.data.comments);
         });
     };
 
