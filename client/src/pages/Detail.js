@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 //css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import Swal from "sweetalert2";
 
 //Icon
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -65,6 +66,19 @@ const Detail = () => {
         "YYYY.MM.DD"
     );
 
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top",
+        width: "380px",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+    });
+
     const getContentDetail = (contentId) => {
         getContent(contentId).then((res) => {
             setContentDetail(res && res.data);
@@ -94,7 +108,10 @@ const Detail = () => {
         if (userInfo.userId === contentsUserId) {
             setModalOpen(true);
         } else {
-            alert("권한이 없습니다.");
+            Toast.fire({
+                icon: "error",
+                title: "권한이 없습니다.",
+            });
         }
     };
 
@@ -116,8 +133,10 @@ const Detail = () => {
                             <div css={postDate}>{`${postingData} 작성`}</div>
                         </div>
 
-                        <div css={ButtonBox}>
-                            {/* className={isMyPost ? "" : "hidden"} */}
+                        <div
+                            css={ButtonBox}
+                            className={contentsUserId === logInUserId ? "" : "hidden"}
+                        >
                             <button css={btnStyle} onClick={updateMyPost}>
                                 Update
                             </button>

@@ -78,6 +78,7 @@ const MyInfo = () => {
                         left="540px"
                         top="105px"
                         transition="none"
+                        color="white"
                     />
                 ) : (
                     <Button
@@ -88,6 +89,7 @@ const MyInfo = () => {
                         left="540px"
                         top="165px"
                         transition="none"
+                        color="white"
                     />
                 )}
             </li>

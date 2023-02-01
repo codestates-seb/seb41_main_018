@@ -37,9 +37,16 @@ const ReviewDeleteModal = (props) => {
                         text="확인"
                         width="25%"
                         margin="20px"
+                        color="white"
                         onClick={() => deleteReviewHandler(props.commentId)}
                     ></Button>
-                    <Button text="취소" width="25%" margin="20px" onClick={closeModal}></Button>
+                    <Button
+                        text="취소"
+                        width="25%"
+                        margin="20px"
+                        color="white"
+                        onClick={closeModal}
+                    ></Button>
                 </div>
             </div>
         </div>

@@ -2,9 +2,22 @@ import React, { useRef, useState, useEffect } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
-
+import Swal from "sweetalert2";
 import { TiDelete } from "react-icons/ti";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top",
+    width: "380px",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+});
 
 const ImgUpload = (props) => {
     const { index, setValue, value } = props;
@@ -12,7 +25,6 @@ const ImgUpload = (props) => {
     const [previewList, setPreviewList] = useState([]);
     const inputRef = useRef(null);
     const uploadBtnClick = () => {
-        console.log("버튼클릭");
         inputRef.current.click();
     };
 
@@ -27,7 +39,10 @@ const ImgUpload = (props) => {
 
         // 사진 입력 제한 : 최대 3장
         if ((value && value.length + maxImg > 3) || selectedImg.length > 3) {
-            alert("최대 3장까지만 등록 가능합니다.");
+            Toast.fire({
+                icon: "error",
+                title: "사진은 3장까지 등록 가능합니다.",
+            });
             return;
         }
 
@@ -53,7 +68,7 @@ const ImgUpload = (props) => {
                 multiple
             />
             <button type="button" onClick={uploadBtnClick} css={uploadButton}>
-                <MdOutlineAddPhotoAlternate size="20" /> <span>사진 업로드</span>
+                <MdOutlineAddPhotoAlternate size="20" /> <span>사진 등록</span>
             </button>
             <div css={PreviewContainer}>
                 {value &&
