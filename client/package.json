@@ -31,6 +31,7 @@
     "react-spinners": "^0.13.8",
     "recoil": "^0.7.6",
     "recoil-persist": "^4.2.0",
+    "sweetalert2": "^11.7.1",
     "swiper": "^8.4.5",
     "web-vitals": "^2.1.4"
   },

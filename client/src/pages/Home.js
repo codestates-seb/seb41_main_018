@@ -19,6 +19,7 @@ import { ContentsList, loginState, userInfoState } from "../state/atom";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loding";
 import { PALETTE } from "../Common";
+import Swal from "sweetalert2";
 
 import { GachiGalleImgSrc } from "../sampleImage";
 
@@ -33,14 +34,28 @@ const Home = () => {
     const viewCountSortArr = [...contentsList].sort((a, b) => b.viewCount - a.viewCount);
     // 좋아요 기준 정렬
     const heartCountSortArr = [...contentsList].sort((a, b) => b.heartCount - a.heartCount);
-
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top",
+        width: "380px",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+    });
     // 비로그인 시에는 post 불가
     const postButtonClick = () => {
         console.log(userInfo.userId);
         if (userInfo.userId !== undefined) {
             navigate("/post");
         } else {
-            alert("로그인이 필요합니다.");
+            Toast.fire({
+                icon: "error",
+                title: "로그인이 필요합니다.",
+            });
             navigate("/login");
         }
     };
