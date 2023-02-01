@@ -1,11 +1,7 @@
 import React, { useState, useRef } from "react";
-
 import { useForm } from "react-hook-form";
-
 import { useNavigate, Link } from "react-router-dom";
-
-import axios from "axios";
-
+import { Signup, EmailCheck } from "../../util/axiosUser";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
@@ -80,56 +76,14 @@ const SignUp = () => {
 
         e.preventDefault();
         if (emailregex.test(email.current)) {
-            const emailjsonData = JSON.stringify(email.current);
-            console.log(emailjsonData);
-
-            await axios
-                .get(
-                    `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/emailCheck/${email.current}`,
-                    emailjsonData,
-                    {
-                        headers: {
-                            "Content-Type": `application/json`,
-                        },
-                    }
-                )
-                .then((res) => {
-                    if (res) {
-                        alert("사용할수 있는 이메일입니다");
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                    console.log(emailjsonData);
-                    alert("존재하는 이메일입니다");
-                });
+            EmailCheck(email.current);
         }
     };
 
     const onSignUpSubmit = async (data) => {
-        const jsonData = JSON.stringify(data);
-        console.log(email.current);
-
-        // 추후 axiosUser로 이동
-        await axios
-            .post(
-                "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users",
-                jsonData,
-                {
-                    headers: {
-                        "Content-Type": `application/json`,
-                    },
-                }
-            )
-            .then((res) => {
-                alert("회원가입 성공!!!!!");
-                navigate("/login");
-            })
-            .catch((err) => {
-                console.log(err);
-                console.log(data);
-                alert("회원가입에 실패했습니다.");
-            });
+        Signup(data).then(() => {
+            navigate("/login");
+        });
     };
 
     const {
