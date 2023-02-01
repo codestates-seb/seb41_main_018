@@ -68,7 +68,6 @@ const SignUp = () => {
         }
 
         setphoneNum(result.filter((val) => val).join("-"));
-        console.log(phoneNum);
     };
 
     const emailCheck = async (e) => {
@@ -130,7 +129,6 @@ const SignUp = () => {
                             width="100px"
                             color="white"
                             text="중복검사"
-                            // margin="40px"
                             padding="10px"
                             bdradius="50px"
                             boxShadow="1px 2px 2px rgb(0,0,0,0.3)"

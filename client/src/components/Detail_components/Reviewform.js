@@ -9,7 +9,6 @@ import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Input } from "../../util/UseForm";
 import { useRecoilState } from "recoil";
 import { ContentDetail, ReviewListState } from "../../state/atom";
 import { createReview, getContent } from "../../util/axiosContents";

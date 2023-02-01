@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
-import { getAuthorization, getRefresh, userInfoState, loginState } from "../../state/atom";
+import { userInfoState, loginState } from "../../state/atom";
 import SocialButton from "../../components/SocialButton";
 import Button from "../../components/Button";
 import { GachiGalleImgSrc } from "../../sampleImage";
@@ -25,8 +24,6 @@ const defaultValues = {
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const [Authorization, setAuthorization] = useRecoilState(getAuthorization);
-    const [Refresh, setRefresh] = useRecoilState(getRefresh);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [isLogin, setIsLogin] = useRecoilState(loginState);
 
