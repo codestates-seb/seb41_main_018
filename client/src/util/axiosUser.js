@@ -62,27 +62,19 @@ export const EmailCheck = async (email) => {
         });
 };
 // 로그인
-export const Login = async (jsonData) => {
+export const Login = async (data) => {
     return await axios
-        .post(
-            "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/login",
-            jsonData,
-            {
-                headers: {
-                    "Content-Type": `application/json`,
-                },
-            }
-        )
+        .post("http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/login", data)
 
         .then((res) => {
             if (res.status === 202) {
-                console.log("Login Success!");
-
                 const accessToken = res.headers.get("Authorization");
-                const refreshToken = res.headers.get("RefreshToken");
                 sessionStorage.setItem("access_token", accessToken);
-                sessionStorage.setItem("refresh_token", refreshToken);
             }
+            Toast.fire({
+                icon: "success",
+                title: "안녕하세요:) 환영합니다!",
+            });
             return res;
         })
         .catch((err) => {
