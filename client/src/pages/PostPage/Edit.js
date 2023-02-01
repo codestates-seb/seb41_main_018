@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -373,7 +372,6 @@ const Edit = () => {
         for (let obj of data && data.routes) {
             delete obj.image;
         }
-        console.log(data);
         patchContent(data).then((res) => {
             if (res) {
                 navigate("/");
@@ -412,7 +410,7 @@ const Edit = () => {
                 </div>
                 <button
                     type="button"
-                    onClick={() => handleSubmit(submit, console.log)()}
+                    onClick={() => handleSubmit(submit)}
                     css={SubmitButton}
                 >
                     작성완료

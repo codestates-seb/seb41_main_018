@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 /* {
 	"email": "ppp@gmail.com",
 	"password": "12345678"
- 
+
  } */
 
 const Toast = Swal.mixin({

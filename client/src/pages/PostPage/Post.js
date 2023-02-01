@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
