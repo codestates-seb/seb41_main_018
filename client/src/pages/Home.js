@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { Link } from "react-router-dom";
 import HomeItems from "../components/Home_components/HomeItems";
 import Regionitems from "../components/Home_components/RegionItems";
 import Categorybar from "../components/Categorybar";
 import Banner from "../components/Home_components/Banner";
-import Footer from "../components/Footer";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/css";
@@ -15,7 +13,7 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import { getContent } from "../util/axiosContents";
 import { useRecoilState } from "recoil";
-import { ContentsList, loginState, userInfoState } from "../state/atom";
+import { ContentsList, userInfoState } from "../state/atom";
 import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loding";
 import { PALETTE } from "../Common";
@@ -48,7 +46,6 @@ const Home = () => {
     });
     // 비로그인 시에는 post 불가
     const postButtonClick = () => {
-        console.log(userInfo.userId);
         if (userInfo.userId !== undefined) {
             navigate("/post");
         } else {
@@ -90,18 +87,6 @@ const Home = () => {
         },
     };
 
-    const data = [
-        { text: "서울", img: GachiGalleImgSrc.seoul_img },
-        { text: "부산", img: GachiGalleImgSrc.busan_img },
-        { text: "제주", img: GachiGalleImgSrc.jeju_img },
-        { text: "여수", img: GachiGalleImgSrc.yeosu_img },
-        { text: "전주", img: GachiGalleImgSrc.jeonju_img },
-        { text: "강릉", img: GachiGalleImgSrc.gangneung_img },
-        { text: "포천", img: GachiGalleImgSrc.pocheon_img },
-        { text: "파주", img: GachiGalleImgSrc.paju_img },
-        { text: "담양", img: GachiGalleImgSrc.damyang_img },
-    ];
-
     return (
         <div>
             {isLoading ? (
@@ -109,17 +94,6 @@ const Home = () => {
             ) : (
                 <>
                     <Categorybar />
-                    {/*  <Swiper {...swiperOption} css={postStyle}>
-                        <div>
-                            {data.map((el) => {
-                                console.log(el.img);
-                                console.log(el.text);
-                                <SwiperSlide>
-                                    <Regionitems key={el.text} img={`${el.img}`} text={el.text} />
-                                </SwiperSlide>;
-                            })}
-                        </div>
-                    </Swiper> */}
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
                             <SwiperSlide>
