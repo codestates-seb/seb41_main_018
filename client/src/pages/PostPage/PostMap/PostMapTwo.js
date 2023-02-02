@@ -270,11 +270,11 @@ const PostMapTwo = (props) => {
 
     return (
         <div css={SearchMap}>
-            <div id="map2"></div>
             <div id="menu_wrap2">
                 <ul id="placesList2"></ul>
                 <div id="pagination2"></div>
             </div>
+            <div id="map2"></div>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import react, { useEffect, useState, useRef } from "react";
 
 //css
 /** @jsxImportSource @emotion/react */
@@ -16,51 +16,20 @@ import { useRecoilState } from "recoil";
 import { ContentDetail } from "../../state/atom";
 import { PALETTE } from "../../Common";
 
-const routes = [
-    {
-        place: "아르떼 뮤지엄",
-        x: 33.39669867756354,
-        y: 126.34501061612566,
-    },
-    {
-        place: "금오름",
-        x: 33.354052786802654,
-        y: 126.30773703851709,
-    },
-];
-
-const DetailMap = () => {
+const DetailMap = (props) => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const data = contentDetail.data;
     const RouteData = data && data.routes;
     const [zoomable, setZoomable] = useState(false);
     const [path, setPath] = useState([]);
 
-    console.log(RouteData);
-
-    //polyLine 좌표 따는 함수 (보류)
-    // useEffect(() => {
-    //     routes.map((el, index) => {
-    //         let position = { lat: el.x, lng: el.y };
-    //         setPath([...path, position]);
-    //     });
-    // }, []);
-    //
-
-    const b = {
-        lat: contentDetail && contentDetail.data && contentDetail.data.routes[0].x,
-        lng: contentDetail && contentDetail.data && contentDetail.data.routes[0].y,
-    };
-    const a = {
-        lat: 36,
-        lng: 127.152557091072,
-    };
-
-    console.log(b);
+    // const center = useRef();
+    // center.current = props.position;
+    console.log(props.position && props.position.center);
 
     return (
         //하드 코딩 데이터 출력용
-        <Map center={a} css={MapStyle} level={13} zoomable={zoomable}>
+        <Map center={props.position} css={MapStyle} level={4} zoomable={zoomable}>
             {data &&
                 data.routes.map((position, index) => (
                     <div key={index}>
