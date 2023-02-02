@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { PALETTE } from "../../Common";
 
 export const LoginpageBg = css`
     overflow: auto;

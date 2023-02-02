@@ -22,10 +22,18 @@ const DetailMap = (props) => {
     const RouteData = data && data.routes;
     const [zoomable, setZoomable] = useState(false);
     const [path, setPath] = useState([]);
+    const [isClick, setIsClick] = useState(false);
 
     // const center = useRef();
     // center.current = props.position;
     console.log(props.position && props.position.center);
+
+
+    const mapZoomBtnClick = (click) => {
+        setIsClick(click);
+        setZoomable(click);
+    };
+
 
     return (
         //하드 코딩 데이터 출력용
@@ -53,10 +61,18 @@ const DetailMap = (props) => {
                     </div>
                 ))}
             <div css={BtnWrap}>
-                <button css={BtnStyle} onClick={() => setZoomable(false)}>
+                <button
+                    css={BtnStyle}
+                    className={isClick ? "" : "click"}
+                    onClick={() => mapZoomBtnClick(false)}
+                >
                     지도 확대/축소 끄기
                 </button>
-                <button css={BtnStyle} onClick={() => setZoomable(true)}>
+                <button
+                    css={BtnStyle}
+                    className={isClick ? "click" : ""}
+                    onClick={() => mapZoomBtnClick(true)}
+                >
                     지도 확대/축소 켜기
                 </button>
             </div>
@@ -141,6 +157,11 @@ const BtnStyle = css`
     @media (min-width: 768px) {
         margin: 5px;
         font-size: 1rem;
+    }
+
+    &.click {
+        color: white;
+        background-color: ${PALETTE.default_color};
     }
 `;
 export default DetailMap;

@@ -62,7 +62,6 @@ const Mypage = () => {
                 <div>Loding...</div>
             ) : (
                 <div css={Mypage_Wrap}>
-                    {console.log(userInfo)}
                     <div css={ProfileContainer}>
                         <img src={userInfo.image} alt="프로필 사진"></img>
                         <div css={NameArea}>

@@ -22,8 +22,6 @@ const PostMapTwo = (props) => {
         };
         const map = new kakao.maps.Map(mapContainer, mapOptions);
 
-        console.log("loading kakaomap");
-
         // 장소 검색 객체를 생성합니다
         var ps = new kakao.maps.services.Places();
 
@@ -34,7 +32,7 @@ const PostMapTwo = (props) => {
 
         var callback = function (result, status) {
             if (status === kakao.maps.services.Status.OK) {
-                // console.log(result[0])
+                // 리스트 클릭시 위치 정보를 저장하는 함수입니다
                 setValue(`routes.${index}.address`, result[0].address.address_name);
                 setValue(`routes.${index}.x`, yposition);
                 setValue(`routes.${index}.y`, xposition);
@@ -54,8 +52,6 @@ const PostMapTwo = (props) => {
                     "   <h5>" +
                     places.place_name +
                     "</h5>";
-
-            // setDpo(places.address_name[0]);
 
             if (places.road_address_name) {
                 itemStr +=
@@ -159,8 +155,7 @@ const PostMapTwo = (props) => {
             var listEl = document.getElementById("placesList2"),
                 menuEl = document.getElementById("menu_wrap2"),
                 fragment = document.createDocumentFragment(),
-                bounds = new kakao.maps.LatLngBounds(),
-                listStr = "";
+                bounds = new kakao.maps.LatLngBounds();
 
             // 검색 결과 목록에 추가된 항목들을 제거합니다
             removeAllChildNods(listEl);
@@ -197,7 +192,6 @@ const PostMapTwo = (props) => {
                     /////
                     itemEl.onmousedown = function () {
                         setValue(`routes.${index}.place`, title);
-                        // console.log(title)
                         geocoder.coord2Address(xposition, yposition, callback);
                     };
                     /////
@@ -227,9 +221,7 @@ const PostMapTwo = (props) => {
 
                 // 페이지 번호를 표출합니다
                 displayPagination(pagination);
-                console.log(data);
             } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-                // alert('검색 결과가 존재하지 않습니다.');
                 return;
             } else if (status === kakao.maps.services.Status.ERROR) {
                 alert("검색 결과 중 오류가 발생했습니다.");
@@ -242,7 +234,6 @@ const PostMapTwo = (props) => {
                 xposition = data[0].x;
                 yposition = data[0].y;
             } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-                // alert('검색 결과가 존재하지 않습니다.');
                 return;
             } else if (status === kakao.maps.services.Status.ERROR) {
                 alert("검색 결과 중 오류가 발생했습니다.");
@@ -252,10 +243,6 @@ const PostMapTwo = (props) => {
 
         // 키워드 검색을 요청하는 함수입니다
         function searchPlaces() {
-            // if (!keyword.replace(/^\s+|\s+$/g, '')) {
-            //     return;
-            // }
-
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
             ps.keywordSearch(keyword, placesSearchCB);
         }
@@ -281,7 +268,6 @@ const PostMapTwo = (props) => {
 
 const SearchMap = css`
     display: flex;
-    flex-direction: column;
 
     #map2 {
         display: none;

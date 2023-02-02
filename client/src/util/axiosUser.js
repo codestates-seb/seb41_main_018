@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 /* {
 	"email": "ppp@gmail.com",
 	"password": "12345678"
- 
+
  } */
 
 const Toast = Swal.mixin({
@@ -103,17 +103,6 @@ export const getUserInfo = async (userId) => {
         .catch((err) => {
             console.error(err.message);
         });
-};
-
-// 로그인 상태 확인
-export const checkLogin = async () => {
-    return await getUserInfo().then((res) => {
-        if (!res) {
-            console.log("Please login");
-        } else {
-            return res.data;
-        }
-    });
 };
 
 // 닉네임 수정

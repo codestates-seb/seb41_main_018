@@ -10,10 +10,22 @@ import { useRecoilState } from "recoil";
 import { userInfoState } from "../../state/atom";
 import { postHeart } from "../../util/axiosContents";
 import { getUserInfo } from "../../util/axiosUser";
-
+import Swal from "sweetalert2";
 import { GachiGalleImgSrc } from "../../sampleImage";
-
 import { SampleImgSrc } from "../../sampleImage";
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top",
+    width: "380px",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+});
 
 const HomeItems = (content) => {
     const GachiArr = Object.values(SampleImgSrc);
@@ -27,12 +39,19 @@ const HomeItems = (content) => {
     const data = content.content;
 
     const handleFavoriteClick = () => {
-        postHeart(userInfo.userId, data.contentId).then(() => {
-            getUserInfo(userInfo.userId).then((data) => {
-                setUserInfo(data.data);
-                setFavoriteClick(!isFavoriteClcik);
+        if (userInfo.userId) {
+            postHeart(userInfo.userId, data.contentId).then(() => {
+                getUserInfo(userInfo.userId).then((data) => {
+                    setUserInfo(data.data);
+                    setFavoriteClick(!isFavoriteClcik);
+                });
             });
-        });
+        } else {
+            Toast.fire({
+                icon: "error",
+                title: "로그인이 필요합니다.",
+            });
+        }
     };
 
     useEffect(() => {
