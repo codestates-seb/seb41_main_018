@@ -145,7 +145,17 @@ const AddInput = () => {
                                             autocomplete="off"
                                             placeholder="사용한 금액을 입력해주세요!"
                                             step="1000"
+                                            min="0"
                                             css={ListInput}
+                                            onBlur={(e) => {
+                                                Number(e.target.value) < 0 ||
+                                                !Number.isInteger(Number(e.target.value))
+                                                    ? (e.target.value = 0)
+                                                    : (e.target.value =
+                                                          Math.round(
+                                                              Number(e.target.value) / 1000
+                                                          ) * 1000);
+                                            }}
                                         />
                                     </div>
                                     <div className="listcontainer ">
