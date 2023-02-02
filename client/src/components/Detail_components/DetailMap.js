@@ -19,25 +19,21 @@ import { PALETTE } from "../../Common";
 const DetailMap = (props) => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const data = contentDetail.data;
-    const RouteData = data && data.routes;
     const [zoomable, setZoomable] = useState(false);
-    const [path, setPath] = useState([]);
     const [isClick, setIsClick] = useState(false);
-
-    // const center = useRef();
-    // center.current = props.position;
-    console.log(props.position && props.position.center);
-
+    const position = useRef();
+    position.current = props.position && props.position.center;
+    console.log(`좌표`, props.position && props.position.center);
+    console.log(`좌표2`, position.current);
 
     const mapZoomBtnClick = (click) => {
         setIsClick(click);
         setZoomable(click);
     };
 
-
     return (
         //하드 코딩 데이터 출력용
-        <Map center={props.position} css={MapStyle} level={4} zoomable={zoomable}>
+        <Map center={position.current} css={MapStyle} level={4} zoomable={zoomable}>
             {data &&
                 data.routes.map((position, index) => (
                     <div key={index}>
@@ -50,14 +46,6 @@ const DetailMap = (props) => {
                                 <span>{position.place}</span>
                             </div>
                         </CustomOverlayMap>
-
-                        {/* <Polyline
-                            path={[path]}
-                            strokeWeight={5} // 선의 두께 입니다
-                            strokeColor={"#FFAE00"} // 선의 색깔입니다
-                            strokeOpacity={0.7} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                            strokeStyle={"solid"} // 선의 스타일입니다
-                        /> */}
                     </div>
                 ))}
             <div css={BtnWrap}>
@@ -77,31 +65,6 @@ const DetailMap = (props) => {
                 </button>
             </div>
         </Map>
-        // 사용할 것
-        // <Map center={a} css={MapStyle} level={3}>
-        //     {RouteData &&
-        //         RouteData.map((position, index) => (
-        //             <div key={index}>
-        //                 <MapMarker key={index} position={{ lat: position.x, lng: position.y }} />
-        //                 <CustomOverlayMap
-        //                     position={{ lat: position.x, lng: position.y }}
-        //                     yAnchor={1}
-        //                 >
-        //                     <div css={customoverlay}>
-        //                         <span css={title}>{position.place}</span>
-        //                     </div>
-        //                 </CustomOverlayMap>
-
-        //                 {/* <Polyline
-        //                     path={[path]}
-        //                     strokeWeight={5} // 선의 두께 입니다
-        //                     strokeColor={"#FFAE00"} // 선의 색깔입니다
-        //                     strokeOpacity={0.7} // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-        //                     strokeStyle={"solid"} // 선의 스타일입니다
-        //                 /> */}
-        //             </div>
-        //         ))}
-        // </Map>
     );
 };
 
