@@ -120,7 +120,8 @@ const wrap = css`
 
 const imgStyle = css`
     width: 100%;
-    height: 190px;
+    width: 100%;
+    /* height: 190px; */
     border-radius: ${PALETTE.border_radius};
     object-fit: cover;
 `;

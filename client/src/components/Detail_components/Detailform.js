@@ -76,33 +76,38 @@ const Detailform = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [addedLike, setAddedLike] = useState(false);
-
-    const data = contentDetail.data;
-    const center = useRef();
-    const position = {
-        lat: data && data.routes[0].x,
-        lng: data && data.routes[0].y,
-    };
-    center.current = position;
     const [state, setState] = useState({
         // 지도의 초기 위치
-        center: position,
+        center: {
+            lat: contentDetail.data && contentDetail.data.routes[0].x,
+            lng: contentDetail.data && contentDetail.data.routes[0].y,
+        },
         // 지도 위치 변경시 panto를 이용할지에 대해서 정의
         isPanto: false,
     });
+
+    useEffect(() => {
+        setState({
+            center: {
+                lat: contentDetail.data && contentDetail.data.routes[0].x,
+                lng: contentDetail.data && contentDetail.data.routes[0].y,
+            },
+            isPanto: false,
+        });
+    }, [contentDetail]);
+
+    const data = contentDetail.data;
 
     const selectMenuHandler = (index) => {
         setcurrentTab(index);
         setState({
             center: {
-                lat: data && data.routes[index].x,
-                lng: data && data.routes[index].y,
+                lat: contentDetail.data && contentDetail.data.routes[index].x,
+                lng: contentDetail.data && contentDetail.data.routes[index].y,
             },
             isPanto: false,
         });
     };
-    console.log(state);
-
     // 좋아요 post요청 함수
     const HeartHandler = () => {
         postHeart(userInfo.userId, data.contentId).then(() => {
