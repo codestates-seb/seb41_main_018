@@ -252,7 +252,11 @@ const itemsTitle = css`
 `;
 
 const postStyle = css`
+    display: grid;
+    margin: 0 auto;
+    gap: 20px;
     width: 80vw;
+    height: 100%;
 
     .swiper-button-next {
         background: url(${GachiGalleImgSrc.right_button_img}) no-repeat;

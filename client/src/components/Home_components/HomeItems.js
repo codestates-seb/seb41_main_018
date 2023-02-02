@@ -22,7 +22,7 @@ const HomeItems = (content) => {
     const randomIndex = Math.floor(Math.random() * GachiArr.length);
     const GachiImg = GachiArr[randomIndex];
 
-    console.log(1)
+    console.log(1);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const data = content.content;
 
@@ -64,9 +64,8 @@ const HomeItems = (content) => {
                 )}
             </div>
             <Link to={`/detail/${data && data.contentId}`}>
-                <div css={imgWrap}>
-                    <img src={GachiArr[randomIndex]} css={imgStyle} />
-                </div>
+                <img src={GachiArr[randomIndex]} css={imgStyle} />
+
                 <div css={textContainer}>
                     <div css={titleStyle}>{data && data.title}</div>
 
@@ -100,18 +99,11 @@ const wrap = css`
     height: 100%;
 `;
 
-const imgWrap = css`
-    width: 100%;
-    height: 70%;
-    border-radius: ${PALETTE.border_radius};
-    overflow: hidden;
-`;
-
 const imgStyle = css`
-    max-width: 300px;
-    max-height: 400px;
-    min-width: 140px;
-    min-height: 250px;
+    width: 100%;
+    height: 190px;
+    border-radius: ${PALETTE.border_radius};
+    object-fit: cover;
 `;
 
 const favoriteStyle = css`

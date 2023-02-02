@@ -28,16 +28,16 @@ const Banner = () => {
         <div css={wrap}>
             <Swiper {...swiperOption} css={swiperStyle}>
                 <SwiperSlide>
-                    <img src={GachiGalleImgSrc.banner_1} />
+                    <img src={GachiGalleImgSrc.banner_1} css={bannerStyle} />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <img src={GachiGalleImgSrc.banner_2} />
+                    <img src={GachiGalleImgSrc.banner_2} css={bannerStyle} />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <img src={GachiGalleImgSrc.banner_3} />
+                    <img src={GachiGalleImgSrc.banner_3} css={bannerStyle} />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <img src={GachiGalleImgSrc.banner_1} />
+                    <img src={GachiGalleImgSrc.banner_1} css={bannerStyle} />
                 </SwiperSlide>
             </Swiper>
         </div>
@@ -74,6 +74,12 @@ const swiperStyle = css`
     .swiper-button-prev::after {
         display: none;
     }
+`;
+
+const bannerStyle = css`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 `;
 
 export default Banner;
