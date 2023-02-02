@@ -201,6 +201,7 @@ const ReviewInput = css`
         margin-right: 10px;
         font-size: 1rem;
         color: gray;
+        resize: none;
     }
 `;
 const ReviewList = css`

@@ -123,9 +123,9 @@ const ReviewItem = ({ review, setUpdate }) => {
 
     return editReview ? (
         <div css={Container}>
-            <div css={ReviewContent}>
+            <div css={ReviewBox}>
                 <img css={ProfileImg} src={image} alt={`${nickName}의 프로필 이미지`} />
-                <div>
+                <div css={ReviewContent}>
                     <span
                         css={css`
                             margin: 10px 0;
@@ -171,15 +171,20 @@ const ReviewItem = ({ review, setUpdate }) => {
                             }}
                         />
                     </div>
-                    <button onClick={() => editReviewConfirm(commentId, reviewText, rateType)}>
-                        수정 완료
-                    </button>
                 </div>
+            </div>
+            <div css={BtnWrap}>
+                <button
+                    css={BtnStyle}
+                    onClick={() => editReviewConfirm(commentId, reviewText, rateType)}
+                >
+                    완료
+                </button>
             </div>
         </div>
     ) : (
         <div css={Container}>
-            <div css={ReviewContent}>
+            <div css={ReviewBox}>
                 <img css={ProfileImg} src={image} alt={`${nickName}의 프로필 이미지`} />
                 <div>
                     <div css={RatingBox}>
@@ -257,9 +262,10 @@ const Container = css`
     border-radius: 10px;
 `;
 
-const ReviewContent = css`
+const ReviewBox = css`
     display: flex;
     padding-left: 20px;
+    width: 100%;
 `;
 
 const ProfileImg = css`
@@ -268,6 +274,10 @@ const ProfileImg = css`
     max-width: 60px;
     max-height: 60px;
     margin: 0 10px 0 -10px;
+`;
+
+const ReviewContent = css`
+    width: 100%;
 `;
 
 const RatingBox = css`
@@ -289,7 +299,7 @@ const ReviewInput = css`
 
     textarea {
         border: none;
-        width: 65vw;
+        width: 100%;
         height: 80px;
         border: 2px solid ${PALETTE.default_color};
         border-radius: ${PALETTE.border_radius};
@@ -297,14 +307,16 @@ const ReviewInput = css`
         margin-right: 10px;
         font-size: 1rem;
         color: gray;
+        resize: none;
         @media (min-width: 768px) {
-            width: 55vw;
+            width: 100%;
         }
     }
 `;
 
 const BtnWrap = css`
-    margin-left: 75px;
+    align-self: flex-end;
+    margin-right: 10px;
 `;
 const BtnStyle = css`
     font-size: 0.775rem;
