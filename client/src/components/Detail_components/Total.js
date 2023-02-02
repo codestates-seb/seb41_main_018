@@ -61,7 +61,7 @@ export const Total = () => {
                 <span css={content}>{setCategroy(data)}</span>
             </div>
             <div css={ComContent}>
-                <sapn css={ComTitle}>총경비</sapn>
+                <span css={ComTitle}>총경비</span>
                 <span css={content}>{`${Amount} 원`}</span>
             </div>
         </div>

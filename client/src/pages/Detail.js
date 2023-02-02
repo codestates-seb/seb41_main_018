@@ -133,8 +133,10 @@ const Detail = () => {
                             <div css={postDate}>{`${postingData} 작성`}</div>
                         </div>
 
-                        <div css={ButtonBox}>
-                            {/* className={isMyPost ? "" : "hidden"} */}
+                        <div
+                            css={ButtonBox}
+                            className={contentsUserId === logInUserId ? "" : "hidden"}
+                        >
                             <button css={btnStyle} onClick={updateMyPost}>
                                 Update
                             </button>

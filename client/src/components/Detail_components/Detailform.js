@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 
@@ -76,11 +76,32 @@ const Detailform = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [addedLike, setAddedLike] = useState(false);
+
     const data = contentDetail.data;
+    const center = useRef();
+    const position = {
+        lat: data && data.routes[0].x,
+        lng: data && data.routes[0].y,
+    };
+    center.current = position;
+    const [state, setState] = useState({
+        // 지도의 초기 위치
+        center: position,
+        // 지도 위치 변경시 panto를 이용할지에 대해서 정의
+        isPanto: false,
+    });
 
     const selectMenuHandler = (index) => {
         setcurrentTab(index);
+        setState({
+            center: {
+                lat: data && data.routes[index].x,
+                lng: data && data.routes[index].y,
+            },
+            isPanto: false,
+        });
     };
+    console.log(state);
 
     // 좋아요 post요청 함수
     const HeartHandler = () => {
@@ -175,7 +196,7 @@ const Detailform = () => {
                 </div>
             </div>
             <h2>✈️ 지도로 경로 확인하기</h2>
-            <DetailMap />
+            <DetailMap position={state} />
             <div css={ButtonBox}>
                 <Buttons
                     icon={addedLike ? <FaHeart /> : <FaRegHeart />}
