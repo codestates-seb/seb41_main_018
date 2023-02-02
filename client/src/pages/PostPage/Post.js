@@ -409,7 +409,7 @@ const TitleInput = css`
     border-radius: ${PALETTE.border_radius};
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     @media (min-width: 768px) {
-        width: 45vw;
+        width: 48.7vw;
     }
 `;
 
@@ -432,6 +432,7 @@ const CategoryInput = css`
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     @media (min-width: 768px) {
         width: 20vw;
+        margin-left: 10px;
     }
 `;
 
