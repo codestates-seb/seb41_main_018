@@ -60,7 +60,6 @@ const ReviewItem = ({ review, setUpdate }) => {
     };
 
     const editReviewConfirm = (commentId, body, ratingType) => {
-        console.log(commentId, body, ratingType);
         patchReview(commentId, body, ratingType).then(() => {
             setUpdate(true);
             setEditReview(!editReview);
@@ -102,24 +101,8 @@ const ReviewItem = ({ review, setUpdate }) => {
             <div css={ReviewBox}>
                 <img css={ProfileImg} src={image} alt={`${nickName}의 프로필 이미지`} />
                 <div css={ReviewContent}>
-                    <span
-                        css={css`
-                            margin: 10px 0;
-                            font-size: 1.1rem;
-                            font-weight: 700;
-                        `}
-                    >
-                        {nickName}
-                    </span>
-                    <span
-                        css={css`
-                            margin: 0 10px;
-                            font-size: 0.875rem;
-                            color: #333;
-                        `}
-                    >
-                        {dayjs(createdAt).format("YY.MM.DD")}
-                    </span>
+                    <span css={nickNameWrap}>{nickName}</span>
+                    <span css={createdWrap}>{dayjs(createdAt).format("YY.MM.DD")}</span>
                     <div css={RatingBox}>
                         <StyledRating
                             defaultValue={
@@ -181,24 +164,8 @@ const ReviewItem = ({ review, setUpdate }) => {
                             readOnly
                         />
                     </div>
-                    <span
-                        css={css`
-                            margin: 10px 0;
-                            font-size: 1.1rem;
-                            font-weight: 700;
-                        `}
-                    >
-                        {nickName}
-                    </span>
-                    <span
-                        css={css`
-                            margin: 0 10px;
-                            font-size: 0.875rem;
-                            color: #333;
-                        `}
-                    >
-                        {dayjs(createdAt).format("YY.MM.DD")}
-                    </span>
+                    <span css={nickNameWrap}>{nickName}</span>
+                    <span css={createdWrap}>{dayjs(createdAt).format("YY.MM.DD")}</span>
                     <div
                         css={css`
                             margin: 10px 0px;
@@ -257,8 +224,6 @@ const ReviewContent = css`
 `;
 
 const RatingBox = css`
-    /* width: fit-content; */
-
     .inactive {
         color: #c4c4c4;
     }
@@ -284,6 +249,7 @@ const ReviewInput = css`
         font-size: 1rem;
         color: gray;
         resize: none;
+
         @media (min-width: 768px) {
             width: 100%;
         }
@@ -298,6 +264,7 @@ const BtnWrap = css`
         visibility: hidden;
     }
 `;
+
 const BtnStyle = css`
     font-size: 0.775rem;
     color: #7d7d7d;
@@ -305,6 +272,7 @@ const BtnStyle = css`
     border: none;
     background-color: white;
 `;
+
 const StyledRating = styled(Rating)({
     "& .MuiRating-iconFilled": {
         color: "#ff6d75",
@@ -313,4 +281,16 @@ const StyledRating = styled(Rating)({
         color: "#ff3d47",
     },
 });
+
+const nickNameWrap = css`
+    margin: 10px 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+`;
+
+const createdWrap = css`
+    margin: 0 10px;
+    font-size: 0.875rem;
+    color: #333;
+`;
 export default ReviewItem;

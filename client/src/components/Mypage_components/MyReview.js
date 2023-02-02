@@ -11,7 +11,6 @@ import { SampleImgSrc } from "../../sampleImage";
 
 const MyReview = () => {
     const GachiArr = Object.values(SampleImgSrc);
-    
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const randomImg = Math.floor(Math.random() * GachiArr.length);
 

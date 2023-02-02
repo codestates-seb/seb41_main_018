@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-/** @jsxImportSource @emotion/react */
 import React from "react";
-import { PALETTE } from "../../Common";
+/** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { useEffect, useState } from "react";
+import { PALETTE } from "../../Common";
 import { AiOutlineClose } from "react-icons/ai";
 import { useRecoilState } from "recoil";
 import { TagsStringState } from "../../state/atom";
@@ -47,35 +47,16 @@ const Tag = (props) => {
                         <li key={index}>
                             <span css={tagStyle}>
                                 {tag}
-                                <AiOutlineClose
-                                    onClick={() => removeTags(index)}
-                                    css={css`
-                                        position: relative;
-                                        top: 3px;
-                                        left: 1px;
-                                    `}
-                                />
+                                <AiOutlineClose onClick={() => removeTags(index)} css={IconPos} />
                             </span>
                         </li>
                     ))}
                 </ul>
                 <input
-                    css={css`
-                        flex: 1;
-                        border: none;
-                        height: 46px;
-                        font-size: 1rem;
-                        padding: 10px;
-                        :focus {
-                            outline: transparent;
-                        }
-                    `}
+                    css={InputStyle}
                     type="text"
                     onKeyUp={(e) => {
                         return addTags(e);
-                        {
-                            /* 키보드의 Enter 키에 의해 addTags 메소드가 실행되어야 합니다. */
-                        }
                     }}
                     placeholder="태그를 입력해보세요!"
                 />
@@ -83,28 +64,6 @@ const Tag = (props) => {
         </>
     );
 };
-
-// {/* <input
-// css={css`
-//     flex: 1;
-//     border: none;
-//     height: 46px;
-//     font-size: 1rem;
-//     padding: 10px;
-//     :focus {
-//         outline: transparent;
-//     }
-// `}
-// // defaultValue={detailTags ? '' : ''}
-// type="text"
-// onKeyUp={(e) => {
-//     return addTags(e);
-//     {
-//         /* 키보드의 Enter 키에 의해 addTags 메소드가 실행되어야 합니다. */
-//     }
-// }}
-// placeholder="태그를 입력해보세요!"
-// /> */}
 
 const TagsInput = css`
     margin: 40px 10px;
@@ -149,5 +108,22 @@ const tagStyle = css`
     border-radius: ${PALETTE.border_radius};
     background-color: #eff5f5;
     cursor: pointer;
+`;
+
+const IconPos = css`
+    position: relative;
+    top: 3px;
+    left: 1px;
+`;
+
+const InputStyle = css`
+    flex: 1;
+    border: none;
+    height: 46px;
+    font-size: 1rem;
+    padding: 10px;
+    :focus {
+        outline: transparent;
+    }
 `;
 export default Tag;

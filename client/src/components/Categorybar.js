@@ -99,7 +99,6 @@ const categoryImg = css`
     width: 25px;
     height: 25px;
     margin: 20px 40px;
-    //호버?;;
 `;
 
 const categoryFont = css`

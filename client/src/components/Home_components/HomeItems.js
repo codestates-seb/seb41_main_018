@@ -11,7 +11,6 @@ import { userInfoState } from "../../state/atom";
 import { postHeart } from "../../util/axiosContents";
 import { getUserInfo } from "../../util/axiosUser";
 import Swal from "sweetalert2";
-import { GachiGalleImgSrc } from "../../sampleImage";
 import { SampleImgSrc } from "../../sampleImage";
 
 const Toast = Swal.mixin({
@@ -30,11 +29,7 @@ const Toast = Swal.mixin({
 const HomeItems = (content) => {
     const GachiArr = Object.values(SampleImgSrc);
     const [isFavoriteClcik, setFavoriteClick] = useState(false);
-
     const randomIndex = Math.floor(Math.random() * GachiArr.length);
-    const GachiImg = GachiArr[randomIndex];
-
-    console.log(1);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const data = content.content;
 
@@ -100,7 +95,12 @@ const HomeItems = (content) => {
                 </div>
                 <div>
                     <ul css={ulStyle}>
-                        {data && data.routes.map((el) => <li css={liStyle}># {el.place}</li>)}
+                        {data &&
+                            data.routes.map((el, index) => (
+                                <li key={index} css={liStyle}>
+                                    # {el.place}
+                                </li>
+                            ))}
                     </ul>
                 </div>
                 <div css={InfoStyle}>
@@ -121,7 +121,6 @@ const wrap = css`
 const imgStyle = css`
     width: 100%;
     width: 100%;
-    /* height: 190px; */
     border-radius: ${PALETTE.border_radius};
     object-fit: cover;
 `;

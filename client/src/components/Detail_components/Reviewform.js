@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import ReviewItem from "./ReviewItem";
-import Button from "../Button";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
@@ -23,7 +22,6 @@ export const Buttons = (props) => {
             before={props.icon}
             onPress={props.onPress}
             css={css`
-                /* --button-default-margin-left: -80px; */
                 --button-default-height: 80px;
                 --button-default-font-size: 1.1rem;
                 --button-default-border-radius: 10px;
@@ -43,18 +41,6 @@ export const Buttons = (props) => {
         </AwesomeButton>
     );
 };
-
-/* {
-	"commentId": 7,
-	"userId": 14,
-	"contentId": 1,
-	"title": "즐거운 제주도 여행",
-	"body": "후기 남기기",
-	"ratingType": "TWO",
-	"nickName": "가치가치",
-	"createdAt": "2023-01-26T13:58:26",
-	"modifiedAt": "2023-01-26T13:58:26"
-} */
 
 const Reviewform = () => {
     const [rateType, setRateType] = useState("FIVE");
@@ -97,7 +83,6 @@ const Reviewform = () => {
 
     useEffect(() => {
         if (update) {
-            console.log("업데이트");
             getContent(location.pathname.slice(8)).then((res) => {
                 setContentDetail(res.data);
                 setReviewList(res.data.data && res.data.data.comments);
@@ -111,7 +96,6 @@ const Reviewform = () => {
     return (
         <div css={ReviewContainer}>
             <div css={ReviewCount}>
-                {console.log(reviewList)}
                 {reviewList.length !== 0
                     ? `Review : ${reviewList.length} 개`
                     : "첫 번째 후기의 주인공이 되어주세요!"}
@@ -148,7 +132,6 @@ const Reviewform = () => {
                 <Buttons text="등록" onPress={createReviewHandler} />
             </div>
             <div css={ReviewList}>
-                {/* reviewitem >> map */}
                 {reviewList.map((review) => (
                     <ReviewItem
                         key={review.commentId}
@@ -159,7 +142,6 @@ const Reviewform = () => {
                     />
                 ))}
             </div>
-            {/* mui */}
             <Box
                 sx={{
                     "& > legend": { mt: 2 },
@@ -168,11 +150,12 @@ const Reviewform = () => {
         </div>
     );
 };
-//리뷰
+
 const ReviewContainer = css`
     width: 90vw;
     margin: 0 auto;
     border-radius: 5px;
+
     @media (min-width: 768px) {
         width: 70vw;
     }
@@ -206,29 +189,10 @@ const ReviewInput = css`
 `;
 const ReviewList = css`
     padding-top: 20px;
-    /* box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2); */
 `;
 
 const RatingBox = css`
     width: fit-content;
-
-    /* .inactive {
-        color: #c4c4c4;
-    }
-    .active {
-        color: black;
-    }
-
-    & svg {
-        color: #c4c4c4;
-        cursor: pointer;
-    }
-    :hover svg {
-        color: black;
-    }
-    & svg:hover ~ svg {
-        color: #c4c4c4;
-    } */
 `;
 const StyledRating = styled(Rating)({
     "& .MuiRating-iconFilled": {

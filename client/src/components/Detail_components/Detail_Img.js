@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 /** @jsxImportSource @emotion/react */
@@ -10,25 +10,10 @@ import "swiper/css/pagination";
 
 // import required modules
 import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";
-
-// import sample img (추후 삭제 예정)
-import { Palette } from "@mui/icons-material";
-import { PALETTE } from "../../Common";
-
-//recoil
-import { useRecoilState } from "recoil";
-import { selectedRouteState, ContentDetail } from "../../state/atom";
-
 import { SampleImgSrc, GachiGalleImgSrc } from "../../sampleImage";
 
 const Detial_Img = () => {
     const GachiArr = Object.values(SampleImgSrc);
-
-    const [selectedRoute, setSelectedRoute] = useRecoilState(selectedRouteState);
-    /* 선택 된 경로만 filter */
-    // let selected = routeDummy.filter((routeplace) => routeplace.routeId === selectedRoute);
-
-    const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const randomIndex1 = Math.floor(Math.random() * GachiArr.length);
     const randomIndex2 = Math.floor(Math.random() * GachiArr.length);
     const randomIndex3 = Math.floor(Math.random() * GachiArr.length);

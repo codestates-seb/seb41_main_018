@@ -1,15 +1,11 @@
-import react, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 
 //css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-//mui (삭제)
-import { Box } from "@mui/system";
-import { styled } from "@mui/material/styles";
-
 //Kakao Map API
-import { MapMarker, Map, CustomOverlayMap, Polyline, Polygon } from "react-kakao-maps-sdk";
+import { MapMarker, Map, CustomOverlayMap } from "react-kakao-maps-sdk";
 
 //recoil
 import { useRecoilState } from "recoil";
@@ -18,13 +14,11 @@ import { PALETTE } from "../../Common";
 
 const DetailMap = (props) => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
-    const data = contentDetail.data;
     const [zoomable, setZoomable] = useState(false);
     const [isClick, setIsClick] = useState(false);
     const position = useRef();
     position.current = props.position && props.position.center;
-    console.log(`좌표`, props.position && props.position.center);
-    console.log(`좌표2`, position.current);
+    const data = contentDetail.data;
 
     const mapZoomBtnClick = (click) => {
         setIsClick(click);
@@ -32,7 +26,6 @@ const DetailMap = (props) => {
     };
 
     return (
-        //하드 코딩 데이터 출력용
         <Map center={position.current} css={MapStyle} level={4} zoomable={zoomable}>
             {data &&
                 data.routes.map((position, index) => (
@@ -74,6 +67,7 @@ const MapStyle = css`
     height: 300px;
     overflow: hidden;
     margin: 0 auto;
+
     @media (min-width: 768px) {
         height: 500px;
         margin: 40px auto;
@@ -106,6 +100,7 @@ const customoverlay = css`
 const BtnWrap = css`
     display: flex;
     margin: 10px 0 0 40px;
+
     @media (min-width: 768px) {
         margin: -30px 0 0 40px;
     }
@@ -117,6 +112,7 @@ const BtnStyle = css`
     background-color: white;
     border: 1.5px solid ${PALETTE.default_color};
     border-radius: ${PALETTE.border_radius};
+
     @media (min-width: 768px) {
         margin: 5px;
         font-size: 1rem;

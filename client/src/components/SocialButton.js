@@ -1,7 +1,6 @@
 import React from "react";
-
 /** @jsxImportSource @emotion/react */
-import { jsx, css } from "@emotion/react";
+import { css } from "@emotion/react";
 
 const SocialButton = () => {
     return (
