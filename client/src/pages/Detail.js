@@ -1,13 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 //css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import Swal from "sweetalert2";
-
-//Icon
-import FavoriteIcon from "@mui/icons-material/Favorite";
 
 //components
 import Detailform from "../components/Detail_components/Detailform";
@@ -23,7 +20,6 @@ import {
     userInfoState,
     ContentDetail,
     ReviewListState,
-    GetPosition,
     DetailContentIdState,
     DetailuserIdState,
     DetailTitleState,
@@ -38,14 +34,11 @@ import dayjs from "dayjs";
 import "dayjs/locale/ko";
 dayjs.locale("ko");
 
-import { getContent, deleteContent } from "../util/axiosContents";
-import { getUserInfo } from "../util/axiosUser";
-import Button from "../components/Button";
+import { getContent } from "../util/axiosContents";
 
 const Detail = () => {
     const navigate = useNavigate();
     const pathname = location.pathname;
-
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [reviewList, setReviewList] = useRecoilState(ReviewListState);

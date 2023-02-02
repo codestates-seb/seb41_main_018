@@ -24,7 +24,6 @@ const Mypage = () => {
     const [inputName, setInputName] = useState("");
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [isLoading, setIsLoading] = useState(true);
-    const randomImg = Math.floor(Math.random() * GachiArr.length);
 
     const selectTabHandler = (index) => {
         setIsTab(index);

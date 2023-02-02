@@ -1,5 +1,5 @@
-/** @jsxImportSource @emotion/react */
 import React from "react";
+/** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import { Swiper, SwiperSlide } from "swiper/react";

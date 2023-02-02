@@ -42,7 +42,6 @@ const MyInfo = () => {
                         <input type="password" onChange={inputPassHandler} />
                         <div>
                             <input type="password" onChange={inputPassHandler} />
-
                             {/* 수정 기능 버튼 */}
                             <span type="button" className={passEditClick ? "" : "hidden"}>
                                 수정

@@ -1,16 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 //css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-//Icon
-import FavoriteIcon from "@mui/icons-material/Favorite";
-
 //components
-import Detailform from "./Detailform";
-import Reviewform from "./Reviewform";
-import { getContent } from "../../util/axiosContents";
 import { PALETTE } from "../../Common";
 
 //recoil
@@ -18,10 +12,7 @@ import { useRecoilState } from "recoil";
 import { ContentDetail } from "../../state/atom";
 
 //Etc
-import axios from "axios";
 import dayjs from "dayjs";
-import "dayjs/locale/ko";
-dayjs.locale("ko");
 
 // 768px 이하일 때 나타나는 Total 화면 (카테고리, 여행날짜, 총 비용)
 export const Total = () => {
@@ -29,7 +20,6 @@ export const Total = () => {
     const data = contentDetail.data;
     const TravelDate = data && data.travelDate;
     const Amount = data && data.amount;
-    const HeartCount = data && data.heartCount;
 
     const setCategroy = (data) => {
         if (data && data.themeType === "DOMESTIC") {
@@ -76,6 +66,7 @@ const ContentsBody = css`
     justify-content: start;
     margin: 5px 0 -10px -27px;
     padding: 0 27px;
+
     @media (min-width: 768px) {
         width: 90vw;
         font-size: 2em;
@@ -86,6 +77,7 @@ const ContentsBody = css`
 const ComContent = css`
     display: flex;
     font-size: 0.9rem;
+
     @media (min-width: 768px) {
         font-size: 1.225rem;
         color: #0e0e0e;
@@ -95,6 +87,7 @@ const ComContent = css`
 
 const ComTitle = css`
     display: none;
+
     @media (min-width: 768px) {
         display: flex;
         align-items: center;

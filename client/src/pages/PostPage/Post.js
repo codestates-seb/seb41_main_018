@@ -1,35 +1,30 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+//css, UI
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-
+import { PALETTE } from "../../Common";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { IoMdRemove } from "react-icons/io";
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-import { PALETTE } from "../../Common";
-
-import { useForm, FormProvider, useFormContext, Controller, useFieldArray } from "react-hook-form";
-
+// component
 import Tag from "../../components/Post_components/Tag";
-
 import PostMap from "./PostMap/PostMap";
 import PostMapTwo from "./PostMap/PostMapTwo";
 import PostMapThree from "./PostMap/PostMapThree";
 import PostMapFour from "./PostMap/PostMapFour";
 import PostMapFive from "./PostMap/PostMapFive";
-
 import ImgUpload from "../../components/Post_components/ImgUpload";
 
-import Dropdown from "react-dropdown";
-import "react-dropdown/style.css";
-
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-
+// Library
 import { useRecoilState } from "recoil";
 import { TagsStringState } from "../../state/atom";
 import { postContent } from "../../util/axiosContents";
+import { useForm, FormProvider, useFormContext, Controller, useFieldArray } from "react-hook-form";
 
 const defaultValues = {
     title: "",
@@ -40,7 +35,6 @@ const defaultValues = {
 
 const AddInput = () => {
     const [fieldIndex, setFieldIndex] = useState(0);
-
     const { control, register, watch, setValue } = useFormContext();
     const { fields, append, remove } = useFieldArray({
         control,
@@ -145,7 +139,17 @@ const AddInput = () => {
                                             autocomplete="off"
                                             placeholder="사용한 금액을 입력해주세요!"
                                             step="1000"
+                                            min="0"
                                             css={ListInput}
+                                            onBlur={(e) => {
+                                                Number(e.target.value) < 0 ||
+                                                !Number.isInteger(Number(e.target.value))
+                                                    ? (e.target.value = 0)
+                                                    : (e.target.value =
+                                                          Math.round(
+                                                              Number(e.target.value) / 1000
+                                                          ) * 1000);
+                                            }}
                                         />
                                     </div>
                                     <div className="listcontainer ">
@@ -304,7 +308,7 @@ const Post = () => {
         for (let obj of data && data.routes) {
             delete obj.image;
         }
-        console.log(data);
+
         postContent(data).then((res) => {
             if (res) {
                 navigate("/");
@@ -325,26 +329,10 @@ const Post = () => {
 
             <div css={FormWrap}>
                 <AddInput />
-
-                <div
-                    css={css`
-                        display: flex;
-                        width: 100%;
-                        margin-top: 10px;
-                        @media (min-width: 768px) {
-                            align-items: center;
-                            justify-content: start;
-                            margin-left: 40px;
-                        }
-                    `}
-                >
+                <div css={TagStyle}>
                     <Tag />
                 </div>
-                <button
-                    type="button"
-                    onClick={() => handleSubmit(submit, console.log)()}
-                    css={SubmitButton}
-                >
+                <button type="button" onClick={() => handleSubmit(submit)()} css={SubmitButton}>
                     작성완료
                 </button>
             </div>
@@ -639,6 +627,17 @@ const SubmitButton = css`
     &:hover {
         text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
         color: ${PALETTE.white};
+    }
+`;
+
+const TagStyle = css`
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    @media (min-width: 768px) {
+        align-items: center;
+        justify-content: start;
+        margin-left: 40px;
     }
 `;
 export default Post;

@@ -1,12 +1,11 @@
+import React from "react";
 /** @jsxImportSource @emotion/react */
-import React, { useEffect } from "react";
 import Button from "../Button";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { ContentsList, KeywordFilterResultState, SearchKeywordState } from "../../state/atom";
-import { Route } from "react-router-dom";
 
 const Regionitems = (props) => {
     const navigate = useNavigate();

@@ -11,24 +11,10 @@ import { patchReview } from "../../util/axiosContents";
 import { useRecoilState } from "recoil";
 import { userInfoState } from "../../state/atom";
 import ReviewDeleteModal from "./ReviewDeleteModal";
-import Swal from "sweetalert2";
 
 //Button
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
-
-const Toast = Swal.mixin({
-    toast: true,
-    position: "top",
-    width: "380px",
-    showConfirmButton: false,
-    timer: 2000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener("mouseenter", Swal.stopTimer);
-        toast.addEventListener("mouseleave", Swal.resumeTimer);
-    },
-});
 
 export const Buttons = (props) => {
     return (
@@ -70,16 +56,10 @@ const ReviewItem = ({ review, setUpdate }) => {
             setEditReview(!editReview);
             setReviewText(body);
             setRateType(ratingType);
-        } else {
-            Toast.fire({
-                icon: "error",
-                title: "권한이 없습니다.",
-            });
         }
     };
 
     const editReviewConfirm = (commentId, body, ratingType) => {
-        console.log(commentId, body, ratingType);
         patchReview(commentId, body, ratingType).then(() => {
             setUpdate(true);
             setEditReview(!editReview);
@@ -89,11 +69,6 @@ const ReviewItem = ({ review, setUpdate }) => {
     const showModal = () => {
         if (userInfo.userId === userId) {
             setModalOpen(true);
-        } else {
-            Toast.fire({
-                icon: "error",
-                title: "권한이 없습니다.",
-            });
         }
     };
 
@@ -123,27 +98,11 @@ const ReviewItem = ({ review, setUpdate }) => {
 
     return editReview ? (
         <div css={Container}>
-            <div css={ReviewContent}>
+            <div css={ReviewBox}>
                 <img css={ProfileImg} src={image} alt={`${nickName}의 프로필 이미지`} />
-                <div>
-                    <span
-                        css={css`
-                            margin: 10px 0;
-                            font-size: 1.1rem;
-                            font-weight: 700;
-                        `}
-                    >
-                        {nickName}
-                    </span>
-                    <span
-                        css={css`
-                            margin: 0 10px;
-                            font-size: 0.875rem;
-                            color: #333;
-                        `}
-                    >
-                        {dayjs(createdAt).format("YY.MM.DD")}
-                    </span>
+                <div css={ReviewContent}>
+                    <span css={nickNameWrap}>{nickName}</span>
+                    <span css={createdWrap}>{dayjs(createdAt).format("YY.MM.DD")}</span>
                     <div css={RatingBox}>
                         <StyledRating
                             defaultValue={
@@ -171,15 +130,20 @@ const ReviewItem = ({ review, setUpdate }) => {
                             }}
                         />
                     </div>
-                    <button onClick={() => editReviewConfirm(commentId, reviewText, rateType)}>
-                        수정 완료
-                    </button>
                 </div>
+            </div>
+            <div css={BtnWrap}>
+                <button
+                    css={BtnStyle}
+                    onClick={() => editReviewConfirm(commentId, reviewText, rateType)}
+                >
+                    완료
+                </button>
             </div>
         </div>
     ) : (
         <div css={Container}>
-            <div css={ReviewContent}>
+            <div css={ReviewBox}>
                 <img css={ProfileImg} src={image} alt={`${nickName}의 프로필 이미지`} />
                 <div>
                     <div css={RatingBox}>
@@ -200,24 +164,8 @@ const ReviewItem = ({ review, setUpdate }) => {
                             readOnly
                         />
                     </div>
-                    <span
-                        css={css`
-                            margin: 10px 0;
-                            font-size: 1.1rem;
-                            font-weight: 700;
-                        `}
-                    >
-                        {nickName}
-                    </span>
-                    <span
-                        css={css`
-                            margin: 0 10px;
-                            font-size: 0.875rem;
-                            color: #333;
-                        `}
-                    >
-                        {dayjs(createdAt).format("YY.MM.DD")}
-                    </span>
+                    <span css={nickNameWrap}>{nickName}</span>
+                    <span css={createdWrap}>{dayjs(createdAt).format("YY.MM.DD")}</span>
                     <div
                         css={css`
                             margin: 10px 0px;
@@ -227,7 +175,7 @@ const ReviewItem = ({ review, setUpdate }) => {
                     </div>
                 </div>
             </div>
-            <div css={BtnWrap}>
+            <div css={BtnWrap} className={userInfo.userId === userId ? "" : "hidden"}>
                 <button css={BtnStyle} onClick={editReviewHandler}>
                     수정
                 </button>
@@ -257,9 +205,10 @@ const Container = css`
     border-radius: 10px;
 `;
 
-const ReviewContent = css`
+const ReviewBox = css`
     display: flex;
     padding-left: 20px;
+    width: 100%;
 `;
 
 const ProfileImg = css`
@@ -270,9 +219,11 @@ const ProfileImg = css`
     margin: 0 10px 0 -10px;
 `;
 
-const RatingBox = css`
-    /* width: fit-content; */
+const ReviewContent = css`
+    width: 100%;
+`;
 
+const RatingBox = css`
     .inactive {
         color: #c4c4c4;
     }
@@ -289,7 +240,7 @@ const ReviewInput = css`
 
     textarea {
         border: none;
-        width: 65vw;
+        width: 100%;
         height: 80px;
         border: 2px solid ${PALETTE.default_color};
         border-radius: ${PALETTE.border_radius};
@@ -297,15 +248,23 @@ const ReviewInput = css`
         margin-right: 10px;
         font-size: 1rem;
         color: gray;
+        resize: none;
+
         @media (min-width: 768px) {
-            width: 55vw;
+            width: 100%;
         }
     }
 `;
 
 const BtnWrap = css`
-    margin-left: 75px;
+    align-self: flex-end;
+    margin-right: 10px;
+
+    &.hidden {
+        visibility: hidden;
+    }
 `;
+
 const BtnStyle = css`
     font-size: 0.775rem;
     color: #7d7d7d;
@@ -313,6 +272,7 @@ const BtnStyle = css`
     border: none;
     background-color: white;
 `;
+
 const StyledRating = styled(Rating)({
     "& .MuiRating-iconFilled": {
         color: "#ff6d75",
@@ -321,4 +281,16 @@ const StyledRating = styled(Rating)({
         color: "#ff3d47",
     },
 });
+
+const nickNameWrap = css`
+    margin: 10px 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+`;
+
+const createdWrap = css`
+    margin: 0 10px;
+    font-size: 0.875rem;
+    color: #333;
+`;
 export default ReviewItem;

@@ -33,7 +33,6 @@ const Header = () => {
     const [keyword, setKeyword] = useRecoilState(SearchKeywordState);
     const menuRef = useRef();
     const AccountRef = useRef();
-    const location = useLocation();
     const navigate = useNavigate();
 
     const menuClick = () => {
@@ -178,7 +177,11 @@ const Header = () => {
                     `}
                 >
                     <Link to="/">
-                        <img src={GachiGalleImgSrc.logo_img} alt="같이갈래 logo" css={logoStyle}></img>
+                        <img
+                            src={GachiGalleImgSrc.logo_img}
+                            alt="같이갈래 logo"
+                            css={logoStyle}
+                        ></img>
                     </Link>
                 </div>
                 {/* 데스크탑 기준 검색창 */}

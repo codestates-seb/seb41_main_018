@@ -113,24 +113,6 @@ const postStyle = css`
     @media (min-width: 1440px) {
         grid-template-columns: repeat(5, 1fr);
     }
-
-    /* grid-template-columns: repeat(5, 1fr);
-    @media (max-width: 1440px) {
-        grid-template-columns: repeat(4, 1fr);
-        width: 1200px;
-    }
-    @media (max-width: 1000px) {
-        grid-template-columns: repeat(3, 1fr);
-        width: 876px;
-    }
-    @media (max-width: 768px) {
-        grid-template-columns: repeat(2, 1fr);
-        width: 630px;
-    }
-    @media (max-width: 576px) {
-        
-        width: 460px;
-    } */
 `;
 
 const noResultMessage = css`

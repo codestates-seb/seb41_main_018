@@ -1,12 +1,11 @@
+import React, { useState } from "react";
 /** @jsxImportSource @emotion/react */
-import React, { useState, useRef } from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 
 import DetailformItems from "./DetailformItems";
 import DetailMap from "./DetailMap";
 import { FiShare } from "react-icons/fi";
-import { BsFillHeartFill } from "react-icons/bs";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import Swal from "sweetalert2";
 
@@ -17,10 +16,6 @@ import { ContentDetail, userInfoState } from "../../state/atom";
 //Button
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
-
-import dayjs from "dayjs";
-import "dayjs/locale/ko";
-dayjs.locale("ko");
 import { postHeart } from "../../util/axiosContents";
 import { getUserInfo } from "../../util/axiosUser";
 import { useEffect } from "react";
@@ -218,10 +213,10 @@ const wrap = css`
     height: 100%;
     display: flex;
     flex-direction: column;
-    /* margin-top: -20px; */
 
     h2 {
         margin: 30px 0 10px 47px;
+
         @media (min-width: 768px) {
             margin: 30px 0 -30px 47px;
         }
@@ -234,6 +229,7 @@ const container = css`
     box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2);
     margin: 10px 40px;
     padding: 20px;
+
     @media (min-width: 768px) {
         min-width: 768px;
         display: flex;
@@ -241,7 +237,7 @@ const container = css`
 
     h3 {
         margin-top: 10px;
-        /* background-color: red; */
+
         @media (min-width: 768px) {
             margin: 0 auto;
             padding: 10px 0;
@@ -266,6 +262,7 @@ const imgStyle = css`
     height: 40px;
     border-radius: 50%;
     margin: 0 10px;
+
     @media (min-width: 768px) {
         width: 100px;
         height: 100px;
@@ -320,6 +317,7 @@ const NoSelect = css`
     cursor: pointer;
     text-align: center;
     border-bottom: 0.285rem solid white;
+
     @media (max-width: 768px) {
         padding: 10px;
         font-size: 0.975rem;
@@ -381,29 +379,9 @@ const tagStyle = css`
     color: #497174;
     border-radius: ${PALETTE.border_round};
     background-color: #eff5f5;
+
     @media (min-width: 768px) {
         font-size: 1.175rem;
-    }
-`;
-
-const ContentsBody = css`
-    display: flex;
-    align-self: flex-start;
-    margin: 0 27px;
-    margin-top: -5px;
-    @media (max-width: 768px) {
-        display: none;
-    }
-`;
-
-const ComContent = css`
-    font-size: 0.9rem;
-    span {
-        margin: 0 5px;
-        color: #555c61;
-        @media (min-width: 768px) {
-            font-size: 1.175rem;
-        }
     }
 `;
 
