@@ -11,24 +11,10 @@ import { patchReview } from "../../util/axiosContents";
 import { useRecoilState } from "recoil";
 import { userInfoState } from "../../state/atom";
 import ReviewDeleteModal from "./ReviewDeleteModal";
-import Swal from "sweetalert2";
 
 //Button
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
-
-const Toast = Swal.mixin({
-    toast: true,
-    position: "top",
-    width: "380px",
-    showConfirmButton: false,
-    timer: 2000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener("mouseenter", Swal.stopTimer);
-        toast.addEventListener("mouseleave", Swal.resumeTimer);
-    },
-});
 
 export const Buttons = (props) => {
     return (
@@ -70,11 +56,6 @@ const ReviewItem = ({ review, setUpdate }) => {
             setEditReview(!editReview);
             setReviewText(body);
             setRateType(ratingType);
-        } else {
-            Toast.fire({
-                icon: "error",
-                title: "권한이 없습니다.",
-            });
         }
     };
 
@@ -89,11 +70,6 @@ const ReviewItem = ({ review, setUpdate }) => {
     const showModal = () => {
         if (userInfo.userId === userId) {
             setModalOpen(true);
-        } else {
-            Toast.fire({
-                icon: "error",
-                title: "권한이 없습니다.",
-            });
         }
     };
 
@@ -232,7 +208,7 @@ const ReviewItem = ({ review, setUpdate }) => {
                     </div>
                 </div>
             </div>
-            <div css={BtnWrap}>
+            <div css={BtnWrap} className={userInfo.userId === userId ? "" : "hidden"}>
                 <button css={BtnStyle} onClick={editReviewHandler}>
                     수정
                 </button>
@@ -317,6 +293,10 @@ const ReviewInput = css`
 const BtnWrap = css`
     align-self: flex-end;
     margin-right: 10px;
+
+    &.hidden {
+        visibility: hidden;
+    }
 `;
 const BtnStyle = css`
     font-size: 0.775rem;
