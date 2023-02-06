@@ -446,7 +446,7 @@ const Edit = () => {
                 <div css={TagStyle}>
                     <Tag detailTags={DetailTag} />
                 </div>
-                <button type="button" onClick={() => handleSubmit(submit)} css={SubmitButton}>
+                <button type="button" onClick={() => handleSubmit(submit)()} css={SubmitButton}>
                     작성완료
                 </button>
             </div>

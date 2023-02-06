@@ -73,7 +73,7 @@ export const Login = async (data) => {
             }
             Toast.fire({
                 icon: "success",
-                title: "안녕하세요:) 환영합니다!",
+                title: "안녕하세요. 환영합니다!",
             });
             return res;
         })

@@ -75,7 +75,7 @@ const Result = () => {
                         </div>
                         <div css={postStyle}>
                             {searchTargetArr.length === 0 ? (
-                                <div css={noResultMessage}>검색 결과가 없습니다 ㅠ.ㅠ</div>
+                                <div css={noResultMessage}>검색 결과가 없습니다.</div>
                             ) : (
                                 <>
                                     {searchTargetArr.map((content) => (

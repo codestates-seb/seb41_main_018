@@ -20,6 +20,7 @@ import { PALETTE } from "../Common";
 import Swal from "sweetalert2";
 
 import { GachiGalleImgSrc } from "../sampleImage";
+import UserDeleteModal from "../components/Mypage_components/UserDeleteModal";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -94,6 +95,7 @@ const Home = () => {
             ) : (
                 <>
                     <Categorybar />
+
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
                             <SwiperSlide>
@@ -226,6 +228,7 @@ const itemsTitle = css`
 `;
 
 const postStyle = css`
+    z-index: 1;
     display: grid;
     margin: 0 auto;
     gap: 20px;
