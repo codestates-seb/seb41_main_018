@@ -7,7 +7,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 export const Loading = () => {
     return (
         <div css={Background}>
-            <div css={LoadingText}>열심히 로딩중입니다 😊</div>
+            <div css={LoadingText}>열심히 로딩중입니다.</div>
             <FadeLoader
                 color={`${PALETTE.default_color}`}
                 height={15}

@@ -66,6 +66,7 @@ const ModalContainer = css`
     position: absolute;
     top: 50%;
     left: 50%;
+
     transform: translate(-50%, -50%);
 
     /* 모달창 디자인 */
