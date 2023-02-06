@@ -235,7 +235,7 @@ export const deleteContent = async (contentId) => {
         )
         .then((res) => {
             Toast.fire({
-                icon: "Success",
+                icon: "success",
                 title: "삭제가 완료되었습니다.",
             });
 
@@ -267,12 +267,12 @@ export const postHeart = async (userId, contentId) => {
         .then((res) => {
             if (res.data) {
                 Toast.fire({
-                    icon: "Success",
+                    icon: "success",
                     title: `"좋아요" 가  등록되었습니다.`,
                 });
             } else {
                 Toast.fire({
-                    icon: "Success",
+                    icon: "success",
                     title: `"좋아요" 가  취소되었습니다.`,
                 });
             }
