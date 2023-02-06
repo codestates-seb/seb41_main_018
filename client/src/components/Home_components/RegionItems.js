@@ -28,9 +28,7 @@ const Regionitems = (props) => {
                 margin-bottom: -120px;
             `}
         >
-            <div>
-                <img src={props.img} css={imgStyle} />
-            </div>
+            <div>{/* <img src={props.img} css={imgStyle} /> */}</div>
             <div css={textWrap}>
                 <div css={textStyle}>{props.text}</div>
                 <Button

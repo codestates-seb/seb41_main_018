@@ -74,6 +74,7 @@ const Detail = () => {
 
     const getContentDetail = (contentId) => {
         getContent(contentId).then((res) => {
+            console.log(res.data);
             setContentDetail(res && res.data);
             setReviewList(res.data && res.data.data && res.data.data.comments);
         });

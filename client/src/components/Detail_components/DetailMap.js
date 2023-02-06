@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 //css
 /** @jsxImportSource @emotion/react */
@@ -26,7 +26,13 @@ const DetailMap = (props) => {
     };
 
     return (
-        <Map center={position.current} css={MapStyle} level={4} zoomable={zoomable}>
+        <Map
+            center={props.position.center}
+            isPanto={false}
+            css={MapStyle}
+            level={4}
+            zoomable={zoomable}
+        >
             {data &&
                 data.routes.map((position, index) => (
                     <div key={index}>

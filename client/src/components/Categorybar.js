@@ -25,12 +25,12 @@ const Categorybar = () => {
 
     // 카테고리 버튼 클릭 시 검색 요청
     const searchHandler = (themeType) => {
-        getCategory(themeType).then((data) => {
-            if (data) {
-                setCategorySearch(data && data.data);
-                navigate("/result");
-            }
-        });
+        // getCategory(themeType).then((data) => {
+        //     if (data) {
+        //         setCategorySearch(data && data.data);
+        navigate(`/result?type=${themeType}`);
+        // }
+        // });
     };
     return (
         <div css={wrap}>
