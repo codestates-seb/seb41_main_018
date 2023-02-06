@@ -10,14 +10,18 @@ import {
     SearchKeywordState,
 } from "../../src/state/atom";
 import Loading from "../components/Loding";
+import { useNavigate, useLocation } from "react-router-dom";
+import { getCategory } from "../util/axiosContents";
 
 const Result = () => {
-    const [categorySearch, setCategorySearch] = useRecoilState(CategorySearchResultState);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [categorySearch, setCategorySearch] = useState([]);
     const [filterResult, setFilterResult] = useRecoilState(KeywordFilterResultState);
     const [searchTargetArr, setSearchTargetArr] = useState([]);
     const [searchTargetName, setSearchTargetName] = useState("");
     const [keyword, setKeyword] = useRecoilState(SearchKeywordState);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     const themeTypeSwitch = (themeType) => {
         switch (themeType) {
@@ -48,19 +52,31 @@ const Result = () => {
         }
     };
 
-    useEffect(() => {
-        if (categorySearch.length !== 0) {
-            setSearchTargetArr(categorySearch.contents);
-            themeTypeSwitch(categorySearch.themeType);
-            setIsLoading(false);
-        }
-    }, [categorySearch]);
+    // useEffect(() => {
+    //     if (categorySearch.length !== 0) {
+    //         setSearchTargetArr(categorySearch.contents);
+    //         themeTypeSwitch(categorySearch.themeType);
+    //         setIsLoading(false);
+    //     }
+    // }, [categorySearch]);
+
+    // useEffect(() => {
+    //     setSearchTargetArr(filterResult);
+    //     setSearchTargetName(keyword);
+    //     setKeyword("");
+    // }, [filterResult]);
 
     useEffect(() => {
-        setSearchTargetArr(filterResult);
-        setSearchTargetName(keyword);
-        setKeyword("");
-    }, [filterResult]);
+        if (location.search) {
+            const type = location.search.split("type=")[1];
+            getCategory(type).then((data) => {
+                if (data) {
+                    themeTypeSwitch(data.data.themeType);
+                    setCategorySearch(data?.data?.contents ?? []);
+                }
+            });
+        }
+    }, [location.search]);
 
     return (
         <div>
@@ -71,14 +87,14 @@ const Result = () => {
                     <Categorybar />
                     <div>
                         <div css={resultText}>
-                            {`" ${searchTargetName} "에 대한 검색결과 : ${searchTargetArr.length}건`}
+                            {`" ${searchTargetName} "에 대한 검색결과 : ${categorySearch.length}건`}
                         </div>
                         <div css={postStyle}>
-                            {searchTargetArr.length === 0 ? (
+                            {categorySearch.length === 0 ? (
                                 <div css={noResultMessage}>검색 결과가 없습니다.</div>
                             ) : (
                                 <>
-                                    {searchTargetArr.map((content) => (
+                                    {categorySearch.map((content) => (
                                         <HomeItems content={content} />
                                     ))}
                                 </>

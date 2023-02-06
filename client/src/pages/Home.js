@@ -19,32 +19,57 @@ import Loading from "../components/Loding";
 import { PALETTE } from "../Common";
 import Swal from "sweetalert2";
 
-import { GachiGalleImgSrc } from "../sampleImage";
+import { GachiGalleImgSrc, SampleImgSrc } from "../sampleImage";
 import UserDeleteModal from "../components/Mypage_components/UserDeleteModal";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top",
+    width: "380px",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+    },
+});
+
+const swiperOption = {
+    spaceBetween: 20,
+    slidesPerView: 5,
+    navigation: true,
+    breakpoints: {
+        1441: {
+            slidesPerView: 5,
+        },
+        1200: {
+            slidesPerView: 4,
+        },
+        876: {
+            slidesPerView: 3,
+        },
+        576: {
+            slidesPerView: 2,
+        },
+        400: {
+            slidesPerView: 1,
+        },
+    },
+};
+
 const Home = () => {
     const navigate = useNavigate();
     const [contentsList, setcontentsList] = useRecoilState(ContentsList);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     // 조회수 기준 정렬
     const viewCountSortArr = [...contentsList].sort((a, b) => b.viewCount - a.viewCount);
     // 좋아요 기준 정렬
     const heartCountSortArr = [...contentsList].sort((a, b) => b.heartCount - a.heartCount);
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top",
-        width: "380px",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
-    });
+
     // 비로그인 시에는 post 불가
     const postButtonClick = () => {
         if (userInfo.userId !== undefined) {
@@ -60,33 +85,12 @@ const Home = () => {
 
     useEffect(() => {
         getContent().then((res) => {
+            const gachiArr = Object.values(SampleImgSrc);
+            const list = res.data.data?.map((el, index) => ({ ...el, image: gachiArr[index] }));
+            setcontentsList(list);
             setIsLoading(false);
-            setcontentsList(res.data.data);
         });
     }, []);
-
-    const swiperOption = {
-        spaceBetween: 20,
-        slidesPerView: 5,
-        navigation: true,
-        breakpoints: {
-            1441: {
-                slidesPerView: 5,
-            },
-            1200: {
-                slidesPerView: 4,
-            },
-            876: {
-                slidesPerView: 3,
-            },
-            576: {
-                slidesPerView: 2,
-            },
-            400: {
-                slidesPerView: 1,
-            },
-        },
-    };
 
     return (
         <div>
@@ -95,7 +99,6 @@ const Home = () => {
             ) : (
                 <>
                     <Categorybar />
-
                     <Swiper {...swiperOption} css={postStyle}>
                         <div>
                             <SwiperSlide>

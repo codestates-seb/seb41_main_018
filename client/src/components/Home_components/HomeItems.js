@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 /** @jsxImportSource @emotion/react */
 import { useState } from "react";
 import { css } from "@emotion/react";
@@ -26,12 +26,11 @@ const Toast = Swal.mixin({
     },
 });
 
-const HomeItems = (content) => {
-    const GachiArr = Object.values(SampleImgSrc);
+const HomeItems = (props) => {
+    const { content } = props;
     const [isFavoriteClcik, setFavoriteClick] = useState(false);
-    const randomIndex = Math.floor(Math.random() * GachiArr.length);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const data = content.content;
+    const data = useMemo(() => content, [content]);
 
     const handleFavoriteClick = () => {
         if (userInfo.userId) {
@@ -78,7 +77,7 @@ const HomeItems = (content) => {
                 )}
             </div>
             <Link to={`/detail/${data && data.contentId}`}>
-                <img src={GachiArr[randomIndex]} css={imgStyle} />
+                <img src={content.image} css={imgStyle} />
 
                 <div css={textContainer}>
                     <div css={titleStyle}>{data && data.title}</div>
@@ -106,7 +105,9 @@ const HomeItems = (content) => {
                 <div css={InfoStyle}>
                     <TbHandClick size="25" />
                     <span>{data.viewCount}</span>
-                    <div css={priceStyle}>{data && `총 경비 : ${data.amount}`}</div>
+                    <div css={priceStyle}>
+                        {data && `총 경비 : ${data.amount.toLocaleString()}원`}
+                    </div>
                 </div>
             </Link>
         </div>

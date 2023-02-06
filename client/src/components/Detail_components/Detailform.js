@@ -74,14 +74,13 @@ const Detailform = () => {
     const [state, setState] = useState({
         // 지도의 초기 위치
         center: {
-            lat: contentDetail.data && contentDetail.data.routes[0].x,
-            lng: contentDetail.data && contentDetail.data.routes[0].y,
+            lat: 33.452613,
+            lng: 126.570888,
         },
-        // 지도 위치 변경시 panto를 이용할지에 대해서 정의
-        isPanto: false,
     });
 
     useEffect(() => {
+        if (!contentDetail?.data) return;
         setState({
             center: {
                 lat: contentDetail.data && contentDetail.data.routes[0].x,

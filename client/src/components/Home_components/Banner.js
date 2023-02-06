@@ -27,7 +27,7 @@ const Banner = () => {
     return (
         <div css={wrap}>
             <Swiper {...swiperOption} css={swiperStyle}>
-                <SwiperSlide>
+                {/* <SwiperSlide>
                     <img src={GachiGalleImgSrc.banner_1} css={bannerStyle} />
                 </SwiperSlide>
                 <SwiperSlide>
@@ -38,7 +38,7 @@ const Banner = () => {
                 </SwiperSlide>
                 <SwiperSlide>
                     <img src={GachiGalleImgSrc.banner_1} css={bannerStyle} />
-                </SwiperSlide>
+                </SwiperSlide> */}
             </Swiper>
         </div>
     );
