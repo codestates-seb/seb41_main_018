@@ -52,7 +52,7 @@ export const Total = () => {
             </div>
             <div css={ComContent}>
                 <span css={ComTitle}>총경비</span>
-                <span css={content}>{`${Amount} 원`}</span>
+                <span css={content}>{`${Number(Amount).toLocaleString()} 원`}</span>
             </div>
         </div>
     );
