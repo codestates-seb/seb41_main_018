@@ -2,15 +2,10 @@ import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
-import { getCategory } from "../util/axiosContents";
-import { useRecoilState } from "recoil";
-import { CategorySearchResultState } from "../../src/state/atom";
-
 import { GachiGalleImgSrc } from "../sampleImage";
 
 const Categorybar = () => {
     const navigate = useNavigate();
-    const [categorySearch, setCategorySearch] = useRecoilState(CategorySearchResultState);
 
     const category = [
         { src: GachiGalleImgSrc.domestic_travel, title: "국내여행", themeType: "DOMESTIC" },
@@ -25,12 +20,7 @@ const Categorybar = () => {
 
     // 카테고리 버튼 클릭 시 검색 요청
     const searchHandler = (themeType) => {
-        // getCategory(themeType).then((data) => {
-        //     if (data) {
-        //         setCategorySearch(data && data.data);
-        navigate(`/result?type=${themeType}`);
-        // }
-        // });
+        navigate(`/result?category=${themeType}`);
     };
     return (
         <div css={wrap}>

@@ -1,7 +1,7 @@
-/** @jsxImportSource @emotion/react */
 import React from "react";
+/** @jsxImportSource @emotion/react */
 import { useState, useEffect, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
 import { PALETTE } from "../Common.js";
@@ -13,24 +13,16 @@ import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "./Button.js";
 import { useRecoilState } from "recoil";
-import {
-    loginState,
-    userInfoState,
-    ContentsList,
-    KeywordFilterResultState,
-    SearchKeywordState,
-} from "../state/atom";
+import { loginState, userInfoState } from "../state/atom";
 import { userLogout } from "../util/axiosUser";
 
 const Header = () => {
     const [isLogin, setIsLogin] = useRecoilState(loginState);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const [contentsList, setcontentsList] = useRecoilState(ContentsList);
-    const [filterResult, setFilterResult] = useRecoilState(KeywordFilterResultState);
     const [isResSearchIconClick, setResSearchIcon] = useState(false);
     const [isMenuClick, setMenuClick] = useState(false);
     const [isAccountClick, setAccontClick] = useState(false);
-    const [keyword, setKeyword] = useRecoilState(SearchKeywordState);
+    const [keyword, setKeyword] = useState("");
     const menuRef = useRef();
     const AccountRef = useRef();
     const navigate = useNavigate();
@@ -45,8 +37,10 @@ const Header = () => {
 
     // 검색 버튼 클릭 시 작동 함수
     const keywordSearch = () => {
-        setFilterResult(contentsList.filter((content) => content.title.includes(keyword)));
-        navigate("/result");
+        if (keyword.trim()) {
+            navigate(`/result?search=${keyword}`);
+            setKeyword("");
+        }
     };
 
     const handleClose = () => {

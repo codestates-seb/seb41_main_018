@@ -4,23 +4,16 @@ import { css } from "@emotion/react";
 import Categorybar from "../components/Categorybar";
 import HomeItems from "../components/Home_components/HomeItems";
 import { useRecoilState } from "recoil";
-import {
-    CategorySearchResultState,
-    KeywordFilterResultState,
-    SearchKeywordState,
-} from "../../src/state/atom";
+import { ContentsList } from "../../src/state/atom";
 import Loading from "../components/Loding";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { getCategory } from "../util/axiosContents";
 
 const Result = () => {
-    const navigate = useNavigate();
     const location = useLocation();
-    const [categorySearch, setCategorySearch] = useState([]);
-    const [filterResult, setFilterResult] = useRecoilState(KeywordFilterResultState);
+    const [contentsList, setcontentsList] = useRecoilState(ContentsList);
     const [searchTargetArr, setSearchTargetArr] = useState([]);
     const [searchTargetName, setSearchTargetName] = useState("");
-    const [keyword, setKeyword] = useRecoilState(SearchKeywordState);
     const [isLoading, setIsLoading] = useState(false);
 
     const themeTypeSwitch = (themeType) => {
@@ -52,29 +45,33 @@ const Result = () => {
         }
     };
 
-    // useEffect(() => {
-    //     if (categorySearch.length !== 0) {
-    //         setSearchTargetArr(categorySearch.contents);
-    //         themeTypeSwitch(categorySearch.themeType);
-    //         setIsLoading(false);
-    //     }
-    // }, [categorySearch]);
-
-    // useEffect(() => {
-    //     setSearchTargetArr(filterResult);
-    //     setSearchTargetName(keyword);
-    //     setKeyword("");
-    // }, [filterResult]);
-
     useEffect(() => {
         if (location.search) {
-            const type = location.search.split("type=")[1];
-            getCategory(type).then((data) => {
-                if (data) {
-                    themeTypeSwitch(data.data.themeType);
-                    setCategorySearch(data?.data?.contents ?? []);
-                }
-            });
+            const type = location.search.split("=")[0];
+            const searchTarget = decodeURI(location.search).split("=")[1];
+            /* 카테고리 선택 검색 */
+            if (type === "?category") {
+                getCategory(searchTarget).then((data) => {
+                    if (data) {
+                        themeTypeSwitch(data.data.themeType);
+                        setSearchTargetArr(data?.data?.contents ?? []);
+                    }
+                });
+                /* 검색창 키워드 검색 */
+            } else if (type === "?search") {
+                setSearchTargetName(searchTarget);
+                setSearchTargetArr(
+                    contentsList.filter((content) => content.title.includes(searchTarget))
+                );
+                /* 지역 선택 검색 */
+            } else if (type === "?region") {
+                setSearchTargetName(`${searchTarget} 지역`);
+                setSearchTargetArr(
+                    contentsList.filter(
+                        (content) => content.routes[0].address.slice(0, 2) === searchTarget
+                    )
+                );
+            }
         }
     }, [location.search]);
 
@@ -87,14 +84,14 @@ const Result = () => {
                     <Categorybar />
                     <div>
                         <div css={resultText}>
-                            {`" ${searchTargetName} "에 대한 검색결과 : ${categorySearch.length}건`}
+                            {`" ${searchTargetName} "에 대한 검색결과 : ${searchTargetArr.length}건`}
                         </div>
                         <div css={postStyle}>
-                            {categorySearch.length === 0 ? (
+                            {searchTargetArr.length === 0 ? (
                                 <div css={noResultMessage}>검색 결과가 없습니다.</div>
                             ) : (
                                 <>
-                                    {categorySearch.map((content) => (
+                                    {searchTargetArr.map((content) => (
                                         <HomeItems content={content} />
                                     ))}
                                 </>
