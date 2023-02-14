@@ -30,7 +30,7 @@ const DetailformItems = (props) => {
                 <div css={PriceVehicleWrap}>
                     <li>
                         <span>경비</span>
-                        <div>{RouteData && RouteData.price}</div>
+                        <div>{RouteData && RouteData.price.toLocaleString()}</div>
                     </li>
                     <li>
                         <span>이동 수단</span>

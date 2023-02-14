@@ -46,21 +46,6 @@ export const ReviewListState = atom({
     default: [],
 });
 
-export const CategorySearchResultState = atom({
-    key: "CategorySearchResultState",
-    default: [],
-});
-
-export const KeywordFilterResultState = atom({
-    key: "KeywordFilterResultState",
-    default: [],
-});
-
-export const SearchKeywordState = atom({
-    key: "SearchKeywordState",
-    default: "",
-});
-
 export const TagsStringState = atom({
     key: "TagsStringState",
     default: "",

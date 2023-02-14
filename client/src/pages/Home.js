@@ -18,9 +18,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../components/Loding";
 import { PALETTE } from "../Common";
 import Swal from "sweetalert2";
-
 import { GachiGalleImgSrc, SampleImgSrc } from "../sampleImage";
-import UserDeleteModal from "../components/Mypage_components/UserDeleteModal";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
