@@ -1,6 +1,6 @@
 package com.seb41_main_018.mainproject.content.mapper;
 
-import com.seb41_main_018.mainproject.comment.dto.CommentDto;
+import com.seb41_main_018.mainproject.comment.dto.CommentResponseDto;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
 import com.seb41_main_018.mainproject.constant.ThemeType;
@@ -103,17 +103,17 @@ public interface ContentMapper {
     }
 
     List<ContentResponseDto> contentsToContentResponse(List<Content> contents);
-    default ContentDto.ThemeTypeResponse themeTypeResponse(ThemeType themeType, ContentRepository contentRepository,RouteRepository routeRepository){
+    default ThemeTypeResponse themeTypeResponse(ThemeType themeType, ContentRepository contentRepository,RouteRepository routeRepository){
         List<Content> contents = contentRepository.findAllByThemeType(themeType);
 
-        return ContentDto.ThemeTypeResponse.builder()
+        return ThemeTypeResponse.builder()
                 .themeType(themeType)
                 .contents(contentsToThemeTypeResponseDtos(contents,routeRepository))
                 .build();
     }
-    default List<ContentDto.themeTypeResponseDto> contentsToThemeTypeResponseDtos(List<Content> contents,RouteRepository routeRepository){
+    default List<ThemeTypeResponseDto> contentsToThemeTypeResponseDtos(List<Content> contents,RouteRepository routeRepository){
         return contents.stream()
-                .map(content -> ContentDto.themeTypeResponseDto.builder()
+                .map(content -> ThemeTypeResponseDto.builder()
                         .contentId(content.getContentId())
                         .userId(content.getUser().getUserId())
                         .nickName(content.getUser().getNickname())
@@ -156,9 +156,9 @@ public interface ContentMapper {
                 .viewCount(content.getViewCount())
                 .build();
     }
-    default List<CommentDto.Response> commentsToCommentResponseDtos(List<Comment> comments){
+    default List<CommentResponseDto> commentsToCommentResponseDtos(List<Comment> comments){
         return comments.stream()
-                .map(comment -> CommentDto.Response.builder()
+                .map(comment -> CommentResponseDto.builder()
                         .commentId(comment.getCommentId())
                         .contentId(comment.getContent().getContentId())
                         .userId(comment.getUser().getUserId())

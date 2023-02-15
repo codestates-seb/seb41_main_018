@@ -1,6 +1,5 @@
 package com.seb41_main_018.mainproject.user.dto;
 
-import com.seb41_main_018.mainproject.comment.dto.CommentDto;
 import com.seb41_main_018.mainproject.comment.dto.UserCommentResponse;
 import com.seb41_main_018.mainproject.content.dto.UserContentResponseDto;
 import com.seb41_main_018.mainproject.heart.dto.HeartListDto;
@@ -33,10 +32,10 @@ public class UserAllResponseDto {
     private String image;
 
     @ApiModelProperty(notes = "유저가 작성한 컨텐츠들", example = "서울 여행 컨텐츠, 부산 여행 컨텐츠", required = true)
-    private List<ContentDto.UserContentResponseDto> contents;
+    private List<UserContentResponseDto> contents;
 
     @ApiModelProperty(notes = "유저가 작성한 후기들", example = "짱좋아요, 좀 별로임", required = true)
-    private List<CommentDto.UserCommentResponse> comments;
+    private List<UserCommentResponse> comments;
 
     @ApiModelProperty(notes = "유저가 좋아요한 컨텐츠들", example = "서울 여행 컨텐츠(좋아요)", required = true)
     private List<HeartListDto> hearts;

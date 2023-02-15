@@ -129,7 +129,7 @@ public class ContentController {
             @ApiResponse(code = 404, message = "Content not found")})
     @GetMapping("/category/{themeType}")
     public ResponseEntity getContentFromThemeType(@PathVariable("themeType")ThemeType themeType){
-        ContentDto.ThemeTypeResponse response = contentMapper.themeTypeResponse(themeType, contentRepository,routeRepository);
+        ThemeTypeResponse response = contentMapper.themeTypeResponse(themeType, contentRepository,routeRepository);
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.OK
         );

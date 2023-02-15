@@ -2,7 +2,6 @@ package com.seb41_main_018.mainproject.user.service;
 
 import com.seb41_main_018.mainproject.auth.utils.CustomAuthorityUtils;
 import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
-import com.seb41_main_018.mainproject.content.dto.ContentDto;
 import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.heart.repository.HeartRepository;
@@ -25,7 +24,7 @@ import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
 
 import org.springframework.transaction.annotation.Transactional;
-import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 

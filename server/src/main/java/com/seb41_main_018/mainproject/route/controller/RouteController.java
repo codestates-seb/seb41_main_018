@@ -1,8 +1,5 @@
 package com.seb41_main_018.mainproject.route.controller;
 
-import com.seb41_main_018.mainproject.content.dto.ContentAllResponseDto;
-import com.seb41_main_018.mainproject.content.dto.ContentDto;
-import com.seb41_main_018.mainproject.response.MultiResponseDto;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
 import com.seb41_main_018.mainproject.route.dto.RoutePatchDto;
 import com.seb41_main_018.mainproject.route.dto.RoutePostDto;
@@ -10,9 +7,7 @@ import com.seb41_main_018.mainproject.route.dto.RouteResponseDto;
 import com.seb41_main_018.mainproject.route.entity.Route;
 import com.seb41_main_018.mainproject.route.mapper.RouteMapper;
 import com.seb41_main_018.mainproject.route.service.RouteService;
-import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
 import io.swagger.annotations.*;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

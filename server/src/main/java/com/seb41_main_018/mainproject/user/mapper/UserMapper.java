@@ -1,22 +1,21 @@
 package com.seb41_main_018.mainproject.user.mapper;
 
-import com.seb41_main_018.mainproject.comment.dto.CommentDto;
+import com.seb41_main_018.mainproject.comment.dto.UserCommentResponse;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
-import com.seb41_main_018.mainproject.content.dto.ContentDto;
+import com.seb41_main_018.mainproject.content.dto.ContentRouteResponseDto;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.heart.dto.HeartListDto;
 import com.seb41_main_018.mainproject.heart.entity.Heart;
 import com.seb41_main_018.mainproject.heart.repository.HeartRepository;
-import com.seb41_main_018.mainproject.route.dto.RouteResponseDto;
 import com.seb41_main_018.mainproject.route.entity.Route;
 import com.seb41_main_018.mainproject.route.repository.RouteRepository;
-import com.seb41_main_018.mainproject.tag.repository.TagRepository;
 import com.seb41_main_018.mainproject.user.dto.UserAllResponseDto;
 import com.seb41_main_018.mainproject.user.dto.UserPatchDto;
 import com.seb41_main_018.mainproject.user.dto.UserPostDto;
 import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
+import com.seb41_main_018.mainproject.content.dto.UserContentResponseDto;
 import com.seb41_main_018.mainproject.user.entity.User;
 import org.mapstruct.Mapper;
 
@@ -52,9 +51,9 @@ public interface UserMapper {
                 .hearts(heartsToHeartResponseDtos(hearts))
                 .build();
     }
-    default List<CommentDto.UserCommentResponse> commentsToCommentResponseDtos(List<Comment> comments){
+    default List<UserCommentResponse> commentsToCommentResponseDtos(List<Comment> comments){
         return comments.stream()
-                .map(comment -> CommentDto.UserCommentResponse.builder()
+                .map(comment -> UserCommentResponse.builder()
                         .commentId(comment.getCommentId())
                         .contentId(comment.getContent().getContentId())
                         .title(comment.getContent().getTitle())
@@ -65,9 +64,9 @@ public interface UserMapper {
                         .build())
                 .collect(Collectors.toList());
     }
-    default List<ContentDto.UserContentResponseDto> contentsToContentResponseDtos(List<Content> contents, RouteRepository routeRepository){
+    default List<UserContentResponseDto> contentsToContentResponseDtos(List<Content> contents, RouteRepository routeRepository){
         return contents.stream()
-                .map(content -> ContentDto.UserContentResponseDto.builder()
+                .map(content -> UserContentResponseDto.builder()
                         .contentId(content.getContentId())
                         .title(content.getTitle())
                         .createdAt(content.getCreatedAt())
@@ -76,9 +75,9 @@ public interface UserMapper {
                         .build())
                 .collect(Collectors.toList());
     }
-    default List<ContentDto.ContentRouteResponseDto> routesToRouteResponseDtos(List<Route> routes){
+    default List<ContentRouteResponseDto> routesToRouteResponseDtos(List<Route> routes){
         return routes.stream()
-                .map(route-> ContentDto.ContentRouteResponseDto.builder()
+                .map(route-> ContentRouteResponseDto.builder()
                         .place(route.getPlace())
                         .build())
                 .collect(Collectors.toList());
