@@ -1,15 +1,11 @@
 package com.seb41_main_018.mainproject.user.controller;
 
-import com.seb41_main_018.mainproject.auth.jwt.JwtTokenizer;
-import com.seb41_main_018.mainproject.auth.utils.RedisUtil;
 import com.seb41_main_018.mainproject.config.S3Uploader;
-import com.seb41_main_018.mainproject.exception.BusinessLogicException;
-import com.seb41_main_018.mainproject.exception.ExceptionCode;
-import com.seb41_main_018.mainproject.response.SingleResponseDto;
 import com.seb41_main_018.mainproject.user.dto.UserAllResponseDto;
 import com.seb41_main_018.mainproject.user.dto.UserPatchDto;
 import com.seb41_main_018.mainproject.user.dto.UserPostDto;
 import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
+import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.user.mapper.UserMapper;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
 import com.seb41_main_018.mainproject.user.service.UserService;
@@ -19,13 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import com.seb41_main_018.mainproject.user.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 

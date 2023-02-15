@@ -1,6 +1,5 @@
 package com.seb41_main_018.mainproject.content.repository;
 
-import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.constant.ThemeType;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import org.springframework.data.jpa.repository.JpaRepository;

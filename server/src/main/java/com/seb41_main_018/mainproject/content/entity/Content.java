@@ -8,8 +8,9 @@ import com.seb41_main_018.mainproject.heart.entity.Heart;
 import com.seb41_main_018.mainproject.route.entity.Route;
 import com.seb41_main_018.mainproject.tag.entity.Tag;
 import com.seb41_main_018.mainproject.user.entity.User;
-import lombok.*;
-import org.hibernate.validator.constraints.Range;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;

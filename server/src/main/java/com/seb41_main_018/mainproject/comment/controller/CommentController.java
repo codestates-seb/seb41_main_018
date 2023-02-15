@@ -1,13 +1,12 @@
 package com.seb41_main_018.mainproject.comment.controller;
 
-import com.seb41_main_018.mainproject.comment.dto.CommentResponseDto;
 import com.seb41_main_018.mainproject.comment.dto.CommentPatchDto;
 import com.seb41_main_018.mainproject.comment.dto.CommentPostDto;
+import com.seb41_main_018.mainproject.comment.dto.CommentResponseDto;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.mapper.CommentMapper;
 import com.seb41_main_018.mainproject.comment.service.CommentService;
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
-import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;

@@ -7,7 +7,7 @@ import com.seb41_main_018.mainproject.content.entity.Content;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.seb41_main_018.mainproject.route.entity.Route;
+
 import javax.persistence.*;
 
 @Entity

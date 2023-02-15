@@ -10,7 +10,6 @@ import com.seb41_main_018.mainproject.response.MultiResponseDto;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
 import com.seb41_main_018.mainproject.route.repository.RouteRepository;
 import com.seb41_main_018.mainproject.route.service.RouteService;
-import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;

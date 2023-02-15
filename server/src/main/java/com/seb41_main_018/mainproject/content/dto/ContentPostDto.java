@@ -4,7 +4,6 @@ import com.seb41_main_018.mainproject.constant.ThemeType;
 import com.seb41_main_018.mainproject.route.dto.RoutePostDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
