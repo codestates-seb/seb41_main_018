@@ -1,4 +1,4 @@
-package com.seb41_main_018.mainproject;
+package com.seb41_main_018.mainproject.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
