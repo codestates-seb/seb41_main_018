@@ -11,9 +11,9 @@ import {
     LoginContainer,
     LoginLabelBox,
     LoginInputBox,
-} from "./loginstyle";
-import Button from "../../components/Button";
-import SocialButton from "../../components/SocialButton";
+} from "./LoginStyle";
+import Button from "../components/Button";
+import SocialButton from "../components/SocialButton";
 import { GachiGalleImgSrc } from "../../sampleImage";
 
 const defaultValues = {

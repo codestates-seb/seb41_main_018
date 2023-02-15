@@ -12,13 +12,13 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 // component
-import Tag from "../../components/Post_components/Tag";
+import Tag from "./PostComponents/Tag";
 import PostMap from "./PostMap/PostMap";
 import PostMapTwo from "./PostMap/PostMapTwo";
 import PostMapThree from "./PostMap/PostMapThree";
 import PostMapFour from "./PostMap/PostMapFour";
 import PostMapFive from "./PostMap/PostMapFive";
-import ImgUpload from "../../components/Post_components/ImgUpload";
+import ImgUpload from "./PostComponents/ImgUpload";
 
 // Library
 import { useRecoilState } from "recoil";

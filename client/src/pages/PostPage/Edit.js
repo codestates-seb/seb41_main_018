@@ -11,7 +11,8 @@ import { PALETTE } from "../../Common";
 
 import { useForm, FormProvider, useFormContext, Controller, useFieldArray } from "react-hook-form";
 
-import Tag from "../../components/Post_components/Tag";
+// import Tag from "../../pages/PostPage/Post_components/Tag";
+import Tag from "./PostComponents/Tag";
 
 import PostMap from "./PostMap/PostMap";
 import PostMapTwo from "./PostMap/PostMapTwo";
@@ -19,7 +20,7 @@ import PostMapThree from "./PostMap/PostMapThree";
 import PostMapFour from "./PostMap/PostMapFour";
 import PostMapFive from "./PostMap/PostMapFive";
 
-import ImgUpload from "../../components/Post_components/ImgUpload";
+import ImgUpload from "./PostComponents/ImgUpload";
 
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
