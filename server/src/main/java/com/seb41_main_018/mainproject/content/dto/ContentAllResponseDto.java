@@ -3,13 +3,12 @@ package com.seb41_main_018.mainproject.content.dto;
 import com.seb41_main_018.mainproject.comment.dto.CommentDto;
 import com.seb41_main_018.mainproject.constant.ThemeType;
 import com.seb41_main_018.mainproject.route.dto.RouteResponseDto;
-import com.seb41_main_018.mainproject.tag.dto.TagDto;
+import com.seb41_main_018.mainproject.tag.dto.TagResponseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -62,7 +61,7 @@ public class ContentAllResponseDto {
     private List<CommentDto.Response> comments;
 
     @ApiModelProperty(notes = "태그들", example = "내돈내산", required = true)
-    private List<TagDto.TagResponse> tags;
+    private List<TagResponseDto> tags;
 
     @ApiModelProperty(notes = "상세 루트들", example = "창경궁", required = true)
     private List<RouteResponseDto> routes;

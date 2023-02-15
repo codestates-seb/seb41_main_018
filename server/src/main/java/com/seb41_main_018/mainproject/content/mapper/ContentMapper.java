@@ -11,7 +11,7 @@ import com.seb41_main_018.mainproject.route.dto.RoutePostDto;
 import com.seb41_main_018.mainproject.route.dto.RouteResponseDto;
 import com.seb41_main_018.mainproject.route.entity.Route;
 import com.seb41_main_018.mainproject.route.repository.RouteRepository;
-import com.seb41_main_018.mainproject.tag.dto.TagDto;
+import com.seb41_main_018.mainproject.tag.dto.TagResponseDto;
 import com.seb41_main_018.mainproject.tag.entity.Tag;
 import com.seb41_main_018.mainproject.tag.repository.TagRepository;
 import com.seb41_main_018.mainproject.user.entity.User;
@@ -173,10 +173,10 @@ public interface ContentMapper {
                 .collect(Collectors.toList());
     }
 
-    default List<TagDto.TagResponse> tagsToTagResponseDtos(List<Tag> tags){
+    default List<TagResponseDto> tagsToTagResponseDtos(List<Tag> tags){
         // tag
         return tags.stream()
-                .map(tag -> TagDto.TagResponse.builder()
+                .map(tag -> TagResponseDto.builder()
                         .tagId(tag.getTagId())
                         .contentId(tag.getContent().getContentId())
                         .name(tag.getName())

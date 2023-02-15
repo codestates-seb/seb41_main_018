@@ -1,14 +1,14 @@
 package com.seb41_main_018.mainproject.user.dto;
 
 import com.seb41_main_018.mainproject.comment.dto.CommentDto;
-import com.seb41_main_018.mainproject.content.dto.ContentDto;
-import com.seb41_main_018.mainproject.heart.dto.HeartDto;
+import com.seb41_main_018.mainproject.comment.dto.UserCommentResponse;
+import com.seb41_main_018.mainproject.content.dto.UserContentResponseDto;
+import com.seb41_main_018.mainproject.heart.dto.HeartListDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,7 +39,7 @@ public class UserAllResponseDto {
     private List<CommentDto.UserCommentResponse> comments;
 
     @ApiModelProperty(notes = "유저가 좋아요한 컨텐츠들", example = "서울 여행 컨텐츠(좋아요)", required = true)
-    private List<HeartDto.UserHeartResponse> hearts;
+    private List<HeartListDto> hearts;
     @ApiModelProperty(notes = "가입한 날짜와 시간", example = "2023-01-22T03:18:40.365773", required = true)
     private LocalDateTime createdAt;
     @ApiModelProperty(notes = "유저 정보 수정한 날짜와 시간", example = "2023-01-22T03:18:40.365773", required = true)

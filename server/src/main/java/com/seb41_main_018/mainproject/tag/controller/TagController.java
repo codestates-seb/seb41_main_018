@@ -1,11 +1,12 @@
 package com.seb41_main_018.mainproject.tag.controller;
 
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
-import com.seb41_main_018.mainproject.tag.dto.TagDto;
+import com.seb41_main_018.mainproject.tag.dto.TagPatchDto;
+import com.seb41_main_018.mainproject.tag.dto.TagPostDto;
+import com.seb41_main_018.mainproject.tag.dto.TagResponseDto;
 import com.seb41_main_018.mainproject.tag.entity.Tag;
 import com.seb41_main_018.mainproject.tag.mapper.TagMapper;
 import com.seb41_main_018.mainproject.tag.service.TagService;
-import com.seb41_main_018.mainproject.user.dto.UserAllResponseDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -34,9 +35,9 @@ public class TagController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Tag not found")})
     @PostMapping
-    public ResponseEntity postTag(@RequestBody TagDto.TagPost requestBody) {
+    public ResponseEntity postTag(@RequestBody TagPostDto requestBody) {
         Tag tag = tagService.createTag(tagMapper.tagPostDtoToTag(requestBody), requestBody.getContentId());
-        TagDto.TagResponse tagResponse = tagMapper.tagToTagResponse(tag);
+        TagResponseDto tagResponse = tagMapper.tagToTagResponse(tag);
 
         return new ResponseEntity<>(tagResponse, HttpStatus.CREATED);
     }
@@ -44,13 +45,13 @@ public class TagController {
     // 태그 단건 조회 //
     @ApiOperation(value = "테그 조회", notes = "테그를 조회합니다.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved",response = TagDto.TagResponse.class),
+            @ApiResponse(code = 200, message = "Successfully retrieved",response = TagResponseDto.class),
             @ApiResponse(code = 404, message = "Tag not found")})
     @GetMapping("/{tagId}")
     public ResponseEntity getTag(@ApiParam(name = "TagId", value = "테그 식별자", example = "1")
                                      @PathVariable("tagId") @Positive Long tagId) {
         Tag tag = tagService.findTag(tagId);
-        TagDto.TagResponse tagResponse = tagMapper.tagToTagResponse(tag);
+        TagResponseDto tagResponse = tagMapper.tagToTagResponse(tag);
 
         return new ResponseEntity<>(tagResponse, HttpStatus.OK);
     }
@@ -58,7 +59,7 @@ public class TagController {
     // 태그 전체 조회 //
     @ApiOperation(value = "테그 전체 조회", notes = "테그를 전체 조회 합니다.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved",response = TagDto.TagResponse.class),
+            @ApiResponse(code = 200, message = "Successfully retrieved",response = TagResponseDto.class),
             @ApiResponse(code = 404, message = "Tag not found")})
     @GetMapping
     public ResponseEntity getTags(@RequestParam("page") int page,
@@ -79,14 +80,14 @@ public class TagController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Tag not found")})
     @PatchMapping("/{tagId}")
-    public ResponseEntity patchTag(@RequestBody TagDto.TagPatch requestBody,
+    public ResponseEntity patchTag(@RequestBody TagPatchDto requestBody,
                                    @PathVariable("tagId") Long tagId) {
         Tag tag = tagService.updateTag(
                 tagId,
                 tagMapper.tagPatchDtoToTag(requestBody));
 
         tag.setTagId(tagId);
-        TagDto.TagResponse tagResponse = tagMapper.tagToTagResponse(tag);
+        TagResponseDto tagResponse = tagMapper.tagToTagResponse(tag);
 
         return new ResponseEntity<>(tagResponse, HttpStatus.OK);
     }

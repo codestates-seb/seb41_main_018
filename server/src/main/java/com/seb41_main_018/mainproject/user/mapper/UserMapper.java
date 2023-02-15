@@ -6,7 +6,7 @@ import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
 import com.seb41_main_018.mainproject.content.dto.ContentDto;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.content.repository.ContentRepository;
-import com.seb41_main_018.mainproject.heart.dto.HeartDto;
+import com.seb41_main_018.mainproject.heart.dto.HeartListDto;
 import com.seb41_main_018.mainproject.heart.entity.Heart;
 import com.seb41_main_018.mainproject.heart.repository.HeartRepository;
 import com.seb41_main_018.mainproject.route.dto.RouteResponseDto;
@@ -83,9 +83,9 @@ public interface UserMapper {
                         .build())
                 .collect(Collectors.toList());
     }
-    default List<HeartDto.UserHeartResponse> heartsToHeartResponseDtos(List<Heart> hearts){
+    default List<HeartListDto> heartsToHeartResponseDtos(List<Heart> hearts){
         return hearts.stream()
-                .map(heart -> HeartDto.UserHeartResponse.builder()
+                .map(heart -> HeartListDto.builder()
                         .contentId(heart.getContent().getContentId())
                         .title(heart.getContent().getTitle())
                         .heartType(heart.getHeartType())
