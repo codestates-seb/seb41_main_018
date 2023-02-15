@@ -1,7 +1,8 @@
 package com.seb41_main_018.mainproject.heart.mapper;
 
 import com.seb41_main_018.mainproject.content.entity.Content;
-import com.seb41_main_018.mainproject.heart.dto.HeartDto;
+import com.seb41_main_018.mainproject.heart.dto.HeartPatchDto;
+import com.seb41_main_018.mainproject.heart.dto.HeartResponseDto;
 import com.seb41_main_018.mainproject.heart.entity.Heart;
 import com.seb41_main_018.mainproject.user.entity.User;
 import org.mapstruct.Mapper;
@@ -10,12 +11,12 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface HeartMapper {
-    Heart heartPatchDtoToEntity(HeartDto.Patch requestBody);
-    default HeartDto.Response heartToHeartResponseDto(Heart heart) {
+    Heart heartPatchDtoToEntity(HeartPatchDto requestBody);
+    default HeartResponseDto heartToHeartResponseDto(Heart heart) {
         User user = heart.getUser();
         Content content = heart.getContent();
 
-        return HeartDto.Response.builder()
+        return HeartResponseDto.builder()
                 .userId(user.getUserId())
                 .heartId(heart.getHeartId())
                 .contentId(content.getContentId())
@@ -23,5 +24,5 @@ public interface HeartMapper {
 
                 .build();
     }
-    List<HeartDto.Response> heartsToHeartResponseDtos(List<Heart> heart);
+    List<HeartResponseDto> heartsToHeartResponseDtos(List<Heart> heart);
 }

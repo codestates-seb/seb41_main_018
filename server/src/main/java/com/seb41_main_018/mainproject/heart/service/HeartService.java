@@ -3,17 +3,12 @@ package com.seb41_main_018.mainproject.heart.service;
 import com.seb41_main_018.mainproject.constant.HeartType;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.content.repository.ContentRepository;
-import com.seb41_main_018.mainproject.content.service.ContentService;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
-import com.seb41_main_018.mainproject.heart.dto.HeartDto;
 import com.seb41_main_018.mainproject.heart.entity.Heart;
 import com.seb41_main_018.mainproject.heart.repository.HeartRepository;
 import com.seb41_main_018.mainproject.user.entity.User;
-import com.seb41_main_018.mainproject.user.repository.UserRepository;
-import com.seb41_main_018.mainproject.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
