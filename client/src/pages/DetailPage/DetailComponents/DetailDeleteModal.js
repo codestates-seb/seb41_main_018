@@ -8,7 +8,7 @@ import { deleteContent } from "../../../util/axiosContents";
 
 const DetailDeleteModal = (props) => {
     const navigate = useNavigate();
-    const [update, setUpdate] = useState(false);
+    const [isUpdate, setUpdate] = useState(false);
 
     // 모달 끄기
     const closeModal = () => {
@@ -24,15 +24,15 @@ const DetailDeleteModal = (props) => {
             } else closeModal();
         });
     };
-
+    //DeleteModal 컴포넌트인데 해당부분에서 update가 왜 있고 무슨 기능을 하는지 궁금합니다.
     useEffect(() => {
-        if (update) {
+        if (isUpdate) {
             getUserInfo(userInfo.userId).then((data) => {
                 setUserInfo(data.data);
             });
             setUpdate(false);
         }
-    }, [update]);
+    }, [isUpdate]);
 
     return (
         <div css={ModalBackground}>
@@ -45,14 +45,14 @@ const DetailDeleteModal = (props) => {
                         margin="20px"
                         color="white"
                         onClick={() => deleteContentDetail(location.pathname.slice(8))}
-                    ></Button>
+                    />
                     <Button
                         text="취소"
                         width="25%"
                         margin="20px"
                         color="white"
                         onClick={closeModal}
-                    ></Button>
+                    />
                 </div>
             </div>
         </div>
