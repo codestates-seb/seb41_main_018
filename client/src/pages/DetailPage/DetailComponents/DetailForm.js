@@ -10,7 +10,7 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 //recoil
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { ContentDetail, userInfoState } from "../../../state/atom";
 
 //Button
@@ -66,10 +66,10 @@ export const Buttons = (props) => {
         </AwesomeButton>
     );
 };
-const Detailform = () => {
-    const [currentTab, setcurrentTab] = useState(0);
-    const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
+const DetailForm = () => {
+    const contentDetail = useRecoilValue(ContentDetail);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const [currentTab, setcurrentTab] = useState(0);
     const [addedLike, setAddedLike] = useState(false);
     const [state, setState] = useState({
         // 지도의 초기 위치
@@ -78,6 +78,7 @@ const Detailform = () => {
             lng: 126.570888,
         },
     });
+    const data = contentDetail.data;
 
     useEffect(() => {
         if (!contentDetail?.data) return;
@@ -90,8 +91,6 @@ const Detailform = () => {
         });
     }, [contentDetail]);
 
-    const data = contentDetail.data;
-
     const selectMenuHandler = (index) => {
         setcurrentTab(index);
         setState({
@@ -102,6 +101,7 @@ const Detailform = () => {
             isPanto: false,
         });
     };
+
     // 좋아요 post요청 함수
     const HeartHandler = () => {
         postHeart(userInfo.userId, data.contentId).then(() => {
@@ -113,7 +113,7 @@ const Detailform = () => {
     };
 
     // 링크 복사
-    const clip = () => {
+    const copyLink = () => {
         navigator.clipboard.writeText(window.location.href).then(
             () => {
                 Toast.fire({
@@ -142,23 +142,18 @@ const Detailform = () => {
     }, [userInfo]);
 
     return (
-        <div css={wrap}>
-            <div css={container}>
-                {/* 경로 아이템 불러오기 */}
-                <div
-                    css={css`
-                        margin: 0 auto;
-                    `}
-                >
+        <div css={Wrap}>
+            <div css={Container}>
+                <div css={CenterAligned}>
                     <div css={UserProfile}>
                         <img
                             src={data && data.image}
                             alt={`${data && data.nickName}의 프로필 이미지`}
-                            css={imgStyle}
+                            css={ImgStyle}
                         />
                         <h3>{`${data && data.nickName}님의 추천 경로`}</h3>
                     </div>
-                    <div css={tabWrap}>
+                    <div css={TabWrap}>
                         {data &&
                             data.routes.map((el, index) => (
                                 <div
@@ -172,22 +167,13 @@ const Detailform = () => {
                     </div>
                 </div>
 
-                <div
-                    css={css`
-                        margin: 0 auto;
-                    `}
-                >
+                <div css={CenterAligned}>
                     <DetailFormItems index={currentTab} />
-                    <div
-                        css={css`
-                            display: flex;
-                            margin-top: 20px;
-                        `}
-                    >
+                    <div css={TagWrap}>
                         {data &&
                             data.tag &&
                             data.tag.split(",").map((el, index) => (
-                                <span key={index} css={tagStyle}>
+                                <span key={index} css={TagStyle}>
                                     {`#${el}`}
                                 </span>
                             ))}
@@ -202,12 +188,13 @@ const Detailform = () => {
                     text="가치갈래"
                     onPress={HeartHandler}
                 />
-                <Buttons text={<FiShare />} onPress={clip} />
+                <Buttons text={<FiShare />} onPress={copyLink} />
             </div>
         </div>
     );
 };
-const wrap = css`
+
+const Wrap = css`
     width: 100%;
     height: 100%;
     display: flex;
@@ -222,7 +209,7 @@ const wrap = css`
     }
 `;
 
-const container = css`
+const Container = css`
     width: 90vw;
     border-radius: ${PALETTE.border_radius};
     box-shadow: 2px 2px 10px 2px rgb(0, 0, 0, 0.2);
@@ -245,6 +232,10 @@ const container = css`
     }
 `;
 
+const CenterAligned = css`
+    margin: 0 auto;
+`;
+
 const UserProfile = css`
     display: flex;
     @media (min-width: 768px) {
@@ -256,7 +247,7 @@ const UserProfile = css`
     }
 `;
 
-const imgStyle = css`
+const ImgStyle = css`
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -269,6 +260,7 @@ const imgStyle = css`
         margin: 20px auto;
     }
 `;
+
 const ButtonBox = css`
     display: flex;
     align-self: flex-end;
@@ -276,7 +268,7 @@ const ButtonBox = css`
     padding-right: 40px;
 `;
 
-const tabWrap = css`
+const TabWrap = css`
     display: flex;
     flex-wrap: wrap;
     margin: 30px 0 -15px 10px;
@@ -365,8 +357,12 @@ const NoSelect = css`
         }
     }
 `;
+const TagWrap = css`
+    display: flex;
+    margin-top: 20px;
+`;
 
-const tagStyle = css`
+const TagStyle = css`
     display: flex;
     width: fit-content;
     height: auto;
@@ -384,4 +380,4 @@ const tagStyle = css`
     }
 `;
 
-export default Detailform;
+export default DetailForm;
