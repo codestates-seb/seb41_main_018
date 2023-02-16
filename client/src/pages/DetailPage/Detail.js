@@ -15,7 +15,7 @@ import DetailDeleteModal from "./DetailComponents/DetailDeleteModal";
 import Loading from "../components/Loding";
 
 //recoil
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
     userInfoState,
     ContentDetail,
@@ -38,26 +38,24 @@ import { getContent } from "../../util/axiosContents";
 
 const Detail = () => {
     const navigate = useNavigate();
-    const pathname = location.pathname;
+    const pathName = location.pathname;
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
-    const [reviewList, setReviewList] = useRecoilState(ReviewListState);
-    const [DetailcontentId, setDetailcontentId] = useRecoilState(DetailContentIdState);
-    const [DetailuserId, setDetailuserId] = useRecoilState(DetailuserIdState);
-    const [DetailTitle, setDetailTitle] = useRecoilState(DetailTitleState);
-    const [DetailThemeType, setDetailThemeType] = useRecoilState(DetailThemeTypeState);
-    const [DetailTag, setDetailTag] = useRecoilState(DetailTagState);
-    const [DetailTravelDate, setDetailTravelDate] = useRecoilState(DetailTravelDateState);
-    const [DetailRoute, setDetailRoute] = useRecoilState(DetailRouteState);
+    const setReviewList = useSetRecoilState(ReviewListState);
+    const setDetailcontentId = useSetRecoilState(DetailContentIdState);
+    const setDetailuserId = useSetRecoilState(DetailuserIdState);
+    const setDetailTitle = useSetRecoilState(DetailTitleState);
+    const setDetailThemeType = useSetRecoilState(DetailThemeTypeState);
+    const setDetailTag = useSetRecoilState(DetailTagState);
+    const setDetailTravelDate = useSetRecoilState(DetailTravelDateState);
+    const setDetailRoute = useSetRecoilState(DetailRouteState);
 
     const [isMyPost, setMyPost] = useState(false);
-    const [modalOpen, setModalOpen] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+    const [ismodalOpen, setModalOpen] = useState(false);
+    const [isLoading, setLoading] = useState(true);
     const contentsUserId = contentDetail.data && contentDetail.data.userId;
-    const logInUserId = userInfo.userId;
-    const postingData = dayjs(contentDetail.data && contentDetail.data.createdAt).format(
-        "YYYY.MM.DD"
-    );
+    const loginUserId = userInfo.userId;
+    const postDate = dayjs(contentDetail.data && contentDetail.data.createdAt).format("YYYY.MM.DD");
 
     const Toast = Swal.mixin({
         toast: true,
@@ -74,17 +72,16 @@ const Detail = () => {
 
     const getContentDetail = (contentId) => {
         getContent(contentId).then((res) => {
-            console.log(res.data);
             setContentDetail(res && res.data);
             setReviewList(res.data && res.data.data && res.data.data.comments);
         });
     };
 
     const handleMyPost = () => {
-        if (contentsUserId === logInUserId) {
+        if (contentsUserId === loginUserId) {
             setMyPost(true);
         }
-        setIsLoading(false);
+        setLoading(false);
     };
 
     const updateMyPost = () => {
@@ -110,7 +107,7 @@ const Detail = () => {
     };
 
     useEffect(() => {
-        getContentDetail(location.pathname.slice(8));
+        getContentDetail(pathName.slice(8));
         handleMyPost();
     }, []);
 
@@ -124,26 +121,26 @@ const Detail = () => {
                         <h1>{contentDetail.data && contentDetail.data.title}</h1>
                         <div css={ContentInfo}>
                             <Total />
-                            <div css={postDate}>{`${postingData} 작성`}</div>
+                            <div css={PostDate}>{`${postDate} 작성`}</div>
                         </div>
 
                         <div
                             css={ButtonBox}
-                            className={contentsUserId === logInUserId ? "" : "hidden"}
+                            className={contentsUserId === loginUserId ? "" : "hidden"}
                         >
-                            <button css={btnStyle} onClick={updateMyPost}>
+                            <button css={BtnStyle} onClick={updateMyPost}>
                                 Update
                             </button>
-                            <button css={btnStyle} onClick={showModal}>
+                            <button css={BtnStyle} onClick={showModal}>
                                 Delete
                             </button>
                         </div>
                         <div css={TotalContainer}>
-                            <Detailform />
+                            <DetailForm />
                         </div>
 
-                        <Reviewform />
-                        {modalOpen && (
+                        <ReviewForm />
+                        {ismodalOpen && (
                             <DetailDeleteModal
                                 text="정말 삭제하시겠습니까?"
                                 setModalOpen={setModalOpen}
@@ -210,7 +207,7 @@ const TotalContainer = css`
     margin: 30px 0;
 `;
 
-const btnStyle = css`
+const BtnStyle = css`
     cursor: pointer;
     background-color: white;
     border: none;
@@ -221,7 +218,7 @@ const btnStyle = css`
     }
 `;
 
-const postDate = css`
+const PostDate = css`
     color: rgba(0, 0, 0, 0.5);
     width: 130px;
     margin-top: 13px;
