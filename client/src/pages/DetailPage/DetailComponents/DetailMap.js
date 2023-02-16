@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 //css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { PALETTE } from "../../../Common";
 
 //Kakao Map API
 import { MapMarker, Map, CustomOverlayMap } from "react-kakao-maps-sdk";
@@ -10,7 +11,6 @@ import { MapMarker, Map, CustomOverlayMap } from "react-kakao-maps-sdk";
 //recoil
 import { useRecoilValue } from "recoil";
 import { ContentDetail } from "../../../state/atom";
-import { PALETTE } from "../../../Common";
 
 const DetailMap = (props) => {
     const contentDetail = useRecoilValue(ContentDetail);

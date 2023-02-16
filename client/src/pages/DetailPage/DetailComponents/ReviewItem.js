@@ -1,20 +1,28 @@
 import React, { useState } from "react";
+
+//css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../../Common";
+
+//component
+import ReviewDeleteModal from "./ReviewDeleteModal";
+
+//UI library
 import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import dayjs from "dayjs";
-import { patchReview } from "../../../util/axiosContents";
-import { useRecoilState } from "recoil";
-import { userInfoState } from "../../../state/atom";
-import ReviewDeleteModal from "./ReviewDeleteModal";
-
-//Button
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
+import dayjs from "dayjs";
+
+//Recoil
+import { useRecoilValue } from "recoil";
+import { userInfoState } from "../../../state/atom";
+
+//API
+import { patchReview } from "../../../util/axiosContents";
 
 export const Buttons = (props) => {
     return (
@@ -45,15 +53,15 @@ export const Buttons = (props) => {
 
 const ReviewItem = ({ review, setUpdate }) => {
     const { body, createdAt, nickName, ratingType, commentId, userId, image } = review;
-    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const [editReview, setEditReview] = useState(false);
+    const userInfo = useRecoilValue(userInfoState);
+    const [isReviewEdit, setEditReview] = useState(false);
     const [reviewText, setReviewText] = useState("");
     const [rateType, setRateType] = useState("FIVE");
-    const [modalOpen, setModalOpen] = useState(false);
+    const [isModalOpen, setModalOpen] = useState(false);
 
     const editReviewHandler = () => {
         if (userInfo.userId === userId) {
-            setEditReview(!editReview);
+            setEditReview(!isReviewEdit);
             setReviewText(body);
             setRateType(ratingType);
         }
@@ -62,7 +70,7 @@ const ReviewItem = ({ review, setUpdate }) => {
     const editReviewConfirm = (commentId, body, ratingType) => {
         patchReview(commentId, body, ratingType).then(() => {
             setUpdate(true);
-            setEditReview(!editReview);
+            setEditReview(!isReviewEdit);
         });
     };
 
@@ -96,13 +104,13 @@ const ReviewItem = ({ review, setUpdate }) => {
         }
     };
 
-    return editReview ? (
+    return isReviewEdit ? (
         <div css={Container}>
             <div css={ReviewBox}>
                 <img css={ProfileImg} src={image} alt={`${nickName}의 프로필 이미지`} />
                 <div css={ReviewContent}>
-                    <span css={nickNameWrap}>{nickName}</span>
-                    <span css={createdWrap}>{dayjs(createdAt).format("YY.MM.DD")}</span>
+                    <span css={NicknameWrap}>{nickName}</span>
+                    <span css={CreatedWrap}>{dayjs(createdAt).format("YY.MM.DD")}</span>
                     <div css={RatingBox}>
                         <StyledRating
                             defaultValue={
@@ -132,9 +140,9 @@ const ReviewItem = ({ review, setUpdate }) => {
                     </div>
                 </div>
             </div>
-            <div css={BtnWrap}>
+            <div css={ButtonWrap}>
                 <button
-                    css={BtnStyle}
+                    css={ButtonStyle}
                     onClick={() => editReviewConfirm(commentId, reviewText, rateType)}
                 >
                     완료
@@ -164,26 +172,20 @@ const ReviewItem = ({ review, setUpdate }) => {
                             readOnly
                         />
                     </div>
-                    <span css={nickNameWrap}>{nickName}</span>
-                    <span css={createdWrap}>{dayjs(createdAt).format("YY.MM.DD")}</span>
-                    <div
-                        css={css`
-                            margin: 10px 0px;
-                        `}
-                    >
-                        {body}
-                    </div>
+                    <span css={NicknameWrap}>{nickName}</span>
+                    <span css={CreatedWrap}>{dayjs(createdAt).format("YY.MM.DD")}</span>
+                    <div css={BodyWrap}>{body}</div>
                 </div>
             </div>
-            <div css={BtnWrap} className={userInfo.userId === userId ? "" : "hidden"}>
-                <button css={BtnStyle} onClick={editReviewHandler}>
+            <div css={ButtonWrap} className={userInfo.userId === userId ? "" : "hidden"}>
+                <button css={ButtonStyle} onClick={editReviewHandler}>
                     수정
                 </button>
-                <button css={BtnStyle} onClick={showModal}>
+                <button css={ButtonStyle} onClick={showModal}>
                     삭제
                 </button>
             </div>
-            {modalOpen && (
+            {isModalOpen && (
                 <ReviewDeleteModal
                     text="정말 삭제하시겠습니까?"
                     setModalOpen={setModalOpen}
@@ -256,7 +258,7 @@ const ReviewInput = css`
     }
 `;
 
-const BtnWrap = css`
+const ButtonWrap = css`
     align-self: flex-end;
     margin-right: 10px;
 
@@ -265,7 +267,7 @@ const BtnWrap = css`
     }
 `;
 
-const BtnStyle = css`
+const ButtonStyle = css`
     font-size: 0.775rem;
     color: #7d7d7d;
     padding: 2.5px;
@@ -282,15 +284,19 @@ const StyledRating = styled(Rating)({
     },
 });
 
-const nickNameWrap = css`
+const NicknameWrap = css`
     margin: 10px 0;
     font-size: 1.1rem;
     font-weight: 700;
 `;
 
-const createdWrap = css`
+const CreatedWrap = css`
     margin: 0 10px;
     font-size: 0.875rem;
     color: #333;
+`;
+
+const BodyWrap = css`
+    margin: 10px 0px;
 `;
 export default ReviewItem;

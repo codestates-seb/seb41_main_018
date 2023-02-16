@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
+
+//css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../../Common";
+
+//component
 import Button from "../../components/Button";
+
+//api
 import { deleteReview } from "../../../util/axiosContents";
 
 const ReviewDeleteModal = (props) => {
