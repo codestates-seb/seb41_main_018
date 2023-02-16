@@ -177,7 +177,7 @@ const Detailform = () => {
                         margin: 0 auto;
                     `}
                 >
-                    <DetailformItems index={currentTab} />
+                    <DetailFormItems index={currentTab} />
                     <div
                         css={css`
                             display: flex;
