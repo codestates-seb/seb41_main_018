@@ -51,7 +51,7 @@ const Detail = () => {
     const setDetailRoute = useSetRecoilState(DetailRouteState);
 
     const [isMyPost, setMyPost] = useState(false);
-    const [ismodalOpen, setModalOpen] = useState(false);
+    const [isModalOpen, setModalOpen] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const contentsUserId = contentDetail.data && contentDetail.data.userId;
     const loginUserId = userInfo.userId;
@@ -140,7 +140,7 @@ const Detail = () => {
                         </div>
 
                         <ReviewForm />
-                        {ismodalOpen && (
+                        {isModalOpen && (
                             <DetailDeleteModal
                                 text="정말 삭제하시겠습니까?"
                                 setModalOpen={setModalOpen}
