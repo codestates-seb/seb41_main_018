@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import DetailForm from "./DetailComponents/DetailForm";
 import ReviewForm from "./DetailComponents/ReviewForm";
 import { PALETTE } from "../../Common";
-import Total from "./DetailComponents/Total";
+import TotalInformation from "./DetailComponents/TotalInformation";
 import DetailDeleteModal from "./DetailComponents/DetailDeleteModal";
 import Loading from "../components/Loding";
 
@@ -120,7 +120,7 @@ const Detail = () => {
                     <div css={Wrap}>
                         <h1>{contentDetail.data && contentDetail.data.title}</h1>
                         <div css={ContentInfo}>
-                            <Total />
+                            <TotalInformation />
                             <div css={PostDate}>{`${postDate} 작성`}</div>
                         </div>
 
