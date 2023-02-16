@@ -13,10 +13,10 @@ import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";
 import { SampleImgSrc, GachiGalleImgSrc } from "../../../sampleImage";
 
 const DetialImg = () => {
-    const GachiArr = Object.values(SampleImgSrc);
-    const randomIndex1 = Math.floor(Math.random() * GachiArr.length);
-    const randomIndex2 = Math.floor(Math.random() * GachiArr.length);
-    const randomIndex3 = Math.floor(Math.random() * GachiArr.length);
+    const dummyImage = Object.values(SampleImgSrc);
+    const firstPhoto = Math.floor(Math.random() * dummyImage.length);
+    const secondPhoto = Math.floor(Math.random() * dummyImage.length);
+    const thirdPhoto = Math.floor(Math.random() * dummyImage.length);
 
     return (
         <div css={Swiper_Wrap}>
@@ -30,13 +30,13 @@ const DetialImg = () => {
                 className="mySwiper"
             >
                 <SwiperSlide>
-                    <img src={GachiArr[randomIndex1]} />
+                    <img src={dummyImage[firstPhoto]} />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <img src={GachiArr[randomIndex2]} />
+                    <img src={dummyImage[secondPhoto]} />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <img src={GachiArr[randomIndex3]} />
+                    <img src={dummyImage[thirdPhoto]} />
                 </SwiperSlide>
             </Swiper>
         </div>
