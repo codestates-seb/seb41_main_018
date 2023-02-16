@@ -17,7 +17,7 @@ const DetailformItems = (props) => {
 
     return (
         <div css={wrap}>
-            <Detial_Img />
+            <DetialImg />
             <div
                 css={css`
                     margin-left: 10px;
