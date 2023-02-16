@@ -15,7 +15,7 @@ import { ContentDetail } from "../../../state/atom";
 import dayjs from "dayjs";
 
 // 768px 이하일 때 나타나는 Total 화면 (카테고리, 여행날짜, 총 비용)
-export const Total = () => {
+export const TotalInformation = () => {
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const data = contentDetail.data;
     const TravelDate = data && data.travelDate;
@@ -102,4 +102,4 @@ const content = css`
     color: black;
 `;
 
-export default Total;
+export default TotalInformation;
