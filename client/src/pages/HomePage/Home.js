@@ -1,23 +1,34 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+//css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { PALETTE } from "../../Common";
+
+//component
 import HomeItems from "./HomeComponents/HomeItems";
 import Regionitems from "./HomeComponents/RegionItems";
 import Categorybar from "../components/CategoryBar";
 import Banner from "./HomeComponents/Banner";
+import Loading from "../components/Loding";
+
+//UILibrary
+import Swal from "sweetalert2";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
+
+//API
 import { getContent } from "../../util/axiosContents";
-import { useRecoilState } from "recoil";
+
+//Recoil
+import { useRecoilState, useRecoilValue } from "recoil";
 import { ContentsList, userInfoState } from "../../state/atom";
-import { useNavigate } from "react-router-dom";
-import Loading from "../components/Loding";
-import { PALETTE } from "../../Common";
-import Swal from "sweetalert2";
+
 import { GachiGalleImgSrc, SampleImgSrc } from "../../sampleImage";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
@@ -60,9 +71,9 @@ const swiperOption = {
 
 const Home = () => {
     const navigate = useNavigate();
-    const [contentsList, setcontentsList] = useRecoilState(ContentsList);
+    const [contentsList, setContentsList] = useRecoilState(ContentsList);
     const [isLoading, setIsLoading] = useState(false);
-    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const isUserInfo = useRecoilValue(userInfoState);
     // 조회수 기준 정렬
     const viewCountSortArr = [...contentsList].sort((a, b) => b.viewCount - a.viewCount);
     // 좋아요 기준 정렬
@@ -70,7 +81,7 @@ const Home = () => {
 
     // 비로그인 시에는 post 불가
     const postButtonClick = () => {
-        if (userInfo.userId !== undefined) {
+        if (isUserInfo.userId !== undefined) {
             navigate("/post");
         } else {
             Toast.fire({
@@ -83,9 +94,9 @@ const Home = () => {
 
     useEffect(() => {
         getContent().then((res) => {
-            const gachiArr = Object.values(SampleImgSrc);
-            const list = res.data.data?.map((el, index) => ({ ...el, image: gachiArr[index] }));
-            setcontentsList(list);
+            const dummyImage = Object.values(SampleImgSrc);
+            const list = res.data.data?.map((el, index) => ({ ...el, image: dummyImage[index] }));
+            setContentsList(list);
             setIsLoading(false);
         });
     }, []);
@@ -97,7 +108,7 @@ const Home = () => {
             ) : (
                 <>
                     <Categorybar />
-                    <Swiper {...swiperOption} css={postStyle}>
+                    <Swiper {...swiperOption} css={PostStyle}>
                         <div>
                             <SwiperSlide>
                                 <Regionitems img={`${GachiGalleImgSrc.seoul_img}`} text="서울" />
@@ -132,8 +143,8 @@ const Home = () => {
                         </div>
                     </Swiper>
 
-                    <h2 css={itemsTitle}>🛫 방금 올라온 🔥HOT🔥 여행지</h2>
-                    <Swiper {...swiperOption} css={postStyle}>
+                    <h2 css={ItemTitle}>🛫 방금 올라온 🔥HOT🔥 여행지</h2>
+                    <Swiper {...swiperOption} css={PostStyle}>
                         <div>
                             {contentsList &&
                                 contentsList.map((content) => (
@@ -145,8 +156,8 @@ const Home = () => {
                     </Swiper>
                     <Banner />
 
-                    <h2 css={itemsTitle}>✨ 관심 급상승 여행지</h2>
-                    <Swiper {...swiperOption} css={postStyle}>
+                    <h2 css={ItemTitle}>✨ 관심 급상승 여행지</h2>
+                    <Swiper {...swiperOption} css={PostStyle}>
                         <div>
                             {viewCountSortArr.map((content) => (
                                 <SwiperSlide key={content.contentId}>
@@ -156,8 +167,8 @@ const Home = () => {
                         </div>
                     </Swiper>
 
-                    <h2 css={itemsTitle}>❤️ 다른 사람들이 좋아하는 여행지</h2>
-                    <Swiper {...swiperOption} css={postStyle}>
+                    <h2 css={ItemTitle}>❤️ 다른 사람들이 좋아하는 여행지</h2>
+                    <Swiper {...swiperOption} css={PostStyle}>
                         <div>
                             {heartCountSortArr.map((content) => (
                                 <SwiperSlide key={content.contentId}>
@@ -166,7 +177,7 @@ const Home = () => {
                             ))}
                         </div>
                     </Swiper>
-                    <button css={postBtn} onClick={postButtonClick}>
+                    <button css={PostButton} onClick={postButtonClick}>
                         <span>내 여행지 공유하기</span>
                     </button>
                 </>
@@ -174,7 +185,7 @@ const Home = () => {
         </div>
     );
 };
-const postBtn = css`
+const PostButton = css`
     position: sticky;
     left: 85%;
     right: 0;
@@ -220,7 +231,7 @@ const postBtn = css`
     }
 `;
 
-const itemsTitle = css`
+const ItemTitle = css`
     width: 80vw;
     margin: 30px auto 0;
     color: rgb(0, 0, 0, 0.85);
@@ -228,7 +239,7 @@ const itemsTitle = css`
     font-weight: 600;
 `;
 
-const postStyle = css`
+const PostStyle = css`
     z-index: 1;
     display: grid;
     margin: 0 auto;
