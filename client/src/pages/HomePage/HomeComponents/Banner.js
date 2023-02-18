@@ -1,7 +1,11 @@
 import React from "react";
+
+//css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../../Common";
+
+//UILibrary
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/css";
@@ -25,7 +29,7 @@ const Banner = () => {
         },
     };
     return (
-        <div css={Wrap}>
+        <div css={Container}>
             <Swiper {...swiperOption} css={SwiperStyle}>
                 <SwiperSlide>
                     <img src={GachiGalleImgSrc.banner_1} css={BannerStyle} />
@@ -44,7 +48,7 @@ const Banner = () => {
     );
 };
 
-const Wrap = css`
+const Container = css`
     display: flex;
     height: 280px;
     margin: 40px auto;
