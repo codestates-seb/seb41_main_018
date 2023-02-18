@@ -1,17 +1,26 @@
 import React, { useEffect, useMemo } from "react";
-/** @jsxImportSource @emotion/react */
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
+//css
+/** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+
+//component
 import { PALETTE } from "../../../Common";
+
+//UILibrary
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { TbHandClick } from "react-icons/tb";
-import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+
+//Recoil
 import { useRecoilState } from "recoil";
 import { userInfoState } from "../../../state/atom";
+
+//API
 import { postHeart } from "../../../util/axiosContents";
 import { getUserInfo } from "../../../util/axiosUser";
-import Swal from "sweetalert2";
-import { SampleImgSrc } from "../../../sampleImage";
 
 const Toast = Swal.mixin({
     toast: true,
@@ -60,43 +69,30 @@ const HomeItems = (props) => {
     }, [userInfo]);
 
     return (
-        <div css={wrap}>
-            <div onClick={handleFavoriteClick} css={favoriteStyle}>
+        <div css={Wrap}>
+            <div onClick={handleFavoriteClick} css={FavoriteIconClick}>
                 {isFavoriteClcik ? (
-                    <FaHeart
-                        css={css`
-                            color: #ff5675;
-                        `}
-                    />
+                    <FaHeart css={HeartClick} />
                 ) : (
-                    <FaRegHeart
-                        css={css`
-                            color: white;
-                        `}
-                    />
+                    <FaRegHeart css={NotHeartClick} />
                 )}
             </div>
             <Link to={`/detail/${data && data.contentId}`}>
-                <img src={content.image} css={imgStyle} />
+                <img src={content.image} css={ImgStyle} />
 
-                <div css={textContainer}>
-                    <div css={titleStyle}>{data && data.title}</div>
+                <div css={TextContainer}>
+                    <div css={TitleStyle}>{data && data.title}</div>
 
-                    <div css={sideTextStyle}>
-                        <FaHeart
-                            css={css`
-                                margin: 0 7px;
-                                color: #ff5675;
-                            `}
-                        />
+                    <div css={LikeTextStyle}>
+                        <FaHeart css={HeartStyle} />
                         {data && data.heartCount}
                     </div>
                 </div>
                 <div>
-                    <ul css={ulStyle}>
+                    <ul css={UlStyle}>
                         {data &&
                             data.routes.map((el, index) => (
-                                <li key={index} css={liStyle}>
+                                <li key={index} css={LiStyle}>
                                     # {el.place}
                                 </li>
                             ))}
@@ -105,7 +101,7 @@ const HomeItems = (props) => {
                 <div css={InfoStyle}>
                     <TbHandClick size="25" />
                     <span>{data.viewCount}</span>
-                    <div css={priceStyle}>
+                    <div css={PriceStyle}>
                         {data && `총 경비 : ${data.amount.toLocaleString()}원`}
                     </div>
                 </div>
@@ -114,19 +110,19 @@ const HomeItems = (props) => {
     );
 };
 
-const wrap = css`
+const Wrap = css`
     width: 100%;
     height: 100%;
 `;
 
-const imgStyle = css`
+const ImgStyle = css`
     width: 100%;
     width: 100%;
     border-radius: ${PALETTE.border_radius};
     object-fit: cover;
 `;
 
-const favoriteStyle = css`
+const FavoriteIconClick = css`
     position: relative;
     text-align: end;
     padding: 0 5px;
@@ -134,13 +130,21 @@ const favoriteStyle = css`
     font-size: 22px;
 `;
 
-const textContainer = css`
+const HeartClick = css`
+    color: #ff5675;
+`;
+
+const NotHeartClick = css`
+    color: white;
+`;
+
+const TextContainer = css`
     display: flex;
     justify-content: space-between;
     width: 100%;
 `;
 
-const titleStyle = css`
+const TitleStyle = css`
     font-size: 1rem;
     font-weight: 600;
     overflow: hidden;
@@ -148,14 +152,19 @@ const titleStyle = css`
     white-space: nowrap;
 `;
 
-const sideTextStyle = css`
+const LikeTextStyle = css`
     display: flex;
     align-items: center;
     font-size: 1.125rem;
     margin: 0 5px;
 `;
 
-const ulStyle = css`
+const HeartStyle = css`
+    margin: 0 7px;
+    color: #ff5675;
+`;
+
+const UlStyle = css`
     display: flex;
     flex-wrap: wrap;
     list-style: none;
@@ -169,12 +178,12 @@ const ulStyle = css`
     height: 50px;
 `;
 
-const liStyle = css`
+const LiStyle = css`
     margin-right: 10px;
     margin-bottom: 10px;
 `;
 
-const priceStyle = css`
+const PriceStyle = css`
     width: 100%;
     text-align: end;
     font-weight: 600;
