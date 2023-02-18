@@ -69,22 +69,22 @@ const HomeItems = (props) => {
     }, [userInfo]);
 
     return (
-        <div css={Wrap}>
-            <div onClick={handleFavoriteClick} css={FavoriteIconClick}>
+        <div css={Container}>
+            <div onClick={handleFavoriteClick} css={FavoriteIconWrap}>
                 {isFavoriteClcik ? (
-                    <FaHeart css={HeartClick} />
+                    <FaHeart css={FavoriteIconClick} />
                 ) : (
-                    <FaRegHeart css={NotHeartClick} />
+                    <FaRegHeart css={NotFavoriteIconClick} />
                 )}
             </div>
             <Link to={`/detail/${data && data.contentId}`}>
                 <img src={content.image} css={ImgStyle} />
 
-                <div css={TextContainer}>
+                <div css={TextWrap}>
                     <div css={TitleStyle}>{data && data.title}</div>
 
-                    <div css={LikeTextStyle}>
-                        <FaHeart css={HeartStyle} />
+                    <div css={FavoriteTextStyle}>
+                        <FaHeart css={FavoriteIconStyle} />
                         {data && data.heartCount}
                     </div>
                 </div>
@@ -110,7 +110,7 @@ const HomeItems = (props) => {
     );
 };
 
-const Wrap = css`
+const Container = css`
     width: 100%;
     height: 100%;
 `;
@@ -122,7 +122,7 @@ const ImgStyle = css`
     object-fit: cover;
 `;
 
-const FavoriteIconClick = css`
+const FavoriteIconWrap = css`
     position: relative;
     text-align: end;
     padding: 0 5px;
@@ -130,15 +130,15 @@ const FavoriteIconClick = css`
     font-size: 22px;
 `;
 
-const HeartClick = css`
+const FavoriteIconClick = css`
     color: #ff5675;
 `;
 
-const NotHeartClick = css`
+const NotFavoriteIconClick = css`
     color: white;
 `;
 
-const TextContainer = css`
+const TextWrap = css`
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -152,14 +152,14 @@ const TitleStyle = css`
     white-space: nowrap;
 `;
 
-const LikeTextStyle = css`
+const FavoriteTextStyle = css`
     display: flex;
     align-items: center;
     font-size: 1.125rem;
     margin: 0 5px;
 `;
 
-const HeartStyle = css`
+const FavoriteIconStyle = css`
     margin: 0 7px;
     color: #ff5675;
 `;
