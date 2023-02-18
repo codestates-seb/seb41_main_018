@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+//css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+
+//component
 import CategoryBar from "../components/CategoryBar";
 import HomeItems from "../HomePage/HomeComponents/HomeItems";
-import { useRecoilState } from "recoil";
-import { ContentsList } from "../../../src/state/atom";
 import Loading from "../components/Loding";
-import { useLocation } from "react-router-dom";
+
+//reocil
+import { useRecoilState, useRecoilValue } from "recoil";
+import { ContentsList } from "../../../src/state/atom";
+
+//API
 import { getCategory } from "../../util/axiosContents";
 
 const Result = () => {
     const location = useLocation();
-    const [contentsList, setcontentsList] = useRecoilState(ContentsList);
+    const contentsList = useRecoilValue(ContentsList);
     const [searchTargetArr, setSearchTargetArr] = useState([]);
     const [searchTargetName, setSearchTargetName] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -83,12 +91,12 @@ const Result = () => {
                 <>
                     <CategoryBar />
                     <div>
-                        <div css={resultText}>
+                        <div css={ResultText}>
                             {`" ${searchTargetName} "에 대한 검색결과 : ${searchTargetArr.length}건`}
                         </div>
-                        <div css={postStyle}>
+                        <div css={PostStyle}>
                             {searchTargetArr.length === 0 ? (
-                                <div css={noResultMessage}>검색 결과가 없습니다.</div>
+                                <div css={NoResultMessage}>검색 결과가 없습니다.</div>
                             ) : (
                                 <>
                                     {searchTargetArr.map((content) => (
@@ -103,12 +111,12 @@ const Result = () => {
         </div>
     );
 };
-const resultText = css`
+const ResultText = css`
     font-size: 1.3rem;
     width: 90vw;
     margin: 20px auto -20px;
 `;
-const postStyle = css`
+const PostStyle = css`
     display: grid;
     margin: 20px auto;
     gap: 20px;
@@ -128,7 +136,7 @@ const postStyle = css`
     }
 `;
 
-const noResultMessage = css`
+const NoResultMessage = css`
     margin: 20px;
     font-size: 20px;
 `;
