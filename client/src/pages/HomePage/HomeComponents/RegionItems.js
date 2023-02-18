@@ -1,9 +1,13 @@
 import React from "react";
-/** @jsxImportSource @emotion/react */
-import Button from "../../components/Button";
-import { css } from "@emotion/react";
-import { PALETTE } from "../../../Common";
 import { useNavigate } from "react-router-dom";
+
+//css
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
+//component
+import Button from "../../components/Button";
+import { PALETTE } from "../../../Common";
 
 const Regionitems = (props) => {
     const navigate = useNavigate();
@@ -14,16 +18,12 @@ const Regionitems = (props) => {
     };
 
     return (
-        <div
-            css={css`
-                margin-bottom: -120px;
-            `}
-        >
+        <div css={Container}>
             <div>
-                <img src={props.img} css={imgStyle} />
+                <img src={props.img} css={ImgStyle} />
             </div>
-            <div css={textWrap}>
-                <div css={textStyle}>{props.text}</div>
+            <div css={TextWrap}>
+                <div css={TextStyle}>{props.text}</div>
                 <Button
                     bgColor="white"
                     width="100px"
@@ -37,7 +37,11 @@ const Regionitems = (props) => {
     );
 };
 
-const imgStyle = css`
+const Container = css`
+    margin-bottom: -120px;
+`;
+
+const ImgStyle = css`
     width: 100%;
     min-height: 320px;
     height: 40vh;
@@ -45,13 +49,13 @@ const imgStyle = css`
     object-fit: cover;
 `;
 
-const textWrap = css`
+const TextWrap = css`
     position: relative;
     bottom: 9rem;
     left: 20px;
 `;
 
-const textStyle = css`
+const TextStyle = css`
     position: relative;
     font-size: 2.7rem;
     font-weight: 600;
