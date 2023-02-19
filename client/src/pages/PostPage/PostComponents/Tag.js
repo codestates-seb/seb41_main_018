@@ -45,7 +45,7 @@ const Tag = (props) => {
                 <ul id="tags">
                     {tagsArr.map((tag, index) => (
                         <li key={index}>
-                            <span css={tagStyle}>
+                            <span css={TagStyle}>
                                 {tag}
                                 <AiOutlineClose onClick={() => removeTags(index)} css={IconPos} />
                             </span>
@@ -96,7 +96,7 @@ const TagsInput = css`
     }
 `;
 
-const tagStyle = css`
+const TagStyle = css`
     display: block;
     width: auto;
     height: auto;

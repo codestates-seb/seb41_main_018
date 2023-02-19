@@ -20,7 +20,7 @@ const Toast = Swal.mixin({
     },
 });
 // 회원가입
-export const Signup = async (data) => {
+export const signUp = async (data) => {
     await axios
         .post("http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users", data, {})
         .then((res) => {
@@ -38,7 +38,7 @@ export const Signup = async (data) => {
 };
 
 // 회원가입 - 이메일 중복검사
-export const EmailCheck = async (email) => {
+export const checkEmail = async (email) => {
     await axios
         .get(
             `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/emailCheck/${email}`,

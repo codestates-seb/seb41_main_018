@@ -133,8 +133,8 @@ const AddInput = () => {
                                                             defaultValue={
                                                                 DetailRoute[index] === {}
                                                                     ? Object.values(
-                                                                          DetailRoute[index]
-                                                                      )[4]
+                                                                        DetailRoute[index]
+                                                                    )[4]
                                                                     : ""
                                                             }
                                                             placeholder="장소를 입력해주세요"
@@ -194,8 +194,8 @@ const AddInput = () => {
                                                         defaultValue={
                                                             DetailRoute[index] === {}
                                                                 ? Object.values(
-                                                                      DetailRoute[index]
-                                                                  )[2]
+                                                                    DetailRoute[index]
+                                                                )[2]
                                                                 : ""
                                                         }
                                                         type="number"
@@ -220,8 +220,8 @@ const AddInput = () => {
                                                         defaultValue={
                                                             DetailRoute[index] === {}
                                                                 ? Object.values(
-                                                                      DetailRoute[index]
-                                                                  )[3]
+                                                                    DetailRoute[index]
+                                                                )[3]
                                                                 : ""
                                                         }
                                                         placeholder="이동수단을 입력해주세요!"
@@ -244,8 +244,8 @@ const AddInput = () => {
                                                         defaultValue={
                                                             DetailRoute[index] === {}
                                                                 ? Object.values(
-                                                                      DetailRoute[index]
-                                                                  )[3]
+                                                                    DetailRoute[index]
+                                                                )[3]
                                                                 : ""
                                                         }
                                                         placeholder="후기를 적어주세요!"
@@ -431,7 +431,7 @@ const Edit = () => {
 
     return (
         <FormProvider {...methods}>
-            <div css={providerWrap}>
+            <div css={UpFormProviderContainer}>
                 <div css={TitleContainer}>
                     <Title />
                 </div>
@@ -441,10 +441,10 @@ const Edit = () => {
                 </div>
             </div>
 
-            <div css={FormWrap}>
+            <div css={DownFormProviderContainer}>
                 <AddInput />
 
-                <div css={TagStyle}>
+                <div css={TagDivStyle}>
                     <Tag detailTags={DetailTag} />
                 </div>
                 <button type="button" onClick={() => handleSubmit(submit)()} css={SubmitButton}>
@@ -455,7 +455,7 @@ const Edit = () => {
     );
 };
 
-const providerWrap = css`
+const UpFormProviderContainer = css`
     display: flex;
     flex-direction: column;
     margin: 30px auto 0;
@@ -466,7 +466,7 @@ const providerWrap = css`
         width: 90vw;
     }
 `;
-const FormWrap = css`
+const DownFormProviderContainer = css`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -746,7 +746,7 @@ const SubmitButton = css`
     }
 `;
 
-const TagStyle = css`
+const TagDivStyle = css`
     display: flex;
     width: 100%;
     margin-top: 10px;
