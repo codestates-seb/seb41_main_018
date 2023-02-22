@@ -97,4 +97,4 @@ const categoryFont = css`
     margin-top: -10px;
     margin-bottom: 20px;
 `;
-export default Categorybar;
+export default CategoryBar;

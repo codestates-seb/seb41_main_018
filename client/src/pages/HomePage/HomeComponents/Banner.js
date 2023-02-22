@@ -1,7 +1,11 @@
 import React from "react";
+
+//css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../../Common";
+
+//UILibrary
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/css";
@@ -25,32 +29,32 @@ const Banner = () => {
         },
     };
     return (
-        <div css={wrap}>
-            <Swiper {...swiperOption} css={swiperStyle}>
-                {/* <SwiperSlide>
-                    <img src={GachiGalleImgSrc.banner_1} css={bannerStyle} />
+        <div css={Container}>
+            <Swiper {...swiperOption} css={SwiperStyle}>
+                <SwiperSlide>
+                    <img src={GachiGalleImgSrc.banner_1} css={BannerStyle} />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <img src={GachiGalleImgSrc.banner_2} css={bannerStyle} />
+                    <img src={GachiGalleImgSrc.banner_2} css={BannerStyle} />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <img src={GachiGalleImgSrc.banner_3} css={bannerStyle} />
+                    <img src={GachiGalleImgSrc.banner_3} css={BannerStyle} />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <img src={GachiGalleImgSrc.banner_1} css={bannerStyle} />
-                </SwiperSlide> */}
+                    <img src={GachiGalleImgSrc.banner_1} css={BannerStyle} />
+                </SwiperSlide>
             </Swiper>
         </div>
     );
 };
 
-const wrap = css`
+const Container = css`
     display: flex;
     height: 280px;
     margin: 40px auto;
     width: 80vw;
 `;
-const swiperStyle = css`
+const SwiperStyle = css`
     border-radius: ${PALETTE.border_radius};
     .swiper-pagination-bullet {
         margin-top: 40px;
@@ -76,7 +80,7 @@ const swiperStyle = css`
     }
 `;
 
-const bannerStyle = css`
+const BannerStyle = css`
     width: 100%;
     height: 100%;
     object-fit: cover;

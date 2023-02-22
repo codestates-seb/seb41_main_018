@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
+
+//css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../../Common";
+
+//component
 import Button from "../../components/Button";
+
+//api
 import { deleteReview } from "../../../util/axiosContents";
 
 const ReviewDeleteModal = (props) => {
-    const [update, setUpdate] = useState(false);
+    const [isUpdate, setUpdate] = useState(false);
 
     // 모달 끄기
     const closeModal = () => {
@@ -20,13 +26,13 @@ const ReviewDeleteModal = (props) => {
     };
 
     useEffect(() => {
-        if (update) {
+        if (isUpdate) {
             getUserInfo(userInfo.userId).then((data) => {
                 setUserInfo(data.data);
             });
             setUpdate(false);
         }
-    }, [update]);
+    }, [isUpdate]);
 
     return (
         <div css={ModalBackground}>

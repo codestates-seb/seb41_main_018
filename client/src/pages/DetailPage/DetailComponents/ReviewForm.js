@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from "react";
+
+//css
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../../Common";
+
+//component
 import ReviewItem from "./ReviewItem";
+
+//UI library
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { useRecoilState } from "recoil";
-import { ContentDetail, ReviewListState } from "../../../state/atom";
-import { createReview, getContent } from "../../../util/axiosContents";
-//Button
 import { AwesomeButton } from "react-awesome-button";
 import "react-awesome-button/dist/styles.css";
+
+//Recoil
+import { useRecoilState } from "recoil";
+import { ContentDetail, ReviewListState } from "../../../state/atom";
+
+//API
+import { createReview, getContent } from "../../../util/axiosContents";
 
 export const Buttons = (props) => {
     return (
@@ -47,7 +56,7 @@ const Reviewform = () => {
     const [reviewText, setReviewText] = useState("");
     const [contentDetail, setContentDetail] = useRecoilState(ContentDetail);
     const [reviewList, setReviewList] = useRecoilState(ReviewListState);
-    const [update, setUpdate] = useState(false);
+    const [isUpdate, setUpdate] = useState(false);
 
     const rateTypeSwitch = (num) => {
         switch (num) {
@@ -82,7 +91,7 @@ const Reviewform = () => {
     };
 
     useEffect(() => {
-        if (update) {
+        if (isUpdate) {
             getContent(location.pathname.slice(8)).then((res) => {
                 setContentDetail(res.data);
                 setReviewList(res.data.data && res.data.data.comments);
@@ -91,7 +100,7 @@ const Reviewform = () => {
             setRateType("FIVE");
             setUpdate(false);
         }
-    }, [update]);
+    }, [isUpdate]);
 
     return (
         <div css={ReviewContainer}>
