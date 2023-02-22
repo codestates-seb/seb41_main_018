@@ -103,9 +103,9 @@ const LoginPage = () => {
                         bdradius="50px"
                         boxShadow="1px 2px 2px 1px rgb(0,0,0,0.3)"
                     />
-                    <div css={UserInfoButton}>아이디 / 비밀번호 찾기</div>
+                    <div css={LoginSignUpLinkButton}>아이디 / 비밀번호 찾기</div>
                     <Link to={"/signup"}>
-                        <div css={UserInfoButton}>회원가입</div>
+                        <div css={LoginSignUpLinkButton}>회원가입</div>
                     </Link>
                 </form>
             </div>
@@ -113,7 +113,7 @@ const LoginPage = () => {
     );
 };
 
-const UserInfoButton = css`
+const LoginSignUpLinkButton = css`
     color: rgba(0, 0, 0, 0.3);
     margin: 10px;
 

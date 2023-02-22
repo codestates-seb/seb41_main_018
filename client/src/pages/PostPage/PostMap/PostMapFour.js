@@ -6,8 +6,8 @@ import { css } from "@emotion/react";
 const PostMapFour = (props) => {
     const { index, setValue } = props;
 
-    let xposition = "";
-    let yposition = "";
+    let xPosition = "";
+    let yPosition = "";
 
     const { kakao } = window;
 
@@ -34,12 +34,12 @@ const PostMapFour = (props) => {
             if (status === kakao.maps.services.Status.OK) {
                 // 리스트 클릭시 위치 정보를 저장하는 함수입니다
                 setValue(`routes.${index}.address`, result[0].address.address_name);
-                setValue(`routes.${index}.x`, yposition);
-                setValue(`routes.${index}.y`, xposition);
+                setValue(`routes.${index}.x`, yPosition);
+                setValue(`routes.${index}.y`, xPosition);
             }
         };
 
-        geocoder.coord2Address(xposition, yposition, callback);
+        geocoder.coord2Address(xPosition, yPosition, callback);
 
         // 검색결과 항목을 Element로 반환하는 함수입니다
         function getListItem(index, places) {
@@ -192,7 +192,7 @@ const PostMapFour = (props) => {
                     /////
                     itemEl.onmousedown = function () {
                         setValue(`routes.${index}.place`, title);
-                        geocoder.coord2Address(xposition, yposition, callback);
+                        geocoder.coord2Address(xposition, yPosition, callback);
                     };
                     /////
 
@@ -231,8 +231,8 @@ const PostMapFour = (props) => {
 
         function listSearchCB(data, status) {
             if (status === kakao.maps.services.Status.OK) {
-                xposition = data[0].x;
-                yposition = data[0].y;
+                xPosition = data[0].x;
+                yPosition = data[0].y;
             } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
                 return;
             } else if (status === kakao.maps.services.Status.ERROR) {

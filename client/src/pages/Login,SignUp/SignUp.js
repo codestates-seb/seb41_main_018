@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 import { css } from "@emotion/react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
-import { Signup, EmailCheck } from "../../util/axiosUser";
+import { signUp, checkEmail } from "../../util/axiosUser";
 import {
     LoginpageBg,
     LoginpageContainer,
@@ -69,17 +69,17 @@ const SignUp = () => {
         setphoneNum(result.filter((val) => val).join("-"));
     };
 
-    const emailCheck = async (e) => {
+    const checkUserEmail = async (e) => {
         const emailregex = /\S+@\S+\.\S+/;
 
         e.preventDefault();
         if (emailregex.test(email.current)) {
-            EmailCheck(email.current);
+            checkEmail(email.current);
         }
     };
 
     const onSignUpSubmit = async (data) => {
-        Signup(data).then(() => {
+        signUp(data).then(() => {
             navigate("/login");
         });
     };
@@ -132,7 +132,7 @@ const SignUp = () => {
                             bdradius="50px"
                             boxShadow="1px 2px 2px rgb(0,0,0,0.3)"
                             ftsize="0.8rem"
-                            onClick={emailCheck}
+                            onClick={checkUserEmail}
                         />
                     </div>
                     {errors.email && <small role="alert">{errors.email.message}</small>}

@@ -59,7 +59,7 @@ const ImgUpload = (props) => {
     };
 
     return (
-        <div css={ImgUpload_Wrap}>
+        <div css={ImgUploadWrap}>
             <input
                 type="file"
                 accept="image/*"
@@ -67,7 +67,7 @@ const ImgUpload = (props) => {
                 onChange={handleUploadImg}
                 multiple
             />
-            <button type="button" onClick={uploadBtnClick} css={uploadButton}>
+            <button type="button" onClick={uploadBtnClick} css={UploadButton}>
                 <MdOutlineAddPhotoAlternate size="20" /> <span>사진 등록</span>
             </button>
             <div css={PreviewContainer}>
@@ -82,7 +82,7 @@ const ImgUpload = (props) => {
         </div>
     );
 };
-const ImgUpload_Wrap = css`
+const ImgUploadWrap = css`
     height: 80px;
     width: 82vw;
     display: flex;
@@ -111,7 +111,7 @@ const PreviewImg = css`
     }
 `;
 
-const uploadButton = css`
+const UploadButton = css`
     display: flex;
     justify-content: space-between;
     align-items: center;

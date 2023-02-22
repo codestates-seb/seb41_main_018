@@ -146,8 +146,8 @@ const AddInput = () => {
                                                 !Number.isInteger(Number(e.target.value))
                                                     ? (e.target.value = 0)
                                                     : (e.target.value =
-                                                          Math.round(
-                                                              Number(e.target.value) / 1000
+                                                            Math.round(
+                                                                Number(e.target.value) / 1000
                                                           ) * 1000);
                                             }}
                                         />
@@ -317,7 +317,7 @@ const Post = () => {
     };
     return (
         <FormProvider {...methods}>
-            <div css={providerWrap}>
+            <div css={UpFormProviderContainer}>
                 <div css={TitleContainer}>
                     <Title />
                 </div>
@@ -327,9 +327,9 @@ const Post = () => {
                 </div>
             </div>
 
-            <div css={FormWrap}>
+            <div css={DownFormProviderContainer}>
                 <AddInput />
-                <div css={TagStyle}>
+                <div css={TagDivStyle}>
                     <Tag />
                 </div>
                 <button type="button" onClick={() => handleSubmit(submit)()} css={SubmitButton}>
@@ -339,7 +339,7 @@ const Post = () => {
         </FormProvider>
     );
 };
-const providerWrap = css`
+const UpFormProviderContainer = css`
     display: flex;
     flex-direction: column;
     margin: 30px auto 0;
@@ -350,7 +350,7 @@ const providerWrap = css`
         width: 90vw;
     }
 `;
-const FormWrap = css`
+const DownFormProviderContainer = css`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -631,7 +631,7 @@ const SubmitButton = css`
     }
 `;
 
-const TagStyle = css`
+const TagDivStyle = css`
     display: flex;
     width: 100%;
     margin-top: 10px;
