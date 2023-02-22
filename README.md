@@ -4,6 +4,8 @@
 
 ##  ![image](https://user-images.githubusercontent.com/108250233/215278635-93dfb954-5f85-4f53-8bd8-b05063aec9dc.png) 가치 갈래? ( Gachi Galle? )
 
+## 📎 배포 링크 ##
+http://gachigallae.s3-website.ap-northeast-2.amazonaws.com/
 ## 👨‍👩‍👧‍👦 **팀원 소개**
 |강진원<br>👑(FE 팀장)</br>|김리안<br>(FE)</br>|신희주<br>(FE)</br>|최유진<br>(BE 부팀장)</br>|강하렴<br>(BE)</br>|안서희<br>(BE)</br>|  
 |:---:|:---:|:---:|:---:|:---:|:---:|
