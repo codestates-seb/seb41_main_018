@@ -2,23 +2,25 @@ import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../../Common";
-import Button from "../../components/Button";
-import { deleteUser } from "../../../util/axiosUser";
+
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { userInfoState, loginState } from "../../../state/atom";
-import { useRecoilState } from "recoil";
+import { deleteUser } from "../../../util/axiosUser";
 import { useNavigate } from "react-router-dom";
 
-const UserDeleteModal = (props) => {
+import Button from "../../components/Button";
+
+const DeleteUserModal = (props) => {
     const navigate = useNavigate();
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const [isLogin, setIsLogin] = useRecoilState(loginState);
+    const setIsLogin = useSetRecoilState(loginState);
 
     // 모달 끄기
     const closeModal = () => {
         props.setModalOpen(false);
     };
     // 회원탈퇴 확인
-    const deleteConfirm = () => {
+    const deleteUserConfirm = () => {
         deleteUser(userInfo.userId).then(() => {
             setIsLogin(false);
             setUserInfo({});
@@ -36,7 +38,7 @@ const UserDeleteModal = (props) => {
                         width="25%"
                         margin="20px"
                         color="white"
-                        onClick={deleteConfirm}
+                        onClick={deleteUserConfirm}
                     ></Button>
                     <Button
                         text="취소"
@@ -97,4 +99,4 @@ const ModalBackground = css`
     right: 0;
     background: rgba(255, 255, 255, 0.7);
 `;
-export default UserDeleteModal;
+export default DeleteUserModal;

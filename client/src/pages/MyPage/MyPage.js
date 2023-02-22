@@ -1,40 +1,34 @@
 import React, { useState, useEffect } from "react";
-
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common";
 import { CgProfile } from "react-icons/cg";
 import { ImAirplane, ImHeart } from "react-icons/im";
 import { MdOutlineRateReview } from "react-icons/md";
+
+import { useRecoilState } from "recoil";
+import { userInfoState } from "../../state/atom";
+import { getUserInfo, userEdit } from "../../util/axiosUser";
+
 import MyInfo from "./MypageComponents/MyInfo";
 import MyPost from "./MypageComponents/MyPost";
 import MyLike from "./MypageComponents/MyLike";
 import MyReview from "./MypageComponents/MyReview";
-import { userInfoState } from "../../state/atom";
-import { useRecoilState } from "recoil";
-import { getUserInfo, userEdit } from "../../util/axiosUser";
+import Loading from "../components/Loding";
 
 import { SampleImgSrc } from "../../sampleImage.js";
 
 const Mypage = () => {
     const GachiArr = Object.values(SampleImgSrc);
 
-    const [isTab, setIsTab] = useState(0);
-    const [editClick, setEditClick] = useState(false);
+    const [tab, setTab] = useState(0);
+    const [isClickEditName, setIsClickEditName] = useState(false);
     const [inputName, setInputName] = useState("");
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [isLoading, setIsLoading] = useState(true);
 
-    const selectTabHandler = (index) => {
-        setIsTab(index);
-    };
-
     const editButtonHandler = () => {
-        setEditClick(!editClick);
-    };
-
-    const inputNameHandler = (e) => {
-        setInputName(e.target.value);
+        setIsClickEditName(!isClickEditName);
     };
 
     const editNameHandler = () => {
@@ -58,17 +52,17 @@ const Mypage = () => {
     return (
         <>
             {isLoading ? (
-                <div>Loding...</div>
+                <Loading />
             ) : (
-                <div css={Mypage_Wrap}>
+                <div css={MypageWrap}>
                     <div css={ProfileContainer}>
                         <img src={userInfo.image} alt="프로필 사진"></img>
                         <div css={NameArea}>
                             <div css={NameBox}>
-                                {editClick ? (
+                                {isClickEditName ? (
                                     <input
                                         defaultValue={userInfo.nickname}
-                                        onChange={inputNameHandler}
+                                        onChange={(e) => setInputName(e.target.value)}
                                     ></input>
                                 ) : (
                                     userInfo.nickname
@@ -77,20 +71,20 @@ const Mypage = () => {
                             {/* 수정 아이콘 클릭 시 수정/취소 버튼 */}
                             <div>
                                 <span
-                                    className={editClick ? "none" : ""}
+                                    className={isClickEditName ? "none" : ""}
                                     onClick={editButtonHandler}
                                 >
                                     수정
                                 </span>
                                 {/* 수정 기능 버튼 */}
                                 <span
-                                    className={editClick ? "" : "hidden"}
+                                    className={isClickEditName ? "" : "hidden"}
                                     onClick={editNameHandler}
                                 >
                                     수정
                                 </span>
                                 <span
-                                    className={editClick ? "" : "none"}
+                                    className={isClickEditName ? "" : "none"}
                                     onClick={editButtonHandler}
                                 >
                                     취소
@@ -102,7 +96,7 @@ const Mypage = () => {
                         <div
                             css={IconItem}
                             onClick={() => {
-                                selectTabHandler(0);
+                                setTab(0);
                             }}
                         >
                             <CgProfile size="25" />
@@ -112,7 +106,7 @@ const Mypage = () => {
                         <div
                             css={IconItem}
                             onClick={() => {
-                                selectTabHandler(1);
+                                setTab(1);
                             }}
                         >
                             <ImAirplane size="25" />
@@ -121,7 +115,7 @@ const Mypage = () => {
                         <div
                             css={IconItem}
                             onClick={() => {
-                                selectTabHandler(3);
+                                setTab(2);
                             }}
                         >
                             <MdOutlineRateReview size="25" />
@@ -130,7 +124,7 @@ const Mypage = () => {
                         <div
                             css={IconItem}
                             onClick={() => {
-                                selectTabHandler(2);
+                                setTab(3);
                             }}
                         >
                             <ImHeart size="25" />
@@ -139,14 +133,14 @@ const Mypage = () => {
                     </div>
                     {/* 후기, 좋아요 컴포넌트 하나 사용 고려*/}
                     <div css={ContentBox}>
-                        {isTab === 0 ? (
+                        {tab === 0 ? (
                             <MyInfo />
-                        ) : isTab === 1 ? (
+                        ) : tab === 1 ? (
                             <MyPost />
-                        ) : isTab === 2 ? (
-                            <MyLike />
-                        ) : isTab === 3 ? (
+                        ) : tab === 2 ? (
                             <MyReview />
+                        ) : tab === 3 ? (
+                            <MyLike />
                         ) : (
                             ""
                         )}
@@ -157,7 +151,7 @@ const Mypage = () => {
     );
 };
 
-const Mypage_Wrap = css`
+const MypageWrap = css`
     margin: 15vh auto;
     display: flex;
     flex-direction: column;
