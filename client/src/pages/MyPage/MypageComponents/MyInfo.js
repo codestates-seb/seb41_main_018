@@ -1,33 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../../Common";
-import { useState } from "react";
-import Button from "../../components/Button";
-import UserDeleteModal from "./UserDeleteModal";
+
+import { useRecoilValue } from "recoil";
 import { userInfoState } from "../../../state/atom";
-import { useRecoilState } from "recoil";
+
+import Button from "../../components/Button";
+import DeleteUserModal from "./DeleteUserModal";
 
 const MyInfo = () => {
-    const [passEditClick, setPassEditClick] = useState(false);
-    const [inputPass, setInputPass] = useState("");
-    const [modalOpen, setModalOpen] = useState(false);
-    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const [isClickEditPassword, setIsClickEditPassword] = useState(false);
+    const [inputPassword, setInputPassword] = useState("");
+    const [openModal, setOpenModal] = useState(false);
+    const userInfo = useRecoilValue(userInfoState);
 
     const editButtonHandler = () => {
-        setPassEditClick(!passEditClick);
+        setIsClickEditPassword(!isClickEditPassword);
     };
 
-    const inputPassHandler = (e) => {
-        setInputPass(e.target.value);
+    const inputPasswordHandler = (e) => {
+        setInputPassword(e.target.value);
     };
 
     const showModal = () => {
-        setModalOpen(true);
+        setOpenModal(true);
     };
 
     return (
-        <ul css={MyInfo_Wrap}>
+        <ul css={MyInfoWrap}>
             <li css={ListItem}>
                 <span css={ListName}>이메일</span>
                 <span>{userInfo.email}</span>
@@ -37,17 +38,17 @@ const MyInfo = () => {
                     비밀번호
                 </span>
 
-                {passEditClick ? (
-                    <div css={PassInput}>
-                        <input type="password" onChange={inputPassHandler} />
+                {isClickEditPassword ? (
+                    <div css={PasswordInput}>
+                        <input type="password" onChange={inputPasswordHandler} />
                         <div>
-                            <input type="password" onChange={inputPassHandler} />
+                            <input type="password" onChange={inputPasswordHandler} />
                             {/* 수정 기능 버튼 */}
-                            <span type="button" className={passEditClick ? "" : "hidden"}>
+                            <span type="button" className={isClickEditPassword ? "" : "hidden"}>
                                 수정
                             </span>
                             <span
-                                className={passEditClick ? "" : "none"}
+                                className={isClickEditPassword ? "" : "none"}
                                 onClick={editButtonHandler}
                             >
                                 취소
@@ -55,9 +56,12 @@ const MyInfo = () => {
                         </div>
                     </div>
                 ) : (
-                    <div css={PassContent}>
+                    <div css={PasswordContent}>
                         <span>●●●●●●●●</span>
-                        <span className={passEditClick ? "none" : ""} onClick={editButtonHandler}>
+                        <span
+                            className={isClickEditPassword ? "none" : ""}
+                            onClick={editButtonHandler}
+                        >
                             수정
                         </span>
                     </div>
@@ -68,7 +72,7 @@ const MyInfo = () => {
                 <span>{userInfo.phone}</span>
             </li>
             <li css={ListItem}>
-                {passEditClick ? (
+                {isClickEditPassword ? (
                     <Button
                         width="80px"
                         height="30px"
@@ -92,14 +96,14 @@ const MyInfo = () => {
                     />
                 )}
             </li>
-            {modalOpen && (
-                <UserDeleteModal text="정말 탈퇴하시겠습니까?" setModalOpen={setModalOpen} />
+            {openModal && (
+                <DeleteUserModal text="정말 탈퇴하시겠습니까?" setOpenModal={setOpenModal} />
             )}
         </ul>
     );
 };
 
-const MyInfo_Wrap = css`
+const MyInfoWrap = css`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -141,7 +145,7 @@ const ListName = css`
     }
 `;
 
-const PassInput = css`
+const PasswordInput = css`
     display: flex;
     flex-direction: column;
     input {
@@ -154,7 +158,7 @@ const PassInput = css`
     }
 `;
 
-const PassContent = css`
+const PasswordContent = css`
     span {
         margin-right: 10px;
     }

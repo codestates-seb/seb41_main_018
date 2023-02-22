@@ -2,8 +2,9 @@ import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../../Common";
-import dayjs from "dayjs";
+
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
 
 import { SampleImgSrc } from "../../../sampleImage";
 
@@ -12,25 +13,26 @@ const MyPostItem = ({ post }) => {
 
     const { title, createdAt, contentId } = post;
     const randomImg = Math.floor(Math.random() * GachiArr.length);
+
     return (
-        <div css={MyPostItem_Wrap}>
+        <div css={MyPostItemWrap}>
             <div css={PostImg}>
                 <img src={GachiArr[randomImg]} />
             </div>
-            <div css={MyPostItem_Content}>
+            <div css={MyPostItemContent}>
                 <Link to={`/detail/${contentId}`}>
                     <h3 css={PostTitle}>{title}</h3>
                 </Link>
 
-                <div css={MyPostItem_Body}>
-                    <div css={Right_Content}>{dayjs(createdAt).format("YY.MM.DD")}</div>
+                <div css={MyPostItemBody}>
+                    <div css={RightContent}>{dayjs(createdAt).format("YY.MM.DD")}</div>
                 </div>
             </div>
         </div>
     );
 };
 
-const MyPostItem_Wrap = css`
+const MyPostItemWrap = css`
     display: flex;
     align-items: center;
     padding: 21px 8px;
@@ -52,7 +54,7 @@ const PostImg = css`
         height: 100%;
     }
 `;
-const MyPostItem_Content = css`
+const MyPostItemContent = css`
     padding: 5px 20px;
     width: 100%;
     text-align: left;
@@ -67,12 +69,12 @@ const PostTitle = css`
     line-height: 2rem;
 `;
 
-const MyPostItem_Body = css`
+const MyPostItemBody = css`
     padding: 5px;
     text-align: left;
 `;
 
-const Right_Content = css`
+const RightContent = css`
     position: relative;
     text-align: right;
 `;

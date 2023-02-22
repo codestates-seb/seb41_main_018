@@ -2,31 +2,32 @@ import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../../Common";
-import dayjs from "dayjs";
+
+import { useRecoilValue } from "recoil";
 import { userInfoState } from "../../../state/atom";
-import { useRecoilState } from "recoil";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
 
 import { SampleImgSrc } from "../../../sampleImage";
 
 const MyReview = () => {
     const GachiArr = Object.values(SampleImgSrc);
-    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const userInfo = useRecoilValue(userInfoState);
     const randomImg = Math.floor(Math.random() * GachiArr.length);
 
     return (
-        <div css={MyReview_Wrap}>
+        <div css={MyReviewWrap}>
             {userInfo.comments.map((review) => (
-                <div css={MyReview_Item} key={review.reviewId}>
+                <div css={MyReviewItem} key={review.reviewId}>
                     <div css={PostImg}>
                         <img src={GachiArr[randomImg]} />
                     </div>
-                    <div css={MyReview_Content}>
+                    <div css={MyReviewContent}>
                         <Link to={`/detail/${review.contentId}`}>
                             <h3 css={PostTitle}>{review.title}</h3>
                         </Link>
                         <div>{review.body}</div>
-                        <div css={Right_Content}>{dayjs(review.createdAt).format("YY.MM.DD")}</div>
+                        <div css={RightContent}>{dayjs(review.createdAt).format("YY.MM.DD")}</div>
                     </div>
                 </div>
             ))}
@@ -34,14 +35,14 @@ const MyReview = () => {
     );
 };
 
-const MyReview_Wrap = css`
+const MyReviewWrap = css`
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 10px;
 `;
 
-const MyReview_Item = css`
+const MyReviewItem = css`
     display: flex;
     align-items: center;
     padding: 8px;
@@ -56,13 +57,14 @@ const PostImg = css`
     border: ${PALETTE.border};
     width: 90px;
     height: 84px;
+
     img {
         width: 100%;
         height: 100%;
     }
 `;
 
-const MyReview_Content = css`
+const MyReviewContent = css`
     padding: 5px 20px;
     width: 100%;
     text-align: left;
@@ -77,7 +79,7 @@ const PostTitle = css`
     line-height: 2rem;
 `;
 
-const Right_Content = css`
+const RightContent = css`
     position: relative;
     text-align: right;
 `;

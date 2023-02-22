@@ -1,15 +1,17 @@
 import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import MyPostItem from "./MyPostItem";
+
+import { useRecoilValue } from "recoil";
 import { userInfoState } from "../../../state/atom";
-import { useRecoilState } from "recoil";
+
+import MyPostItem from "./MyPostItem";
 
 const MyPost = () => {
-    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const userInfo = useRecoilValue(userInfoState);
 
     return (
-        <div css={MyPost_Wrap}>
+        <div css={MyPostWrap}>
             {userInfo.contents.map((post) => (
                 <MyPostItem key={post.contentId} post={post}></MyPostItem>
             ))}
@@ -17,7 +19,7 @@ const MyPost = () => {
     );
 };
 
-const MyPost_Wrap = css`
+const MyPostWrap = css`
     display: flex;
     flex-direction: column;
     align-items: center;

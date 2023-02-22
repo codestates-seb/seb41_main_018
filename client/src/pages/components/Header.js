@@ -1,38 +1,44 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 /** @jsxImportSource @emotion/react */
-import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../Common.js";
-import { GachiGalleImgSrc } from "../../sampleImage.js";
+
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { loginState, userInfoState } from "../../state/atom";
+import { userLogout } from "../../util/axiosUser";
+import { useNavigate, Link } from "react-router-dom";
+
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
+
 import Button from "./Button.js";
-import { useRecoilState } from "recoil";
-import { loginState, userInfoState } from "../../state/atom";
-import { userLogout } from "../../util/axiosUser";
+
+import { GachiGalleImgSrc } from "../../sampleImage.js";
 
 const Header = () => {
+    const navigate = useNavigate();
+    const setUserInfo = useSetRecoilState(userInfoState);
     const [isLogin, setIsLogin] = useRecoilState(loginState);
-    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const [isResSearchIconClick, setResSearchIcon] = useState(false);
-    const [isMenuClick, setMenuClick] = useState(false);
-    const [isAccountClick, setAccontClick] = useState(false);
+    const [isClickSearchIcon, setIsClickSearchIcon] = useState(false);
+    const [isClickMenu, setClickMenu] = useState(false);
+    const [isClickAccount, setIsClickAccount] = useState(false);
     const [keyword, setKeyword] = useState("");
     const menuRef = useRef();
     const AccountRef = useRef();
-    const navigate = useNavigate();
 
-    const menuClick = () => {
-        setMenuClick(!isMenuClick);
+    const clickMenu = () => {
+        setClickMenu(!isClickMenu);
     };
 
-    const handleResSearchIconClick = () => {
-        setResSearchIcon(!isResSearchIconClick);
+    const clickSearchIcon = () => {
+        setIsClickSearchIcon(!isClickSearchIcon);
+    };
+
+    const clickAccount = () => {
+        setIsClickAccount(!isClickAccount);
     };
 
     // 검색 버튼 클릭 시 작동 함수
@@ -43,36 +49,28 @@ const Header = () => {
         }
     };
 
-    const handleClose = () => {
-        setResSearchIcon(false);
-    };
-
-    const handleAccountClick = () => {
-        setAccontClick(!isAccountClick);
-    };
-
     // 외부클릭시 닫히게하기
-    const handleClickOutSide = (e) => {
-        if (isMenuClick && !menuRef.current.contains(e.target)) {
-            setMenuClick(false);
+    const clickMenuOutside = (e) => {
+        if (isClickMenu && !menuRef.current.contains(e.target)) {
+            setClickMenu(false);
         }
     };
     useEffect(() => {
-        if (isMenuClick) document.addEventListener("mousedown", handleClickOutSide);
+        if (isClickMenu) document.addEventListener("mousedown", clickMenuOutside);
         return () => {
-            document.removeEventListener("mousedown", handleClickOutSide);
+            document.removeEventListener("mousedown", clickMenuOutside);
         };
     });
 
-    const handleClickOutSide2 = (e) => {
-        if (isAccountClick && !AccountRef.current.contains(e.target)) {
-            setAccontClick(false);
+    const clickAccountOutSide = (e) => {
+        if (isClickAccount && !AccountRef.current.contains(e.target)) {
+            setIsClickAccount(false);
         }
     };
     useEffect(() => {
-        if (isAccountClick) document.addEventListener("mousedown", handleClickOutSide2);
+        if (isClickAccount) document.addEventListener("mousedown", clickAccountOutSide);
         return () => {
-            document.removeEventListener("mousedown", handleClickOutSide2);
+            document.removeEventListener("mousedown", clickAccountOutSide);
         };
     });
 
@@ -82,7 +80,7 @@ const Header = () => {
             setIsLogin(false);
             setUserInfo({});
             navigate("/");
-            setMenuClick(false);
+            setClickMenu(false);
         });
     };
 
@@ -91,7 +89,7 @@ const Header = () => {
 
     return (
         <>
-            <div
+            {/*  <div
                 css={css`
                     border: none;
                     transition: 0.3s;
@@ -109,16 +107,16 @@ const Header = () => {
                         }
                     }
                 `}
-            ></div>
+            ></div> */}
 
-            <div css={wrap}>
-                <div css={container}>
-                    <MenuIcon onClick={menuClick} css={menuicon} />
-                    {isMenuClick ? (
-                        <div css={menuClickContainer}>
-                            <div css={menuContainer} ref={menuRef}>
+            <div css={Wrap}>
+                <div css={MenuArea}>
+                    <MenuIcon onClick={clickMenu} css={MenuIconStyle} />
+                    {isClickMenu ? (
+                        <div css={ClickMenuContainer}>
+                            <div css={MenuContainer} ref={menuRef}>
                                 <img src={GachiGalleImgSrc.logo_img} alt="같이갈래 logo" />
-                                <div css={buttonContainer}>
+                                <div css={ButtonContainer}>
                                     {isLogin ? (
                                         <div>
                                             <Link to="/mypage">
@@ -130,7 +128,7 @@ const Header = () => {
                                                     boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px;"
                                                     margin="10px"
                                                     onClick={() => {
-                                                        setMenuClick(false);
+                                                        setClickMenu(false);
                                                     }}
                                                 />
                                             </Link>
@@ -175,28 +173,10 @@ const Header = () => {
                         false
                     )}
                 </div>
-                <div
-                    css={css`
-                        display: flex;
-                        justify-content: space-between;
-                        width: 1200px;
-                        align-items: center;
-                    `}
-                >
-                    <div
-                        css={css`
-                            @media (max-width: 768px) {
-                                margin: 0 auto;
-                                padding-right: 30px;
-                            }
-                        `}
-                    >
+                <div css={HeaderContainer}>
+                    <div css={LogoStyle}>
                         <Link to="/">
-                            <img
-                                src={GachiGalleImgSrc.logo_img}
-                                alt="같이갈래 logo"
-                                css={logoStyle}
-                            ></img>
+                            <img src={GachiGalleImgSrc.logo_img} alt="같이갈래 logo"></img>
                         </Link>
                     </div>
                     {/* 데스크탑 기준 검색창 */}
@@ -217,39 +197,29 @@ const Header = () => {
                                 }
                             }}
                         ></input>
-                        <SearchIcon css={searchIcon} onClick={keywordSearch} />
+                        <SearchIcon css={SearchIconStyle} onClick={keywordSearch} />
 
                         {/* 모바일 기준 검색창 - 검색버튼 */}
-                        <SearchIcon css={resSearchIcon} onClick={handleResSearchIconClick} />
-                        {isResSearchIconClick ? (
+                        <SearchIcon css={MobileSearchIcon} onClick={clickSearchIcon} />
+                        {isClickSearchIcon ? (
                             <div>
-                                <div css={resSearchIconClick}>
-                                    <CloseIcon
-                                        onClick={handleClose}
-                                        css={css`
-                                            position: relative;
-                                            top: 7px;
-                                            width: 25px;
-                                            height: 25px;
-                                            margin: 20px;
-                                            align-self: end;
-                                        `}
-                                    />
+                                <div css={MobileSearchIconClick}>
+                                    <CloseIcon onClick={clickSearchIcon} css={CloseIconStyle} />
                                     {/* 모바일 기준 검색창 - 검색 input */}
                                     <input
                                         type="text"
-                                        css={responsiveSearchInput}
+                                        css={MobileSearchInput}
                                         placeholder="검색어를 입력해주세요."
                                         value={keyword}
                                         onChange={(e) => setKeyword(e.target.value)}
                                         onKeyUp={(e) => {
                                             if (e.key == "Enter") {
                                                 keywordSearch();
-                                                setResSearchIcon(false);
+                                                setIsClickSearchIcon(false);
                                             }
                                         }}
                                     ></input>
-                                    <div css={recentKeyword}>최근 검색어</div>
+                                    <div css={RecentKeyword}>최근 검색어</div>
                                 </div>
                             </div>
                         ) : (
@@ -257,27 +227,16 @@ const Header = () => {
                         )}
                     </div>
                     {isLogin ? (
-                        <div css={divAccount}>
-                            <NotificationsActiveIcon css={notification} />
-                            <AccountCircleIcon css={Account} onClick={handleAccountClick} />
-                            {isAccountClick ? (
-                                <div css={dropMenu} ref={AccountRef}>
-                                    <ul
-                                        css={css`
-                                            list-style: none;
-                                            padding: 0;
-                                        `}
-                                    >
-                                        <Link
-                                            to="/mypage"
-                                            css={css`
-                                                text-decoration-line: none;
-                                                color: black;
-                                            `}
-                                        >
-                                            <li css={topDropMenu}>마이페이지</li>
+                        <div css={Account}>
+                            <NotificationsActiveIcon css={Notification} />
+                            <AccountCircleIcon css={AccountIcon} onClick={clickAccount} />
+                            {isClickAccount ? (
+                                <div css={DropMenu} ref={AccountRef}>
+                                    <ul>
+                                        <Link to="/mypage">
+                                            <li css={TopDropMenu}>마이페이지</li>
                                         </Link>
-                                        <li css={bottomDropMenu} onClick={logout}>
+                                        <li css={BottomDropMenu} onClick={logout}>
                                             로그아웃
                                         </li>
                                     </ul>
@@ -285,7 +244,7 @@ const Header = () => {
                             ) : null}
                         </div>
                     ) : (
-                        <div css={divAccount}>
+                        <div css={Account}>
                             <Link to="/login">
                                 <Button
                                     width="100px"
@@ -314,7 +273,7 @@ const Header = () => {
     );
 };
 
-const wrap = css`
+const Wrap = css`
     display: flex;
     width: 100vw;
     height: 60px;
@@ -328,7 +287,7 @@ const wrap = css`
     }
 `;
 
-const container = css`
+const MenuArea = css`
     display: none;
     @media (max-width: 768px) {
         display: block;
@@ -336,7 +295,7 @@ const container = css`
     }
 `;
 
-const menuClickContainer = css`
+const ClickMenuContainer = css`
     position: absolute;
     top: 0px;
     left: 0px;
@@ -344,7 +303,7 @@ const menuClickContainer = css`
     height: 2554px;
     background-color: rgb(0, 0, 0, 0.3);
 `;
-const menuContainer = css`
+const MenuContainer = css`
     position: absolute;
     text-align: center;
     top: 0px;
@@ -359,22 +318,35 @@ const menuContainer = css`
         margin: 20px;
     }
 `;
-const buttonContainer = css`
+const ButtonContainer = css`
     display: flex;
     flex-direction: column;
     align-items: center;
 `;
 
-const logoStyle = css`
-    width: 140px;
-    height: 74px;
-    margin: 0 auto;
-    @media (min-width: 768px) {
-        margin-left: 40px;
+const HeaderContainer = css`
+    display: flex;
+    justify-content: space-between;
+    width: 1200px;
+    align-items: center;
+`;
+
+const LogoStyle = css`
+    @media (max-width: 768px) {
+        margin: 0 auto;
+        padding-right: 30px;
+    }
+    img {
+        width: 140px;
+        height: 74px;
+        margin: 0 auto;
+        @media (min-width: 768px) {
+            margin-left: 40px;
+        }
     }
 `;
 
-const searchIcon = css`
+const SearchIconStyle = css`
     position: relative;
     width: 34px;
     height: 34px;
@@ -395,7 +367,7 @@ const searchIcon = css`
     }
 `;
 
-const resSearchIcon = css`
+const MobileSearchIcon = css`
     width: 34px;
     height: 34px;
     border: solid 10px ${PALETTE.default_color};
@@ -415,7 +387,7 @@ const resSearchIcon = css`
     }
 `;
 
-const resSearchIconClick = css`
+const MobileSearchIconClick = css`
     position: absolute;
     top: 0px;
     left: 0px;
@@ -425,6 +397,15 @@ const resSearchIconClick = css`
     display: flex;
     flex-direction: column;
     align-items: center;
+`;
+
+const CloseIconStyle = css`
+    position: relative;
+    top: 7px;
+    width: 25px;
+    height: 25px;
+    margin: 20px;
+    align-self: end;
 `;
 
 const SearchInput = css`
@@ -448,7 +429,7 @@ const SearchInput = css`
     }
 `;
 
-const responsiveSearchInput = css`
+const MobileSearchInput = css`
     width: 80vw;
     height: 50px;
     padding: 10px 20px;
@@ -458,14 +439,14 @@ const responsiveSearchInput = css`
     border: solid 2px rgb(0, 0, 0, 0.05);
 `;
 
-const recentKeyword = css`
+const RecentKeyword = css`
     display: flex;
     align-self: start;
     margin-top: 30px;
     margin-left: 30px;
     font-weight: 600;
 `;
-const divAccount = css`
+const Account = css`
     display: flex;
     justify-content: center;
     width: 220px;
@@ -477,7 +458,7 @@ const divAccount = css`
     }
 `;
 
-const Account = css`
+const AccountIcon = css`
     width: 40px;
     height: 40px;
     margin: 0 10px;
@@ -488,7 +469,7 @@ const Account = css`
     }
 `;
 
-const notification = css`
+const Notification = css`
     width: 40px;
     height: 40px;
     color: ${PALETTE.default_color};
@@ -499,7 +480,7 @@ const notification = css`
     }
 `;
 
-const menuicon = css`
+const MenuIconStyle = css`
     display: none;
     @media (max-width: 768px) {
         display: flex;
@@ -510,15 +491,26 @@ const menuicon = css`
     }
 `;
 
-const dropMenu = css`
+const DropMenu = css`
     position: absolute;
     top: 70px;
     margin-left: 60px;
     background-color: white;
     border-radius: 10px;
-    box-shadow: ${PALETTE.box_shaodw};
+    box-shadow: ${PALETTE.box_shadow};
     border-radius: ${PALETTE.border_radius};
     z-index: 4;
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        &a {
+            text-decoration-line: none;
+            color: black;
+        }
+    }
+
     li {
         width: 150px;
         height: 40px;
@@ -533,100 +525,16 @@ const dropMenu = css`
     }
 `;
 
-const topDropMenu = css`
+const TopDropMenu = css`
     border: solid ${PALETTE.ligth_gray} 1px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 `;
 
-const bottomDropMenu = css`
+const BottomDropMenu = css`
     border: solid ${PALETTE.ligth_gray} 1px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 `;
 
-const buttonss = css`
-    width: 130px;
-    height: 40px;
-    color: #fff;
-    border-radius: 5px;
-    padding: 10px 25px;
-    font-family: "Lato", sans-serif;
-    font-weight: 500;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    display: inline-block;
-    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1),
-        4px 4px 5px 0px rgba(0, 0, 0, 0.1);
-    outline: none;
-
-    background-color: #4dccc6;
-    background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
-    line-height: 42px;
-    padding: 0;
-    border: none;
-
-    &:hover {
-        background-color: #89d8d3;
-        background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
-    }
-    span {
-        position: relative;
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-    &:before,
-    &:after {
-        position: absolute;
-        content: "";
-        right: 0;
-        top: 0;
-        box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.9), -4px -4px 6px 0 rgba(116, 125, 136, 0.2),
-            inset -4px -4px 6px 0 rgba(255, 255, 255, 0.9),
-            inset 4px 4px 6px 0 rgba(116, 125, 136, 0.3);
-        transition: all 0.3s ease;
-    }
-    &:before {
-        height: 0%;
-        width: 0.1px;
-    }
-    &:after {
-        width: 0%;
-        height: 0.1px;
-    }
-    &:hover:before {
-        height: 100%;
-    }
-    &:hover:after {
-        width: 100%;
-    }
-    span:before,
-    span:after {
-        position: absolute;
-        content: "";
-        left: 0;
-        bottom: 0;
-        box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, 0.9), -4px -4px 6px 0 rgba(116, 125, 136, 0.2),
-            inset -4px -4px 6px 0 rgba(255, 255, 255, 0.9),
-            inset 4px 4px 6px 0 rgba(116, 125, 136, 0.3);
-        transition: all 0.3s ease;
-    }
-    span:before {
-        width: 0.1px;
-        height: 0%;
-    }
-    span:after {
-        width: 0%;
-        height: 0.1px;
-    }
-    span:hover:before {
-        height: 100%;
-    }
-    span:hover:after {
-        width: 100%;
-    }
-`;
 export default Header;

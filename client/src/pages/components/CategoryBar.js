@@ -1,6 +1,7 @@
 import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+
 import { useNavigate } from "react-router-dom";
 import { GachiGalleImgSrc } from "../../sampleImage";
 
@@ -23,7 +24,7 @@ const CategoryBar = () => {
         navigate(`/result?category=${themeType}`);
     };
     return (
-        <div css={wrap}>
+        <div css={Wrap}>
             <div
                 css={css`
                     display: flex;
@@ -32,11 +33,11 @@ const CategoryBar = () => {
                 {category.slice(0, category.length / 2).map((el, index) => (
                     <div
                         key={index}
-                        css={categoryContainer}
+                        css={CategoryContainer}
                         onClick={() => searchHandler(el.themeType)}
                     >
-                        <img src={el.src} css={categoryImg} />
-                        <span css={categoryFont}>{el.title}</span>
+                        <img src={el.src} css={CategoryImg} />
+                        <span css={CategoryFont}>{el.title}</span>
                     </div>
                 ))}
             </div>
@@ -48,11 +49,11 @@ const CategoryBar = () => {
                 {category.slice(category.length / 2, category.length).map((el, index) => (
                     <div
                         key={index}
-                        css={categoryContainer}
+                        css={CategoryContainer}
                         onClick={() => searchHandler(el.themeType)}
                     >
-                        <img src={el.src} css={categoryImg} />
-                        <span css={categoryFont}>{el.title}</span>
+                        <img src={el.src} css={CategoryImg} />
+                        <span css={CategoryFont}>{el.title}</span>
                     </div>
                 ))}
             </div>
@@ -60,7 +61,7 @@ const CategoryBar = () => {
     );
 };
 
-const wrap = css`
+const Wrap = css`
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -72,7 +73,7 @@ const wrap = css`
     }
 `;
 
-const categoryContainer = css`
+const CategoryContainer = css`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -85,16 +86,16 @@ const categoryContainer = css`
     }
 `;
 
-const categoryImg = css`
+const CategoryImg = css`
     width: 25px;
     height: 25px;
     margin: 20px 40px;
 `;
 
-const categoryFont = css`
+const CategoryFont = css`
     text-align: center;
     font-size: 12px;
     margin-top: -10px;
     margin-bottom: 20px;
 `;
-export default Categorybar;
+export default CategoryBar;

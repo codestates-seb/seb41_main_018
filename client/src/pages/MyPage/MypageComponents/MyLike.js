@@ -2,30 +2,31 @@ import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../../Common";
-import dayjs from "dayjs";
+
+import { useRecoilValue } from "recoil";
 import { userInfoState } from "../../../state/atom";
-import { useRecoilState } from "recoil";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
 
 import { SampleImgSrc } from "../../../sampleImage";
 
 const MyLike = () => {
     const GachiArr = Object.values(SampleImgSrc);
 
-    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const userInfo = useRecoilValue(userInfoState);
     const randomImg = Math.floor(Math.random() * GachiArr.length);
     return (
-        <div css={MyLike_Wrap}>
+        <div css={MyLikeWrap}>
             {userInfo.hearts.map((el) => (
-                <div css={MyLike_Item} key={el.contentId}>
+                <div css={MyLikeItem} key={el.contentId}>
                     <div css={PostImg}>
                         <img src={GachiArr[randomImg]} />
                     </div>
-                    <div css={MyLike_Content}>
+                    <div css={MyLikeContent}>
                         <Link to={`/detail/${el.contentId}`}>
                             <h3 css={PostTitle}>{el.title}</h3>
                         </Link>
-                        <div css={Right_Content}>{dayjs(el.createdAt).format("YY.MM.DD")}</div>
+                        <div css={RightContent}>{dayjs(el.createdAt).format("YY.MM.DD")}</div>
                     </div>
                 </div>
             ))}
@@ -33,14 +34,14 @@ const MyLike = () => {
     );
 };
 
-const MyLike_Wrap = css`
+const MyLikeWrap = css`
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 10px;
 `;
 
-const MyLike_Item = css`
+const MyLikeItem = css`
     display: flex;
     align-items: center;
     padding: 21px 8px;
@@ -61,7 +62,7 @@ const PostImg = css`
     }
 `;
 
-const MyLike_Content = css`
+const MyLikeContent = css`
     padding: 5px 20px;
     width: 100%;
     text-align: left;
@@ -76,7 +77,7 @@ const PostTitle = css`
     line-height: 2rem;
 `;
 
-const Right_Content = css`
+const RightContent = css`
     position: relative;
     text-align: right;
 `;
