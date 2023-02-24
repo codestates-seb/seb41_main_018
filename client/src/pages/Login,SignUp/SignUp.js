@@ -13,7 +13,7 @@ import {
     LoginInputBox,
 } from "./LoginStyle";
 import Button from "../components/Button";
-import SocialButton from "../components/SocialButton";
+import SocialButton from "./SocialButton";
 import { GachiGalleImgSrc } from "../../sampleImage";
 
 const defaultValues = {

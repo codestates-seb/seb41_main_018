@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { userInfoState, loginState } from "../../state/atom";
-import SocialButton from "../components/SocialButton";
+import SocialButton from "./SocialButton";
 import Button from "../components/Button";
 import { GachiGalleImgSrc } from "../../sampleImage";
 import { Login, getUserInfo } from "../../util/axiosUser";
