@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import javax.validation.constraints.Pattern;
+
 @ApiModel("Route Post")
 @Getter
 @Builder
@@ -14,6 +16,7 @@ public class RoutePostDto {
     @ApiModelProperty(notes = "컨텐츠아이디", example = "1", required = true)
     private Long ContentId;
     @ApiModelProperty(notes = "금액", example = "100,000", required = true)
+    @Pattern(regexp = "\\d",message = "숫자만 입력해 주세요")
     private int price;
     @ApiModelProperty(notes = "교통 수단", example = "버스", required = true)
     @NotSpace(message = "내용을 채워주세요.")
