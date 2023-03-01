@@ -17,6 +17,7 @@ import MyReview from "./MypageComponents/MyReview";
 import Loading from "../components/Loding";
 
 import { SampleImgSrc } from "../../sampleImage.js";
+import EditProfileModal from "./MypageComponents/EditProfileModal";
 
 const Mypage = () => {
     const GachiArr = Object.values(SampleImgSrc);
@@ -26,6 +27,7 @@ const Mypage = () => {
     const [inputName, setInputName] = useState("");
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [isLoading, setIsLoading] = useState(true);
+    const [openModal, setOpenModal] = useState(false);
 
     const editButtonHandler = () => {
         setIsClickEditName(!isClickEditName);
@@ -42,6 +44,10 @@ const Mypage = () => {
         });
     };
 
+    const editProfileHandler = () => {
+        setOpenModal(true);
+    };
+
     useEffect(() => {
         getUserInfo(userInfo.userId).then((data) => {
             setUserInfo(data.data);
@@ -56,7 +62,11 @@ const Mypage = () => {
             ) : (
                 <div css={MypageWrap}>
                     <div css={ProfileContainer}>
-                        <img src={userInfo.image} alt="프로필 사진"></img>
+                        <img
+                            src={userInfo.image}
+                            alt="프로필 사진"
+                            onClick={editProfileHandler}
+                        ></img>
                         <div css={NameArea}>
                             <div css={NameBox}>
                                 {isClickEditName ? (
@@ -146,6 +156,9 @@ const Mypage = () => {
                         )}
                     </div>
                 </div>
+            )}
+            {openModal && (
+                <EditProfileModal setOpenModal={setOpenModal} profileImage={userInfo.image} />
             )}
         </>
     );
