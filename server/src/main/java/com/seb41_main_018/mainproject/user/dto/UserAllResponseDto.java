@@ -1,6 +1,6 @@
 package com.seb41_main_018.mainproject.user.dto;
 
-import com.seb41_main_018.mainproject.comment.dto.CommentDto;
+import com.seb41_main_018.mainproject.comment.dto.UserCommentResponseDto;
 import com.seb41_main_018.mainproject.content.dto.ContentDto;
 import com.seb41_main_018.mainproject.heart.dto.HeartDto;
 import io.swagger.annotations.ApiModel;
@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,7 +35,7 @@ public class UserAllResponseDto {
     private List<ContentDto.UserContentResponseDto> contents;
 
     @ApiModelProperty(notes = "유저가 작성한 후기들", example = "짱좋아요, 좀 별로임", required = true)
-    private List<CommentDto.UserCommentResponse> comments;
+    private List<UserCommentResponseDto> comments;
 
     @ApiModelProperty(notes = "유저가 좋아요한 컨텐츠들", example = "서울 여행 컨텐츠(좋아요)", required = true)
     private List<HeartDto.UserHeartResponse> hearts;

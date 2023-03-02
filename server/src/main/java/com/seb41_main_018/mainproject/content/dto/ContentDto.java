@@ -1,17 +1,13 @@
 package com.seb41_main_018.mainproject.content.dto;
 
-import com.seb41_main_018.mainproject.comment.dto.CommentDto;
 import com.seb41_main_018.mainproject.route.dto.RouteResponseDto;
-import com.seb41_main_018.mainproject.tag.dto.TagDto;
 import com.seb41_main_018.mainproject.constant.ThemeType;
 import com.seb41_main_018.mainproject.validator.NotSpace;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.seb41_main_018.mainproject.user.mapper;
 
-import com.seb41_main_018.mainproject.comment.dto.CommentDto;
+import com.seb41_main_018.mainproject.comment.dto.UserCommentResponseDto;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
 import com.seb41_main_018.mainproject.content.dto.ContentDto;
@@ -9,10 +9,8 @@ import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.heart.dto.HeartDto;
 import com.seb41_main_018.mainproject.heart.entity.Heart;
 import com.seb41_main_018.mainproject.heart.repository.HeartRepository;
-import com.seb41_main_018.mainproject.route.dto.RouteResponseDto;
 import com.seb41_main_018.mainproject.route.entity.Route;
 import com.seb41_main_018.mainproject.route.repository.RouteRepository;
-import com.seb41_main_018.mainproject.tag.repository.TagRepository;
 import com.seb41_main_018.mainproject.user.dto.UserAllResponseDto;
 import com.seb41_main_018.mainproject.user.dto.UserPatchDto;
 import com.seb41_main_018.mainproject.user.dto.UserPostDto;
@@ -52,9 +50,9 @@ public interface UserMapper {
                 .hearts(heartsToHeartResponseDtos(hearts))
                 .build();
     }
-    default List<CommentDto.UserCommentResponse> commentsToCommentResponseDtos(List<Comment> comments){
+    default List<UserCommentResponseDto> commentsToCommentResponseDtos(List<Comment> comments){
         return comments.stream()
-                .map(comment -> CommentDto.UserCommentResponse.builder()
+                .map(comment -> UserCommentResponseDto.builder()
                         .commentId(comment.getCommentId())
                         .contentId(comment.getContent().getContentId())
                         .title(comment.getContent().getTitle())

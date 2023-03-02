@@ -1,11 +1,12 @@
 package com.seb41_main_018.mainproject.comment.controller;
 
-import com.seb41_main_018.mainproject.comment.dto.CommentDto;
+import com.seb41_main_018.mainproject.comment.dto.CommentPatchDto;
+import com.seb41_main_018.mainproject.comment.dto.CommentPostDto;
+import com.seb41_main_018.mainproject.comment.dto.CommentResponseDto;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.mapper.CommentMapper;
 import com.seb41_main_018.mainproject.comment.service.CommentService;
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
-import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -35,13 +36,13 @@ public class CommentController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Comment not found")})
     @PostMapping
-    public ResponseEntity postComment(@Valid @RequestBody CommentDto.Post requestBody
+    public ResponseEntity postComment(@Valid @RequestBody CommentPostDto requestBody
     ){
         Comment comment = commentService.createComment(
                 commentMapper.commentPostDtoToComment(requestBody),
                 requestBody.getContentId()
         );
-        CommentDto.Response commentResponseDto = commentMapper.commentToCommentResponseDto(comment);
+        CommentResponseDto commentResponseDto = commentMapper.commentToCommentResponseDto(comment);
 
         return new ResponseEntity(commentResponseDto, HttpStatus.CREATED);
     }
@@ -52,7 +53,7 @@ public class CommentController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Comment not found")})
     @PatchMapping("/{commentId}")
-    public ResponseEntity patchComment(@Valid @RequestBody CommentDto.Patch requestBody,
+    public ResponseEntity patchComment(@Valid @RequestBody CommentPatchDto requestBody,
                                        @PathVariable("commentId") @Positive Long commentId)
     {
         Comment comment = commentService.updateComment(
@@ -60,7 +61,7 @@ public class CommentController {
                 commentId);
 
         comment.setCommentId(commentId);
-        CommentDto.Response userResponseDto = commentMapper.commentToCommentResponseDto(comment);
+        CommentResponseDto userResponseDto = commentMapper.commentToCommentResponseDto(comment);
 
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
@@ -68,14 +69,14 @@ public class CommentController {
     // 코멘트 조회 //
     @ApiOperation(value = "코멘트 조회", notes = "코멘트를 조회합니다.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved", response = CommentDto.Response.class),
+            @ApiResponse(code = 200, message = "Successfully retrieved", response = CommentResponseDto.class),
             @ApiResponse(code = 404, message = "Comment not found")})
     @GetMapping("/{commentId}")
     public ResponseEntity getComment(@ApiParam(name = "commentId", value = "코멘트 식별자", example = "1")
                                          @PathVariable("commentId") @Positive Long commentId)
     {
         Comment comment = commentService.findComment(commentId);
-        CommentDto.Response commentResponse = commentMapper.commentToCommentResponseDto(comment);
+        CommentResponseDto commentResponse = commentMapper.commentToCommentResponseDto(comment);
 
         return new ResponseEntity<>(commentResponse, HttpStatus.OK);
     }
@@ -83,7 +84,7 @@ public class CommentController {
     // 코멘트 전체 조회 //
     @ApiOperation(value = "코멘트 전체 조회", notes = "코멘트를 전체 조회 합니다.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved", response = CommentDto.Response.class),
+            @ApiResponse(code = 200, message = "Successfully retrieved", response = CommentResponseDto.class),
             @ApiResponse(code = 404, message = "Comment not found")})
     @GetMapping
     public ResponseEntity getComments(@Positive @RequestParam("page") int page,

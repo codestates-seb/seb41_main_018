@@ -1,6 +1,8 @@
 package com.seb41_main_018.mainproject.comment.mapper;
 
-import com.seb41_main_018.mainproject.comment.dto.CommentDto;
+import com.seb41_main_018.mainproject.comment.dto.CommentPatchDto;
+import com.seb41_main_018.mainproject.comment.dto.CommentPostDto;
+import com.seb41_main_018.mainproject.comment.dto.CommentResponseDto;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.user.entity.User;
@@ -9,7 +11,7 @@ import org.mapstruct.Mapper;
 import java.util.List;
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
-    default Comment commentPostDtoToComment(CommentDto.Post requestBody)
+    default Comment commentPostDtoToComment(CommentPostDto requestBody)
         {
         // content id, comment id 받아오기 + body 받아오기
         Content content = new Content();
@@ -23,7 +25,7 @@ public interface CommentMapper {
         return comment;
     }
 
-    default Comment commentPatchDtoToComment(CommentDto.Patch requestBody)
+    default Comment commentPatchDtoToComment(CommentPatchDto requestBody)
     {
         // content id, comment id 받아오기 + body 받아오기
         Content content = new Content();
@@ -37,12 +39,12 @@ public interface CommentMapper {
 
         return comment;
     }
-    default CommentDto.Response commentToCommentResponseDto(Comment comment)
+    default CommentResponseDto commentToCommentResponseDto(Comment comment)
     {
         User user = comment.getUser();
         Content content = comment.getContent();
 
-        return CommentDto.Response.builder()
+        return CommentResponseDto.builder()
                 .commentId(comment.getCommentId())
                 .userId(user.getUserId())
                 .contentId(content.getContentId())
@@ -55,5 +57,5 @@ public interface CommentMapper {
                 .image(user.getImage())
                 .build();
     }
-    List<CommentDto.Response> commentsToCommentResponseDtos(List<Comment> comment);
+    List<CommentResponseDto> commentsToCommentResponseDtos(List<Comment> comment);
 }

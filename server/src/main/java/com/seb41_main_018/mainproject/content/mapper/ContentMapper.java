@@ -1,6 +1,6 @@
 package com.seb41_main_018.mainproject.content.mapper;
 
-import com.seb41_main_018.mainproject.comment.dto.CommentDto;
+import com.seb41_main_018.mainproject.comment.dto.CommentResponseDto;
 import com.seb41_main_018.mainproject.comment.entity.Comment;
 import com.seb41_main_018.mainproject.comment.repository.CommentRepository;
 import com.seb41_main_018.mainproject.constant.ThemeType;
@@ -156,9 +156,9 @@ public interface ContentMapper {
                 .viewCount(content.getViewCount())
                 .build();
     }
-    default List<CommentDto.Response> commentsToCommentResponseDtos(List<Comment> comments){
+    default List<CommentResponseDto> commentsToCommentResponseDtos(List<Comment> comments){
         return comments.stream()
-                .map(comment -> CommentDto.Response.builder()
+                .map(comment -> CommentResponseDto.builder()
                         .commentId(comment.getCommentId())
                         .contentId(comment.getContent().getContentId())
                         .userId(comment.getUser().getUserId())

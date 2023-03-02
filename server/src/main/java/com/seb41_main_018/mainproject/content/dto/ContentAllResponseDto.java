@@ -1,6 +1,6 @@
 package com.seb41_main_018.mainproject.content.dto;
 
-import com.seb41_main_018.mainproject.comment.dto.CommentDto;
+import com.seb41_main_018.mainproject.comment.dto.CommentResponseDto;
 import com.seb41_main_018.mainproject.constant.ThemeType;
 import com.seb41_main_018.mainproject.route.dto.RouteResponseDto;
 import com.seb41_main_018.mainproject.tag.dto.TagDto;
@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -59,7 +58,7 @@ public class ContentAllResponseDto {
     private String image;
 
     @ApiModelProperty(notes = "후기들", example = "저도 너무 좋았어요!", required = true)
-    private List<CommentDto.Response> comments;
+    private List<CommentResponseDto> comments;
 
     @ApiModelProperty(notes = "태그들", example = "내돈내산", required = true)
     private List<TagDto.TagResponse> tags;
