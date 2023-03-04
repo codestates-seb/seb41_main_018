@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface ContentMapper {
-    default Content contentPostDtoToContent(ContentPostDto requestBody){
+    default Content contentPostDtoToContent(ContentPostDto requestBody,List<List<String>> imgList){
         Content content = new Content();
 
-        List<Route> routes = routesDtosToRoutes(requestBody.getRoutes(),content);
+        List<Route> routes = routesDtosToRoutes(requestBody.getRoutes(),content,imgList);
         content.setRoutes(routes);
         content.setTitle(requestBody.getTitle());
         //content.setRouteName(requestBody.getRouteName());
@@ -36,11 +36,11 @@ public interface ContentMapper {
 
         return content;
     }
-    default Content contentPatchDtoToContent(ContentPatchDto requestBody){
+    default Content contentPatchDtoToContent(ContentPatchDto requestBody,List<List<String>> imgList){
         Content content = new Content();
 
         content.setContentId(requestBody.getContentId());
-        List<Route> routes = routesDtosToRoutes(requestBody.getRoutes(),content);
+        List<Route> routes = routesDtosToRoutes(requestBody.getRoutes(),content,imgList);
 
         content.setTitle(requestBody.getTitle());
         content.setThemeType(requestBody.getThemeType());
@@ -70,10 +70,12 @@ public interface ContentMapper {
                 .routes(routesToRouteResponseDtos(content.getRoutes()))
                 .build();
     }
-    default List<Route> routesDtosToRoutes(List<RoutePostDto> routePostDtos, Content content){
-
+    default List<Route> routesDtosToRoutes(List<RoutePostDto> routePostDtos, Content content,List<List<String>> imgList){
+        final int[] i = {0};
         return routePostDtos.stream().map(routePostDto -> {
             Route route = new Route();
+            route.addContent(content);
+            route.addRouteImages(imgList.get(i[0]++));
             route.addContent(content);
             route.setPrice(routePostDto.getPrice());
             route.setVehicle(routePostDto.getVehicle());
@@ -98,6 +100,7 @@ public interface ContentMapper {
                         .y(route.getY())
                         .routeId(route.getRouteId())
                         .address(route.getAddress())
+                        .routeImages(route.getRouteImages())
                         .build())
                 .collect(Collectors.toList());
     }

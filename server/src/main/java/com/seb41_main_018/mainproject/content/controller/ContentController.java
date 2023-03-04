@@ -1,5 +1,6 @@
 package com.seb41_main_018.mainproject.content.controller;
 
+import com.seb41_main_018.mainproject.config.S3Uploader;
 import com.seb41_main_018.mainproject.constant.ThemeType;
 import com.seb41_main_018.mainproject.content.dto.*;
 import com.seb41_main_018.mainproject.content.entity.Content;
@@ -8,20 +9,23 @@ import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.content.service.ContentService;
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
-import com.seb41_main_018.mainproject.route.repository.RouteRepository;
 import com.seb41_main_018.mainproject.route.service.RouteService;
-import com.seb41_main_018.mainproject.user.dto.UserResponseDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 @ApiOperation(value = "컨텐트 API", tags = {"Content Controller"})
 @RestController
@@ -32,15 +36,14 @@ public class ContentController {
     private final ContentMapper contentMapper;
     private final ContentRepository contentRepository;
     private final RouteService routeService;
-    private final RouteRepository routeRepository;
+    private final S3Uploader s3Uploader;
 
-    public ContentController(ContentService contentService, ContentMapper contentMapper, ContentRepository contentRepository, RouteService routeService,
-                             RouteRepository routeRepository) {
+    public ContentController(ContentService contentService, ContentMapper contentMapper, ContentRepository contentRepository, RouteService routeService, S3Uploader s3Uploader) {
         this.contentService = contentService;
         this.contentMapper = contentMapper;
         this.contentRepository = contentRepository;
         this.routeService = routeService;
-        this.routeRepository = routeRepository;
+        this.s3Uploader = s3Uploader;
     }
 
 
@@ -49,9 +52,49 @@ public class ContentController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Content not found")})
-    @PostMapping
-    public ResponseEntity postContent(@Valid @RequestBody ContentPostDto requestBody) {
-        Content content = contentService.createContent(contentMapper.contentPostDtoToContent(requestBody));
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity postContent(@Valid @RequestPart(value="requestBody") ContentPostDto requestBody,
+                                      @RequestPart(value = "imgFiles0") MultipartFile[] imgFiles0,
+                                      @RequestPart(value = "imgFiles1", required = false) MultipartFile[] imgFiles1,
+                                      @RequestPart(value = "imgFiles2", required = false) MultipartFile[] imgFiles2,
+                                      @RequestPart(value = "imgFiles3", required = false) MultipartFile[] imgFiles3,
+                                      @RequestPart(value = "imgFiles4", required = false) MultipartFile[] imgFiles4,
+                                      @RequestPart(value = "imgFiles5", required = false) MultipartFile[] imgFiles5,
+                                      @RequestPart(value = "imgFiles6", required = false) MultipartFile[] imgFiles6,
+                                      @RequestPart(value = "imgFiles7", required = false) MultipartFile[] imgFiles7) throws IOException {
+        List<List<String>> imgList = new ArrayList<>();
+        List<String> imgUrls = s3Uploader.uploadRouteImages(imgFiles0);
+        imgList.add(imgUrls);
+        if(imgFiles1!=null){
+            imgUrls = s3Uploader.uploadRouteImages(imgFiles1);
+            imgList.add(imgUrls);
+        }
+        if(imgFiles2!=null){
+            imgUrls = s3Uploader.uploadRouteImages(imgFiles2);
+            imgList.add(imgUrls);
+        }
+        if(imgFiles3!=null){
+            imgUrls = s3Uploader.uploadRouteImages(imgFiles3);
+            imgList.add(imgUrls);
+        }
+        if(imgFiles4!=null){
+            imgUrls = s3Uploader.uploadRouteImages(imgFiles4);
+            imgList.add(imgUrls);
+        }
+        if(imgFiles5!=null){
+            imgUrls = s3Uploader.uploadRouteImages(imgFiles5);
+            imgList.add(imgUrls);
+        }
+        if(imgFiles6!=null){
+            imgUrls = s3Uploader.uploadRouteImages(imgFiles6);
+            imgList.add(imgUrls);
+        }
+        if(imgFiles7!=null){
+            imgUrls = s3Uploader.uploadRouteImages(imgFiles7);
+            imgList.add(imgUrls);
+        }
+
+        Content content = contentService.createContent(contentMapper.contentPostDtoToContent(requestBody,imgList));
         ContentResponseDto contentResponse = contentMapper.contentToContentResponse(content);
 
         return new ResponseEntity<>(
@@ -100,11 +143,50 @@ public class ContentController {
             @ApiResponse(code = 200, message = "Successfully retrieved"),
             @ApiResponse(code = 404, message = "Content not found")})
     @PatchMapping("/{contentId}")
-    public ResponseEntity patchContent(@RequestBody ContentPatchDto requestBody,
-                                       @PathVariable("contentId") Long contentId) {
+    public ResponseEntity patchContent(@RequestPart ContentPatchDto requestBody,
+                                       @PathVariable("contentId") Long contentId,
+                                       @RequestPart(value = "imgFiles0") MultipartFile[] imgFiles0,
+                                       @RequestPart(value = "imgFiles1", required = false) MultipartFile[] imgFiles1,
+                                       @RequestPart(value = "imgFiles2", required = false) MultipartFile[] imgFiles2,
+                                       @RequestPart(value = "imgFiles3", required = false) MultipartFile[] imgFiles3,
+                                       @RequestPart(value = "imgFiles4", required = false) MultipartFile[] imgFiles4,
+                                       @RequestPart(value = "imgFiles5", required = false) MultipartFile[] imgFiles5,
+                                       @RequestPart(value = "imgFiles6", required = false) MultipartFile[] imgFiles6,
+                                       @RequestPart(value = "imgFiles7", required = false) MultipartFile[] imgFiles7) throws IOException {
         requestBody.updateId(contentId);
+        List<List<String>> imgList = new ArrayList<>();
+        List<String> imgUrls = s3Uploader.uploadRouteImages(imgFiles0);
+        imgList.add(imgUrls);
+        if(imgFiles1!=null){
+            imgUrls = s3Uploader.uploadRouteImages(imgFiles1);
+            imgList.add(imgUrls);
+        }
+        if(imgFiles2!=null){
+            imgUrls = s3Uploader.uploadRouteImages(imgFiles2);
+            imgList.add(imgUrls);
+        }
+        if(imgFiles3!=null){
+            imgUrls = s3Uploader.uploadRouteImages(imgFiles3);
+            imgList.add(imgUrls);
+        }
+        if(imgFiles4!=null){
+            imgUrls = s3Uploader.uploadRouteImages(imgFiles4);
+            imgList.add(imgUrls);
+        }
+        if(imgFiles5!=null){
+            imgUrls = s3Uploader.uploadRouteImages(imgFiles5);
+            imgList.add(imgUrls);
+        }
+        if(imgFiles6!=null){
+            imgUrls = s3Uploader.uploadRouteImages(imgFiles6);
+            imgList.add(imgUrls);
+        }
+        if(imgFiles7!=null){
+            imgUrls = s3Uploader.uploadRouteImages(imgFiles7);
+            imgList.add(imgUrls);
+        }
         Content content = contentService.updateContent(
-                contentMapper.contentPatchDtoToContent(requestBody));
+                contentMapper.contentPatchDtoToContent(requestBody,imgList));
 
         ContentResponseDto contentResponse = contentMapper.contentToContentResponse(content);
 
@@ -129,7 +211,7 @@ public class ContentController {
             @ApiResponse(code = 404, message = "Content not found")})
     @GetMapping("/category/{themeType}")
     public ResponseEntity getContentFromThemeType(@PathVariable("themeType")ThemeType themeType){
-        ContentDto.ThemeTypeResponse response = contentMapper.themeTypeResponse(themeType, contentRepository,routeRepository);
+        ContentDto.ThemeTypeResponse response = contentMapper.themeTypeResponse(themeType, contentRepository);
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.OK
         );

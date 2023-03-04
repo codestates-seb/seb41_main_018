@@ -30,6 +30,32 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     private String S3bucket;
 
+    public List<String> uploadRouteImages(MultipartFile[] multipartFileList) throws IOException {
+
+        List<String> imagePathList = new ArrayList<>();
+
+        for(MultipartFile multipartFile: multipartFileList) {
+
+            String originalName = multipartFile.getOriginalFilename(); // 파일 이름
+            Long size = multipartFile.getSize(); // 파일 크기
+
+            ObjectMetadata objectMetaData = new ObjectMetadata();
+            objectMetaData.setContentType(multipartFile.getContentType());
+            objectMetaData.setContentLength(size);
+
+            // S3에 업로드
+            amazonS3Client.putObject(
+                    new PutObjectRequest(S3bucket, originalName, multipartFile.getInputStream(), objectMetaData)
+                            .withCannedAcl(CannedAccessControlList.PublicRead)
+            );
+
+            String imagePath = amazonS3Client.getUrl(S3bucket, originalName).toString(); // 접근가능한 URL 가져오기
+            imagePathList.add(imagePath);
+        }
+
+        return imagePathList;
+    }
+
     // MultipartFile 을 전달받아 File 로 전환한 후 S3에 업로드
     public String uploadRouteImages(MultipartFile multipartFile) throws IOException {
 
