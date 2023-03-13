@@ -1,6 +1,7 @@
 package com.seb41_main_018.mainproject.auth.oauth;
 
 import com.seb41_main_018.mainproject.auth.utils.CustomAuthorityUtils;
+import com.seb41_main_018.mainproject.constant.LoginType;
 import com.seb41_main_018.mainproject.user.entity.User;
 import com.seb41_main_018.mainproject.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +19,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
-@Slf4j
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final UserRepository userRepository;
     private final CustomAuthorityUtils authorityUtils;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+
         OAuth2UserService<OAuth2UserRequest, OAuth2User> service = new DefaultOAuth2UserService();
         OAuth2User oauth2User = service.loadUser(userRequest);
 
@@ -37,8 +39,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oauth2User.getAttributes());
 
         if (userRepository.findByEmail(attributes.getEmail()).isEmpty()) {
-            log.info("=============== 소셜 회원 신규 가입 ================");
-            saveUser(attributes.getEmail(), attributes.getName(), registrationId.toUpperCase());
+            log.info("### 소셜회원 신규가입 ###");
+            saveUser(attributes.getEmail()
+                    ,attributes.getName()
+                    ,attributes.getImage()
+                    ,registrationId.toUpperCase());
         }
 
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority("USER")),
@@ -47,14 +52,20 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
 
-    private void saveUser(String email, String name, String password) {
+    private void saveUser(String email,
+                          String name,
+                          String image,
+                          String password) {
         List<String> roles = authorityUtils.createRoles(email);
         User user = new User();
+
         user.setEmail(email);
         user.setNickname(name);
+        user.setImage(image);
         user.setPassword(password);
+        user.setLoginType(LoginType.SOCIAL);
         user.setRoles(roles);
+
         userRepository.save(user);
     }
-
 }

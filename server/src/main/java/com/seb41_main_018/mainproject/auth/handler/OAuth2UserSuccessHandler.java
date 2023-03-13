@@ -21,8 +21,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-@RequiredArgsConstructor
+
 @Slf4j
+@RequiredArgsConstructor
 public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtTokenizer jwtTokenizer;
     private final UserRepository userRepository;
@@ -44,20 +45,21 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
             clientId = "KAKAO";
         } else {
             email = attributes.get("email").toString();
-            clientId = "FACEBOOK";
-            if (attributes.get("sub") != null) {
-                clientId = "GOOGLE";
-            }
+            clientId = "GOOGLE";
         }
 
         String password = userRepository.findByEmail(email).get().getPassword();
 
-        log.info("member's email : {}", email);
+        log.info("User Email : {}", email);
 
         redirect(request, response, email, password.equals(clientId));
     }
 
-    private void redirect(HttpServletRequest request, HttpServletResponse response, String username, boolean isMember) throws IOException {
+    private void redirect(HttpServletRequest request,
+                          HttpServletResponse response,
+                          String username,
+                          Boolean isMember) throws IOException {
+
         String accessToken = "";
         String refreshToken = "";
 
@@ -77,7 +79,9 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
     }
 
     private String delegateAccessToken(String username, List<String> authorities) {
+
         Map<String, Object> claims = new HashMap<>();
+
         claims.put("username", username);
         claims.put("roles", authorities);
 
@@ -88,41 +92,38 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
         String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
 
-        System.out.println("엑세스토큰 생성됨★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
+        log.info("--- 액세스 토큰 생성완료 ---");
 
         return accessToken;
     }
 
     private String delegateRefreshToken(String username) {
+
         String subject = username;
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
         String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
 
-
         //리프레시 토큰 redis에 저장
         redisUtil.set(subject, refreshToken, jwtTokenizer.getRefreshTokenExpirationMinutes());
-
-        System.out.println("리프레쉬토큰 생성됨★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 
         return refreshToken;
     }
 
-    private URI createURI(String accessToken, String refreshToken, long userId) {
+    private URI createURI(String accessToken, String refreshToken, Long userId) {
+
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
 
         queryParams.add("accessToken", accessToken);
         queryParams.add("refreshToken", refreshToken);
-        queryParams.add("useerId", String.valueOf(userId));
-        queryParams.add("gachigalle", "login");
+        queryParams.add("userId", String.valueOf(userId));
 
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("http")
                 .host("gachigallae.s3-website.ap-northeast-2.amazonaws.com")
-                .host("localhost")
-                .port(8080)
+                .port(80)
                 .path("/loading")
                 .queryParams(queryParams)
                 .build()
