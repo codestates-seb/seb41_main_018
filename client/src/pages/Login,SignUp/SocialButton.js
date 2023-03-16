@@ -1,16 +1,13 @@
 import React from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { WidthWideTwoTone } from "@mui/icons-material";
+import KaKaoLogin from "./KaKaoLogin";
 
 const SocialButton = () => {
     return (
         <div css={SocialLogin}>
-            <button type="button" css={KakaoLogo}>
-                <img
-                    alt="kakao"
-                    src="https://i.postimg.cc/hGMs7XMR/100px-Kakao-Corp-symbol-2012-svg.png"
-                />
-            </button>
+            <KaKaoLogin />
             <button type="button" css={NaverLogo}>
                 <img alt="naver" src="https://i.postimg.cc/tCQVzXs1/btn-G.png" />
             </button>
@@ -31,7 +28,8 @@ const SocialLogin = css`
 
     margin: 20px;
 
-    button {
+    button,
+    a {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -47,18 +45,6 @@ const SocialLogin = css`
             -webkit-transform: scale(1.1, 1.1);
             transition-duration: 250ms;
         }
-    }
-`;
-
-const KakaoLogo = css`
-    width: 40px;
-    height: 40px;
-
-    background-color: rgb(254, 229, 0);
-
-    img {
-        width: 16px;
-        height: 16px;
     }
 `;
 

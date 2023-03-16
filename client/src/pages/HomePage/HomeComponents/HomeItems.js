@@ -57,16 +57,16 @@ const HomeItems = (props) => {
         }
     };
 
-    useEffect(() => {
-        if (
-            userInfo.userId &&
-            userInfo.hearts.find((el) => el.contentId === (data && data.contentId))
-        ) {
-            setFavoriteClick(true);
-        } else {
-            setFavoriteClick(false);
-        }
-    }, [userInfo]);
+    // useEffect(() => {
+    //     if (
+    //         userInfo.userId &&
+    //         userInfo.hearts.find((el) => el.contentId === (data && data.contentId))
+    //     ) {
+    //         setFavoriteClick(true);
+    //     } else {
+    //         setFavoriteClick(false);
+    //     }
+    // }, [userInfo]);
 
     return (
         <div css={Container}>
