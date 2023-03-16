@@ -69,7 +69,7 @@ const Wrap = css`
     @media (max-width: 768px) {
         flex-direction: column;
         align-items: center;
-        width: 460px;
+        min-width: 400px;
     }
 `;
 

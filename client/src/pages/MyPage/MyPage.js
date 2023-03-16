@@ -25,7 +25,9 @@ const Mypage = () => {
     const [isClickEditName, setIsClickEditName] = useState(false);
     const [inputName, setInputName] = useState("");
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+
+    console.log(userInfo);
 
     const editButtonHandler = () => {
         setIsClickEditName(!isClickEditName);
