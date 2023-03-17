@@ -71,6 +71,7 @@ export const Login = async (data) => {
                 const accessToken = res.headers.get("Authorization");
                 sessionStorage.setItem("access_token", accessToken);
             }
+            console.log(res.data);
             Toast.fire({
                 icon: "success",
                 title: "안녕하세요. 환영합니다!",

@@ -89,26 +89,6 @@ const Header = () => {
 
     return (
         <>
-            {/*  <div
-                css={css`
-                    border: none;
-                    transition: 0.3s;
-                    display: block;
-                    padding: 0 20px;
-                    animation: move-left 50s linear infinite;
-                    span {
-                        @keyframes move-left {
-                            from {
-                                transform: translateX(100%);
-                            }
-                            to {
-                                transform: translateX(-100%);
-                            }
-                        }
-                    }
-                `}
-            ></div> */}
-
             <div css={Wrap}>
                 <div css={MenuArea}>
                     <MenuIcon onClick={clickMenu} css={MenuIconStyle} />
@@ -276,6 +256,7 @@ const Header = () => {
 const Wrap = css`
     display: flex;
     width: 100vw;
+    min-width: 400px;
     height: 60px;
     justify-content: center;
     align-items: center;
