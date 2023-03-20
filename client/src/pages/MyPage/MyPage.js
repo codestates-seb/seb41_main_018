@@ -27,8 +27,6 @@ const Mypage = () => {
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const [isLoading, setIsLoading] = useState(false);
 
-    console.log(userInfo);
-
     const editButtonHandler = () => {
         setIsClickEditName(!isClickEditName);
     };
@@ -44,12 +42,12 @@ const Mypage = () => {
         });
     };
 
-    useEffect(() => {
-        getUserInfo(userInfo.userId).then((data) => {
-            setUserInfo(data.data);
-            setIsLoading(false);
-        });
-    }, []);
+    // useEffect(() => {
+    //     getUserInfo(userInfo.userId).then((data) => {
+    //         setUserInfo(data.data);
+    //         setIsLoading(false);
+    //     });
+    // }, []);
 
     return (
         <>
