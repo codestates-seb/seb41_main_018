@@ -61,6 +61,7 @@ export const checkEmail = async (email) => {
             console.log(err);
         });
 };
+
 // 로그인
 export const Login = async (data) => {
     return await axios
@@ -71,6 +72,7 @@ export const Login = async (data) => {
                 const accessToken = res.headers.get("Authorization");
                 sessionStorage.setItem("access_token", accessToken);
             }
+            console.log(res.data);
             Toast.fire({
                 icon: "success",
                 title: "안녕하세요. 환영합니다!",
@@ -125,6 +127,34 @@ export const userEdit = async (userId, editName) => {
             return res.data;
         })
         .catch((err) => {
+            console.error(err.message);
+        });
+};
+
+// 프로필 이미지 수정
+export const editProfileImage = async (userId, formData) => {
+    return await axios
+        .patch(
+            `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/${userId}/image`,
+            formData,
+            {
+                headers: {
+                    Authorization: sessionStorage.getItem("access_token"),
+                },
+            }
+        )
+        .then((res) => {
+            Toast.fire({
+                icon: "success",
+                title: "수정이 완료되었습니다.",
+            });
+            return res.data;
+        })
+        .catch((err) => {
+            Toast.fire({
+                icon: "error",
+                title: "이미지가 변경되지 않았습니다.",
+            });
             console.error(err.message);
         });
 };

@@ -48,7 +48,7 @@ const Toast = Swal.mixin({
 
 const swiperOption = {
     spaceBetween: 20,
-    slidesPerView: 5,
+    slidesPerView: 1,
     navigation: true,
     breakpoints: {
         1441: {
@@ -62,9 +62,6 @@ const swiperOption = {
         },
         576: {
             slidesPerView: 2,
-        },
-        400: {
-            slidesPerView: 1,
         },
     },
 };
@@ -103,85 +100,105 @@ const Home = () => {
 
     return (
         <div>
-            {isLoading ? (
-                <Loading />
-            ) : (
-                <>
-                    <Categorybar />
-                    <Swiper {...swiperOption} css={PostStyle}>
-                        <div>
-                            <SwiperSlide>
-                                <Regionitems img={`${GachiGalleImgSrc.seoul_img}`} text="서울" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Regionitems img={`${GachiGalleImgSrc.busan_img}`} text="부산" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Regionitems img={`${GachiGalleImgSrc.jeju_img}`} text="제주" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Regionitems
-                                    img={`${GachiGalleImgSrc.gangneung_img}`}
-                                    text="강릉"
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Regionitems img={`${GachiGalleImgSrc.damyang_img}`} text="담양" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Regionitems img={`${GachiGalleImgSrc.jeonju_img}`} text="전주" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Regionitems img={`${GachiGalleImgSrc.yeosu_img}`} text="여수" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Regionitems img={`${GachiGalleImgSrc.paju_img}`} text="파주" />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Regionitems img={`${GachiGalleImgSrc.pocheon_img}`} text="포천" />
-                            </SwiperSlide>
-                        </div>
-                    </Swiper>
+            <Categorybar />
+            <div css={Container}>
+                {isLoading ? (
+                    <Loading />
+                ) : (
+                    <>
+                        <Swiper {...swiperOption} css={PostStyle}>
+                            <div>
+                                <SwiperSlide>
+                                    <Regionitems
+                                        img={`${GachiGalleImgSrc.seoul_img}`}
+                                        text="서울"
+                                    />
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <Regionitems
+                                        img={`${GachiGalleImgSrc.busan_img}`}
+                                        text="부산"
+                                    />
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <Regionitems img={`${GachiGalleImgSrc.jeju_img}`} text="제주" />
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <Regionitems
+                                        img={`${GachiGalleImgSrc.gangneung_img}`}
+                                        text="강릉"
+                                    />
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <Regionitems
+                                        img={`${GachiGalleImgSrc.damyang_img}`}
+                                        text="담양"
+                                    />
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <Regionitems
+                                        img={`${GachiGalleImgSrc.jeonju_img}`}
+                                        text="전주"
+                                    />
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <Regionitems
+                                        img={`${GachiGalleImgSrc.yeosu_img}`}
+                                        text="여수"
+                                    />
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <Regionitems img={`${GachiGalleImgSrc.paju_img}`} text="파주" />
+                                </SwiperSlide>
+                                <SwiperSlide>
+                                    <Regionitems
+                                        img={`${GachiGalleImgSrc.pocheon_img}`}
+                                        text="포천"
+                                    />
+                                </SwiperSlide>
+                            </div>
+                        </Swiper>
 
-                    <h2 css={ItemTitle}>🛫 방금 올라온 🔥HOT🔥 여행지</h2>
-                    <Swiper {...swiperOption} css={PostStyle}>
-                        <div>
-                            {contentsList &&
-                                contentsList.map((content) => (
+                        <h2 css={ItemTitle}>🛫 방금 올라온 🔥HOT🔥 여행지</h2>
+                        <Swiper {...swiperOption} css={PostStyle}>
+                            <div>
+                                {contentsList &&
+                                    contentsList.map((content) => (
+                                        <SwiperSlide key={content.contentId}>
+                                            <HomeItems content={content} />
+                                        </SwiperSlide>
+                                    ))}
+                            </div>
+                        </Swiper>
+                        <Banner />
+
+                        <h2 css={ItemTitle}>✨ 관심 급상승 여행지</h2>
+                        <Swiper {...swiperOption} css={PostStyle}>
+                            <div>
+                                {viewCountSortArr.map((content) => (
                                     <SwiperSlide key={content.contentId}>
                                         <HomeItems content={content} />
                                     </SwiperSlide>
                                 ))}
-                        </div>
-                    </Swiper>
-                    <Banner />
+                            </div>
+                        </Swiper>
 
-                    <h2 css={ItemTitle}>✨ 관심 급상승 여행지</h2>
-                    <Swiper {...swiperOption} css={PostStyle}>
-                        <div>
-                            {viewCountSortArr.map((content) => (
-                                <SwiperSlide key={content.contentId}>
-                                    <HomeItems content={content} />
-                                </SwiperSlide>
-                            ))}
-                        </div>
-                    </Swiper>
-
-                    <h2 css={ItemTitle}>❤️ 다른 사람들이 좋아하는 여행지</h2>
-                    <Swiper {...swiperOption} css={PostStyle}>
-                        <div>
-                            {heartCountSortArr.map((content) => (
-                                <SwiperSlide key={content.contentId}>
-                                    <HomeItems content={content} />
-                                </SwiperSlide>
-                            ))}
-                        </div>
-                    </Swiper>
-                    <button css={PostButton} onClick={postButtonClick}>
-                        <span>내 여행지 공유하기</span>
-                    </button>
-                </>
-            )}
+                        <h2 css={ItemTitle}>❤️ 다른 사람들이 좋아하는 여행지</h2>
+                        <Swiper {...swiperOption} css={PostStyle}>
+                            <div>
+                                {heartCountSortArr.map((content) => (
+                                    <SwiperSlide key={content.contentId}>
+                                        <HomeItems content={content} />
+                                    </SwiperSlide>
+                                ))}
+                            </div>
+                        </Swiper>
+                        <button css={PostButton} onClick={postButtonClick}>
+                            <span>내 여행지 공유하기</span>
+                        </button>
+                    </>
+                )}
+            </div>
         </div>
     );
 };
@@ -230,9 +247,15 @@ const PostButton = css`
         z-index: 1;
     }
 `;
+const Container = css`
+    @media (max-width: 400px) {
+        margin: 0 20px;
+    }
+`;
 
 const ItemTitle = css`
     width: 80vw;
+    min-width: 400px;
     margin: 30px auto 0;
     color: rgb(0, 0, 0, 0.85);
     font-size: 1.5rem;
@@ -241,9 +264,10 @@ const ItemTitle = css`
 
 const PostStyle = css`
     z-index: 1;
-    display: grid;
+    /* display: grid; */
     margin: 0 auto;
-    gap: 20px;
+    /* gap: 20px; */
+    min-width: 360px;
     width: 80vw;
     height: 100%;
 
