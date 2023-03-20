@@ -1,21 +1,81 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from 'jwt-decode';
+import { signUp, Login, getUserInfo} from "../../util/axiosUser";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { userInfoState, loginState } from "../../state/atom";
+import axios from "axios";
+
 import { WidthWideTwoTone } from "@mui/icons-material";
 import KaKaoLogin from "./KaKaoLogin";
 
 const SocialButton = () => {
+    const navigate = useNavigate();
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    const [isLogin, setIsLogin] = useRecoilState(loginState);
+
+
     return (
         <div css={SocialLogin}>
             <KaKaoLogin />
             <button type="button" css={NaverLogo}>
                 <img alt="naver" src="https://i.postimg.cc/tCQVzXs1/btn-G.png" />
             </button>
-            <button type="button" css={GoogleLogo}>
-                <img
-                    alt="google"
-                    src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-                />
+            <button css={GoogleLogo}>
+                <GoogleLogin
+                    onSuccess={async (credentialResponse) => {
+                        const details = jwt_decode(credentialResponse.credential);
+
+                        const googleSignUpData = {
+                            email: details.email,
+                            email_subscribe: true,
+                            nickname: details.name,
+                            password: "1111111111",
+                            phone: "1111111111111",
+                        }
+                        const googleLogindata = {
+                            email: details.email,
+                            password: "1111111111",
+                        }
+
+                        // console.log(details);
+                        // console.log(credentialResponse);
+                        
+                        await axios
+                        .get(
+                            `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/emailCheck/${details.email}`,
+                            details.email
+                        )
+                        .then((res) => {
+                            if(res.data) {
+                                signUp(googleSignUpData)
+                            } else {
+                                Login(googleLogindata)
+                                .then((res) => {
+                                    getUserInfo(res.data.userId).then((data) => {
+                                        setUserInfo(data.data);
+                                        setIsLogin(true);
+                                    });
+                                })
+                            }
+                        })
+                        .then(() => {
+                            navigate("/")
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                    }}
+                    onError={() => {
+                        console.log('err')
+                    }}
+                    type="icon"
+                    shape="circle"
+                    theme="outline"
+                ></GoogleLogin>
             </button>
         </div>
     );

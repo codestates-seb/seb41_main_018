@@ -1,5 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import ScrollToTop from "./util/ScrollToTop";
 import Header from "../src/pages/components/Header";
@@ -20,16 +21,18 @@ const App = () => {
             <ScrollToTop />
             <Header />
             {/* {!["/signup", "/login"].includes(location.pathname.slice(0, 6)) && <Footer />} */}
-            <Routes>
-                <Route path="/" element={<Home />}></Route>
-                <Route path="/login" element={<Login />}></Route>
-                <Route path="/signup" element={<SignUp />}></Route>
-                <Route path="/mypage" element={<Mypage />}></Route>
-                <Route path="/detail/:contentId" element={<Detail />}></Route>
-                <Route path="/post" element={<Post />}></Route>
-                <Route path="/edit" element={<Edit />}></Route>
-                <Route path="/result" element={<Result />}></Route>
-            </Routes>
+            <GoogleOAuthProvider clientId='1098183900363-cre0duef6r6q3bg1fqdqpq6roumjee97.apps.googleusercontent.com'>
+                <Routes>
+                    <Route path="/" element={<Home />}></Route>
+                    <Route path="/login" element={<Login />}></Route>
+                    <Route path="/signup" element={<SignUp />}></Route>
+                    <Route path="/mypage" element={<Mypage />}></Route>
+                    <Route path="/detail/:contentId" element={<Detail />}></Route>
+                    <Route path="/post" element={<Post />}></Route>
+                    <Route path="/edit" element={<Edit />}></Route>
+                    <Route path="/result" element={<Result />}></Route>
+                </Routes>
+            </GoogleOAuthProvider>
         </BrowserRouter>
     );
 };
