@@ -26,8 +26,10 @@ const Mypage = () => {
     const [isClickEditName, setIsClickEditName] = useState(false);
     const [inputName, setInputName] = useState("");
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
     const [isLoading, setIsLoading] = useState(true);
     const [openModal, setOpenModal] = useState(false);
+
 
     const editButtonHandler = () => {
         setIsClickEditName(!isClickEditName);
@@ -43,6 +45,7 @@ const Mypage = () => {
             editButtonHandler();
         });
     };
+
 
     const editProfileHandler = () => {
         setOpenModal(true);
