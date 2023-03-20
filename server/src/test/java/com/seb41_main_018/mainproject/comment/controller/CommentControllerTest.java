@@ -1,6 +1,7 @@
 package com.seb41_main_018.mainproject.comment.controller;
 
 import com.google.gson.Gson;
+import com.seb41_main_018.mainproject.auth.jwt.JwtTokenizer;
 import com.seb41_main_018.mainproject.comment.dto.CommentPatchDto;
 import com.seb41_main_018.mainproject.comment.dto.CommentPostDto;
 import com.seb41_main_018.mainproject.comment.dto.CommentResponseDto;
@@ -9,6 +10,7 @@ import com.seb41_main_018.mainproject.comment.mapper.CommentMapper;
 import com.seb41_main_018.mainproject.comment.service.CommentService;
 import com.seb41_main_018.mainproject.constant.RatingType;
 import com.seb41_main_018.mainproject.user.entity.User;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
@@ -35,7 +38,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser
 class CommentControllerTest {
+
+    private static JwtTokenizer jwtTokenizer;
+    private String secretKey;
+    private String base64EncodedSecretKey;
     @Autowired
     private MockMvc mockMvc;
 
@@ -47,6 +55,9 @@ class CommentControllerTest {
 
     @MockBean
     private CommentMapper commentMapper;
+
+
+
     @Test
     void postCommentTest() throws Exception {
         // given
@@ -82,6 +93,7 @@ class CommentControllerTest {
         // then
         MvcResult result = actions
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.title").value(post.getBody()))
                 .andExpect(jsonPath("$.body").value(post.getBody()))
                 .andReturn();
 
@@ -132,7 +144,7 @@ class CommentControllerTest {
         comment.setCommentId(commentId);
 
         CommentResponseDto response = new CommentResponseDto(1L,
-                1L,1L,"홍길동", "좋은 여행 정보 군요!",RatingType.FOUR, "홍길동", LocalDateTime.now() , LocalDateTime.now(), "셀카.png");
+                1L,1L,"홍길동", "홍길동",RatingType.FOUR, "홍길동", LocalDateTime.now() , LocalDateTime.now(), "셀카.png");
         // Stubbing by Mockito
         given(commentService.findComment(Mockito.anyLong())).willReturn(new Comment());
         given(commentMapper.commentToCommentResponseDto(Mockito.any(Comment.class))).willReturn(response);

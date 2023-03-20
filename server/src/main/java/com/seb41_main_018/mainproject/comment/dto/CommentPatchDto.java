@@ -6,9 +6,11 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @ApiModel("Comment Patcht")
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class CommentPatchDto {
         @ApiModelProperty(notes = "코멘트 아이디", example = "1", required = true)

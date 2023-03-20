@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS) // 테스트 학습이 핵심이 아니니 구글에서 검색해서 학습하세요.
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class JwtTokenizerTest {
     private static JwtTokenizer jwtTokenizer;
     private String secretKey;
