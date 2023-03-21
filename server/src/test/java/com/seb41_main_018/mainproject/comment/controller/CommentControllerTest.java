@@ -133,6 +133,9 @@ class CommentControllerTest {
 
         // then
         actions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.commentId").value(patch.getCommentId()))
+                .andExpect(jsonPath("$.userId").value(patch.getUserId()))
+                .andExpect(jsonPath("$.contentId").value(patch.getContentId()))
                 .andExpect(jsonPath("$.body").value(patch.getBody()));
     }
 
@@ -159,6 +162,7 @@ class CommentControllerTest {
 
         // then
         actions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.commentId").value(comment.getCommentId()))
                 .andExpect(jsonPath("$.body").value(comment.getBody()));
     }
 

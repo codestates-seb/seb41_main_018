@@ -1,8 +1,11 @@
 //package com.seb41_main_018.mainproject.content.controller;
 //
+//import com.amazonaws.services.ec2.model.Route;
 //import com.google.gson.Gson;
 //import com.jayway.jsonpath.JsonPath;
-//import com.seb41_main_018.mainproject.content.dto.ContentDto;
+//import com.seb41_main_018.mainproject.content.dto.ContentPatchDto;
+//import com.seb41_main_018.mainproject.content.dto.ContentPostDto;
+//import com.seb41_main_018.mainproject.content.dto.ContentResponseDto;
 //import com.seb41_main_018.mainproject.content.entity.Content;
 //import com.seb41_main_018.mainproject.content.mapper.ContentMapper;
 //import com.seb41_main_018.mainproject.content.service.ContentService;
@@ -14,6 +17,7 @@
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.boot.test.mock.mockito.MockBean;
 //import org.springframework.http.MediaType;
+//import org.springframework.security.test.context.support.WithMockUser;
 //import org.springframework.test.web.servlet.MockMvc;
 //import org.springframework.test.web.servlet.MvcResult;
 //import org.springframework.test.web.servlet.ResultActions;
@@ -24,8 +28,10 @@
 //
 //import javax.transaction.Transactional;
 //import java.net.URI;
+//import java.time.LocalDateTime;
 //import java.util.List;
 //
+//import static com.seb41_main_018.mainproject.constant.ThemeType.DOMESTIC;
 //import static org.hamcrest.MatcherAssert.assertThat;
 //import static org.hamcrest.Matchers.is;
 //import static org.mockito.ArgumentMatchers.anyLong;
@@ -37,6 +43,7 @@
 //@Transactional
 //@SpringBootTest
 //@AutoConfigureMockMvc
+//@WithMockUser
 //class ContentControllerTest {
 //
 //    @Autowired
@@ -53,22 +60,16 @@
 //
 //    @Test
 //    void postContent() throws Exception {
-//        User user = new User("hgd@gmail.com", "1234",
-//                "홍길동",
-//                true);
+//        User user = new User("hgd@gmail.com","1234"
+//                ,"홍길동");
 //
-//        ContentDto.ContentPost post = new ContentDto.ContentPost(1L,
-//                "Algorithm to simplify a weighted directed graph of debts",
-//                "I've been using a little python script I wrote to manage debt amongst my roommates.");
-//        ContentDto.ContentResponse responseBody = new ContentDto.ContentResponse(1L,
-//                1L,
-//                "Algorithm to simplify a weighted directed graph of debts",
-//                "I've been using a little python script I wrote to manage debt amongst my roommates.",0);
+//        ContentPostDto post = new ContentPostDto("여행기록","2023.01.20", "내돈내산", DOMESTIC, "창경궁");
+//        ContentPostDto responseBody = new ContentPostDto("여행기록","2023.01.20", "내돈내산", DOMESTIC, "창경궁");
 //
 //        // Stubbing by Mockito
-//        given(contentMapper.contentPostDtoToContent(Mockito.any(ContentDto.ContentPost.class))).willReturn(new Content());
+//        given(contentMapper.contentPostDtoToContent(Mockito.any(ContentPostDto.class))).willReturn(new Content());
 //
-//        given(contentService.createContent(Mockito.any(Content.class),anyLong())).willReturn(new Content());
+//        given(contentService.createContent(Mockito.any(Content.class))).willReturn(new Content());
 //
 //        given(contentMapper.contentToContentResponse(Mockito.any(Content.class))).willReturn(responseBody);
 //
@@ -87,7 +88,8 @@
 //        MvcResult result = actions
 //                .andExpect(status().isCreated())
 //                .andExpect(jsonPath("$.title").value(post.getTitle()))
-//                .andExpect(jsonPath("$.body").value(post.getBody()))
+//                .andExpect(jsonPath("$.travelDate").value(post.getTravelDate()))
+//                .andExpect(jsonPath("$.tag").value(post.getTag()))
 //                .andReturn();
 //    }
 //
@@ -96,14 +98,13 @@
 //        // given
 //        long contentId = 1L;
 //
-//        Content content = new Content("Algorithm to simplify a weighted directed graph of debts",
-//                "I've been using a little python script I wrote to manage debt amongst my roommates.");
+//        Content content = new Content();
 //        content.setContentId(contentId);
 //
-//        ContentDto.ContentResponse response = new ContentDto.ContentResponse(1L,
+//        ContentResponseDto response = new ContentResponseDto(1L,
 //                1L,
 //                "Algorithm to simplify a weighted directed graph of debts",
-//                "I've been using a little python script I wrote to manage debt amongst my roommates.",0);
+//                DOMESTIC,1,0,1,"2023.03.21","내돈내산","1.png", LocalDateTime.now(),LocalDateTime.now(), "");
 //
 //
 //        // Stubbing by Mockito
@@ -120,8 +121,13 @@
 //
 //        // then
 //        actions.andExpect(status().isOk())
+//                .andExpect(jsonPath("$.contentId").value(content.getContentId()))
 //                .andExpect(jsonPath("$.title").value(content.getTitle()))
-//                .andExpect(jsonPath("$.body").value(content.getBody()));
+//                .andExpect(jsonPath("$.themeType").value(content.getThemeType()))
+//                .andExpect(jsonPath("$.heartCount").value(content.getHeartCount()))
+//                .andExpect(jsonPath("$.viewCount").value(content.getViewCount()))
+//                .andExpect(jsonPath("$.travelDate").value(content.getTravelDate()))
+//                .andExpect(jsonPath("$.tag").value(content.getTag()));
 //    }
 //
 //    /*@Test
@@ -185,21 +191,21 @@
 //    @Test
 //    void patchContent() throws Exception {
 //        long contentId = 1L;
-//        ContentDto.ContentPatch patch = new ContentDto.ContentPatch(1L,
+//        ContentPatchDto patch = new ContentPatchDto(1L,
 //                1L,
-//                "Patch:Algorithm to simplify a weighted directed graph of debts",
-//                "Patch:I've been using a little python script I wrote to manage debt amongst my roommates.");
+//                "Algorithm to simplify a weighted directed graph of debts","2023.03.21",
+//                DOMESTIC,"내돈내산","");
 //
-//        ContentDto.ContentResponse response = new ContentDto.ContentResponse(1L,
+//        ContentResponseDto response = new ContentResponseDto(1L,
 //                1L,
-//                "Patch:Algorithm to simplify a weighted directed graph of debts",
-//                "Patch:I've been using a little python script I wrote to manage debt amongst my roommates.",0);
+//                "Algorithm to simplify a weighted directed graph of debts",
+//                DOMESTIC,1,1,1,"2023.03.21","내돈내산","1.png",LocalDateTime.now(),LocalDateTime.now(),"");
 //
 //
 //        // Stubbing by Mockito
-//        given(contentMapper.contentPatchDtoToContent(Mockito.any(ContentDto.ContentPatch.class))).willReturn(new Content());
+//        given(contentMapper.contentPatchDtoToContent(Mockito.any(ContentPatchDto.class))).willReturn(new Content());
 //
-//        given(contentService.updateContent(anyLong(),Mockito.any(Content.class))).willReturn(new Content());
+//        given(contentService.updateContent(Mockito.any(Content.class))).willReturn(new Content());
 //
 //        given(contentMapper.contentToContentResponse(Mockito.any(Content.class))).willReturn(response);
 //
@@ -219,8 +225,11 @@
 //
 //        // then
 //        actions.andExpect(status().isOk())
+//                .andExpect(jsonPath("$.contentId").value(patch.getContentId()))
+//                .andExpect(jsonPath("$.userId").value(patch.getUserId()))
 //                .andExpect(jsonPath("$.title").value(patch.getTitle()))
-//                .andExpect(jsonPath("$.body").value(patch.getBody()));
+//                .andExpect(jsonPath("$.travelDate").value(patch.getTravelDate()))
+//                .andExpect(jsonPath("$.tag").value(patch.getTag()));
 //    }
 //
 //    @Test

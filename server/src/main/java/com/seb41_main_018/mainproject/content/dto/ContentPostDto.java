@@ -4,6 +4,7 @@ import com.seb41_main_018.mainproject.constant.ThemeType;
 import com.seb41_main_018.mainproject.route.dto.RoutePostDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @ApiModel("Content Post")
 @Getter
+@AllArgsConstructor
 public class ContentPostDto {
     @ApiModelProperty(notes = "컨텐트 제목", example = "기가 막힌 서울여행", required = true)
     @NotBlank(message = "게시글 제목을 입력해야합니다.")
