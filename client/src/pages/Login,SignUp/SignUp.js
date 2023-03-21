@@ -169,7 +169,7 @@ const SignUp = () => {
                         css={LoginInputBox}
                     />
                     {errors.passwordConfirm && (
-                        <small role="alert">"비밀번호가 일치하지 않습니다."</small>
+                        <small role="alert">비밀번호가 일치하지 않습니다.</small>
                     )}
                     <label htmlFor="password" css={LoginLabelBox}>
                         닉네임
