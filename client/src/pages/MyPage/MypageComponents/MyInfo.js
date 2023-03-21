@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { PALETTE } from "../../../Common";
@@ -12,6 +12,9 @@ import DeleteUserModal from "./DeleteUserModal";
 const MyInfo = () => {
     const [isClickEditPassword, setIsClickEditPassword] = useState(false);
     const [inputPassword, setInputPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [passwordLength, setPasswordLength] = useState();
+    const [b, setb] = useState();
     const [openModal, setOpenModal] = useState(false);
     const userInfo = useRecoilValue(userInfoState);
 
@@ -19,8 +22,16 @@ const MyInfo = () => {
         setIsClickEditPassword(!isClickEditPassword);
     };
 
+    //비밀 번호 수정 및 8자리 이상 비밀번호 검증
     const inputPasswordHandler = (e) => {
         setInputPassword(e.target.value);
+        e.target.value.length < 8 ? setPasswordLength(false) : setPasswordLength(true);
+    };
+
+    //비밀 번호 2차 확인
+    const ConfirmPasswordHandler = (e) => {
+        setConfirmPassword(e.target.value);
+        inputPassword === e.target.value ? setb(true) : setb(false);
     };
 
     const showModal = () => {
@@ -41,9 +52,32 @@ const MyInfo = () => {
                 {isClickEditPassword ? (
                     <div css={PasswordInput}>
                         <input type="password" onChange={inputPasswordHandler} />
+                        {inputPassword ? (
+                            passwordLength ? (
+                                <span css={PasswordValidationMessage}>
+                                    사용가능한 비밀번호 입니다.
+                                </span>
+                            ) : (
+                                <span css={PasswordValidationMessage}>
+                                    8자리 이상 비밀번호를 사용하세요.
+                                </span>
+                            )
+                        ) : null}
                         <div>
-                            <input type="password" onChange={inputPasswordHandler} />
+                            <input type="password" onChange={ConfirmPasswordHandler} />
+                            {confirmPassword ? (
+                                b ? (
+                                    <span css={PasswordValidationMessage}>
+                                        비밀번호가 일치합니다.
+                                    </span>
+                                ) : (
+                                    <span css={PasswordValidationMessage}>
+                                        비밀번호가 일치하지 않습니다.
+                                    </span>
+                                )
+                            ) : null}
                             {/* 수정 기능 버튼 */}
+
                             <span type="button" className={isClickEditPassword ? "" : "hidden"}>
                                 수정
                             </span>
@@ -148,6 +182,7 @@ const ListName = css`
 const PasswordInput = css`
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     input {
         width: 200px;
         height: 30px;
@@ -156,6 +191,13 @@ const PasswordInput = css`
     span {
         margin-right: 10px;
     }
+`;
+
+const PasswordValidationMessage = css`
+    display: flex;
+
+    color: red;
+    margin: -10px 0 10px 0;
 `;
 
 const PasswordContent = css`
