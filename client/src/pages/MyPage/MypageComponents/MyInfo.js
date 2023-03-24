@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import { PALETTE } from "../../../Common";
 
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { userInfoState } from "../../../state/atom";
 
 import Button from "../../components/Button";
 import DeleteUserModal from "./DeleteUserModal";
+
+import { EditUserPassword, getUserInfo } from "../../../util/axiosUser";
 
 const MyInfo = () => {
     const [isClickEditPassword, setIsClickEditPassword] = useState(false);
@@ -16,7 +18,7 @@ const MyInfo = () => {
     const [passwordLength, setPasswordLength] = useState();
     const [b, setb] = useState();
     const [openModal, setOpenModal] = useState(false);
-    const userInfo = useRecoilValue(userInfoState);
+    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
 
     const editButtonHandler = () => {
         setIsClickEditPassword(!isClickEditPassword);
@@ -38,6 +40,19 @@ const MyInfo = () => {
         setOpenModal(true);
     };
 
+    const EditPasswordHandler = () => {
+        EditUserPassword(userInfo.userId, confirmPassword).then((data) => {
+            if (data) {
+                getUserInfo(userInfo.userId).then((data) => {
+                    setUserInfo(data.data);
+                });
+            }
+        });
+        editButtonHandler();
+        setInputPassword("");
+        setConfirmPassword("");
+    };
+
     return (
         <ul css={MyInfoWrap}>
             <li css={ListItem}>
@@ -50,20 +65,20 @@ const MyInfo = () => {
                 </span>
 
                 {isClickEditPassword ? (
-                    <div css={PasswordInput}>
-                        <input type="password" onChange={inputPasswordHandler} />
-                        {inputPassword ? (
-                            passwordLength ? (
-                                <span css={PasswordValidationMessage}>
-                                    사용가능한 비밀번호 입니다.
-                                </span>
-                            ) : (
-                                <span css={PasswordValidationMessage}>
-                                    8자리 이상 비밀번호를 사용하세요.
-                                </span>
-                            )
-                        ) : null}
-                        <div>
+                    <div css={EditPasswordContainer}>
+                        <div css={PasswordInput}>
+                            <input type="password" onChange={inputPasswordHandler} />
+                            {inputPassword ? (
+                                passwordLength ? (
+                                    <span css={PasswordValidationMessage}>
+                                        사용가능한 비밀번호 입니다.
+                                    </span>
+                                ) : (
+                                    <span css={PasswordValidationMessage}>
+                                        8자리 이상 비밀번호를 사용하세요.
+                                    </span>
+                                )
+                            ) : null}
                             <input type="password" onChange={ConfirmPasswordHandler} />
                             {confirmPassword ? (
                                 b ? (
@@ -77,12 +92,17 @@ const MyInfo = () => {
                                 )
                             ) : null}
                             {/* 수정 기능 버튼 */}
-
-                            <span type="button" className={isClickEditPassword ? "" : "hidden"}>
+                        </div>
+                        <div css={EditPasswordButton}>
+                            <span
+                                type="button"
+                                css={isClickEditPassword ? "" : "hidden"}
+                                onClick={EditPasswordHandler}
+                            >
                                 수정
                             </span>
                             <span
-                                className={isClickEditPassword ? "" : "none"}
+                                css={isClickEditPassword ? "" : "none"}
                                 onClick={editButtonHandler}
                             >
                                 취소
@@ -193,6 +213,11 @@ const PasswordInput = css`
     }
 `;
 
+const EditPasswordContainer = css`
+    display: flex;
+    align-items: end;
+`;
+
 const PasswordValidationMessage = css`
     display: flex;
 
@@ -200,8 +225,18 @@ const PasswordValidationMessage = css`
     margin: -10px 0 10px 0;
 `;
 
+const EditPasswordButton = css`
+    margin-bottom: 17px;
+
+    span {
+        cursor: pointer;
+        margin: 0 5px;
+    }
+`;
+
 const PasswordContent = css`
     span {
+        cursor: pointer;
         margin-right: 10px;
     }
 `;

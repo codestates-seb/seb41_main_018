@@ -131,6 +131,30 @@ export const userEdit = async (userId, editName) => {
         });
 };
 
+// 비밀번호 수정 (닉네임 수정과 같이 통일할 수 있는 방법 찾기)
+export const EditUserPassword = async (userId, editPassword) => {
+    return await axios
+        .patch(
+            `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/${userId}`,
+            { password: editPassword },
+            {
+                headers: {
+                    Authorization: sessionStorage.getItem("access_token"),
+                },
+            }
+        )
+        .then((res) => {
+            Toast.fire({
+                icon: "success",
+                title: "수정이 완료되었습니다.",
+            });
+            return res.data;
+        })
+        .catch((err) => {
+            console.error(err.message);
+        });
+};
+
 // 프로필 이미지 수정
 export const editProfileImage = async (userId, formData) => {
     return await axios
