@@ -31,6 +31,7 @@ const KaKaoLogin = () => {
 
     // 인가코드 받아오기
     const query = queryString.parse(window.location.search);
+    console.log(query);
 
     //qs 모듈을 사용하여 data값들을 query string으로 변환
     const payload = qs.stringify({
@@ -39,6 +40,7 @@ const KaKaoLogin = () => {
         redirect_uri: process.env.REACT_APP_REDIRECT_URI,
         code: query.code,
     });
+    console.log(payload);
 
     //API) accessToken 발급
     const getAuthorization = async (payload) => {
@@ -83,19 +85,13 @@ const KaKaoLogin = () => {
     //API) 서버 유저 데이터 가져오기
     const getData = async () => {
         const data = await axios.get(
-            `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/${isUserInfo.userId}/Info`
+            `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/${result[2].data?.userId}/Info`
         );
         return data;
     };
 
     //API) 로그인
-    const AuthLogin = async (a) => {
-        const data = await axios.post(
-            `http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/users/login`,
-            a
-        );
-        return data;
-    };
+    // const AuthLogin = as;
 
     const result = useQueries([
         //이메일 중복 확인
@@ -103,40 +99,32 @@ const KaKaoLogin = () => {
         //카카오 서버로부터 유저정보 받아오기
         { queryKey: ["getUserData"], queryFn: getUserData },
         //가치갈래 서버 유저 정보 요청
-        { queryKey: ["getData"], queryFn: getData },
+        // { queryKey: ["getData"], queryFn: getData },
     ]);
 
     const authorization = useMutation(getAuthorization, {
         onError: (err, variables) => {
             console.error(err);
         },
-        //카카오 서버로 부터 받은 accessToken과 refrrreshToken을 sessionStorage에 저장
+        //카카오 서버로 부터 받은 accessToken과 refreshToken을 sessionStorage에 저장
         onSuccess: (data, variables) => {
             console.log("success", data.data, variables);
             sessionStorage.setItem("access_token", data.data.access_token);
             sessionStorage.setItem("refresh_token", data.data.refresh_token);
+            // navigate("/");
         },
     });
 
-    const KaKaoLogin = useMutation(AuthLogin, {
-        onError: (err) => {
-            console.error(err);
-        },
-        onSuccess: () => {
-            setIsLogin(true);
-            setUserInfo(data);
-            navigate("/");
-            Toast.fire({
-                icon: "success",
-                title: "안녕하세요. 환영합니다!",
-            });
-        },
-    });
+    // setIsLogin(true);
+    // Toast.fire({
+    //     icon: "success",
+    //     title: "안녕하세요. 환영합니다!",
+    // });
 
     //카카오 서버로부터 받은 데이터로 회원등록하기
     const KaKaoSignUp = useMutation(AuthSignUp, {
         onSuccess: () => {
-            console.log(`회원가입 완료`, data);
+            console.log(data);
         },
         onError: () => {
             console.error();
@@ -147,6 +135,10 @@ const KaKaoLogin = () => {
     useEffect(() => {
         if (query.code) {
             authorization.mutate(payload);
+        }
+
+        //등록되지 않은 이메일이라면
+        if (result[0].data?.data === true) {
             const userData = {
                 // userId: result[1].data?.id,
                 // image: result[1].data?.properties.profile_image,
@@ -156,18 +148,18 @@ const KaKaoLogin = () => {
                 phone: "010-1111-1111", //카카오 소셜 로그인으로 전화번호를 받아올 수 없음 (비지니스 전환해야함)
             };
             setUserData(userData);
+            setUserInfo(isUserInfo);
+            KaKaoSignUp.mutate(isUserData);
+            console.log(`userData`, isUserData);
         }
     }, []);
 
-    useEffect(() => {
-        //가입 가능한 이메일이라면
-        KaKaoSignUp.mutate(isUserData);
-        KaKaoLogin.mutate({ email: isUserData.email, password: isUserData.password });
-        console.log(`userData`, isUserData);
-    }, [isUserData]);
-
     return (
-        <a type="button" href={process.env.REACT_APP_KAKAO_AUTH_URL} css={KakaoLogo}>
+        <a
+            type="button"
+            href="http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/kakao"
+            css={KakaoLogo}
+        >
             <img
                 alt="kakao"
                 src="https://i.postimg.cc/hGMs7XMR/100px-Kakao-Corp-symbol-2012-svg.png"
