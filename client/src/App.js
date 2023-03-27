@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { GoogleOAuthProvider } from '@react-oauth/google'
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import ScrollToTop from "./util/ScrollToTop";
 import Header from "../src/pages/components/Header";
@@ -14,6 +14,7 @@ import Edit from "./pages/PostPage/Edit";
 import Result from "../src/pages/Result/Result";
 import Footer from "../src/pages/components/Footer";
 import "./App.css";
+import LoadingPage from "./pages/HomePage/LoadingPage";
 
 const App = () => {
     return (
@@ -21,7 +22,7 @@ const App = () => {
             <ScrollToTop />
             <Header />
             {/* {!["/signup", "/login"].includes(location.pathname.slice(0, 6)) && <Footer />} */}
-            <GoogleOAuthProvider clientId='1098183900363-cre0duef6r6q3bg1fqdqpq6roumjee97.apps.googleusercontent.com'>
+            <GoogleOAuthProvider clientId="1098183900363-cre0duef6r6q3bg1fqdqpq6roumjee97.apps.googleusercontent.com">
                 <Routes>
                     <Route path="/" element={<Home />}></Route>
                     <Route path="/login" element={<Login />}></Route>
@@ -31,6 +32,7 @@ const App = () => {
                     <Route path="/post" element={<Post />}></Route>
                     <Route path="/edit" element={<Edit />}></Route>
                     <Route path="/result" element={<Result />}></Route>
+                    <Route path="/loading" element={<LoadingPage />}></Route>
                 </Routes>
             </GoogleOAuthProvider>
         </BrowserRouter>
