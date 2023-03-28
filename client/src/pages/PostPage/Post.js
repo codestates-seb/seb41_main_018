@@ -146,8 +146,8 @@ const AddInput = () => {
                                                 !Number.isInteger(Number(e.target.value))
                                                     ? (e.target.value = 0)
                                                     : (e.target.value =
-                                                            Math.round(
-                                                                Number(e.target.value) / 1000
+                                                          Math.round(
+                                                              Number(e.target.value) / 1000
                                                           ) * 1000);
                                             }}
                                         />
@@ -303,58 +303,57 @@ const Post = () => {
     const { handleSubmit } = methods;
 
     //기존업로드코드///
-    // const submit = async (data) => {
-    //     // 태그 추가
-    //     data.tag = tagsStr;
-    //     for (let obj of data && data.routes) {
-    //         delete obj.image;
-    //     }
-
-    //     postContent(data).then((res) => {
-    //         if (res) {
-    //             navigate("/");
-    //         }
-    //     });
-    // };
-    
-
-    /////formData 테스트 코드///
     const submit = async (data) => {
         // 태그 추가
         data.tag = tagsStr;
-
-        formData.append('routes', data.routes)
-        formData.append('tag', data.tag)
-        formData.append('themeType', data.themeType)
-        formData.append('title', data.title)
-        formData.append('travelDate', data.travelDate)
         for (let obj of data && data.routes) {
-            formData.append('immage', obj.image);
+            delete obj.image;
         }
 
-        // axios({
-        //     method:'post',
-        //     url:'http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents',
-        //     data: formData,
-        // })
-
-        axios
-        .post(
-            "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents",
-            formData,
-            {
-                headers: {
-                    // "Content-Type": `application/json`,
-                    Authorization: sessionStorage.getItem("access_token"),
-                },
-            }
-        )
-        .then((res) => {
+        postContent(data).then((res) => {
             if (res) {
                 navigate("/");
             }
         });
     };
+
+    /////formData 테스트 코드///
+    // const submit = async (data) => {
+    //     // 태그 추가
+    //     data.tag = tagsStr;
+
+    //     formData.append('routes', data.routes)
+    //     formData.append('tag', data.tag)
+    //     formData.append('themeType', data.themeType)
+    //     formData.append('title', data.title)
+    //     formData.append('travelDate', data.travelDate)
+    //     for (let obj of data && data.routes) {
+    //         formData.append('immage', obj.image);
+    //     }
+
+    //     // axios({
+    //     //     method:'post',
+    //     //     url:'http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents',
+    //     //     data: formData,
+    //     // })
+
+    //     axios
+    //     .post(
+    //         "http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/contents",
+    //         formData,
+    //         {
+    //             headers: {
+    //                 // "Content-Type": `application/json`,
+    //                 Authorization: sessionStorage.getItem("access_token"),
+    //             },
+    //         }
+    //     )
+    //     .then((res) => {
+    //         if (res) {
+    //             navigate("/");
+    //         }
+    //     });
+    // };
     ///////
 
     return (

@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { userInfoState, loginState } from "../../state/atom";
 import SocialButton from "./SocialButton";
 import Button from "../components/Button";
@@ -24,8 +24,8 @@ const defaultValues = {
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const [isLogin, setIsLogin] = useRecoilState(loginState);
+    const setUserInfo = useSetRecoilState(userInfoState);
+    const setIsLogin = useSetRecoilState(loginState);
 
     const {
         register,

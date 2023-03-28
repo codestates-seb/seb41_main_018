@@ -9,6 +9,7 @@ import { deleteUser } from "../../../util/axiosUser";
 import { useNavigate } from "react-router-dom";
 
 import Button from "../../components/Button";
+import axios from "axios";
 
 const DeleteUserModal = (props) => {
     const navigate = useNavigate();
@@ -19,6 +20,7 @@ const DeleteUserModal = (props) => {
     const closeModal = () => {
         props.setModalOpen(false);
     };
+
     // 회원탈퇴 확인
     const deleteUserConfirm = () => {
         deleteUser(userInfo.userId).then(() => {
@@ -27,6 +29,11 @@ const DeleteUserModal = (props) => {
             navigate("/");
         });
     };
+
+    const ACCESS_TOKEN = sessionStorage.getItem("access_token");
+    const REFRESH_TOKEN = sessionStorage.getItem("refresh");
+    console.log(`회원탈퇴`, ACCESS_TOKEN);
+    console.log(`회원탈퇴`, REFRESH_TOKEN);
 
     return (
         <div css={ModalBackground}>
