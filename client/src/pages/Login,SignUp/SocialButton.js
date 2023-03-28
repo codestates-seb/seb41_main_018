@@ -1,31 +1,45 @@
 import React, { useEffect, useRef } from "react";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { GoogleLogin } from "@react-oauth/google";
-import jwt_decode from 'jwt-decode';
-import { signUp, Login, getUserInfo} from "../../util/axiosUser";
-import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { userInfoState, loginState } from "../../state/atom";
-import axios from "axios";
+// import { useNavigate } from "react-router-dom";
 
-import { WidthWideTwoTone } from "@mui/icons-material";
-import KaKaoLogin from "./KaKaoLogin";
+// import { GoogleLogin } from "@react-oauth/google";
+// import jwt_decode from "jwt-decode";
+// import { signUp, Login, getUserInfo } from "../../util/axiosUser";
+
+// import { useRecoilState } from "recoil";
+// import { userInfoState, loginState } from "../../state/atom";
+// import axios from "axios";
+
+// import { WidthWideTwoTone } from "@mui/icons-material";
+// import KaKaoLogin from "./KaKaoLogin";
 
 const SocialButton = () => {
-    const navigate = useNavigate();
-    const [userInfo, setUserInfo] = useRecoilState(userInfoState);
-    const [isLogin, setIsLogin] = useRecoilState(loginState);
-
+    // const navigate = useNavigate();
+    // const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+    // const [isLogin, setIsLogin] = useRecoilState(loginState);
 
     return (
         <div css={SocialLogin}>
-            <KaKaoLogin />
+            <a href="http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/kakao">
+                <button type="button" css={KakaoLogo}>
+                    <img
+                        alt="kakao"
+                        src="https://i.postimg.cc/hGMs7XMR/100px-Kakao-Corp-symbol-2012-svg.png"
+                    />
+                </button>
+            </a>
             <button type="button" css={NaverLogo}>
                 <img alt="naver" src="https://i.postimg.cc/tCQVzXs1/btn-G.png" />
             </button>
-            <button css={GoogleLogo}>
-                <GoogleLogin
+            <a href="http://ec2-54-180-87-83.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google">
+                <button type="button" css={GoogleLogo}>
+                    <img
+                        alt="google"
+                        src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                    />
+
+                    {/* <GoogleLogin
                     onSuccess={async (credentialResponse) => {
                         const details = jwt_decode(credentialResponse.credential);
 
@@ -75,8 +89,9 @@ const SocialButton = () => {
                     type="icon"
                     shape="circle"
                     theme="outline"
-                ></GoogleLogin>
-            </button>
+                ></GoogleLogin> */}
+                </button>
+            </a>
         </div>
     );
 };
@@ -105,6 +120,18 @@ const SocialLogin = css`
             -webkit-transform: scale(1.1, 1.1);
             transition-duration: 250ms;
         }
+    }
+`;
+
+const KakaoLogo = css`
+    width: 40px;
+    height: 40px;
+
+    background-color: rgb(254, 229, 0);
+
+    img {
+        width: 16px;
+        height: 16px;
     }
 `;
 
