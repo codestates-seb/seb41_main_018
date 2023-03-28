@@ -3,11 +3,12 @@ package com.seb41_main_018.mainproject.route.service;
 import com.seb41_main_018.mainproject.content.entity.Content;
 import com.seb41_main_018.mainproject.exception.BusinessLogicException;
 import com.seb41_main_018.mainproject.exception.ExceptionCode;
+import com.seb41_main_018.mainproject.route.dto.RouteResponseDto;
 import com.seb41_main_018.mainproject.route.entity.Route;
+import com.seb41_main_018.mainproject.route.mapper.RouteMapper;
 import com.seb41_main_018.mainproject.route.repository.RouteRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +19,11 @@ import java.util.stream.Collectors;
 @Service
 public class RouteService {
     private final RouteRepository routeRepository;
+    private final RouteMapper routeMapper;
 
-    public RouteService(RouteRepository routeRepository) {
+    public RouteService(RouteRepository routeRepository, RouteMapper routeMapper) {
         this.routeRepository = routeRepository;
+        this.routeMapper = routeMapper;
     }
 
     // 루트 장소 생성 //
@@ -80,6 +83,15 @@ public class RouteService {
                 new BusinessLogicException(ExceptionCode.ROUTE_NOT_FOUND));
 
         return findRoute;
+    }
+
+    @Transactional(readOnly = true)
+    public ResponseEntity detail(Route route) {
+        RouteResponseDto routeResponse =
+                routeMapper.routeToRouteResponseDto(route);
+
+        return new ResponseEntity<>(routeResponse, HttpStatus.OK);
+
     }
 
 }

@@ -54,7 +54,7 @@ public class Route extends Auditable {
     @BatchSize(size = 10)
     @Column(nullable = false)
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "route_image", joinColumns = @JoinColumn(name = "CONTENT_ID"))
+    @CollectionTable(name = "ROUTE_IMAGES", joinColumns = @JoinColumn(name = "CONTENT_ID"))
     private List<String> routeImages;
 
     public Route(

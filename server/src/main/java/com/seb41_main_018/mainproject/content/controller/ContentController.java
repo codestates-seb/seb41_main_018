@@ -9,6 +9,7 @@ import com.seb41_main_018.mainproject.content.repository.ContentRepository;
 import com.seb41_main_018.mainproject.content.service.ContentService;
 import com.seb41_main_018.mainproject.response.MultiResponseDto;
 import com.seb41_main_018.mainproject.response.SingleResponseDto;
+import com.seb41_main_018.mainproject.route.repository.RouteRepository;
 import com.seb41_main_018.mainproject.route.service.RouteService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -37,13 +38,16 @@ public class ContentController {
     private final ContentRepository contentRepository;
     private final RouteService routeService;
     private final S3Uploader s3Uploader;
+    private final RouteRepository routeRepository;
 
-    public ContentController(ContentService contentService, ContentMapper contentMapper, ContentRepository contentRepository, RouteService routeService, S3Uploader s3Uploader) {
+    public ContentController(ContentService contentService, ContentMapper contentMapper, ContentRepository contentRepository, RouteService routeService, S3Uploader s3Uploader,
+                             RouteRepository routeRepository) {
         this.contentService = contentService;
         this.contentMapper = contentMapper;
         this.contentRepository = contentRepository;
         this.routeService = routeService;
         this.s3Uploader = s3Uploader;
+        this.routeRepository = routeRepository;
     }
 
 
@@ -211,7 +215,7 @@ public class ContentController {
             @ApiResponse(code = 404, message = "Content not found")})
     @GetMapping("/category/{themeType}")
     public ResponseEntity getContentFromThemeType(@PathVariable("themeType")ThemeType themeType){
-        ContentDto.ThemeTypeResponse response = contentMapper.themeTypeResponse(themeType, contentRepository);
+        ContentDto.ThemeTypeResponse response = contentMapper.themeTypeResponse(themeType, contentRepository,routeRepository);
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.OK
         );

@@ -95,10 +95,7 @@ public class RouteController {
     public ResponseEntity getRoute(@ApiParam(name = "routeId", value = "상세 경로 식별자", example = "1")
                                    @PathVariable("routeId") Long routeId) {
         Route route = routeService.findRoute(routeId);
-        RouteResponseDto routeResponse =
-                routeMapper.routeToRouteResponseDto(route);
-
-        return new ResponseEntity<>(routeResponse, HttpStatus.OK);
+        return routeService.detail(route);
     }
 //
 //    // 상세 경로 전체 조회 //
