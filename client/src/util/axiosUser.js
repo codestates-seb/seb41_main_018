@@ -214,7 +214,6 @@ export const deleteUser = async (userId) => {
             {
                 headers: {
                     Authorization: sessionStorage.getItem("access_token"),
-                    Refresh: sessionStorage.getItem("refresh"),
                 },
             }
         )

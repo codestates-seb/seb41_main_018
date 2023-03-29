@@ -1,3 +1,7 @@
+import 이미지1 from "../src/assets/이미지1.webp";
+import 이미지2 from "../src/assets/이미지2.webp";
+import 이미지3 from "../src/assets/이미지3.webp";
+
 export const GachiGalleImgSrc = {
     //logo
     logo_img: "https://i.postimg.cc/zXsF686H/Gachi-Gallae-Logo.png",
@@ -134,4 +138,7 @@ export const SampleImgSrc = {
     sample_Img96: "https://i.postimg.cc/j5D75Mrp/sample96.jpg",
     sample_Img97: "https://i.postimg.cc/50DFF846/sample97.webp",
     sample_Img98: "https://i.postimg.cc/wMJR53MF/sample98.webp",
+    // sample_Img1: 이미지1,
+    // sample_Img2: 이미지2,
+    // sample_Img3: 이미지3,
 };

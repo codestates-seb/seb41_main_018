@@ -5,6 +5,8 @@ import { PALETTE } from "../../../Common";
 import Swal from "sweetalert2";
 import { TiDelete } from "react-icons/ti";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import imageCompression from "browser-image-compression";
+import { GachiGalleImgSrc, SampleImgSrc } from "../../../sampleImage";
 
 const Toast = Swal.mixin({
     toast: true,
@@ -57,6 +59,10 @@ const ImgUpload = (props) => {
     const handleDeleteImg = (i) => {
         setPreviewList(value.filter((_, index) => index !== i));
     };
+
+    const image = SampleImgSrc.sample_Img1;
+    console.log("originalFile instanceof Blob", image instanceof Blob); // true
+    console.log(`originalFile size ${image.size / 1024 / 1024} MB`);
 
     return (
         <div css={ImgUploadWrap}>

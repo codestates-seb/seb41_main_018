@@ -178,9 +178,9 @@ const AddInput = () => {
                                     <input
                                         {...register(`routes.${index}.image`)}
                                         name="image"
-                                        css={css`
-                                            display: none;
-                                        `}
+                                        // css={css`
+                                        //     display: none;
+                                        // `}
                                     />
                                 </div>
                             </div>
@@ -306,9 +306,10 @@ const Post = () => {
     const submit = async (data) => {
         // 태그 추가
         data.tag = tagsStr;
-        for (let obj of data && data.routes) {
+        console.log(data);
+        /*  for (let obj of data && data.routes) {
             delete obj.image;
-        }
+        } */
 
         postContent(data).then((res) => {
             if (res) {
