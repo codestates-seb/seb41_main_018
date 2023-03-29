@@ -78,15 +78,7 @@ const HomeItems = (props) => {
                 )}
             </div>
             <Link to={`/detail/${data && data.contentId}`}>
-                <div
-                // css={css`
-                //     width: 300px;
-                //     height: 200px;
-                //     background-color: red;
-                // `}
-                >
-                    <img src={content.image} css={ImgStyle} />
-                </div>
+                <img src={content.image} css={ImgStyle} />
 
                 <div css={TextWrap}>
                     <div css={TitleStyle}>{data && data.title}</div>
@@ -125,7 +117,6 @@ const Container = css`
 
 const ImgStyle = css`
     width: 100%;
-    height: 200px;
     border-radius: ${PALETTE.border_radius};
     object-fit: cover;
 `;
