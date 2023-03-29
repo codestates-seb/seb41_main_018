@@ -16,6 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.2",
     "bootstrap": "^5.2.3",
+    "browser-image-compression": "^2.0.2",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.7",
     "force": "^0.0.3",

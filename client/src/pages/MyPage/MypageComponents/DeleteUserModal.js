@@ -30,11 +30,6 @@ const DeleteUserModal = (props) => {
         });
     };
 
-    const ACCESS_TOKEN = sessionStorage.getItem("access_token");
-    const REFRESH_TOKEN = sessionStorage.getItem("refresh");
-    console.log(`회원탈퇴`, ACCESS_TOKEN);
-    console.log(`회원탈퇴`, REFRESH_TOKEN);
-
     return (
         <div css={ModalBackground}>
             <div css={ModalContainer}>
