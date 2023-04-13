@@ -58,10 +58,11 @@ const ImgUpload = (props) => {
 
             new Compressor(selectedImg[i], {
                 quality: 0.6,
-                minHeight: 500,
-                maxHeight: 700,
+                minHeight: 500, //최소 높이
+                maxHeight: 700, //최대 높이
                 mimeType: "image/jpeg",
                 success(result) {
+                    //이미지 크기가 어떻게 변했는지 콘솔에 찍어주는 코드, 나중에 삭제
                     const img = new Image();
                     img.onload = () => {
                         console.log("Width:", img.width);

@@ -116,9 +116,9 @@ const Container = css`
 `;
 
 const ImgStyle = css`
-    width: 100%;
     border-radius: ${PALETTE.border_radius};
-    object-fit: cover;
+    width: 100%;
+    height: 60%;
 `;
 
 const FavoriteIconWrap = css`
