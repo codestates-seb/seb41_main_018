@@ -252,6 +252,10 @@ const PostButton = css`
     }
 `;
 const Container = css`
+    .swiper {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, auto));
+    }
     @media (max-width: 400px) {
         margin: 0 20px;
     }
@@ -268,12 +272,9 @@ const ItemTitle = css`
 
 const PostStyle = css`
     z-index: 1;
-    /* display: grid; */
     margin: 0 auto;
-    /* gap: 20px; */
     min-width: 360px;
-    width: 80vw;
-    height: 100%;
+    width: 80%;
 
     .swiper-button-next {
         background: url(${GachiGalleImgSrc.right_button_img}) no-repeat;

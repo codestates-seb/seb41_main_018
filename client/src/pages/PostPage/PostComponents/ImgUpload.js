@@ -6,6 +6,8 @@ import Swal from "sweetalert2";
 import { TiDelete } from "react-icons/ti";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import imageCompression from "browser-image-compression";
+
+import Compressor from "compressorjs";
 import { GachiGalleImgSrc, SampleImgSrc } from "../../../sampleImage";
 
 const Toast = Swal.mixin({
@@ -26,8 +28,9 @@ const ImgUpload = (props) => {
 
     const [previewList, setPreviewList] = useState([]);
     const inputRef = useRef(null);
-    const uploadBtnClick = () => {
-        inputRef.current.click();
+    const uploadBtnClick = (compressedFile) => {
+        inputRef.current.click(compressedFile);
+        console.log("이미지 업로드 완료");
     };
 
     useEffect(() => {
@@ -52,17 +55,27 @@ const ImgUpload = (props) => {
         for (let i = 0; i < selectedImg.length; i++) {
             const imgUrl = URL.createObjectURL(selectedImg[i]);
             setPreviewList((previewList) => [...previewList, imgUrl]);
+
+            new Compressor(selectedImg[i], {
+                quality: 0.6,
+                minHeight: 500, //최소 높이
+                maxHeight: 700, //최대 높이
+                mimeType: "image/jpeg",
+                success(result) {
+                    //이미지 크기가 어떻게 변했는지 콘솔에 찍어주는 코드, 나중에 삭제
+                    const img = new Image();
+                    img.onload = () => {
+                        console.log("Width:", img.width);
+                        console.log("Height:", img.height);
+                    };
+                    img.src = URL.createObjectURL(result);
+                },
+                error(err) {
+                    console.log(err.message);
+                },
+            });
         }
     };
-
-    // img delete function
-    const handleDeleteImg = (i) => {
-        setPreviewList(value.filter((_, index) => index !== i));
-    };
-
-    const image = SampleImgSrc.sample_Img1;
-    console.log("originalFile instanceof Blob", image instanceof Blob); // true
-    console.log(`originalFile size ${image.size / 1024 / 1024} MB`);
 
     return (
         <div css={ImgUploadWrap}>

@@ -178,9 +178,9 @@ const AddInput = () => {
                                     <input
                                         {...register(`routes.${index}.image`)}
                                         name="image"
-                                        // css={css`
-                                        //     display: none;
-                                        // `}
+                                        css={css`
+                                            display: none;
+                                        `}
                                     />
                                 </div>
                             </div>
