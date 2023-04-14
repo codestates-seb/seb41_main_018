@@ -49,10 +49,53 @@ import 이미지19 from "../src/assets/sampleImage/이미지19.webp";
 import 이미지20 from "../src/assets/sampleImage/이미지20.webp";
 import 이미지21 from "../src/assets/sampleImage/이미지21.webp";
 import 이미지22 from "../src/assets/sampleImage/이미지22.webp";
+import 이미지23 from "../src/assets/sampleImage/이미지23.webp";
+import 이미지24 from "../src/assets/sampleImage/이미지24.webp";
+import 이미지25 from "../src/assets/sampleImage/이미지25.webp";
+import 이미지26 from "../src/assets/sampleImage/이미지26.webp";
+import 이미지27 from "../src/assets/sampleImage/이미지27.webp";
+import 이미지28 from "../src/assets/sampleImage/이미지28.jpeg";
+import 이미지29 from "../src/assets/sampleImage/이미지29.jpeg";
+import 이미지30 from "../src/assets/sampleImage/이미지30.jpeg";
+import 이미지31 from "../src/assets/sampleImage/이미지31.jpeg";
+import 이미지32 from "../src/assets/sampleImage/이미지32.jpeg";
+import 이미지33 from "../src/assets/sampleImage/이미지33.jpg";
+import 이미지34 from "../src/assets/sampleImage/이미지34.jpg";
+import 이미지35 from "../src/assets/sampleImage/이미지35.jpg";
+import 이미지36 from "../src/assets/sampleImage/이미지36.jpg";
+import 이미지37 from "../src/assets/sampleImage/이미지37.jpg";
+import 이미지38 from "../src/assets/sampleImage/이미지38.jpg";
+import 이미지39 from "../src/assets/sampleImage/이미지39.jpg";
+import 이미지40 from "../src/assets/sampleImage/이미지40.jpg";
+import 이미지41 from "../src/assets/sampleImage/이미지41.jpg";
+import 이미지42 from "../src/assets/sampleImage/이미지42.jpg";
+import 이미지43 from "../src/assets/sampleImage/이미지43.jpg";
+import 이미지44 from "../src/assets/sampleImage/이미지44.jpg";
+import 이미지45 from "../src/assets/sampleImage/이미지45.jpg";
+import 이미지46 from "../src/assets/sampleImage/이미지46.jpg";
+import 이미지47 from "../src/assets/sampleImage/이미지47.jpg";
+import 이미지48 from "../src/assets/sampleImage/이미지48.jpg";
+import 이미지49 from "../src/assets/sampleImage/이미지49.jpg";
+import 이미지50 from "../src/assets/sampleImage/이미지50.jpg";
+import 이미지51 from "../src/assets/sampleImage/이미지51.png";
+import 이미지52 from "../src/assets/sampleImage/이미지52.jpg";
+import 이미지53 from "../src/assets/sampleImage/이미지53.jpg";
+import 이미지54 from "../src/assets/sampleImage/이미지54.jpg";
+import 이미지55 from "../src/assets/sampleImage/이미지55.png";
+import 이미지56 from "../src/assets/sampleImage/이미지56.jpg";
+import 이미지57 from "../src/assets/sampleImage/이미지57.jpg";
+import 이미지58 from "../src/assets/sampleImage/이미지58.jpg";
+import 이미지59 from "../src/assets/sampleImage/이미지59.jpg";
+import 이미지60 from "../src/assets/sampleImage/이미지60.jpg";
+import 이미지61 from "../src/assets/sampleImage/이미지61.jpg";
+import 이미지62 from "../src/assets/sampleImage/이미지62.jpg";
+import 이미지63 from "../src/assets/sampleImage/이미지63.jpg";
+import 이미지64 from "../src/assets/sampleImage/이미지64.jpg";
+import 이미지65 from "../src/assets/sampleImage/이미지65.webp";
 
 export const GachiGalleImgSrc = {
     //log7
-    logo_8mg: 로고이미지,
+    logo_img: 로고이미지,
     //butto10
     left_button_img: left,
     right_button_img: right, //접속 안되서 다운 불가능
@@ -109,4 +152,47 @@ export const SampleImgSrc = {
     sample_Img20: 이미지20,
     sample_Img21: 이미지21,
     sample_Img22: 이미지22,
+    sample_Img23: 이미지23,
+    sample_Img24: 이미지24,
+    sample_Img25: 이미지25,
+    sample_Img26: 이미지26,
+    sample_Img27: 이미지27,
+    sample_Img28: 이미지28,
+    sample_Img29: 이미지29,
+    sample_Img30: 이미지30,
+    sample_Img31: 이미지31,
+    sample_Img32: 이미지32,
+    sample_Img33: 이미지33,
+    sample_Img34: 이미지34,
+    sample_Img35: 이미지35,
+    sample_Img36: 이미지36,
+    sample_Img37: 이미지37,
+    sample_Img38: 이미지38,
+    sample_Img39: 이미지39,
+    sample_Img40: 이미지40,
+    sample_Img41: 이미지41,
+    sample_Img42: 이미지42,
+    sample_Img43: 이미지43,
+    sample_Img44: 이미지44,
+    sample_Img45: 이미지45,
+    sample_Img46: 이미지46,
+    sample_Img47: 이미지47,
+    sample_Img48: 이미지48,
+    sample_Img49: 이미지49,
+    sample_Img50: 이미지50,
+    sample_Img51: 이미지51,
+    sample_Img52: 이미지52,
+    sample_Img53: 이미지53,
+    sample_Img54: 이미지54,
+    sample_Img55: 이미지55,
+    sample_Img56: 이미지56,
+    sample_Img57: 이미지57,
+    sample_Img58: 이미지58,
+    sample_Img59: 이미지59,
+    sample_Img60: 이미지60,
+    sample_Img61: 이미지61,
+    sample_Img62: 이미지62,
+    sample_Img63: 이미지63,
+    sample_Img64: 이미지64,
+    sample_Img65: 이미지65,
 };
