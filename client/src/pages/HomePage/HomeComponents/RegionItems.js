@@ -38,7 +38,8 @@ const Regionitems = (props) => {
 };
 
 const Container = css`
-    margin-bottom: -120px;
+    width: 100%;
+    height: 100%;
 `;
 
 const ImgStyle = css`

@@ -1,144 +1,112 @@
-import 이미지1 from "../src/assets/이미지1.webp";
-import 이미지2 from "../src/assets/이미지2.webp";
-import 이미지3 from "../src/assets/이미지3.webp";
+import 로고이미지 from "../src/assets/로고이미지.png";
+import right from "../src/assets/right.png";
+import left from "../src/assets/left.png";
+
+import 서울 from "../src/assets/regionImage/서울.png";
+import 부산 from "../src/assets/regionImage/부산.png";
+import 강릉 from "../src/assets/regionImage/강릉.png";
+import 담양 from "../src/assets/regionImage/담양.png";
+import 여수 from "../src/assets/regionImage/여수.png";
+import 전주 from "../src/assets/regionImage/전주.png";
+import 제주 from "../src/assets/regionImage/제주.png";
+import 파주 from "../src/assets/regionImage/파주.png";
+import 포천 from "../src/assets/regionImage/포천.png";
+
+import 배너1 from "../src/assets/bannerImage/배너1.png";
+import 배너2 from "../src/assets/bannerImage/배너2.png";
+import 배너3 from "../src/assets/bannerImage/배너3.png";
+import 배너4 from "../src/assets/bannerImage/배너4.png";
+import 배너5 from "../src/assets/bannerImage/배너5.png";
+
+import 가족여행 from "../src/assets/category/가족여행.png";
+import 국내여행 from "../src/assets/category/국내여행.png";
+import 맛집투어 from "../src/assets/category/맛집투어.png";
+import 친구여행 from "../src/assets/category/친구여행.png";
+import 카페투어 from "../src/assets/category/카페투어.png";
+import 커플여행 from "../src/assets/category/커플여행.png";
+import 해외여행 from "../src/assets/category/해외여행.png";
+import 혼자여행 from "../src/assets/category/혼자여행.png";
+
+import 이미지1 from "../src/assets/sampleImage/이미지1.webp";
+import 이미지2 from "../src/assets/sampleImage/이미지2.webp";
+import 이미지3 from "../src/assets/sampleImage/이미지3.webp";
+import 이미지4 from "../src/assets/sampleImage/이미지4.webp";
+import 이미지5 from "../src/assets/sampleImage/이미지5.webp";
+import 이미지6 from "../src/assets/sampleImage/이미지6.webp";
+import 이미지7 from "../src/assets/sampleImage/이미지7.webp";
+import 이미지8 from "../src/assets/sampleImage/이미지8.webp";
+import 이미지9 from "../src/assets/sampleImage/이미지9.webp";
+import 이미지10 from "../src/assets/sampleImage/이미지10.webp";
+import 이미지11 from "../src/assets/sampleImage/이미지11.webp";
+import 이미지12 from "../src/assets/sampleImage/이미지12.webp";
+import 이미지13 from "../src/assets/sampleImage/이미지13.webp";
+import 이미지14 from "../src/assets/sampleImage/이미지14.webp";
+import 이미지15 from "../src/assets/sampleImage/이미지15.webp";
+import 이미지16 from "../src/assets/sampleImage/이미지16.webp";
+import 이미지17 from "../src/assets/sampleImage/이미지17.webp";
+import 이미지18 from "../src/assets/sampleImage/이미지18.webp";
+import 이미지19 from "../src/assets/sampleImage/이미지19.webp";
+import 이미지20 from "../src/assets/sampleImage/이미지20.webp";
+import 이미지21 from "../src/assets/sampleImage/이미지21.webp";
+import 이미지22 from "../src/assets/sampleImage/이미지22.webp";
 
 export const GachiGalleImgSrc = {
-    //logo
-    logo_img: "https://i.postimg.cc/zXsF686H/Gachi-Gallae-Logo.png",
-
-    //button
-    left_button_img: "https://i.postimg.cc/XYdFGPLR/left.png",
-    right_button_img: "https://i.postimg.cc/1tCN11Rq/right.png",
-
+    //log7
+    logo_8mg: 로고이미지,
+    //butto10
+    left_button_img: left,
+    right_button_img: right, //접속 안되서 다운 불가능
     //region
-    seoul_img: "https://i.postimg.cc/Njq8jCmJ/image.png",
-    busan_img: "https://i.postimg.cc/MpCLxYpq/image.png",
-    gangneung_img: "https://i.postimg.cc/3Nh7RTrr/image.png",
-    damyang_img: "https://i.postimg.cc/wM6h5Qf6/image.png",
-    yeosu_img: "https://i.postimg.cc/FKFThnQt/image.png",
-    jeonju_img: "https://i.postimg.cc/26sdL0gS/image.png",
-    jeju_img: "https://i.postimg.cc/28wvCjj6/image.png",
-    paju_img: "https://i.postimg.cc/m2zfsky3/image.png",
-    pocheon_img: "https://i.postimg.cc/ydbQQh5M/image.png",
-
+    seoul_img: 서울,
+    busan_img: 부산,
+    gangneung_img: 강릉,
+    damyang_img: 담양,
+    yeosu_img: 여수,
+    jeonju_img: 전주,
+    jeju_img: 제주,
+    paju_img: 파주,
+    pocheon_img: 포천,
     //category
-    family_travel: "https://i.postimg.cc/4d5GypYC/image.png",
-    domestic_travel: "https://i.postimg.cc/Wz3B4CRr/image.png",
-    food_travel: "https://i.postimg.cc/d0wS1pr1/image.png",
-    friend_travel: "https://i.postimg.cc/YCkJGvwM/image.png",
-    cafe_travel: "https://i.postimg.cc/ncKWJn95/image.png",
-    couple_travel: "https://i.postimg.cc/xCymdpG0/image.png",
-    overseas_travel: "https://i.postimg.cc/wBFHThtC/image.png",
-    solo_travel: "https://i.postimg.cc/J4Js72RS/image.png",
+    family_travel: 가족여행,
+    domestic_travel: 국내여행,
+    food_travel: 맛집투어,
+    friend_travel: 친구여행,
+    cafe_travel: 카페투어,
+    couple_travel: 커플여행,
+    overseas_travel: 해외여행,
+    solo_travel: 혼자여행,
 
     //banner
-    banner_1: "https://i.postimg.cc/yNWBxDFW/1.png",
-    banner_2: "https://i.postimg.cc/WzmcCgPY/2.png",
-    banner_3: "https://i.postimg.cc/yd9M3cW6/3.png",
+    banner_1: 배너1,
+    banner_2: 배너2,
+    banner_3: 배너3,
+    banner_4: 배너4,
+    banner_5: 배너5,
 };
 
 export const SampleImgSrc = {
     //sample
-    // sample_Img1: "https://i.postimg.cc/ZRfcwRrQ/sample1-1.webp",
-    // sample_Img2: "https://i.postimg.cc/ZnxN5Ycc/sample2-1.webp",
-    // sample_Img3: "https://i.postimg.cc/ZYxv3R8P/sample3-1.webp",
-    // sample_Img4: "https://i.postimg.cc/PqDPqrfw/sample4-1.webp",
-    // sample_Img5: "https://i.postimg.cc/6p2QH5vm/sample5-1.webp",
-    // sample_Img6: "https://i.postimg.cc/3NQJSW6Z/sample6-1.webp",
-    // sample_Img7: "https://i.postimg.cc/Tw7MMn8q/sample7-1.webp",
-    // sample_Img8: "https://i.postimg.cc/W48xg04L/sample8-1.webp",
-    // sample_Img9: "https://i.postimg.cc/QtwDKc6N/sample9-1.webp",
-    // sample_Img10: "https://i.postimg.cc/pd1b3DMQ/sample10-1.webp",
-    // sample_Img11: "https://i.postimg.cc/7Y4csBT8/sample11-1.webp",
-    // sample_Img12: "https://i.postimg.cc/Bb0hz6bc/sample12-1.webp",
-    // sample_Img13: "https://i.postimg.cc/fb5Tytnk/sample13-1.webp",
-    // sample_Img14: "https://i.postimg.cc/QxLBR7Xr/sample14-1.webp",
-    // sample_Img15: "https://i.postimg.cc/D01z2C23/sample15-1.webp",
-    // sample_Img16: "https://i.postimg.cc/sxPVFvcV/sample16-1.webp",
-    // sample_Img17: "https://i.postimg.cc/fW7ZRScs/sample17-1.webp",
-    // sample_Img18: "https://i.postimg.cc/4xmrVY9m/sample18-1.webp",
-    // sample_Img19: "https://i.postimg.cc/BQwzSJVs/sample19.jpg",
-    // sample_Img20: "https://i.postimg.cc/brw6P50s/sample20-1.webp",
-    // sample_Img21: "https://i.postimg.cc/k4fcTcr9/sample21-1.webp",
-    // sample_Img22: "https://i.postimg.cc/25Y7mJrr/sample22-1.webp",
-    // sample_Img23: "https://i.postimg.cc/PxxZ5ncs/sample23-1.webp",
-    // sample_Img24: "https://i.postimg.cc/ZYXf2wBK/sample24-1.webp",
-    // sample_Img25: "https://i.postimg.cc/Jzx5rxnX/sample25-1.webp",
-    // sample_Img26: "https://i.postimg.cc/h4m8zcvc/sample26-1.webp",
-    // sample_Img27: "https://i.postimg.cc/5tjLxMDc/sample27-1.webp",
-    // sample_Img28: "https://i.postimg.cc/8cg6BfcD/sample28-1.webp",
-    // sample_Img29: "https://i.postimg.cc/ncZmXmNG/sample29-1.webp",
-    // sample_Img30: "https://i.postimg.cc/HkNj98vK/sample30-1.webp",
-    // sample_Img31: "https://i.postimg.cc/wjNYntTn/sample31-1.webp",
-    // sample_Img32: "https://i.postimg.cc/G90qDpws/sample32-1.webp",
-    // sample_Img33: "https://i.postimg.cc/wvZSWgY9/sample33-1.webp",
-    // sample_Img34: "https://i.postimg.cc/jdzGhpgr/sample34-1.webp",
-    // sample_Img35: "https://i.postimg.cc/sXkNYm5X/sample35-1.webp",
-    // sample_Img36: "https://i.postimg.cc/T3tN7fnB/sample36-1.webp",
-    // sample_Img37: "https://i.postimg.cc/05GfX9sZ/sample37-1.png",
-    // sample_Img38: "https://i.postimg.cc/LsZktpDt/sample38-1.png",
-    // sample_Img39: "https://i.postimg.cc/3wppyZr9/sample39-1.png",
-    // sample_Img40: "https://i.postimg.cc/RCP3ZYQ4/sample40-1.png",
-    // sample_Img41: "https://i.postimg.cc/Fzqsg2DS/sample41-1.png",
-    // sample_Img42: "https://i.postimg.cc/JzCRr3gR/sample42-1.png",
-    // sample_Img43: "https://i.postimg.cc/P5MJ0Fqg/sample43-1.webp",
-    // sample_Img44: "https://i.postimg.cc/02RNjqKg/sample44-1.webp",
-    // sample_Img45: "https://i.postimg.cc/Pxs7ZKWq/sample45-1.webp",
-    // sample_Img46: "https://i.postimg.cc/2S19KgT6/sample46-1.webp",
-    // sample_Img47: "https://i.postimg.cc/Hk832Xs8/sample47-1.webp",
-    // sample_Img48: "https://i.postimg.cc/J7yqmjZ6/sample48-1.webp",
-    // sample_Img49: "https://i.postimg.cc/7PTgjwrj/sample49-1.webp",
-    // sample_Img50: "https://i.postimg.cc/k5BV8vnL/sample50-1.webp",
-    // sample_Img51: "https://i.postimg.cc/d0b0CMNT/sample51-1.webp",
-    // sample_Img52: "https://i.postimg.cc/5NsN3QkJ/sample52-1.webp",
-    // sample_Img53: "https://i.postimg.cc/QxdjHxNy/sample53-1.webp",
-    // sample_Img54: "https://i.postimg.cc/WpXvLLm6/sample54-1.webp",
-    // sample_Img55: "https://i.postimg.cc/FzKwszbb/sample55-1.webp",
-    // sample_Img56: "https://i.postimg.cc/V6fVDvhy/sample56-1.webp",
-    // sample_Img57: "https://i.postimg.cc/j2Gv0SMS/sample57-1.webp",
-    // sample_Img58: "https://i.postimg.cc/s2VmR847/sample58-1.webp",
-    // sample_Img59: "https://i.postimg.cc/4nkv2F3K/sample59-1.png",
-    // sample_Img60: "https://i.postimg.cc/3RkbPV39/sample60-1.png",
-    // sample_Img61: "https://i.postimg.cc/ncZmXmNG/sample29-1.webp",
-    // sample_Img62: "https://i.postimg.cc/ncJ0kC93/sample62-1.webp",
-    // sample_Img63: "https://i.postimg.cc/bN874pMM/743f6342-89c2-4ded-ab61-9ff53dc9a538.webp",
-    // sample_Img63: "https://i.postimg.cc/MGbBNnmL/sample63.webp",
-    // sample_Img64: "https://i.postimg.cc/rmV4kqhw/sample64.webp",
-    // sample_Img65: "https://i.postimg.cc/tJfnWW9s/sample65.jpg",
-    // sample_Img66: "https://i.postimg.cc/Fz1JYDXt/sample66.png",
-    // sample_Img67: "https://i.postimg.cc/xC6zjB7y/sample67.webp",
-    // sample_Img68: "https://i.postimg.cc/02TJNYt3/sample68.png",
-    // sample_Img69: "https://i.postimg.cc/YqGWknxY/sample69.png",
-    // sample_Img70: "https://i.postimg.cc/25fv0Qhv/sample70.png",
-    // sample_Img71: "https://i.postimg.cc/qBZ3PV2p/sample71.png",
-    // sample_Img72: "https://i.postimg.cc/QdcKKFwM/sample72.png",
-    // sample_Img73: "https://i.postimg.cc/q70hskHx/sample73.png",
-    // sample_Img74: "https://i.postimg.cc/QMbBSRXG/sample74.png",
-    // sample_Img75: "https://i.postimg.cc/pTLmSqT9/sample75.png",
-    // sample_Img76: "https://i.postimg.cc/hjZXRTz2/sample76.png",
-    // sample_Img77: "https://i.postimg.cc/brGsyr1p/sample77.png",
-    // sample_Img78: "https://i.postimg.cc/WzQthV7r/sample78.png",
-    // sample_Img79: "https://i.postimg.cc/dQXhWRK1/sample79.png",
-    // sample_Img80: "https://i.postimg.cc/02wbh68C/sample80.png",
-    // sample_Img81: "https://i.postimg.cc/Dw38h203/sample81.png",
-    // sample_Img82: "https://i.postimg.cc/dVRDtzZk/sample82.jpg",
-    // sample_Img83: "https://i.postimg.cc/BvM62HgJ/sample83.jpg",
-    // sample_Img84: "https://i.postimg.cc/yNVxJv0f/sample84.webp",
-    // sample_Img85: "https://i.postimg.cc/C15K75Pk/sample85.webp",
-    // sample_Img86: "https://i.postimg.cc/mDng54Jq/sample86.webp",
-    // sample_Img87: "https://i.postimg.cc/kGtgrZd5/sample87.webp",
-    // sample_Img88: "https://i.postimg.cc/w38T9V6Q/sample88.webp",
-    // sample_Img89: "https://i.postimg.cc/kMVQXgJ2/sample89.png",
-    // sample_Img90: "https://i.postimg.cc/SQwWXbRD/sample90.jpg",
-    // sample_Img91: "https://i.postimg.cc/X7d9d1y3/sample91.jpg",
-    // sample_Img92: "https://i.postimg.cc/Njtm481X/sample92.jpg",
-    // sample_Img93: "https://i.postimg.cc/nh17wskP/sample93.jpg",
-    // sample_Img94: "https://i.postimg.cc/PqrZGtVr/sample94.jpg",
-    // sample_Img95: "https://i.postimg.cc/Zq7N41XP/sample95.jpg",
-    // sample_Img96: "https://i.postimg.cc/j5D75Mrp/sample96.jpg",
-    // sample_Img97: "https://i.postimg.cc/50DFF846/sample97.webp",
-    // sample_Img98: "https://i.postimg.cc/wMJR53MF/sample98.webp",
+
     sample_Img1: 이미지1,
     sample_Img2: 이미지2,
     sample_Img3: 이미지3,
+    sample_Img4: 이미지4,
+    sample_Img5: 이미지5,
+    sample_Img6: 이미지6,
+    sample_Img7: 이미지7,
+    sample_Img8: 이미지8,
+    sample_Img9: 이미지9,
+    sample_Img10: 이미지10,
+    sample_Img11: 이미지11,
+    sample_Img12: 이미지12,
+    sample_Img13: 이미지13,
+    sample_Img14: 이미지14,
+    sample_Img15: 이미지15,
+    sample_Img16: 이미지16,
+    sample_Img17: 이미지17,
+    sample_Img18: 이미지18,
+    sample_Img19: 이미지19,
+    sample_Img20: 이미지20,
+    sample_Img21: 이미지21,
+    sample_Img22: 이미지22,
 };

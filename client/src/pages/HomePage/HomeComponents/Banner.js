@@ -41,7 +41,10 @@ const Banner = () => {
                     <img src={GachiGalleImgSrc.banner_3} css={BannerStyle} />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <img src={GachiGalleImgSrc.banner_1} css={BannerStyle} />
+                    <img src={GachiGalleImgSrc.banner_4} css={BannerStyle} />
+                </SwiperSlide>
+                <SwiperSlide>
+                    <img src={GachiGalleImgSrc.banner_5} css={BannerStyle} />
                 </SwiperSlide>
             </Swiper>
         </div>
@@ -50,9 +53,10 @@ const Banner = () => {
 
 const Container = css`
     display: flex;
-    height: 280px;
-    margin: 40px auto;
-    width: 80vw;
+    height: auto;
+    max-height: 380px;
+    margin: 40px auto 150px;
+    width: 80%;
 `;
 const SwiperStyle = css`
     border-radius: ${PALETTE.border_radius};
@@ -63,14 +67,14 @@ const SwiperStyle = css`
     .swiper-button-next {
         background: url(${GachiGalleImgSrc.right_button_img}) no-repeat;
         right: 0;
-        background-size: 140% auto;
+        background-size: 100% auto;
         background-position: center;
         position: absolute;
     }
     .swiper-button-prev {
         background: url(${GachiGalleImgSrc.left_button_img}) no-repeat;
         left: 0;
-        background-size: 140% auto;
+        background-size: 100% auto;
         background-position: center;
         position: absolute;
     }
