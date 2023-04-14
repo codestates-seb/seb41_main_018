@@ -99,8 +99,8 @@ const Result = () => {
                                 <div css={NoResultMessage}>검색 결과가 없습니다.</div>
                             ) : (
                                 <>
-                                    {searchTargetArr.map((content) => (
-                                        <HomeItems content={content} />
+                                    {searchTargetArr.map((content, index) => (
+                                        <HomeItems content={content} key={index} />
                                     ))}
                                 </>
                             )}
@@ -118,10 +118,11 @@ const ResultText = css`
 `;
 const PostStyle = css`
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, auto));
     margin: 20px auto;
     gap: 20px;
-    width: 90vw;
-    grid-template-columns: repeat(1, 1fr);
+    width: 90%;
+    /* grid-template-columns: repeat(1, 1fr);
     @media (min-width: 576px) {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -133,7 +134,7 @@ const PostStyle = css`
     }
     @media (min-width: 1440px) {
         grid-template-columns: repeat(5, 1fr);
-    }
+    } */
 `;
 
 const NoResultMessage = css`

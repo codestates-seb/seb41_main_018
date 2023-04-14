@@ -282,10 +282,6 @@ const PostStyle = css`
     margin: 0 auto;
     min-width: 360px;
     width: 80%;
-    /* height: 53vh;
-    @media (min-width: 575px) {
-        height: 45vh;
-    } */
     .swiper-button-next {
         background: url(${GachiGalleImgSrc.right_button_img}) no-repeat;
         right: 0;
