@@ -162,41 +162,44 @@ const Home = () => {
                                 </SwiperSlide>
                             </div>
                         </Swiper>
-
-                        <h2 css={ItemTitle}>🛫 방금 올라온 🔥HOT🔥 여행지</h2>
-                        <Swiper {...swiperOption} css={PostStyle}>
-                            <div>
-                                {contentsList &&
-                                    contentsList.map((content) => (
+                        <div css={ItemWrap}>
+                            <h2 css={ItemTitle}>🛫 방금 올라온 🔥HOT🔥 여행지</h2>
+                            <Swiper {...swiperOption} css={PostStyle}>
+                                <div>
+                                    {contentsList &&
+                                        contentsList.map((content) => (
+                                            <SwiperSlide key={content.contentId}>
+                                                <HomeItems content={content} />
+                                            </SwiperSlide>
+                                        ))}
+                                </div>
+                            </Swiper>
+                        </div>
+                        <Banner />
+                        <div css={ItemWrap}>
+                            <h2 css={ItemTitle}>✨ 관심 급상승 여행지</h2>
+                            <Swiper {...swiperOption} css={PostStyle}>
+                                <div>
+                                    {viewCountSortArr.map((content) => (
                                         <SwiperSlide key={content.contentId}>
                                             <HomeItems content={content} />
                                         </SwiperSlide>
                                     ))}
-                            </div>
-                        </Swiper>
-                        <Banner />
-
-                        <h2 css={ItemTitle}>✨ 관심 급상승 여행지</h2>
-                        <Swiper {...swiperOption} css={PostStyle}>
-                            <div>
-                                {viewCountSortArr.map((content) => (
-                                    <SwiperSlide key={content.contentId}>
-                                        <HomeItems content={content} />
-                                    </SwiperSlide>
-                                ))}
-                            </div>
-                        </Swiper>
-
-                        <h2 css={ItemTitle}>❤️ 다른 사람들이 좋아하는 여행지</h2>
-                        <Swiper {...swiperOption} css={PostStyle}>
-                            <div>
-                                {heartCountSortArr.map((content) => (
-                                    <SwiperSlide key={content.contentId}>
-                                        <HomeItems content={content} />
-                                    </SwiperSlide>
-                                ))}
-                            </div>
-                        </Swiper>
+                                </div>
+                            </Swiper>
+                        </div>
+                        <div css={ItemWrap}>
+                            <h2 css={ItemTitle}>❤️ 다른 사람들이 좋아하는 여행지</h2>
+                            <Swiper {...swiperOption} css={PostStyle}>
+                                <div>
+                                    {heartCountSortArr.map((content) => (
+                                        <SwiperSlide key={content.contentId}>
+                                            <HomeItems content={content} />
+                                        </SwiperSlide>
+                                    ))}
+                                </div>
+                            </Swiper>
+                        </div>
                         <button css={PostButton} onClick={postButtonClick}>
                             <span>내 여행지 공유하기</span>
                         </button>
@@ -256,9 +259,6 @@ const Container = css`
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, auto));
     }
-    @media (max-width: 400px) {
-        margin: 0 20px;
-    }
 `;
 
 const ItemTitle = css`
@@ -270,25 +270,37 @@ const ItemTitle = css`
     font-weight: 600;
 `;
 
+const ItemWrap = css`
+    margin: -100px 0 -350px 0;
+    @media (min-width: 575px) {
+        margin-bottom: -200px;
+    }
+`;
+
 const PostStyle = css`
     z-index: 1;
     margin: 0 auto;
     min-width: 360px;
     width: 80%;
-
+    /* height: 53vh;
+    @media (min-width: 575px) {
+        height: 45vh;
+    } */
     .swiper-button-next {
         background: url(${GachiGalleImgSrc.right_button_img}) no-repeat;
         right: 0;
-        background-size: 140% auto;
+        background-size: 100% auto;
         background-position: center;
         position: absolute;
+        top: 150px;
     }
     .swiper-button-prev {
         background: url(${GachiGalleImgSrc.left_button_img}) no-repeat;
         left: 0;
-        background-size: 140% auto;
+        background-size: 100% auto;
         background-position: center;
         position: absolute;
+        top: 150px;
     }
     .swiper-button-next::after,
     .swiper-button-prev::after {

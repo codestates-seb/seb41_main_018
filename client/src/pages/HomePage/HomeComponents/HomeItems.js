@@ -112,13 +112,13 @@ const HomeItems = (props) => {
 
 const Container = css`
     width: 100%;
-    height: 100%;
+    height: 50%;
 `;
 
 const ImgStyle = css`
     border-radius: ${PALETTE.border_radius};
     width: 100%;
-    height: 60%;
+    height: 70%;
 `;
 
 const FavoriteIconWrap = css`
