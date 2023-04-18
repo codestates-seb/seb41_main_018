@@ -70,13 +70,15 @@ const Detail = () => {
         },
     });
 
+    //컨텐츠 정보 받아오기
     const getContentDetail = (contentId) => {
         getContent(contentId).then((res) => {
-            setContentDetail(res && res.data);
-            setReviewList(res.data && res.data.data && res.data.data.comments);
+            setContentDetail(res.data);
+            setReviewList(res.data?.data?.comments);
         });
     };
 
+    //내가 작성한 글 일치 여부
     const handleMyPost = () => {
         if (contentsUserId === loginUserId) {
             setMyPost(true);
