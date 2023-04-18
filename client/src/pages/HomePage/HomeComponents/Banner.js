@@ -28,24 +28,25 @@ const Banner = () => {
             disableOnInteraction: false,
         },
     };
+
+    const bannerDummyImg = [
+        GachiGalleImgSrc.banner_1,
+        GachiGalleImgSrc.banner_2,
+        GachiGalleImgSrc.banner_3,
+        GachiGalleImgSrc.banner_4,
+        GachiGalleImgSrc.banner_5,
+    ];
+
     return (
         <div css={Container}>
             <Swiper {...swiperOption} css={SwiperStyle}>
-                <SwiperSlide>
-                    <img src={GachiGalleImgSrc.banner_1} css={BannerStyle} />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src={GachiGalleImgSrc.banner_2} css={BannerStyle} />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src={GachiGalleImgSrc.banner_3} css={BannerStyle} />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src={GachiGalleImgSrc.banner_4} css={BannerStyle} />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <img src={GachiGalleImgSrc.banner_5} css={BannerStyle} />
-                </SwiperSlide>
+                {bannerDummyImg.map((el, index) => {
+                    return (
+                        <SwiperSlide>
+                            <img key={index} src={el} css={BannerStyle} />
+                        </SwiperSlide>
+                    );
+                })}
             </Swiper>
         </div>
     );
@@ -55,9 +56,10 @@ const Container = css`
     display: flex;
     height: auto;
     max-height: 380px;
-    margin: 40px auto 150px;
+    margin: 40px auto;
     width: 80%;
 `;
+
 const SwiperStyle = css`
     border-radius: ${PALETTE.border_radius};
     .swiper-pagination-bullet {

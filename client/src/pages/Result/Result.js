@@ -7,7 +7,7 @@ import { css } from "@emotion/react";
 
 //component
 import CategoryBar from "../components/CategoryBar";
-import HomeItems from "../HomePage/HomeComponents/HomeItems";
+import ResultItems from "../HomePage/HomeComponents/ResultItems";
 import Loading from "../components/Loding";
 
 //reocil
@@ -62,9 +62,13 @@ const Result = () => {
                 getCategory(searchTarget).then((data) => {
                     if (data) {
                         themeTypeSwitch(data.data.themeType);
-                        setSearchTargetArr(data?.data?.contents ?? []);
+                        // setSearchTargetArr(data?.data?.contents ?? []); //getCategory API에서 이미지에 대한 key 값이 없기 떄문에 결과창에서 이미지 출력이 불가함
+                        setSearchTargetArr(
+                            contentsList.filter((el) => el.themeType === data.data.themeType)
+                        );
                     }
                 });
+
                 /* 검색창 키워드 검색 */
             } else if (type === "?search") {
                 setSearchTargetName(searchTarget);
@@ -94,15 +98,17 @@ const Result = () => {
                         <div css={ResultText}>
                             {`" ${searchTargetName} "에 대한 검색결과 : ${searchTargetArr.length}건`}
                         </div>
-                        <div css={PostStyle}>
+                        <div>
                             {searchTargetArr.length === 0 ? (
                                 <div css={NoResultMessage}>검색 결과가 없습니다.</div>
                             ) : (
-                                <>
+                                <div css={PostWrap}>
                                     {searchTargetArr.map((content, index) => (
-                                        <HomeItems content={content} key={index} />
+                                        <div css={PostStyle}>
+                                            <ResultItems content={content} key={index} />
+                                        </div>
                                     ))}
-                                </>
+                                </div>
                             )}
                         </div>
                     </div>
@@ -116,13 +122,13 @@ const ResultText = css`
     width: 90vw;
     margin: 20px auto -20px;
 `;
-const PostStyle = css`
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, auto));
-    margin: 20px auto;
-    gap: 20px;
+const PostWrap = css`
     width: 90%;
-    /* grid-template-columns: repeat(1, 1fr);
+
+    margin: 20px auto;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(1, 1fr);
     @media (min-width: 576px) {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -134,12 +140,17 @@ const PostStyle = css`
     }
     @media (min-width: 1440px) {
         grid-template-columns: repeat(5, 1fr);
-    } */
+    }
+`;
+
+const PostStyle = css`
+    width: 100%;
+    height: 400px;
 `;
 
 const NoResultMessage = css`
-    margin: 20px;
-    font-size: 20px;
+    margin: 40px;
+    font-size: 1.3rem;
 `;
 
 export default Result;
