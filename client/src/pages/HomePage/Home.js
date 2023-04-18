@@ -30,6 +30,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { ContentsList, userInfoState } from "../../state/atom";
 
 import { GachiGalleImgSrc, SampleImgSrc } from "../../sampleImage";
+import { FaObjectGroup } from "react-icons/fa";
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
@@ -75,6 +76,7 @@ const Home = () => {
     const [contentsList, setContentsList] = useRecoilState(ContentsList);
     const [isLoading, setIsLoading] = useState(false);
     const isUserInfo = useRecoilValue(userInfoState);
+
     // 조회수 기준 정렬
     const viewCountSortArr = [...contentsList].sort((a, b) => b.viewCount - a.viewCount);
     // 좋아요 기준 정렬
@@ -93,6 +95,7 @@ const Home = () => {
         }
     };
 
+    //백엔드 이미지 업로드 미구현으로 인한 더미이미지 나열
     useEffect(() => {
         getContent().then((res) => {
             const dummyImage = Object.values(SampleImgSrc);
@@ -102,6 +105,19 @@ const Home = () => {
         });
     }, []);
 
+    //지역 카테고리 더미이미지
+    const regionDummyImg = [
+        { img: GachiGalleImgSrc.seoul_img, text: "서울" },
+        { img: GachiGalleImgSrc.busan_img, text: "부산" },
+        { img: GachiGalleImgSrc.jeju_img, text: "제주" },
+        { img: GachiGalleImgSrc.gangneung_img, text: "강릉" },
+        { img: GachiGalleImgSrc.damyang_img, text: "담양" },
+        { img: GachiGalleImgSrc.jeonju_img, text: "전주" },
+        { img: GachiGalleImgSrc.yeosu_img, text: "여수" },
+        { img: GachiGalleImgSrc.paju_img, text: "파주" },
+        { img: GachiGalleImgSrc.pocheon_img, text: "포천" },
+    ];
+
     return (
         <div>
             <Categorybar />
@@ -109,57 +125,16 @@ const Home = () => {
                 {isLoading ? (
                     <Loading />
                 ) : (
-                    <>
+                    <div>
                         <Swiper {...swiperOption} css={PostStyle}>
                             <div>
-                                <SwiperSlide>
-                                    <Regionitems
-                                        img={`${GachiGalleImgSrc.seoul_img}`}
-                                        text="서울"
-                                    />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <Regionitems
-                                        img={`${GachiGalleImgSrc.busan_img}`}
-                                        text="부산"
-                                    />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <Regionitems img={`${GachiGalleImgSrc.jeju_img}`} text="제주" />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <Regionitems
-                                        img={`${GachiGalleImgSrc.gangneung_img}`}
-                                        text="강릉"
-                                    />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <Regionitems
-                                        img={`${GachiGalleImgSrc.damyang_img}`}
-                                        text="담양"
-                                    />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <Regionitems
-                                        img={`${GachiGalleImgSrc.jeonju_img}`}
-                                        text="전주"
-                                    />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <Regionitems
-                                        img={`${GachiGalleImgSrc.yeosu_img}`}
-                                        text="여수"
-                                    />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <Regionitems img={`${GachiGalleImgSrc.paju_img}`} text="파주" />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <Regionitems
-                                        img={`${GachiGalleImgSrc.pocheon_img}`}
-                                        text="포천"
-                                    />
-                                </SwiperSlide>
+                                {regionDummyImg.map((el, index) => {
+                                    return (
+                                        <SwiperSlide>
+                                            <Regionitems img={el.img} text={el.text} key={index} />
+                                        </SwiperSlide>
+                                    );
+                                })}
                             </div>
                         </Swiper>
                         <div css={ItemWrap}>
@@ -203,12 +178,13 @@ const Home = () => {
                         <button css={PostButton} onClick={postButtonClick}>
                             <span>내 여행지 공유하기</span>
                         </button>
-                    </>
+                    </div>
                 )}
             </div>
         </div>
     );
 };
+
 const PostButton = css`
     position: sticky;
     left: 85%;
@@ -254,6 +230,7 @@ const PostButton = css`
         z-index: 1;
     }
 `;
+
 const Container = css`
     .swiper {
         display: grid;
@@ -271,9 +248,10 @@ const ItemTitle = css`
 `;
 
 const ItemWrap = css`
-    margin: -100px 0 -350px 0;
+    margin: 0 0 0 0;
+    height: 500px;
     @media (min-width: 575px) {
-        margin-bottom: -200px;
+        height: 400px;
     }
 `;
 

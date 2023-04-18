@@ -35,13 +35,12 @@ const Toast = Swal.mixin({
     },
 });
 
-const HomeItems = (props) => {
+const ResultItems = (props) => {
     const { content } = props;
     const [isFavoriteClcik, setFavoriteClick] = useState(false);
     const [userInfo, setUserInfo] = useRecoilState(userInfoState);
     const data = useMemo(() => content, [content]);
 
-    //좋아요 버튼 동작 함수
     const handleFavoriteClick = () => {
         if (userInfo.userId) {
             postHeart(userInfo.userId, data.contentId).then(() => {
@@ -51,7 +50,6 @@ const HomeItems = (props) => {
                 });
             });
         } else {
-            //비로그인시 좋아요 클릭 불가능
             Toast.fire({
                 icon: "error",
                 title: "로그인이 필요합니다.",
@@ -70,8 +68,10 @@ const HomeItems = (props) => {
             </div>
             <Link to={`/detail/${data && data.contentId}`}>
                 <img src={content.image} css={ImgStyle} />
+
                 <div css={TextWrap}>
                     <div css={TitleStyle}>{data && data.title}</div>
+
                     <div css={FavoriteTextStyle}>
                         <FaHeart css={FavoriteIconStyle} />
                         {data && data.heartCount}
@@ -107,7 +107,7 @@ const Container = css`
 const ImgStyle = css`
     border-radius: ${PALETTE.border_radius};
     width: 100%;
-    height: 40%;
+    height: 60%;
 `;
 
 const FavoriteIconWrap = css`
@@ -185,4 +185,4 @@ const InfoStyle = css`
     }
 `;
 
-export default HomeItems;
+export default ResultItems;
